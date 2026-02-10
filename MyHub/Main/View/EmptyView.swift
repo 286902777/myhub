@@ -44,7 +44,7 @@ class EmptyView: UIView {
     var type: Hub_EmptyType = .noContent {
         didSet {
             self.imageV.image = UIImage(named: type == .noContent ? "nocontent" : "nonet")
-            self.infoL.text = type == .noContent ? "Add photos and videos." : "Offline. Please retry."
+            self.infoL.text = type == .noContent ? "Add photos and videos." : "No network. Please try again later."
             self.upBtn.setTitle(type == .noContent ? "Upload" : "Retry", for: .normal)
             self.upBtn.layer.borderWidth = type == .noContent ? 0 : 1
             self.upBtn.backgroundColor = type == .noContent ? UIColor.rgbHex("#DDF75B") : UIColor.white

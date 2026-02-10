@@ -25,10 +25,12 @@ class HubTabBarController: UIViewController {
         super.viewDidLoad()
         addControllers()
         addTabBar()
-            let ns = UIFont.fontNames(forFamilyName: "Google Sans")
-            for n in ns {
-                print(n)
+        NotificationCenter.default.addObserver(forName: Noti_TabbarShow, object: nil, queue: .main) {[weak self] data in
+            guard let self = self else { return }
+            if let result = data.userInfo?["show"] as? Bool {
+                self.tabbar.isHidden = !result
             }
+        }
     }
     
     func addControllers() {
@@ -58,7 +60,7 @@ class HubTabBarController: UIViewController {
         view.addSubview(self.tabbar)
         self.tabbar.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.height.equalTo(84)
+            make.height.equalTo(CusTabBarHight)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         let homeItem = HubTabItem(selectedImage: UIImage(named: "home_s"), normalImage: UIImage(named: "home"), tag: 0)
@@ -67,8 +69,9 @@ class HubTabBarController: UIViewController {
         let meItem = HubTabItem(selectedImage: UIImage(named: "me_s"), normalImage: UIImage(named: "me"), tag: 3)
         self.tabbar.tabbarItems = [homeItem, fileItem, uploadItem, meItem]
         self.tabbar.addItems()
-        self.tabbar.clickAddBlock = {
-            
+        self.tabbar.clickAddBlock = {[weak self] in
+            guard let self = self else { return }
+            UploadTool.instance.openVC(self)
         }
         self.tabbar.clickBlock = { [weak self] idx in
             guard let self = self else { return }
@@ -83,4 +86,31 @@ class HubTabBarController: UIViewController {
             }
         }
     }
+}
+
+extension HubTabBarController {
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    // 支持哪些屏幕方向
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
+    ///默认的屏幕方向（当前ViewController必须是通过模态出来的UIViewController（模态带导航的无效）方式展现出来的，才会调用这个方法）
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
+    /// 状态栏样式
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
+    
+    /// 是否隐藏状态栏
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
 }

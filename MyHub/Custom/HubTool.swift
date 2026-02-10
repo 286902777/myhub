@@ -15,7 +15,7 @@ let ScreenBounds = UIScreen.main.bounds
 let ScreenSize = UIScreen.main.bounds.size
 let ScreenHeight: CGFloat = ScreenSize.height
 let ScreenWidth: CGFloat = ScreenSize.width
-
+let CusTabBarHight: CGFloat = 84
 var playRate: HUB_RateState = .one
 
 var TopSafeH: CGFloat {
@@ -205,124 +205,124 @@ class HubTool {
     func clearCache() {
         ImageCache.default.clearDiskCache()
     }
-//    
-//    func changeModel(_ model: OpenUrlData, linkId: String, uId: String, platform: HUB_PlatformType) -> VideoData {
-//        let m = VideoData()
-//        let dbData: [VideoData] = RealmDB.instance.readDatas()
-//        if let mod = dbData.first(where: {$0.id == model.file_id && $0.file_type == .video}) {
-//            return mod
-//        } else {
-//            m.id = model.file_id
-//            m.userId = uId
-//            m.linkId = linkId
-//            m.size = "\(model.file_meta.size.computeFileSize())"
-//            m.file_size = model.file_meta.size
-//            m.ext = model.file_meta.ext
-//            m.isNet = true
-//            m.date = model.create_time
-//            m.name = model.file_meta.display_name
-//            m.thumbnail = model.file_meta.thumbnail
-//            m.file_type = model.file_type
-//            m.vid_qty = model.vid_qty
-//            m.platform = platform
-//            return m
-//        }
-//    }
-//    
-//    func changeList(_ list: [OpenUrlData], linkId: String, uId: String, platform: HUB_PlatformType) -> [VideoData] {
-//        var result: [VideoData] = []
-//        let dbData: [VideoData] = RealmDB.instance.readDatas()
-//        list.forEach { item in
-//            var m = VideoData()
-//            if let mod = dbData.first(where: {$0.id == item.file_id && $0.file_type == .video}) {
-//                m = mod
-//            } else {
-//                m.id = item.file_id
-//                m.userId = uId
-//                m.linkId = linkId
-//                m.size = "\(item.file_meta.size.computeFileSize())"
-//                m.file_size = item.file_meta.size
-//                m.ext = item.file_meta.ext
-//                m.isNet = true
-//                m.date = item.create_time
-//                m.name = item.file_meta.display_name
-//                m.thumbnail = item.file_meta.thumbnail
-//                m.file_type = item.file_type
-//                m.vid_qty = item.vid_qty
-//                m.platform = platform
-//            }
-//            result.append(m)
-//        }
-//        return result
-//    }
-//    
-//    func channelModel(_ model: ChannelData, linkId: String, uId: String, platform: HUB_PlatformType) -> VideoData {
-//        let m = VideoData()
-//        let dbData: [VideoData] = RealmDB.instance.readDatas()
-//        if let mod = dbData.first(where: {$0.id == model.id && $0.file_type == .video}) {
-//            mod.linkId = linkId
-//            return mod
-//        } else {
-//            m.id = model.id
-//            m.userId = uId
-//            m.linkId = linkId
-//            m.size = "\(model.file_meta.size.computeFileSize())"
-//            m.file_size = model.file_meta.size
-//            m.ext = model.file_meta.ext
-//            m.isNet = true
-//            m.pubData = model.update_time
-//            m.name = model.displayName.thenness
-//            m.thumbnail = model.file_meta.thumbnail
-//            m.file_type = model.file_type
-//            m.vid_qty = model.vid_qty
-//            m.platform = platform
-//            return m
-//        }
-//    }
-//    
-//    func channelList(_ list: [ChannelData], linkId: String, uId: String, platform: HUB_PlatformType) -> [VideoData] {
-//        var result: [VideoData] = []
-//        let dbData: [VideoData] = RealmDB.instance.readDatas()
-//        list.forEach { item in
-//            var m = VideoData()
-//            if let mod = dbData.first(where: {$0.id == item.id && $0.file_type == .video}) {
-//                m.linkId = linkId
-//                m = mod
-//            } else {
-//                m.id = item.id
-//                m.userId = uId
-//                m.linkId = linkId
-//                m.size = "\(item.file_meta.size.computeFileSize())"
-//                m.file_size = item.file_meta.size
-//                m.ext = item.file_meta.ext
-//                m.isNet = true
-//                m.pubData = item.update_time
-//                m.name = item.displayName.thenness
-//                m.thumbnail = item.file_meta.thumbnail
-//                m.file_type = item.file_type
-//                m.vid_qty = item.vid_qty
-//                m.platform = platform
-//            }
-//            result.append(m)
-//        }
-//        return result
-//    }
-//    
-//    // MRAK: - video image
-//    func getVideoImage(videoURL: URL, completion: @escaping (UIImage?) -> Void) {
-//        let asset = AVURLAsset(url: videoURL)
-//        let generator = AVAssetImageGenerator(asset: asset)
-//        generator.appliesPreferredTrackTransform = true
-//        
-//        let time = CMTimeMake(value: 0, timescale: 1)
-//        generator.generateCGImagesAsynchronously(forTimes: [time as NSValue]) { _, cImage,_, _, _ in
-//            if let imageRe = cImage, let data = UIImage(cgImage: imageRe).compressSize(with: 1024 * 2) {
-//                let image = UIImage(data: data)
-//                completion(image)
-//            } else {
-//                completion(nil)
-//            }
-//        }
-//    }
+    
+    func changeModel(_ model: OpenUrlData, linkId: String, uId: String, platform: HUB_PlatformType) -> VideoData {
+        let m = VideoData()
+        let dbData: [VideoData] = HubDB.instance.readDatas()
+        if let mod = dbData.first(where: {$0.id == model.file_id && $0.file_type == .video}) {
+            return mod
+        } else {
+            m.id = model.file_id
+            m.userId = uId
+            m.linkId = linkId
+            m.size = "\(model.file_meta.size.computeFileSize())"
+            m.file_size = model.file_meta.size
+            m.ext = model.file_meta.ext
+            m.isNet = true
+            m.date = model.create_time
+            m.name = model.file_meta.display_name
+            m.thumbnail = model.file_meta.thumbnail
+            m.file_type = model.file_type
+            m.vid_qty = model.vid_qty
+            m.platform = platform
+            return m
+        }
+    }
+    
+    func changeList(_ list: [OpenUrlData], linkId: String, uId: String, platform: HUB_PlatformType) -> [VideoData] {
+        var result: [VideoData] = []
+        let dbData: [VideoData] = HubDB.instance.readDatas()
+        list.forEach { item in
+            var m = VideoData()
+            if let mod = dbData.first(where: {$0.id == item.file_id && $0.file_type == .video}) {
+                m = mod
+            } else {
+                m.id = item.file_id
+                m.userId = uId
+                m.linkId = linkId
+                m.size = "\(item.file_meta.size.computeFileSize())"
+                m.file_size = item.file_meta.size
+                m.ext = item.file_meta.ext
+                m.isNet = true
+                m.date = item.create_time
+                m.name = item.file_meta.display_name
+                m.thumbnail = item.file_meta.thumbnail
+                m.file_type = item.file_type
+                m.vid_qty = item.vid_qty
+                m.platform = platform
+            }
+            result.append(m)
+        }
+        return result
+    }
+    
+    func channelModel(_ model: ChannelData, linkId: String, uId: String, platform: HUB_PlatformType) -> VideoData {
+        let m = VideoData()
+        let dbData: [VideoData] = HubDB.instance.readDatas()
+        if let mod = dbData.first(where: {$0.id == model.id && $0.file_type == .video}) {
+            mod.linkId = linkId
+            return mod
+        } else {
+            m.id = model.id
+            m.userId = uId
+            m.linkId = linkId
+            m.size = "\(model.file_meta.size.computeFileSize())"
+            m.file_size = model.file_meta.size
+            m.ext = model.file_meta.ext
+            m.isNet = true
+            m.pubData = model.update_time
+            m.name = model.displayName.thenness
+            m.thumbnail = model.file_meta.thumbnail
+            m.file_type = model.file_type
+            m.vid_qty = model.vid_qty
+            m.platform = platform
+            return m
+        }
+    }
+    
+    func channelList(_ list: [ChannelData], linkId: String, uId: String, platform: HUB_PlatformType) -> [VideoData] {
+        var result: [VideoData] = []
+        let dbData: [VideoData] = HubDB.instance.readDatas()
+        list.forEach { item in
+            var m = VideoData()
+            if let mod = dbData.first(where: {$0.id == item.id && $0.file_type == .video}) {
+                m.linkId = linkId
+                m = mod
+            } else {
+                m.id = item.id
+                m.userId = uId
+                m.linkId = linkId
+                m.size = "\(item.file_meta.size.computeFileSize())"
+                m.file_size = item.file_meta.size
+                m.ext = item.file_meta.ext
+                m.isNet = true
+                m.pubData = item.update_time
+                m.name = item.displayName.thenness
+                m.thumbnail = item.file_meta.thumbnail
+                m.file_type = item.file_type
+                m.vid_qty = item.vid_qty
+                m.platform = platform
+            }
+            result.append(m)
+        }
+        return result
+    }
+    
+    // MRAK: - video image
+    func getVideoImage(videoURL: URL, completion: @escaping (UIImage?) -> Void) {
+        let asset = AVURLAsset(url: videoURL)
+        let generator = AVAssetImageGenerator(asset: asset)
+        generator.appliesPreferredTrackTransform = true
+        
+        let time = CMTimeMake(value: 0, timescale: 1)
+        generator.generateCGImagesAsynchronously(forTimes: [time as NSValue]) { _, cImage,_, _, _ in
+            if let imageRe = cImage, let data = UIImage(cgImage: imageRe).compressSize(with: 1024 * 2) {
+                let image = UIImage(data: data)
+                completion(image)
+            } else {
+                completion(nil)
+            }
+        }
+    }
 }
 

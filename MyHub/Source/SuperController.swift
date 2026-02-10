@@ -6,13 +6,13 @@
 //
 
 import UIKit
+import SnapKit
 
 class SuperController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-    }
+    lazy var navbar: NaviBar = {
+        let view = NaviBar.xibView()
+        return view
+    }()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -20,6 +20,47 @@ class SuperController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             guard let self = self else { return }
             self.startTrack()
+        }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initNavBar()
+        initUI()
+    }
+    
+    func initNavBar() {
+        view.backgroundColor = .white
+        self.view.addSubview(self.navbar)
+        self.navbar.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(NavBarH)
+        }
+        self.navbar.clickBlock = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.backAction()
+            }
+        }
+    }
+    
+    func initUI() {
+        
+    }
+    
+    func backAction() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - login
+    func isUserLogin() -> Bool {
+        if (LoginManager.share.isLogin == false) {
+            LoginManager.share.loginRequest(self) { success in
+               
+            }
+            return false
+        } else {
+            return true
         }
     }
     
@@ -54,5 +95,4 @@ extension SuperController {
     override var prefersStatusBarHidden: Bool {
         return false
     }
-    
 }

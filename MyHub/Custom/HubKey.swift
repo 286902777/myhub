@@ -68,3 +68,5 @@ let Noti_ShowAds = NSNotification.Name(rawValue: "Noti_HUB_ShowAds")
 let Noti_DismissAds = NSNotification.Name(rawValue: "Noti_HUB_DismissAds")
 
 let Noti_ClickNativeAds = NSNotification.Name(rawValue: "Noti_HUB_ClickNativeAds")
+
+let Noti_TabbarShow = NSNotification.Name(rawValue: "Noti_TabbarShow")

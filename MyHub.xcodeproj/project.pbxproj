@@ -244,7 +244,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyHub/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "app info";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the seamless use of the media library import function for photos and videos, access permissions for your photos and videos are essential. You may alter these permissions in the “Settings” menu as needed.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "For the purpose of offering personalized advertising services and an optimal product experience, we kindly request that you grant permission for the advertising identifier. You may subsequently disable this permission in the settings.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -282,7 +283,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyHub/Info.plist;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
-				INFOPLIST_KEY_NSUserTrackingUsageDescription = "app info";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the seamless use of the media library import function for photos and videos, access permissions for your photos and videos are essential. You may alter these permissions in the “Settings” menu as needed.";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = "For the purpose of offering personalized advertising services and an optimal product experience, we kindly request that you grant permission for the advertising identifier. You may subsequently disable this permission in the settings.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

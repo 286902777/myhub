@@ -18,8 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
+        NetManager.instance.startChecking()
+        HubDB.instance.config()
         addKeyboard()
+        startTrack()
         return true
     }
 
