@@ -37,11 +37,6 @@ class SaveController: UIViewController {
         TabbarTool.instance.displayOrHidden(true)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        TabbarTool.instance.displayOrHidden(false)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.addSubview(self.collectionView)

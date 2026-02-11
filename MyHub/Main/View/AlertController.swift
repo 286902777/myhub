@@ -31,8 +31,8 @@ class AlertController: UIViewController {
     
     lazy var titleL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.font = UIFont.GoogleSans(weight: .medium, size: 16)
+        label.textColor = UIColor.rgbHex("#14171C")
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -40,8 +40,8 @@ class AlertController: UIViewController {
     
     lazy var infoL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor.rgbHex("#112031", 0.75)
+        label.font = UIFont.GoogleSans(weight: .regular, size: 14)
+        label.textColor = UIColor.rgbHex("#14171C", 0.75)
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -104,7 +104,7 @@ class AlertController: UIViewController {
     }
     
     func setUI() {
-        self.view.backgroundColor = UIColor.rgbHex("#000000", 0.5)
+        self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.titleStackV)
         self.titleStackV.addArrangedSubview(self.titleL)

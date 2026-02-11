@@ -46,12 +46,7 @@ class IndexController: SuperController {
         super.viewWillAppear(animated)
         TabbarTool.instance.displayOrHidden(true)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        TabbarTool.instance.displayOrHidden(false)
-    }
-
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
@@ -90,6 +85,7 @@ class IndexController: SuperController {
             } else {
                 let vc = IndexListController(list: m.lists, type: m.type)
                 vc.hidesBottomBarWhenPushed = true
+                TabbarTool.instance.displayOrHidden(false)
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

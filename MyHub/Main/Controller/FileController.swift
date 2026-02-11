@@ -61,12 +61,7 @@ class FileController: UIViewController {
         self.netRequest()
         TabbarTool.instance.displayOrHidden(true)
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        TabbarTool.instance.displayOrHidden(false)
-    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -345,10 +340,12 @@ class FileController: UIViewController {
         case .folder:
             let vc = FileListController(model: model)
             vc.hidesBottomBarWhenPushed = true
+            TabbarTool.instance.displayOrHidden(false)
             self.navigationController?.pushViewController(vc, animated: true)
         case .photo:
             let vc = OpenPhotoController(model: model)
             vc.hidesBottomBarWhenPushed = true
+            TabbarTool.instance.displayOrHidden(false)
             self.navigationController?.pushViewController(vc, animated: true)
         case .video:
             PlayTool.instance.pushPage(self, model, self.list.filter({$0.file_type == .video}))

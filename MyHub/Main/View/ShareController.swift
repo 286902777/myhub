@@ -25,21 +25,21 @@ class ShareController: UIViewController {
     lazy var leftL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.textColor = UIColor.rgbHex("#14171C")
         label.text = "「"
         return label
     }()
     lazy var rightL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.textColor = UIColor.rgbHex("#14171C")
         label.text = "」"
         return label
     }()
     lazy var nameL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.textColor = UIColor.rgbHex("#14171C")
         label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()
@@ -47,7 +47,7 @@ class ShareController: UIViewController {
     lazy var itemL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.textColor = UIColor.rgbHex("#14171C")
         label.text = "contains 3 files"
         return label
     }()
@@ -68,8 +68,8 @@ class ShareController: UIViewController {
     
     lazy var validityL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.font = UIFont.GoogleSans(weight: .regular, size: 14)
+        label.textColor = UIColor.rgbHex("##14171C")
         label.text = "Valid time"
         return label
     }()

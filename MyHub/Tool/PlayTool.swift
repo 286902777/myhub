@@ -14,6 +14,7 @@ class PlayTool {
     
     func pushPage(_ controller: UIViewController, _ mod: VideoData, _ list: [VideoData]) {
         PlayTool.instance.list = list.filter({$0.file_type == .video})
+        TabbarTool.instance.displayOrHidden(false)
 //        let vc = PlayVideoController(model: mod)
 //        vc.hidesBottomBarWhenPushed = true
 //        controller.navigationController?.pushViewController(vc, animated: true)
