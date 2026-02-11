@@ -32,6 +32,7 @@ class ChannelData: SuperData {
     var file_meta: ChannelFileMetaData = ChannelFileMetaData()
     var displayName: DisplayNameData = DisplayNameData()
     var isSelect: Bool = false
+    var recommoned: Bool = false
     var fileName: String {
         get {
             return displayName.thenness

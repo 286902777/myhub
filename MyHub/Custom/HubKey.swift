@@ -29,6 +29,10 @@ let HUB_AppDown: String = "HUB_AppDown"
 
 let HUB_FirstOpenApp: String = "HUB_FirstOpenApp"
 
+let HUB_PlayingCount: String = "HUB_PlayingCount"
+
+let HUB_OpenVipPop: String = "HUB_OpenVipPop"
+
 let HUB_FirstUpload: String = "HUB_FirstUpload"
 
 let HUB_UploadFirstDeepPlay: String = "HUB_UploadFirstDeepPlay"
