@@ -16,13 +16,42 @@ class ShareController: UIViewController {
         view.layer.masksToBounds = true
         return view
     }()
+    lazy var stackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        return view
+    }()
     
+    lazy var leftL: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
+        label.textColor = UIColor.rgbHex("#112031")
+        label.text = "「"
+        return label
+    }()
+    lazy var rightL: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
+        label.textColor = UIColor.rgbHex("#112031")
+        label.text = "」"
+        return label
+    }()
     lazy var nameL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         label.textColor = UIColor.rgbHex("#112031")
+        label.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return label
     }()
+    
+    lazy var itemL: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
+        label.textColor = UIColor.rgbHex("#112031")
+        label.text = "contains 3 files"
+        return label
+    }()
+    
     lazy var closeBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "close"), for: .normal)
@@ -90,7 +119,11 @@ class ShareController: UIViewController {
         self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         self.view.addSubview(self.contentV)
         self.view.addSubview(self.closeBtn)
-        self.contentV.addSubview(self.nameL)
+        self.contentV.addSubview(self.stackView)
+        self.stackView.addArrangedSubview(self.leftL)
+        self.stackView.addArrangedSubview(self.nameL)
+        self.stackView.addArrangedSubview(self.rightL)
+        self.stackView.addArrangedSubview(self.itemL)
         self.contentV.addSubview(self.validityV)
         self.validityV.addSubview(self.validityL)
         self.validityV.addSubview(self.dayL)
@@ -108,10 +141,10 @@ class ShareController: UIViewController {
             make.size.equalTo(CGSize(width: 52, height: 52))
         }
 
-        self.nameL.snp.makeConstraints { make in
+        self.stackView.snp.makeConstraints { make in
             make.top.equalTo(24)
-            make.left.equalTo(14)
-            make.right.equalTo(-14)
+            make.left.equalTo(34)
+            make.right.equalTo(-34)
         }
         
         self.validityV.snp.makeConstraints { make in
@@ -145,7 +178,6 @@ class ShareController: UIViewController {
         self.copyBtn.addTarget(self, action: #selector(clickCopyAction), for: .touchUpInside)
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
 
-        self.contentV.addRedius([.topLeft, .topRight], 12)
         let tap = UITapGestureRecognizer(target: self, action: #selector(clickDayAction))
         self.validityV.addGestureRecognizer(tap)
         self.dayL.text = self.name.rawValue
@@ -153,7 +185,8 @@ class ShareController: UIViewController {
         self.list.forEach { m in
             name = name + m.name
         }
-        self.nameL.text = name
+        self.nameL.text = "jaosifjoasifdjasdfsaflfdjoasidfja.mp3"
+//        self.nameL.text = name
     }
     
     @objc func clickDayAction() {

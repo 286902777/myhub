@@ -34,6 +34,12 @@ class SaveController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.addData()
+        TabbarTool.instance.displayOrHidden(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        TabbarTool.instance.displayOrHidden(false)
     }
     
     override func viewDidLoad() {

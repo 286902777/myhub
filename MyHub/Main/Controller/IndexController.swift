@@ -42,6 +42,16 @@ class IndexController: SuperController {
         return table
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        TabbarTool.instance.displayOrHidden(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        TabbarTool.instance.displayOrHidden(false)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()
@@ -72,16 +82,16 @@ class IndexController: SuperController {
     
     @objc func clickHeadAction(_ sender: UITapGestureRecognizer) {
         if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
-//            if m.type == .channel {
+            if m.type == .channel {
 //                let vc = ChannelListController()
 //                vc.model = m.users.first ?? ChannelUserData()
 //                vc.hidesBottomBarWhenPushed = true
 //                self.navigationController?.pushViewController(vc, animated: true)
-//            } else {
-//                let vc = HomeListController(list: m.lists, type: m.type)
-//                vc.hidesBottomBarWhenPushed = true
-//                self.navigationController?.pushViewController(vc, animated: true)
-//            }
+            } else {
+                let vc = IndexListController(list: m.lists, type: m.type)
+                vc.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

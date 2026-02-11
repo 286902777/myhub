@@ -144,7 +144,7 @@ class IndexMoreController: UIViewController {
         switch mod.imageType {
         case .download:
             guard self.userIsLogin() else { return }
-            ToastTool.instance.show("Added to download list")
+            ToastTool.instance.show("Add the download list")
             if let m = self.listArr.first(where: {$0.imageType == .download}) {
                 m.imageType = .downloading
                 self.collectV.reloadData()

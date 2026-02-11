@@ -50,6 +50,13 @@ extension Double {
         }
     }
 
+    func timeToHMS() -> String {
+        let seconds = Int(self) % 60
+        let minutes = (Int(self) / 60) % 60
+        let hours = Int(self) / 3600
+        return String(format: "%02d:%02d:%02d", hours, minutes, seconds)
+    }
+    
     func dateToYMD(_ rate: Double = 1000.0) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(self/rate))
         let format: DateFormatter = DateFormatter()

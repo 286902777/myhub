@@ -55,10 +55,16 @@ class FileController: UIViewController {
     
     var clickUploadBlock: (() -> Void)?
     var showCountBlock: ((_ count: Int) -> Void)?
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.netRequest()
+        TabbarTool.instance.displayOrHidden(true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        TabbarTool.instance.displayOrHidden(false)
     }
     
     override func viewDidLoad() {
