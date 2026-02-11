@@ -10,6 +10,8 @@ import SnapKit
 
 class HubTabBarController: UIViewController {
     let tabbar = HubTabBar()
+    
+    var currentIdx: Int = 0
     private var controllers: [UIViewController] = []
 
     lazy var pageController: UIPageViewController = {
@@ -71,12 +73,22 @@ class HubTabBarController: UIViewController {
         self.tabbar.addItems()
         self.tabbar.clickAddBlock = {[weak self] in
             guard let self = self else { return }
-            HubTool.share.loginSource = .upload
-            UploadTool.instance.openVC(self)
+            switch self.currentIdx {
+            case 0:
+                HubTool.share.loginSource = .upload
+            case 1:
+                HubTool.share.loginSource = .file
+            case 2:
+                HubTool.share.loginSource = .transfer
+            default:
+                HubTool.share.loginSource = .set
+            }
+            UploadTool.instance.openVC(self, self.currentIdx == 1)
         }
         self.tabbar.clickBlock = { [weak self] idx in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                self.currentIdx = idx
                 let currentVC = self.controllers[idx]
                 self.pageController.setViewControllers(
                     [currentVC],

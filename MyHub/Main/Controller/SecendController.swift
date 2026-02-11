@@ -194,6 +194,12 @@ class SecendController: SuperController {
                 self.countL.isHidden = false
             }
         }
+        self.fileVC.clickUploadBlock = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                UploadTool.instance.openVC(self, true)
+            }
+        }
     }
   
     @objc func clickCancelAction() {
