@@ -140,7 +140,7 @@ class ShareController: UIViewController {
             make.left.equalTo(14)
             make.right.equalTo(-14)
             make.height.equalTo(44)
-            make.bottom.equalTo(24)
+            make.bottom.equalTo(-24)
         }
         self.copyBtn.addTarget(self, action: #selector(clickCopyAction), for: .touchUpInside)
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)

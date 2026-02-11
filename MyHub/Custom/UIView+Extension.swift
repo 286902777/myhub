@@ -222,7 +222,7 @@ extension UIImage {
 
 extension UIImageView {
     typealias CompleteBlock = (_ image: UIImage?)->()
-    func load_NetImage(_ url: String?, placeholder: String = "video_bg", complete: CompleteBlock? = nil) {
+    func setImage(_ url: String?, placeholder: String = "video_bg", complete: CompleteBlock? = nil) {
         let placeImg = UIImage(named: placeholder)
         var imageAddress: String? = url
 

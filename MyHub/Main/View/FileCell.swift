@@ -19,7 +19,7 @@ class FileCell: UITableViewCell {
     lazy var iconV: UIImageView = {
        let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 6
         view.layer.masksToBounds = true
         return view
     }()
@@ -136,10 +136,10 @@ class FileCell: UITableViewCell {
             self.iconV.image = UIImage(named: "folder_bg")
             self.infoL.text = "\(model.vid_qty) Files"
         case .photo:
-            self.iconV.load_NetImage(model.file_meta.thumbnail, placeholder: "photo_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "photo_bg")
             self.infoL.text = model.update_time.dateToYMD()
         case .video:
-            self.iconV.load_NetImage(model.file_meta.thumbnail, placeholder: "video_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "video_bg")
             self.infoL.text = "\(model.file_meta.size.computeFileSize()) · \(model.update_time.dateToYMD())"
         }
         self.nameL.text = model.fileName
@@ -153,10 +153,10 @@ class FileCell: UITableViewCell {
             self.iconV.image = UIImage(named: "folder_bg")
             self.infoL.text = "\(model.create_time.dateToYMD())"
         case .photo:
-            self.iconV.load_NetImage(model.file_meta.thumbnail, placeholder: "photo_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "photo_bg")
             self.infoL.text = model.create_time.dateToYMD()
         case .video:
-            self.iconV.load_NetImage(model.file_meta.thumbnail, placeholder: "video_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "video_bg")
             self.infoL.text = "\(model.file_meta.size.computeFileSize()) · \(model.create_time.dateToYMD())"
         }
         self.nameL.text = model.file_meta.display_name
@@ -172,11 +172,11 @@ class FileCell: UITableViewCell {
             self.infoL.text = "\(model.vid_qty) Files"
         case .photo:
             self.selectBtn.isHidden = true
-            self.iconV.load_NetImage(model.file_meta.thumbnail, placeholder: "photo_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "photo_bg")
             self.infoL.text = model.update_time.dateToYMD()
         case .video:
             self.selectBtn.isHidden = false
-            self.iconV.load_NetImage(model.file_meta.thumbnail, placeholder: "video_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "video_bg")
             self.infoL.text = "\(model.file_meta.size.computeFileSize()) · \(model.update_time.dateToYMD())"
         }
         self.nameL.text = model.fileName
@@ -190,9 +190,9 @@ class FileCell: UITableViewCell {
         case .folder:
             self.iconV.image = UIImage(named: "folder_bg")
         case .photo:
-            self.iconV.load_NetImage(data.thumbnail, placeholder: "photo_bg")
+            self.iconV.setImage(data.thumbnail, placeholder: "photo_bg")
         case .video:
-            self.iconV.load_NetImage(data.thumbnail, placeholder: "video_bg")
+            self.iconV.setImage(data.thumbnail, placeholder: "video_bg")
         }
         if hasSize {
             self.infoL.text = "\(data.file_size.computeFileSize()) · \(data.pubData.dateToYMD())"

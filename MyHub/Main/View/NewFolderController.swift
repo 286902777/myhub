@@ -44,6 +44,7 @@ class NewFolderController: UIViewController {
         btn.setTitle("Confirm", for: .normal)
         btn.setTitleColor(UIColor.rgbHex("#14171C", 0.5), for: .normal)
         btn.backgroundColor = UIColor.rgbHex("#DDF75B", 0.5)
+        btn.titleLabel?.font = UIFont.GoogleSans(size: 12)
         btn.layer.cornerRadius = 16
         return btn
     }()
@@ -114,7 +115,7 @@ class NewFolderController: UIViewController {
         self.sureBtn.snp.makeConstraints { make in
             make.top.equalTo(20)
             make.right.equalTo(-14)
-            make.size.equalTo(CGSize(width: 68, height: 28))
+            make.size.equalTo(CGSize(width: 72, height: 28))
         }
         
         self.inputV.snp.makeConstraints { make in
@@ -122,7 +123,7 @@ class NewFolderController: UIViewController {
             make.left.equalTo(14)
             make.right.equalTo(-14)
             make.height.equalTo(80)
-            make.height.equalTo(-20)
+            make.bottom.equalTo(-20)
             
         }
         self.inputV.delegate = self

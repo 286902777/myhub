@@ -34,10 +34,10 @@ class HubTabBarController: UIViewController {
     }
     
     func addControllers() {
-        let homeVC = IndexController()
-        let fileVC = SecendController()
-        let uploadVC = SetController()
-        let setVC = SecendController()
+        let homeVC = UINavigationController(rootViewController: IndexController())
+        let fileVC = UINavigationController(rootViewController: SecendController())
+        let uploadVC = UINavigationController(rootViewController: SetController())
+        let setVC = UINavigationController(rootViewController: SecendController())
 
         self.controllers.append(homeVC)
         self.controllers.append(fileVC)

@@ -54,7 +54,8 @@ class FileController: UIViewController {
     private var isShowBottom: Bool = false
     
     var clickUploadBlock: (() -> Void)?
-    
+    var showCountBlock: ((_ count: Int) -> Void)?
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.netRequest()
@@ -85,6 +86,9 @@ class FileController: UIViewController {
             make.left.right.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(clickSortAction))
+        self.sortV.addGestureRecognizer(tap)
+        
         view.addSubview(self.noContentV)
         self.noContentV.snp.makeConstraints { make in
             make.left.top.bottom.right.equalToSuperview()
@@ -126,13 +130,14 @@ class FileController: UIViewController {
     }
     
     func disPlayBottomView(_ show: Bool) {
-        NotificationCenter.default.post(name: Noti_TabbarShow, object: nil, userInfo: ["show": false])
+        TabbarTool.instance.displayOrHidden(false)
         self.isShowBottom = true
         self.sortV.isHidden = true
         self.sortV.snp.updateConstraints { make in
             make.height.equalTo(0)
         }
         let selectList = self.list.filter({$0.isSelect == true})
+        self.showCountBlock?(selectList.count)
         if selectList.count > 0 {
             HubTool.share.keyWindow?.addSubview(self.bottomView)
             self.bottomView.setReNameState(selectList.count == 1)
@@ -153,8 +158,24 @@ class FileController: UIViewController {
         }
     }
     
+    @objc func clickSortAction() {
+        let vc = SortController()
+        vc.currentType = self.sortType
+        vc.currentAsc = self.sortAsc
+        vc.modalPresentationStyle = .overFullScreen
+        vc.clickBlock = { [weak self] type, asc in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.sortType = type
+                self.sortAsc = asc
+                self.sortData(type, asc)
+            }
+        }
+        self.present(vc, animated: false)
+    }
+    
     func dismissBottomView() {
-        NotificationCenter.default.post(name: Noti_TabbarShow, object: nil, userInfo: ["show": true])
+        TabbarTool.instance.displayOrHidden(true)
         self.isShowBottom = false
         self.sortV.isHidden = false
         self.sortV.snp.updateConstraints { make in

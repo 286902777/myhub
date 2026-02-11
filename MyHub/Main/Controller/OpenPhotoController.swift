@@ -37,6 +37,6 @@ class OpenPhotoController: SuperController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(self.navbar.snp.bottom)
         }
-        self.imageV.load_NetImage(self.model.thumbnail, placeholder: "")
+        self.imageV.setImage(self.model.thumbnail, placeholder: "")
     }
 }

@@ -12,6 +12,7 @@ class IndexMoreCell: UICollectionViewCell {
     private lazy var iconBgV: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 34
+        view.layer.borderColor = UIColor.rgbHex("#DDF75B", 0.5).cgColor
         view.layer.borderWidth = 1
         return view
     }()

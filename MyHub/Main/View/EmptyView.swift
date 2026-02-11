@@ -65,18 +65,20 @@ class EmptyView: UIView {
         self.addSubview(self.infoL)
         self.addSubview(self.imageV)
         
+        self.infoL.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        
         self.imageV.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.left.equalTo(14)
             make.right.equalTo(-14)
-            make.bottom.equalTo(self.snp.centerY)
+            make.bottom.equalTo(self.infoL.snp.top)
         }
-        self.infoL.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(self.imageV.snp.bottom)
-        }
+  
         self.upBtn.snp.makeConstraints { make in
             make.top.equalTo(self.infoL.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 120, height: 40))
         }
        

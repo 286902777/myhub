@@ -24,7 +24,7 @@ enum HUB_HomeMoreType: String {
     case delete = "delete"
 }
 
-class HomeData: SuperData {
+class HomeListData: SuperData {
     var type: HUB_HomeListType = .history
     var lists: [VideoData] = []
     var users: [ChannelUserData] = []

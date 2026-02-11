@@ -143,6 +143,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, UserDeleteData(), nil)
             default:
                 completion(status, UserDeleteData(), error?.localizedDescription)
                 return
@@ -200,6 +201,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, FileData(), nil)
             default:
                 completion(status, FileData(), "Request fail!")
                 return
@@ -240,6 +242,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, FileCallData(), nil)
             default:
                 completion(status, FileCallData(), error?.localizedDescription)
                 return
@@ -273,6 +276,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, UserSpaceData(), nil)
             default:
                 completion(status, UserSpaceData(), error?.localizedDescription)
                 return
@@ -315,6 +319,7 @@ class HttpManager {
                     completion(status, nil)
                 case .permission:
                     HttpManager.share.premissonLaterLogin()
+                    completion(status, nil)
                 default:
                     completion(status, error?.localizedDescription)
                     return
@@ -349,6 +354,7 @@ class HttpManager {
                 completion(status, nil)
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, nil)
             default:
                 completion(status, error?.localizedDescription)
                 return
@@ -414,6 +420,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, [], nil)
             default:
                 completion(status, [], error?.localizedDescription)
                 return
@@ -477,6 +484,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, [], nil)
             default:
                 completion(status, [], error?.localizedDescription)
                 return
@@ -510,6 +518,7 @@ class HttpManager {
                 completion(status, nil)
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, nil)
             default:
                 completion(status, error?.localizedDescription)
                 return
@@ -561,6 +570,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, ShareRootData(), nil)
             default:
                 completion(status, ShareRootData(), error?.localizedDescription)
                 return
@@ -605,6 +615,7 @@ class HttpManager {
                 }
             case .permission:
                 HttpManager.share.premissonLaterLogin()
+                completion(status, "", nil)
             default:
                 completion(status, "", error?.localizedDescription)
                 return
@@ -1019,7 +1030,7 @@ class HttpManager {
     func premissonLaterLogin() {
         DispatchQueue.main.async {
             if let vc = HubTool.share.keyVC() {
-                LoginManager.share.loginRequest(vc) { _ in }
+//                LoginManager.share.loginRequest(vc) { _ in }
             }
         }
     }

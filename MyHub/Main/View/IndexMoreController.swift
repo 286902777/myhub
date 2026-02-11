@@ -46,6 +46,7 @@ class IndexMoreController: UIViewController {
     }()
     
     let cellW: CGFloat = 68
+    let space: CGFloat = ceil((ScreenWidth - 4  * 68 - 68) / 3)
     var listArr: [HomeMoreData] = []
     private var model: VideoData = VideoData()
     private var type: HUB_HomeListType = .history
@@ -77,8 +78,8 @@ class IndexMoreController: UIViewController {
         self.view.addSubview(self.closeBtn)
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         self.contentView.snp.makeConstraints { make in
-            make.left.equalTo(14)
-            make.right.equalTo(-14)
+            make.left.equalTo(16)
+            make.right.equalTo(-16)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         self.closeBtn.snp.makeConstraints { make in
@@ -143,7 +144,7 @@ class IndexMoreController: UIViewController {
         switch mod.imageType {
         case .download:
             guard self.userIsLogin() else { return }
-//            ESToast.instance.show("Added to download list")
+            ToastTool.instance.show("Added to download list")
             if let m = self.listArr.first(where: {$0.imageType == .download}) {
                 m.imageType = .downloading
                 self.collectV.reloadData()
@@ -159,34 +160,34 @@ class IndexMoreController: UIViewController {
             break
         case .share:
             guard self.userIsLogin() else { return }
-//            let vc = ShareController(list: [self.model])
-//            vc.modalPresentationStyle = .overFullScreen
-//            vc.resultBlock = { [weak self] url in
-//                guard let self = self else { return }
-//                DispatchQueue.main.async {
-//                    let copyVC = ShareCopyController()
-//                    copyVC.modalPresentationStyle = .overFullScreen
-//                    copyVC.url = url
-//                    self.present(copyVC, animated: false)
-//                }
-//            }
-//            self.present(vc, animated: false)
+            let vc = ShareController(list: [self.model])
+            vc.modalPresentationStyle = .overFullScreen
+            vc.resultBlock = { [weak self] url in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    let copyVC = ShareCopyController()
+                    copyVC.modalPresentationStyle = .overFullScreen
+                    copyVC.url = url
+                    self.present(copyVC, animated: false)
+                }
+            }
+            self.present(vc, animated: false)
         case .rename:
             guard self.userIsLogin() else { return }
-//            let vc = CreateFolderController(parentId: "")
-//            vc.modalPresentationStyle = .overFullScreen
-//            vc.isFixName = true
-//            vc.fileId = self.model.id
-//            vc.fixSuccessBlock = { [weak self] name in
-//                guard let self = self else { return }
-//                DispatchQueue.main.async {
-//                    self.model.name = name
-//                    RealmDB.instance.updateMovieData(self.model)
-//                    self.renameBlock?(name)
-//                    self.dismiss(animated: false)
-//                }
-//            }
-//            self.present(vc, animated: false)
+            let vc = NewFolderController(parentId: "")
+            vc.modalPresentationStyle = .overFullScreen
+            vc.isFixName = true
+            vc.fileId = self.model.id
+            vc.fixSuccessBlock = { [weak self] name in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.model.name = name
+                    HubDB.instance.updateMovieData(self.model)
+                    self.renameBlock?(name)
+                    self.dismiss(animated: false)
+                }
+            }
+            self.present(vc, animated: false)
         case .delete:
             if self.type == .history {
                 let vc = AlertController(title: "Delete", info: "Shall I delete the selected files?")
@@ -255,7 +256,7 @@ extension IndexMoreController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        12
+        self.space
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
