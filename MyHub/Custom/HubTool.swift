@@ -223,7 +223,7 @@ class HubTool {
     
     var isCountMiddlePlay: Bool = false
     
-//    var loginSource: HUB_loginSource = .upload
+    var loginSource: HUB_loginSource = .upload
     
     var playLinkId: String = ""
     

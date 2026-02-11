@@ -66,9 +66,15 @@ class IndexHeadView: UIView {
         }
     }
     
-    func setData() {
-        self.circleV.useLabel.text = "100MB"
-        self.circleV.totalLabel.text = "/500MB"
-        self.circleV.ratio = 100 / 500
+    func setData(_ model: UserSpaceData?) {
+        if let m = model {
+            self.circleV.useLabel.text = m.user_space.computeFileSize()
+            self.circleV.totalLabel.text = m.max_space.computeFileSize()
+            self.circleV.ratio = CGFloat(m.user_space / m.max_space)
+        } else {
+            self.circleV.useLabel.text = "0MB"
+            self.circleV.totalLabel.text = "/500MB"
+            self.circleV.ratio = 0
+        }
     }
 }

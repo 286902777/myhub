@@ -152,6 +152,11 @@ class UploadController: UIViewController {
     @objc func clickCloseAction() {
         self.dismiss(animated: false)
     }
+    
+    func closeUploadPage() {
+        self.uploadBlock?()
+        self.dismiss(animated: false)
+    }
 }
 
 extension UploadController {
@@ -169,8 +174,7 @@ extension UploadController {
         case .limited, .authorized:
             self.openPhotoPage()
         default:
-            break
-//            ESToast.instance.show("Enable photo access permissions in Settings > Privacy > Photos to upload videos.", ToastImage.none)
+            ToastTool.instance.show("Enable photo access permissions in Settings > Privacy > Photos to upload videos.", ToastImage.none)
         }
     }
     
@@ -292,10 +296,10 @@ extension UploadController: UIImagePickerControllerDelegate, UINavigationControl
                             model.image = image
                             model.parent_id = self.parent_id
                             model.date = Double(Date().timeIntervalSince1970 * 1000)
-//                            FileUploadDownTool.instance.upload(model)
-//                            self.dismiss(animated: false) {
-//                                self.uploadClosePage()
-//                            }
+                            UploadDownTool.instance.upload(model)
+                            self.dismiss(animated: false) {
+                                self.closeUploadPage()
+                            }
                         }
                     } catch {}
                 }
@@ -317,13 +321,13 @@ extension UploadController: UIImagePickerControllerDelegate, UINavigationControl
                     model.name = destinationURL.lastPathComponent
                     model.ext = destinationURL.pathExtension
                     model.date = Double(Date().timeIntervalSince1970 * 1000)
-//                    FileUploadDownTool.instance.upload(model)
-//                    self.dismiss(animated: false) { [weak self] in
-//                        guard let self = self else { return }
-//                        DispatchQueue.main.async {
-//                            self.uploadClosePage()
-//                        }
-//                    }
+                    UploadDownTool.instance.upload(model)
+                    self.dismiss(animated: false) { [weak self] in
+                        guard let self = self else { return }
+                        DispatchQueue.main.async {
+                            self.closeUploadPage()
+                        }
+                    }
                 }
             } catch {}
         }
@@ -338,13 +342,13 @@ extension UploadController: UIDocumentPickerDelegate {
             guard let self = self else { return }
             self.getPickedFile(fileUrl) { model, url in
                 if let m = model {
-//                    FileUploadDownTool.instance.upload(m)
-//                    self.dismiss(animated: false) { [weak self] in
-//                        guard let self = self else { return }
-//                        DispatchQueue.main.async {
-//                            self.uploadClosePage()
-//                        }
-//                    }
+                    UploadDownTool.instance.upload(m)
+                    self.dismiss(animated: false) { [weak self] in
+                        guard let self = self else { return }
+                        DispatchQueue.main.async {
+                            self.closeUploadPage()
+                        }
+                    }
                 }
             }
         }

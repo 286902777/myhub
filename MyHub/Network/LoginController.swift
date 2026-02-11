@@ -7,6 +7,14 @@
 
 import UIKit
 
+enum HUB_loginSource: String {
+//    cloudtab、metab、upload、download、transfer
+    case file = "a"
+    case set = "b"
+    case upload = "c"
+    case transfer = "d"
+}
+
 class LoginController: UIViewController {
 
     var loginSuccessBlock: (() -> Void)?

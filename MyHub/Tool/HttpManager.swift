@@ -68,17 +68,17 @@ enum HttpHeadValue: String {
 class HttpManager {
     static let share = HttpManager()
     
-    let userHeadKey: String = "riskers"
+    let userHeadKey: String = "bxsd"
     
-    let appHeadKey: String = "12xssdaa"
+    let appHeadKey: String = "2as"
     
     let tokenKey: String = "X-Token"
     
-    let userHost: String = "https://api.evzersnazve.com/"
+    let userHost: String = "https://api.a.com/"
     
-    let userHostAddress: String = "api.evzersnazve.com"
+    let userHostAddress: String = "api.a.com"
     
-    var appHost: String = "https://sswxwwpyi.sdbfsf.com/"
+    var appHost: String = "https://c.sdbfsf.com/"
     
     let pageSize: Int = 500
     //MARK: - Login

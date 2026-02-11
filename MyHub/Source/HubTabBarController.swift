@@ -71,6 +71,7 @@ class HubTabBarController: UIViewController {
         self.tabbar.addItems()
         self.tabbar.clickAddBlock = {[weak self] in
             guard let self = self else { return }
+            HubTool.share.loginSource = .upload
             UploadTool.instance.openVC(self)
         }
         self.tabbar.clickBlock = { [weak self] idx in

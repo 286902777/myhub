@@ -35,6 +35,37 @@ let HUB_OpenVipPop: String = "HUB_OpenVipPop"
 
 let HUB_FirstUpload: String = "HUB_FirstUpload"
 
+let EventUploadArray: String = "EventUploadList"
+let EventInstall: String = "EventInstall"
+let EventLinkInstall: String = "EventLinkInstall"
+let EventFirstOpenApp: String = "EventFirstOpenApp"
+let EventDistinctId: String = "EventDistinctId"
+let FirstOpenLink: String = "FirstOpenLink"
+let EventSaveUserId = "EventSaveUserId"
+let EventSaveLinkId = "EventSaveLinkId"
+let EventSaveEmail: String = "EventsSaveEmail"
+let EventSavePlatform: String = "EventsSavePlatform"
+
+let HUB_UploadFirstDeepPlay: String = "HUB_UploadFirstDeepPlay"
+
+let HUB_UserVip: String = "HUB_UserVip"
+
+let PremiumSuccess: String = "PremiumSuccess"
+let PremiumDisplayF: String = "PremiumDisplayF"
+let PremiumPrice: String = "PremiumPrice"
+let PremiumTime: String = "PremiumTime"
+let PremiumName: String = "PremiumName"
+
+let PreStartPopVip = "PreStartPopVip"
+
+let PrePupopDate = "PrePupopDate"///小弹窗
+
+let PreAutoVipPayDate = "PreAutoVipPayDate" ///大弹窗
+
+let PreAutoVipPayCount = "PreAutoVipPayCount"
+
+let FirePremuimInfoKey: String = "FirePremuimInfoKey"
+
 let HUB_UploadFirstDeepPlay: String = "HUB_UploadFirstDeepPlay"
 
 let Noti_Login = NSNotification.Name(rawValue: "HUB_loginSuccess")
