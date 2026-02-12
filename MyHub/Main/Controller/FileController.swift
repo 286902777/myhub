@@ -19,8 +19,7 @@ class FileController: UIViewController {
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.bounces = false
-        table.isHidden = true
-        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CusTabBarHight, right: 0)
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CusTabBarHight + 24, right: 0)
         table.register(FileCell.self, forCellReuseIdentifier: cellIdentifier)
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
@@ -38,6 +37,7 @@ class FileController: UIViewController {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 12)
         label.textColor = UIColor.rgbHex("#8C8C8C")
+        label.text = "By upload time"
         return label
     }()
     lazy var sortImageV: UIImageView = {
@@ -49,13 +49,25 @@ class FileController: UIViewController {
     let bottomView: FileBottomView = FileBottomView.view()
     
     private var list: [VideoData] = []
-    private var sortType: HUB_SortType = .upload
+    private var sortType: HUB_SortType = .upload {
+        didSet {
+            switch sortType {
+            case .upload:
+                self.sortL.text = "By upload time"
+            case .size:
+                self.sortL.text = "By file size"
+            case .type:
+                self.sortL.text = "By file type"
+            }
+        }
+    }
     private var sortAsc: Bool = true
     private var isShowBottom: Bool = false
     
     var clickUploadBlock: (() -> Void)?
     var showCountBlock: ((_ count: Int) -> Void)?
-    
+    var dismissCountBlock: (() -> Void)?
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.netRequest()
@@ -84,8 +96,7 @@ class FileController: UIViewController {
         }
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.sortV.snp.bottom)
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.left.bottom.right.equalToSuperview()
         }
         let tap = UITapGestureRecognizer(target: self, action: #selector(clickSortAction))
         self.sortV.addGestureRecognizer(tap)
@@ -131,6 +142,9 @@ class FileController: UIViewController {
     }
     
     func disPlayBottomView(_ show: Bool) {
+        if self.isShowBottom {
+            return
+        }
         TabbarTool.instance.displayOrHidden(false)
         self.isShowBottom = true
         self.sortV.isHidden = true
@@ -177,11 +191,14 @@ class FileController: UIViewController {
     
     func dismissBottomView() {
         TabbarTool.instance.displayOrHidden(true)
+        self.dismissCountBlock?()
         self.isShowBottom = false
         self.sortV.isHidden = false
         self.sortV.snp.updateConstraints { make in
             make.height.equalTo(28)
         }
+        let _ = self.list.map({$0.isSelect = false})
+        self.tableView.reloadData()
         self.bottomView.removeFromSuperview()
     }
     
@@ -275,22 +292,27 @@ class FileController: UIViewController {
     }
     
     func netRequest() {
-        LoadManager.instance.show(self)
-        HttpManager.share.selectFolderApi("") { [weak self] status, list, errMsg in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                LoadManager.instance.dismiss()
-                if status == .success {
-                    self.list = list
-                    self.sortData(self.sortType, self.sortAsc)
-                    self.tableView.isHidden = self.list.count == 0
-                    self.tableView.reloadData()
-                    self.refreshUI()
-                } else {
-                    ToastTool.instance.show(errMsg ?? "Request fail", .fail)
-                }
-            }
-        }
+        self.noContentV.isHidden = true
+        let m = VideoData()
+        m.name = "name"
+        self.list.append(m)
+        self.tableView.reloadData()
+//        LoadManager.instance.show(self)
+//        HttpManager.share.selectFolderApi("") { [weak self] status, list, errMsg in
+//            guard let self = self else { return }
+//            DispatchQueue.main.async {
+//                LoadManager.instance.dismiss()
+//                if status == .success {
+//                    self.list = list
+//                    self.sortData(self.sortType, self.sortAsc)
+//                    self.tableView.isHidden = self.list.count == 0
+//                    self.tableView.reloadData()
+//                    self.refreshUI()
+//                } else {
+//                    ToastTool.instance.show(errMsg ?? "Request fail", .fail)
+//                }
+//            }
+//        }
     }
     
     func refreshUI() {
@@ -363,6 +385,10 @@ extension FileController: UITableViewDelegate, UITableViewDataSource {
                 m.isSelect = on
                 DispatchQueue.main.async {
                     self.disPlayBottomView(true)
+                    let arr = self.list.filter({$0.isSelect == true})
+                    if arr.count == 0 {
+                        self.dismissBottomView()
+                    }
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
             }

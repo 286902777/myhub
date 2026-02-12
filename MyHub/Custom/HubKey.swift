@@ -66,8 +66,6 @@ let PreAutoVipPayCount = "PreAutoVipPayCount"
 
 let FirePremuimInfoKey: String = "FirePremuimInfoKey"
 
-let HUB_UploadFirstDeepPlay: String = "HUB_UploadFirstDeepPlay"
-
 let Noti_Login = NSNotification.Name(rawValue: "HUB_loginSuccess")
 
 let Noti_Logout = NSNotification.Name(rawValue: "HUB_logoutSuccess")

@@ -31,6 +31,7 @@ class IndexController: SuperController {
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.bounces = false
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CusTabBarHight + 24, right: 0)
         table.register(IndexCell.self, forCellReuseIdentifier: cellIdentifier)
         table.register(IndexHistoryListCell.self, forCellReuseIdentifier: historyCellIdentifier)
         if #available(iOS 15.0, *) {

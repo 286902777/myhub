@@ -127,6 +127,7 @@ class NewFolderController: UIViewController {
             
         }
         self.inputV.delegate = self
+        self.inputV.becomeFirstResponder()
         self.sureBtn.addTarget(self, action: #selector(clickSureAction), for: .touchUpInside)
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         self.keyboardInfo()
@@ -147,7 +148,7 @@ class NewFolderController: UIViewController {
     
     @objc func keyboardFrame(_ info: Notification) {
         guard let frame = info.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
-        let y = frame.height - view.safeAreaInsets.bottom - 14
+        let y = frame.height - view.safeAreaInsets.bottom + 14
         self.contentV.snp.updateConstraints { make in
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(self.isKeyShow ? -y : 0)
         }

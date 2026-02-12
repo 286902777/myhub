@@ -49,6 +49,7 @@ class FileBottomCell: UICollectionViewCell {
     }
     
     func setUI() {
+        self.backgroundColor = .clear
         self.addSubview(iconV)
         self.addSubview(nameL)
         self.iconV.snp.makeConstraints { make in

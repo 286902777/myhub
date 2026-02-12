@@ -48,6 +48,7 @@ class SortController: UIViewController {
         self.tableView.snp.makeConstraints { make in
             make.left.equalTo(14)
             make.right.equalTo(-14)
+            make.height.equalTo(394)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         self.closeBtn.snp.makeConstraints { make in
@@ -55,10 +56,16 @@ class SortController: UIViewController {
             make.bottom.equalTo(self.tableView.snp.top)
             make.size.equalTo(CGSize(width: 52, height: 52))
         }
+        self.closeBtn.addTarget(self, action: #selector(clickCancelAction), for: .touchUpInside)
         setData()
     }
     
+    @objc func clickCancelAction() {
+        self.dismiss(animated: false)
+    }
+    
     func setData() {
+        self.listArr.removeAll()
         var typeList: [SortData] = []
         typeList.append(self.setModel(type: .upload, name: "By upload time", select: self.currentType == .upload))
         typeList.append(self.setModel(type: .size, name: "By file size", select: self.currentType == .size))
@@ -68,8 +75,8 @@ class SortController: UIViewController {
         typeData.isType = true
         typeData.list = typeList
         var orderList: [SortData] = []
-        orderList.append(self.setOrderModel(name: "By upload time", select: self.currentAsc, asc: true))
-        orderList.append(self.setOrderModel(name: "By file size", select: self.currentAsc, asc: false))
+        orderList.append(self.setOrderModel(name: "Ascending", select: self.currentAsc, asc: true))
+        orderList.append(self.setOrderModel(name: "Descending", select: !self.currentAsc, asc: false))
         let orderData: SortListData = SortListData()
         orderData.name = "Order"
         orderData.list = orderList
@@ -103,8 +110,10 @@ extension SortController: UITableViewDelegate, UITableViewDataSource {
             if let data = m.list.safeIndex(indexPath.row) {
                 if m.isType {
                     cell.initData(data)
+                    return cell
                 } else {
                     oCell.initData(data)
+                    return oCell
                 }
             }
         }
@@ -134,6 +143,7 @@ extension SortController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     self.currentAsc = data.ascending
                 }
+                self.setData()
             }
             self.clickBlock?(self.currentType, self.currentAsc)
         }
@@ -151,7 +161,7 @@ extension SortController: UITableViewDelegate, UITableViewDataSource {
         label.textColor = UIColor.rgbHex("#8C8C8C")
         view.addSubview(label)
         label.snp.makeConstraints { make in
-            make.left.equalTo(114)
+            make.left.equalTo(14)
             make.centerY.equalToSuperview()
         }
         if let m = self.listArr.safeIndex(section) {

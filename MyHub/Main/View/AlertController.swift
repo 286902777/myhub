@@ -73,7 +73,7 @@ class AlertController: UIViewController {
         btn.setTitle("Confirm", for: .normal)
         btn.setTitleColor(UIColor.white, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        btn.layer.cornerRadius = 20
+        btn.layer.cornerRadius = 22
         btn.layer.masksToBounds = true
         btn.backgroundColor = UIColor.rgbHex("#053C62")
         return btn
@@ -128,7 +128,7 @@ class AlertController: UIViewController {
             make.top.equalTo(self.titleStackV.snp.bottom).offset(20)
             make.left.equalTo(20)
             make.right.equalTo(-20)
-            make.height.equalTo(40)
+            make.height.equalTo(44)
             make.bottom.equalTo(-24)
         }
         

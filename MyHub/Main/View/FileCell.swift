@@ -130,7 +130,6 @@ class FileCell: UITableViewCell {
     func initPlatformData(_ model: ChannelData, _ show: Bool) {
         self.selectBtn.isHidden = !show
         self.selectBtn.isSelected = model.isSelect
-        self.contentView.backgroundColor = UIColor.rgbHex(model.isSelect ? "#F3FAFF" : "#FFFFFF")
         switch model.file_type {
         case .folder:
             self.iconV.image = UIImage(named: "folder_bg")
@@ -164,7 +163,6 @@ class FileCell: UITableViewCell {
     
     func initFolderData(_ model: FolderData) {
         self.selectBtn.isSelected = model.isSelect
-        self.contentView.backgroundColor = UIColor.rgbHex(model.isSelect ? "#F3FAFF" : "#FFFFFF")
         switch model.file_type {
         case .folder:
             self.selectBtn.isHidden = true
@@ -184,7 +182,6 @@ class FileCell: UITableViewCell {
     
     func initDirData(_ data: VideoData) {
         self.selectBtn.isSelected = data.isSelect
-        self.contentView.backgroundColor = UIColor.rgbHex(data.isSelect ? "#F3FAFF" : "#FFFFFF")
         let hasSize = data.file_size > 0
         switch data.file_type {
         case .folder:
@@ -199,7 +196,7 @@ class FileCell: UITableViewCell {
         } else {
             self.infoL.text = "\(data.pubData.dateToYMD())"
         }
-        self.selectBtn.isHidden = data.isPass != .passed
+//        self.selectBtn.isHidden = data.isPass != .passed
         self.spaceL.isHidden = data.isPass == .passed
         self.stateL.isHidden = data.isPass == .passed
         switch data.isPass {
@@ -221,7 +218,6 @@ class FileCell: UITableViewCell {
     
     @objc func clickSelAction() {
         self.selectBtn.isSelected = !self.selectBtn.isSelected
-        self.contentView.backgroundColor = UIColor.rgbHex(self.selectBtn.isSelected ? "#F3FAFF" : "#FFFFFF")
         self.selectBlock?(self.selectBtn.isSelected)
     }
 }

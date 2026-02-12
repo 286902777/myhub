@@ -16,6 +16,12 @@ class ShareController: UIViewController {
         view.layer.masksToBounds = true
         return view
     }()
+    
+    lazy var sbgView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -48,7 +54,6 @@ class ShareController: UIViewController {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         label.textColor = UIColor.rgbHex("#14171C")
-        label.text = "contains 3 files"
         return label
     }()
     
@@ -69,7 +74,7 @@ class ShareController: UIViewController {
     lazy var validityL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .regular, size: 14)
-        label.textColor = UIColor.rgbHex("##14171C")
+        label.textColor = UIColor.rgbHex("#14171C")
         label.text = "Valid time"
         return label
     }()
@@ -119,7 +124,8 @@ class ShareController: UIViewController {
         self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         self.view.addSubview(self.contentV)
         self.view.addSubview(self.closeBtn)
-        self.contentV.addSubview(self.stackView)
+        self.contentV.addSubview(self.sbgView)
+        self.sbgView.addSubview(self.stackView)
         self.stackView.addArrangedSubview(self.leftL)
         self.stackView.addArrangedSubview(self.nameL)
         self.stackView.addArrangedSubview(self.rightL)
@@ -141,14 +147,18 @@ class ShareController: UIViewController {
             make.size.equalTo(CGSize(width: 52, height: 52))
         }
 
-        self.stackView.snp.makeConstraints { make in
-            make.top.equalTo(24)
+        self.sbgView.snp.makeConstraints { make in
             make.left.equalTo(34)
             make.right.equalTo(-34)
+            make.top.equalTo(24)
+            make.height.equalTo(20)
+        }
+        self.stackView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
         
         self.validityV.snp.makeConstraints { make in
-            make.top.equalTo(self.nameL.snp.bottom).offset(24)
+            make.top.equalTo(self.nameL.snp.bottom).offset(22)
             make.left.equalTo(14)
             make.right.equalTo(-14)
             make.height.equalTo(52)
@@ -164,7 +174,7 @@ class ShareController: UIViewController {
             make.centerY.equalToSuperview()
         }
         self.dayL.snp.makeConstraints { make in
-            make.right.equalTo(self.arrowV.snp.left)
+            make.right.equalTo(self.arrowV.snp.left).offset(-6)
             make.centerY.equalToSuperview()
         }
         
@@ -185,8 +195,8 @@ class ShareController: UIViewController {
         self.list.forEach { m in
             name = name + m.name
         }
-        self.nameL.text = "jaosifjoasifdjasdfsaflfdjoasidfja.mp3"
-//        self.nameL.text = name
+        self.itemL.text = "contains \(self.list.count) files"
+        self.nameL.text = name
     }
     
     @objc func clickDayAction() {

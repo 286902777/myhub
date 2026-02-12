@@ -192,7 +192,17 @@ class SecendController: SuperController {
                 self.stackView.isHidden = true
                 self.cancelBtn.isHidden = false
                 self.countL.isHidden = false
+                self.countL.text = "\(count) items"
             }
+        }
+        self.fileVC.dismissCountBlock = {[weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.stackView.isHidden = false
+                self.cancelBtn.isHidden = true
+                self.countL.isHidden = true
+            }
+            
         }
         self.fileVC.clickUploadBlock = { [weak self] in
             guard let self = self else { return }

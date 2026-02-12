@@ -397,7 +397,7 @@ class VideoDataRealm: Object {
     @Persisted var isShare: Bool = false
     @Persisted var done_size: Double = 0
     @Persisted var upload_size: Double = 0
-//    @Persisted(primaryKey: true) var _id: ObjectId
+    @Persisted(primaryKey: true) var sid: ObjectId
 }
 
 class ChannelUserRealm: Object {
@@ -409,5 +409,5 @@ class ChannelUserRealm: Object {
     @Persisted var account: String = ""
     @Persisted var thumbnail: String = ""
     @Persisted var platform: String = ""
-//    @Persisted(primaryKey: true) var _id: ObjectId
+    @Persisted(primaryKey: true) var sid: ObjectId
 }
