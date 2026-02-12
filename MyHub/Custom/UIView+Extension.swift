@@ -34,7 +34,7 @@ extension UIView {
 }
 
 extension UIView {
-    func addCornerShadow(_ corner: CGFloat, _ offset: CGSize, _ color: UIColor, _ radius: CGFloat, _ opacity: Float = 1.0) {
+    func addCornerShadow(_ corner: CGFloat, _ offset: CGSize, _ color: UIColor, _ radius: CGFloat, _ opacity: Float = 0.2) {
         self.layer.cornerRadius = corner
         self.layer.contentsScale = UIScreen.main.scale
         self.layer.shadowOpacity = opacity

@@ -96,7 +96,8 @@ class FileController: UIViewController {
         }
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.sortV.snp.bottom)
-            make.left.bottom.right.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         let tap = UITapGestureRecognizer(target: self, action: #selector(clickSortAction))
         self.sortV.addGestureRecognizer(tap)

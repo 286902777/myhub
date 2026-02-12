@@ -410,7 +410,8 @@ class IndexController: SuperController {
         view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.navbar.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         self.tableView.tableHeaderView = self.tableHeadV
     }

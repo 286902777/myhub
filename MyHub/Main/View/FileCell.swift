@@ -113,16 +113,15 @@ class FileCell: UITableViewCell {
         spaceL.snp.makeConstraints { make in
             make.width.equalTo(12)
         }
-        
         nameL.snp.makeConstraints { make in
             make.left.equalTo(iconV.snp.right).offset(12)
             make.right.equalTo(stackV.snp.left)
-            make.top.equalTo(iconV.snp.top).offset(9)
+            make.bottom.equalTo(self.mainV.snp.centerY).offset(-5)
         }
         infoL.snp.makeConstraints { make in
             make.left.equalTo(iconV.snp.right).offset(12)
             make.right.equalTo(stackV.snp.left)
-            make.bottom.equalTo(iconV.snp.bottom).offset(-9)
+            make.top.equalTo(self.mainV.snp.centerY).offset(5)
         }
         self.selectBtn.addTarget(self, action: #selector(clickSelAction), for: .touchUpInside)
     }
