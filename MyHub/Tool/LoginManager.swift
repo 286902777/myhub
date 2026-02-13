@@ -41,11 +41,11 @@ class LoginManager {
         get { UserDefaults.standard.string(forKey: HUB_UserToken) ?? "" }
         set { UserDefaults.standard.set(newValue, forKey: HUB_UserToken) }
     }
-    var isLogin: Bool = true
-//    var isLogin: Bool {
-//        get { UserDefaults.standard.bool(forKey: HUB_UserIsLogin) }
-//        set { UserDefaults.standard.set(newValue, forKey: HUB_UserIsLogin) }
-//    }
+//    var isLogin: Bool = true
+    var isLogin: Bool {
+        get { UserDefaults.standard.bool(forKey: HUB_UserIsLogin) }
+        set { UserDefaults.standard.set(newValue, forKey: HUB_UserIsLogin) }
+    }
     
     func loginRequest(_ topVC: UIViewController, _ completion: @escaping (Bool) -> Void) {
         let vc = LoginController()

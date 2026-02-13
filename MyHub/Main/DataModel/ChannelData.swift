@@ -141,8 +141,8 @@ class UserData: SuperData {
     var user: UserInfoData = UserInfoData()
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &token, name: "beglerbeg")
-        mapper.specify(property: &user, name: "secundus")
+        mapper.specify(property: &token, name: "97eubbebr4")
+        mapper.specify(property: &user, name: "autoecism")
     }
 }
 
@@ -170,8 +170,8 @@ class UserDeleteData: SuperData {
     var entity: UserDeleteInfoData = UserDeleteInfoData()
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &accepted, name: "ibilmqkoxp")
-        mapper.specify(property: &entity, name: "taluto")
+        mapper.specify(property: &accepted, name: "turgoid")
+        mapper.specify(property: &entity, name: "immixt")
     }
 }
 
@@ -197,7 +197,7 @@ class UserSpaceData: SuperData {
 
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &user_space, name: "taipan")
-        mapper.specify(property: &max_space, name: "azilian")
+        mapper.specify(property: &user_space, name: "predefy")
+        mapper.specify(property: &max_space, name: "incitation")
     }
 }

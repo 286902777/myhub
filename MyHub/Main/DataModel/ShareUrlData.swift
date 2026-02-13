@@ -29,7 +29,7 @@ class ShareRootData: SuperData {
     var entity: ShareData = ShareData()
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &entity, name: "nlj91krmzb")
+        mapper.specify(property: &entity, name: "wessands")
     }
 }
 
@@ -79,8 +79,8 @@ class OpenRootData: SuperData {
     var user: OpenUserData = OpenUserData()
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &page, name: "plows")
-        mapper.specify(property: &user, name: "slashers")
+        mapper.specify(property: &page, name: "soviets")
+        mapper.specify(property: &user, name: "helleborin")
     }
 }
 
@@ -90,9 +90,9 @@ class OpenPageData: SuperData {
     var records: [OpenUrlData] = []
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &total, name: "hectorly")
-        mapper.specify(property: &size, name: "xce_7pujkz")
-        mapper.specify(property: &records, name: "prolific")
+        mapper.specify(property: &total, name: "phallales")
+        mapper.specify(property: &size, name: "neshly")
+        mapper.specify(property: &records, name: "infantive")
     }
 }
 
@@ -104,11 +104,11 @@ class OpenUserData: SuperData {
     var avtar_url: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "cyclostyle")
-        mapper.specify(property: &app_id, name: "oedipally")
-        mapper.specify(property: &username, name: "cornupete")
-        mapper.specify(property: &user_id, name: "oinology")
-        mapper.specify(property: &avtar_url, name: "fm7dg1clwd")
+        mapper.specify(property: &id, name: "serows")
+        mapper.specify(property: &app_id, name: "_bbd7ub97f")
+        mapper.specify(property: &username, name: "presettled")
+        mapper.specify(property: &user_id, name: "fice")
+        mapper.specify(property: &avtar_url, name: "prelocated")
     }
 }
 
@@ -184,15 +184,15 @@ class OpenFolderData: SuperData {
     }
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &file_id, name: "diabolic")
-        mapper.specify(property: &create_time, name: "ftzemvhoto")
-        mapper.specify(property: &vid_qty, name: "callate")
-        mapper.specify(property: &directory, name: "excised")
-        mapper.specify(property: &video, name: "forearming")
-        mapper.specify(property: &parent_id, name: "forleft")
-        mapper.specify(property: &moderate_type, name: "untoward")
-        mapper.specify(property: &file_meta, name: "457c4gxvgg")
-        mapper.specify(property: &namespace, name: "deterring")
+        mapper.specify(property: &file_id, name: "overcold")
+        mapper.specify(property: &create_time, name: "podzol")
+        mapper.specify(property: &vid_qty, name: "uyhe0yv_xe")
+        mapper.specify(property: &directory, name: "lbrd0x4e47")
+        mapper.specify(property: &video, name: "cornerer")
+        mapper.specify(property: &parent_id, name: "aeried")
+        mapper.specify(property: &moderate_type, name: "dif4fvsigy")
+        mapper.specify(property: &file_meta, name: "karite")
+        mapper.specify(property: &namespace, name: "communis")
     }
 }
 
@@ -203,10 +203,10 @@ class OpenFolderFileMetaData: SuperData {
     var size: Double = 0
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &display_name, name: "vizierial")
-        mapper.specify(property: &ext, name: "decomplex")
-        mapper.specify(property: &thumbnail, name: "saggier")
-        mapper.specify(property: &size, name: "asciferous")
+        mapper.specify(property: &display_name, name: "lrfzjscvyl")
+        mapper.specify(property: &ext, name: "cmyxbyytd3")
+        mapper.specify(property: &thumbnail, name: "musth")
+        mapper.specify(property: &size, name: "lividness")
     }
 }
 
@@ -214,7 +214,7 @@ class OpenFolderNamespaceData: SuperData {
     var id: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "ppxh5rxlm7")
+        mapper.specify(property: &id, name: "datana")
     }
 }
 

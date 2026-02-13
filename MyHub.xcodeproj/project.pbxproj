@@ -239,9 +239,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyHub/MyHub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LWL2Z985Z4;
+				DEVELOPMENT_TEAM = 92Y82HR4GQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MyHub/Upload",
@@ -249,6 +250,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyHub/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyHub;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the seamless use of the media library import function for photos and videos, access permissions for your photos and videos are essential. You may alter these permissions in the “Settings” menu as needed.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "For the purpose of offering personalized advertising services and an optimal product experience, we kindly request that you grant permission for the advertising identifier. You may subsequently disable this permission in the settings.";
@@ -262,8 +264,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hub.MyHub;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hub.MyHub123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -285,9 +287,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MyHub/MyHub.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LWL2Z985Z4;
+				DEVELOPMENT_TEAM = 92Y82HR4GQ;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/MyHub/Upload",
@@ -295,6 +298,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyHub/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MyHub;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "For the seamless use of the media library import function for photos and videos, access permissions for your photos and videos are essential. You may alter these permissions in the “Settings” menu as needed.";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "For the purpose of offering personalized advertising services and an optimal product experience, we kindly request that you grant permission for the advertising identifier. You may subsequently disable this permission in the settings.";
@@ -308,8 +312,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.hub.MyHub;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hub.MyHub123;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

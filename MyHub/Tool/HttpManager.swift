@@ -24,59 +24,59 @@ enum BackEventName: String {
 }
 
 enum HttpApi: String {
-    case login = "s" ///login/app/ios
-    case deleteUser = "ss" /// app/user/delete
-    case uploadFile = "sb" ///app/file/local/upload
-    case uploadResult = "sd" /// app/file/upload_callback
-    case userSpace = "gyle/tensed/leningrad" /// app/user/space
-    case deleteFile = "grandmas/skyhook/lakeshore" /// app/file/delete_files
-    case createDir = "donatress/chapstick/kana"  /// app/file/create_directory
-    case lsDir = "jgqco_dpum/vizirs/eryngium/gladeye" /// app/user/file/list
+    case login = "serrano/boza/villae" ///login/app/ios
+    case deleteUser = "doubleted/as2rkgjrhj/canacuas" /// app/user/delete
+    case uploadFile = "houlet/restudies/incanous/overhating" ///app/file/local/upload
+    case uploadResult = "confounds/semifluid/fixing" /// app/file/upload_callback
+    case userSpace = "onanistic/sketchlike/sko_uph0gg" /// app/user/space
+    case deleteFile = "emparl/widegab/nucleotide" /// app/file/delete_files
+    case createFolder = "spurlike/nonnumeral/pitsaw"  /// app/file/create_directory
+    case lsDir = "plumbago/peerless/sampi/chases" /// app/user/file/list
   
-    case fixName = "railers/phlox/condoler"  ///  app/file/rename_file
-    case shareFile = "narcotical/slipstick/unanointed"  /// app/file/share_files
-    case downLoadUrl = "tushes/chronology/glossotomy"  ///app/file/download_url
-    case selectFiles = "outwake/deployable/degreeing/ouw6taxom7"  /// app/user/file/list_by_file_ids
-    case openShareUrl = "reencloses/haploses/abrocoma"  /// app/user_share_link/open
-    case openFolder = "airish/reediest/scrubs"   ///app/file/list_by_parent
+    case fixName = "spagnuolo/dahoman/cimbal"  ///  app/file/rename_file
+    case shareFile = "indorsable/idrisid/conditione"  /// app/file/share_files
+    case downLoadUrl = "6twb5vdamb/evangels/bauno"  ///app/file/download_url
+    case selectFiles = "unparallel/ghzb2txj6l/amoritish/kgsxniyaxn"  /// app/user/file/list_by_file_ids
+    case openShareUrl = "braker/raying/steppe"  /// app/user_share_link/open
+    case openFolder = "ammoniuret/isoelastic/artemision"   ///app/file/list_by_parent
 
     /// 承接页接口
-    case channel = "v1/chopped/_ss2ctgjjx/incipient"  /// v1/app/open/data
-    case download = "v1/marmion/elating/haverels"     /// v1/app/download/file/
-    case folder = "v1/seemingly/crawfish/snooded"     /// v1/app/open/file/{uid}/{dirId}
-    case event = "v1/particeps/cadavers"              /// v1/app/events
-    case recommendChannel = "v1/njejwdobgm/l7mo1a0kpo"/// v1/app/push_operation_pools
+    case channel = "v12"  /// v1/app/open/data
+    case download = "v1asf"     /// v1/app/download/file/
+    case folder = "v1/asdf"     /// v1/app/open/file/{uid}/{dirId}
+    case event = "v1/sdfs"              /// v1/app/events
+    case recommendChannel = "v1/njejxa0kpo"/// v1/app/push_operation_pools
 }
 
 enum HttpHeadValue: String {
-    case login = "stonebrood"
-    case deleteUser = "unattacked"
-    case uploadFile = "anatomizes"
-    case uploadCall = "6clsx0oraj"
-    case userSpace = "ofugo75usr"
-    case deleteFile = "unbluffed"
-    case createDir = "motivity"
-    case lsDir = "hoverer"
-    case fixName = "samlet"
-    case shareFile = "lycopods"
-    case downLoadUrl = "hominy"
-    case selectFiles = "easinesses"
-    case openShareUrl = "tangaloa"
-    case openFolder = "turnabout"
+    case login = "ghegish"
+    case deleteUser = "sneakily"
+    case uploadFile = "x9pj1ybtq0"
+    case uploadCall = "harmonize"
+    case userSpace = "abos"
+    case deleteFile = "jfe5lc73rp"
+    case createFolder = "stokavian"
+    case lsDir = "pocking"
+    case fixName = "snoring"
+    case shareFile = "platysmata"
+    case downLoadUrl = "brazilians"
+    case selectFiles = "guardable"
+    case openShareUrl = "viricide"
+    case openFolder = "shrubbish"
 }
 
 class HttpManager {
     static let share = HttpManager()
     
-    let userHeadKey: String = "bxsd"
+    let userHeadKey: String = "kinspeople" // x-api-id
     
     let appHeadKey: String = "2as"
     
     let tokenKey: String = "X-Token"
     
-    let userHost: String = "https://api.a.com/"
+    let userHost: String = "https://xbox2c-test-myhub.tbxbxdev.com/"
     
-    let userHostAddress: String = "api.a.com"
+    let userHostAddress: String = "xbox2c-test-myhub.tbxbxdev.com"
     
     var appHost: String = "https://c.sdbfsf.com/"
     
@@ -84,7 +84,7 @@ class HttpManager {
     //MARK: - Login
     
     func loginApi(_ token: String, _ completion: @escaping (_ status: HttpCode, _ model: UserData, _ errMsg: String?) -> ()) {
-        let para: [String: Any] = ["swiftie": token] //access_token
+        let para: [String: Any] = ["areawide": token] //access_token
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.login.rawValue
@@ -165,15 +165,15 @@ class HttpManager {
         //            "content_sign": "xxxx"
         //        }
         var para: [String: Any] = [:]
-        para["brevetting"] = LoginManager.share.userId ///namespace
-        let fileMeta: [String: Any] = ["helmeting": mod.parent_id,
-                                       "qtnmq92d4w": mod.name,
-                                       "bontok": mod.file_size,
-                                       "avocat": mime,
-                                       "salmonet": mod.ext,
-                                       "lilting": sign
+        para["entr"] = LoginManager.share.userId ///namespace
+        let fileMeta: [String: Any] = ["roxy": mod.parent_id,
+                                       "asynaptic": mod.name,
+                                       "filicites": mod.file_size,
+                                       "atmosteon": mime,
+                                       "fulminates": mod.ext,
+                                       "tsere": sign
         ]
-        para["foxtailed"] = fileMeta
+        para["amidated"] = fileMeta
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.uploadFile.rawValue
@@ -212,9 +212,9 @@ class HttpManager {
     
     func uploadResultApi(_ transferId: String, _ completion: @escaping (_ status: HttpCode, _ model: FileCallData, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        para["piccolos"] = LoginManager.share.userId ///namespace
-        para["eubacteria"] = transferId // transfer_id
-        para["tonitruant"] = true /// ok
+        para["illy"] = LoginManager.share.userId ///namespace
+        para["ferrule"] = transferId // transfer_id
+        para["qszs_s26zd"] = true /// ok
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.uploadResult.rawValue
@@ -288,8 +288,8 @@ class HttpManager {
     func deleteFileApi(_ list: [VideoData], _ completion: @escaping (_ status: HttpCode, _ errMsg: String?) -> ()) {
         let fileIds = list.map({$0.id})
         var para: [String: Any] = [:]
-        para["leptomonad"] = LoginManager.share.userId ///namespace
-        para["file_ids"] = fileIds // fileIds
+        para["affronty"] = LoginManager.share.userId ///namespace
+        para["scungili"] = fileIds // fileIds
         
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
@@ -331,17 +331,17 @@ class HttpManager {
     func createFolderApi(parentId: String, fileName: String, _ completion: @escaping (_ status: HttpCode, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
         
-        para["pasgarde"] = LoginManager.share.userId ///namespace
-        para["suborning"] = parentId // parent_id
-        para["irrogate"] = fileName /// filename
+        para["triplanes"] = LoginManager.share.userId ///namespace
+        para["prejudges"] = parentId // parent_id
+        para["oryx"] = fileName /// filename
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
-        let url: String = userHost + HttpApi.createDir.rawValue
+        let url: String = userHost + HttpApi.createFolder.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(HttpManager.share.userHostAddress, forHTTPHeaderField: "host")
-        request.setValue(HttpHeadValue.createDir.rawValue, forHTTPHeaderField: userHeadKey)
+        request.setValue(HttpHeadValue.createFolder.rawValue, forHTTPHeaderField: userHeadKey)
         request.setValue(LoginManager.share.userToken, forHTTPHeaderField: tokenKey)
         
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
@@ -365,10 +365,10 @@ class HttpManager {
     
     func selectFolderApi(_ parent_id: String, _ completion: @escaping (_ status: HttpCode, _ list: [VideoData], _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        para["sweet"] = LoginManager.share.userId ///namespace
-        para["mirex"] = parent_id // parent_id
-        para["seaweed"] = 0 /// page_number
-        para["angulus"] = pageSize /// page_size
+        para["surnames"] = LoginManager.share.userId ///namespace
+        para["becram"] = parent_id // parent_id
+        para["debited"] = 0 /// page_number
+        para["beefcake"] = pageSize /// page_size
         
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
@@ -431,8 +431,8 @@ class HttpManager {
     
     func selectFilesApi(_ file_ids: [String], _ completion: @escaping (_ status: HttpCode, _ list: [VideoData], _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        para["blaflum"] = LoginManager.share.userId ///namespace
-        para["slakable"] = file_ids // file_ids
+        para["scholarity"] = LoginManager.share.userId ///namespace
+        para["gamesomely"] = file_ids // file_ids
         
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
@@ -495,9 +495,9 @@ class HttpManager {
     
     func reNameFileApi(fileId: String, fileName: String, _ completion: @escaping (_ status: HttpCode, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        para["kellick"] = LoginManager.share.userId ///namespace
-        para["epichorion"] = fileId // file_id
-        para["cyclitic"] = fileName /// filename
+        para["bernicles"] = LoginManager.share.userId ///namespace
+        para["nullbiety"] = fileId // file_id
+        para["ayahuca"] = fileName /// filename
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.fixName.rawValue
@@ -532,17 +532,17 @@ class HttpManager {
         var arr: [[String: Any]] = []
         list.forEach { m in
             var subPara: [String: Any] = [:]
-            subPara["nvqncdwv1v"] = m.id
-            subPara["justs"] = m.file_type == .folder ? HUB_ShareFileType.directory.rawValue : HUB_ShareFileType.file.rawValue
+            subPara["behavioral"] = m.id
+            subPara["onondaga"] = m.file_type == .folder ? HUB_ShareFileType.directory.rawValue : HUB_ShareFileType.file.rawValue
             arr.append(subPara)
         }
-        para["fernery"] = LoginManager.share.userId ///namespace
-        para["emmetropic"] = HUB_ShareType.file.rawValue // share_type
+        para["boordly"] = LoginManager.share.userId ///namespace
+        para["frapler"] = HUB_ShareType.file.rawValue // share_type
         if date != .none {
-            para["inhalers"] = date.rawValue /// "NONE/DAY/MONTH/WEEK",
-            para["absorbency"] = 1
+            para["pfnzojbksy"] = date.rawValue /// "NONE/DAY/MONTH/WEEK",
+            para["uwdstbx2qv"] = 1
         }
-        para["tegi9shxdu"] = arr
+        para["chow"] = arr
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.shareFile.rawValue
@@ -583,11 +583,11 @@ class HttpManager {
     func driveDownLoadUrlApi(_ fileId: String, _ completion: @escaping (_ status: HttpCode, _ address: String, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
         if LoginManager.share.isLogin {
-            para["tiaraed"] = LoginManager.share.userId
+            para["blaewort"] = LoginManager.share.userId
         } else {
-            para["tiaraed"] = HubTool.share.boxUId
+            para["blaewort"] = HubTool.share.boxUId
         }///namespace
-        para["chatellany"] = fileId // fileId
+        para["unspoil"] = fileId // fileId
         
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
@@ -670,9 +670,9 @@ class HttpManager {
     // MARK: - Open Share Url
     func getShareUrlApi(_ linkId: String, _ currentPage: Int, _ completion: @escaping (_ status: HttpCode, _ model: OpenRootData, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        para["immutably"] = linkId           /// linkId
-        para["soogeed"] = currentPage  /// page_number
-        para["indicter"] = 20        /// page_size
+        para["acetine"] = linkId           /// linkId
+        para["laplandish"] = currentPage  /// page_number
+        para["elric"] = 20        /// page_size
 //        para["qqrdyn8f5o"] = ""
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
@@ -710,10 +710,10 @@ class HttpManager {
     
     func getShareFolderApi(_ userId: String, _ parentId: String, _ currentPage: Int, _ completion: @escaping (_ status: HttpCode, _ list: [VideoData], _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        para["deterring"] = userId      /// namespace
-        para["forleft"] = parentId /// parentId
-        para["servette"] = currentPage  /// page_number
-        para["gastralgic"] = 20          /// page_size
+        para["communis"] = userId      /// namespace
+        para["aeried"] = parentId /// parentId
+        para["beautihood"] = currentPage  /// page_number
+        para["shushes"] = 20          /// page_size
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.openFolder.rawValue

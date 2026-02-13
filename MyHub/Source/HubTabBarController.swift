@@ -33,13 +33,17 @@ class HubTabBarController: UIViewController {
                 self.tabbar.isHidden = !result
             }
         }
+        NotificationCenter.default.addObserver(forName: Noti_Logout, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.exitLogin()
+        }
     }
     
     func addControllers() {
         let homeVC = UINavigationController(rootViewController: IndexController())
         let fileVC = UINavigationController(rootViewController: SecendController())
-        let uploadVC = UINavigationController(rootViewController: SetController())
-        let setVC = UINavigationController(rootViewController: SecendController())
+        let uploadVC = UINavigationController(rootViewController: DownController())
+        let setVC = UINavigationController(rootViewController: SetController())
 
         self.controllers.append(homeVC)
         self.controllers.append(fileVC)
@@ -97,6 +101,19 @@ class HubTabBarController: UIViewController {
                     completion: nil
                 )
             }
+        }
+    }
+    
+    func exitLogin() {
+        self.currentIdx = 0
+        self.tabbar.currentIdx = self.currentIdx
+        if let currentVC = self.controllers.first {
+            self.pageController.setViewControllers(
+                [currentVC],
+                direction: .forward,
+                animated: false,
+                completion: nil
+            )
         }
     }
 }

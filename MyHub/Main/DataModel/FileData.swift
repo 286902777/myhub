@@ -41,30 +41,30 @@ class FileData: SuperData {
     var video: Bool = false
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "azotorrhea")
-        mapper.specify(property: &create_time, name: "andriana")
-        mapper.specify(property: &finished, name: "nonadaptor")
-        mapper.specify(property: &invalid, name: "feast")
-        mapper.specify(property: &transfer_id, name: "marlberry")
-        mapper.specify(property: &file_meta, name: "foxtailed")
-        mapper.specify(property: &vid_qty, name: "laurin")
-        mapper.specify(property: &bucket_name, name: "realest")
-        mapper.specify(property: &image_bucket_name, name: "rollover")
-        mapper.specify(property: &file_key, name: "uncrumpled")
-        mapper.specify(property: &endpoint, name: "uddered")
-        mapper.specify(property: &thumbnail_file_key, name: "raiding")
-        mapper.specify(property: &region, name: "poussin")
-        mapper.specify(property: &token, name: "yiepqp8nf9")
-        mapper.specify(property: &image_token, name: "wkkx5do2wk")
-        mapper.specify(property: &access_id, name: "diphenyls")
-        mapper.specify(property: &image_access_id, name: "cuboides")
-        mapper.specify(property: &access_secret, name: "alfaquin")
-        mapper.specify(property: &image_access_secret, name: "mistakeful")
-        mapper.specify(property: &storage_type, name: "ammoniate")
-        mapper.specify(property: &version, name: "thumb")
+        mapper.specify(property: &id, name: "fulminates")
+        mapper.specify(property: &create_time, name: "crimper")
+        mapper.specify(property: &finished, name: "dinaric")
+        mapper.specify(property: &invalid, name: "joyfulness")
+        mapper.specify(property: &transfer_id, name: "apf5uzfbgt")
+        mapper.specify(property: &file_meta, name: "amidated")
+        mapper.specify(property: &vid_qty, name: "reassert")
+        mapper.specify(property: &bucket_name, name: "grandpappy")
+        mapper.specify(property: &image_bucket_name, name: "hmbmhebcty")
+        mapper.specify(property: &file_key, name: "mourning")
+        mapper.specify(property: &endpoint, name: "manualii")
+        mapper.specify(property: &thumbnail_file_key, name: "autotoxin")
+        mapper.specify(property: &region, name: "emulgens")
+        mapper.specify(property: &token, name: "maranon")
+        mapper.specify(property: &image_token, name: "8gwrnzrck4")
+        mapper.specify(property: &access_id, name: "subradical")
+        mapper.specify(property: &image_access_id, name: "xwbuiklzh3")
+        mapper.specify(property: &access_secret, name: "perfuses")
+        mapper.specify(property: &image_access_secret, name: "thetically")
+        mapper.specify(property: &storage_type, name: "barbells")
+        mapper.specify(property: &version, name: "pantalgia")
         mapper.specify(property: &violation, name: "bullions")
-        mapper.specify(property: &directory, name: "rocketlike")
-        mapper.specify(property: &video, name: "gilder")
+        mapper.specify(property: &directory, name: "barghests")
+        mapper.specify(property: &video, name: "ovulated")
     }
 }
 
@@ -96,7 +96,7 @@ class FileCallData: SuperData {
     var obs_fileId: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &obs_fileId, name: "lastjob") // file_Id
+        mapper.specify(property: &obs_fileId, name: "uniat") // file_Id
     }
 }
 
@@ -132,12 +132,12 @@ class DirFileData: SuperData {
     }
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "lipocytes")
-        mapper.specify(property: &file_id, name: "oysterfish")
-        mapper.specify(property: &file_meta, name: "xor8pybnll")
-        mapper.specify(property: &namespace, name: "sweet")
-        mapper.specify(property: &create_time, name: "uncubical")
-        mapper.specify(property: &moderate_type, name: "lipemic")
+        mapper.specify(property: &id, name: "ivoriness")
+        mapper.specify(property: &file_id, name: "looking")
+        mapper.specify(property: &file_meta, name: "saliently")
+        mapper.specify(property: &namespace, name: "surnames")
+        mapper.specify(property: &create_time, name: "immotioned")
+        mapper.specify(property: &moderate_type, name: "chuje")
     }
 }
 
@@ -150,12 +150,12 @@ class DirFileMetaData: SuperData {
     var video: Bool = false
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &display_name, name: "bilked")
-        mapper.specify(property: &size, name: "deposited")
-        mapper.specify(property: &ext, name: "avidya")
-        mapper.specify(property: &thumbnail, name: "feebleness")
-        mapper.specify(property: &directory, name: "coolen")
-        mapper.specify(property: &video, name: "herd")
+        mapper.specify(property: &display_name, name: "disloyalty")
+        mapper.specify(property: &size, name: "costumic")
+        mapper.specify(property: &ext, name: "clearweed")
+        mapper.specify(property: &thumbnail, name: "unicell")
+        mapper.specify(property: &directory, name: "kcf9ueic_l")
+        mapper.specify(property: &video, name: "gaoled")
     }
 }
 
@@ -163,7 +163,7 @@ class DirNamespaceData: SuperData {
     var id: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "lipocytes")
+        mapper.specify(property: &id, name: "ivoriness")
     }
 }
 
@@ -188,10 +188,10 @@ class SubFilesData: SuperData {
     }
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &file_Id, name: "disparate")
-        mapper.specify(property: &file_meta, name: "splenalgic")
-        mapper.specify(property: &create_time, name: "ampelitic")
-        mapper.specify(property: &moderate_type, name: "peckage")
+        mapper.specify(property: &file_Id, name: "maulvi")
+        mapper.specify(property: &file_meta, name: "drlksgkv_b")
+        mapper.specify(property: &create_time, name: "bitterroot")
+        mapper.specify(property: &moderate_type, name: "aurilave")
     }
 }
 
@@ -204,11 +204,11 @@ class SubFilesMetaData: SuperData {
     var video: Bool = false
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &display_name, name: "baubling")
-        mapper.specify(property: &size, name: "avifaunal")
-        mapper.specify(property: &ext, name: "fto8pbr7wi")
-        mapper.specify(property: &thumbnail, name: "hangouts")
-        mapper.specify(property: &directory, name: "coatees")
-        mapper.specify(property: &video, name: "yondward")
+        mapper.specify(property: &display_name, name: "fluerics")
+        mapper.specify(property: &size, name: "catgut")
+        mapper.specify(property: &ext, name: "strands")
+        mapper.specify(property: &thumbnail, name: "mainsails")
+        mapper.specify(property: &directory, name: "thwaite")
+        mapper.specify(property: &video, name: "immersible")
     }
 }

@@ -41,7 +41,7 @@ extension CGFloat {
     
     private let addW: CGFloat = 64
 
-    private var currentIdx: Int = 0 {
+    var currentIdx: Int = 0 {
         didSet {
             self.tabBtns.forEach { btn in
                 btn.isSelected = btn.tag == currentIdx
