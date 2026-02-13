@@ -31,7 +31,7 @@ class PlayTool {
         controller.navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func adsPushPremium(_ state: ES_AdsPlayState, _ source: ES_PremiumSource, _ controller: UIViewController) {
+    func adsPushPremium(_ state: HUB_AdsPlayState, _ source: HUB_PremiumSource, _ controller: UIViewController) {
 //        if PremiumTool.instance.isMember == false {
 //            let count = UserDefaults.standard.integer(forKey: PreAutoVipPayCount)
 //            if count > 2 {
@@ -61,5 +61,5 @@ class PlayTool {
 //            vc.modalPresentationStyle = .fullScreen
 //            controller.present(vc, animated: true)
 //        }
-//    }
+    }
 }

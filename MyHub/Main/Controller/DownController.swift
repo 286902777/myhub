@@ -134,7 +134,39 @@ class DownController: SuperController {
         self.downV.addGestureRecognizer(stap)
     }
     
+    func addController() {
+        self.pages.append(self.uploadVC)
+        self.pages.append(self.downVC)
+        self.downVC.refreshBlock = { [weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+
+            }
+        }
+ 
+        if let firstVC = pages.first {
+            pageController.setViewControllers([firstVC], direction: .forward, animated: false, completion: nil)
+        }
+        self.addChild(self.pageController)
+        self.view.addSubview(self.pageController.view)
+        self.pageController.didMove(toParent: self)
+        self.pageController.view.snp.makeConstraints { make in
+            make.top.equalTo(self.navbar.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
+        }
+        self.currentIdx = 0
+    }
+    
     @objc func clickFilterAction(_ sender: UITapGestureRecognizer) {
         self.currentIdx = sender.view?.tag ?? 0
     }
+}
+
+enum HUB_UploadDownState: String {
+    case inProgree = "In progress"
+    case completed = "Completed"
+}
+class UploadDownData: SuperData {
+    var state: HUB_UploadDownState = .inProgree
+    var lists: [VideoData] = []
 }

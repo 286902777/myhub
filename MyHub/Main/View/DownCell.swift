@@ -92,6 +92,20 @@ class DownCell: UITableViewCell {
         }
     }
     
+    func initData(_ model: VideoData) {
+        if let img = model.image {
+            self.iconV.image = img
+        } else {
+            if model.file_type == .video {
+                self.iconV.setImage(model.thumbnail, placeholder: "video_bg")
+            } else {
+                self.iconV.setImage(model.thumbnail, placeholder: "photo_bg")
+            }
+        }
+        self.sizeL.text = model.size
+        self.nameL.text = model.name
+    }
+    
     @objc func clickDeletAction() {
         self.deleteBlock?()
     }
