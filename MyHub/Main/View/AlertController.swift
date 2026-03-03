@@ -31,8 +31,8 @@ class AlertController: UIViewController {
     
     lazy var titleL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.GoogleSans(weight: .medium, size: 16)
-        label.textColor = UIColor.rgbHex("#14171C")
+        label.font = UIFont.systemFont(ofSize: 16.0, weight: .medium)
+        label.textColor = UIColor.rgbHex("#262626")
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -40,8 +40,8 @@ class AlertController: UIViewController {
     
     lazy var infoL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.GoogleSans(weight: .regular, size: 14)
-        label.textColor = UIColor.rgbHex("#14171C", 0.75)
+        label.font = UIFont.systemFont(ofSize: 14.0)
+        label.textColor = UIColor.rgbHex("#8C8C8C")
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
@@ -58,11 +58,11 @@ class AlertController: UIViewController {
     lazy var cancelBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Cancel", for: .normal)
-        btn.setTitleColor(UIColor.rgbHex("#053C62"), for: .normal)
+        btn.setTitleColor(UIColor.rgbHex("#14171C"), for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        btn.layer.cornerRadius = 20
+        btn.layer.cornerRadius = 22
         btn.layer.borderWidth = 1
-        btn.layer.borderColor = UIColor.rgbHex("#053C62").cgColor
+        btn.layer.borderColor = UIColor.rgbHex("#14171C").cgColor
         btn.layer.masksToBounds = true
         btn.backgroundColor = .white
         return btn
@@ -71,11 +71,11 @@ class AlertController: UIViewController {
     lazy var sureBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("Confirm", for: .normal)
-        btn.setTitleColor(UIColor.white, for: .normal)
+        btn.setTitleColor(UIColor.rgbHex("#14171C"), for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         btn.layer.cornerRadius = 22
         btn.layer.masksToBounds = true
-        btn.backgroundColor = UIColor.rgbHex("#053C62")
+        btn.backgroundColor = UIColor.rgbHex("#DDF75B")
         return btn
     }()
     
@@ -96,7 +96,6 @@ class AlertController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -115,19 +114,19 @@ class AlertController: UIViewController {
 
         self.contentView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.left.equalTo(28)
-            make.right.equalTo(-28)
+            make.left.equalTo(14)
+            make.right.equalTo(-14)
         }
         
         self.titleStackV.snp.makeConstraints { make in
-            make.top.equalTo(40)
-            make.left.equalTo(40)
-            make.right.equalTo(-40)
+            make.top.equalTo(44)
+            make.left.equalTo(34)
+            make.right.equalTo(-34)
         }
         self.stackV.snp.makeConstraints { make in
             make.top.equalTo(self.titleStackV.snp.bottom).offset(20)
-            make.left.equalTo(20)
-            make.right.equalTo(-20)
+            make.left.equalTo(14)
+            make.right.equalTo(-14)
             make.height.equalTo(44)
             make.bottom.equalTo(-24)
         }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import ObjectiveC
 
-enum ToastImage: String {
+public enum ToastImage: String {
     case success = "success"
     case fail = "failed"
     case warning = "warning"
@@ -63,7 +63,7 @@ public extension UIView {
         }
     }
     
-    func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, position: ToastPosition = ToastManager.shared.position, title: String? = nil, image: UIImage? = nil, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)? = nil) {
+    func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, position: ToastPosition = ToastManager.shared.position, title: String? = nil, image: ToastImage = .none, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)? = nil) {
         do {
             let toast = try toastViewForMessage(message, title: title, image: image, style: style)
             showToast(toast, duration: duration, position: position, completion: completion)
@@ -72,7 +72,7 @@ public extension UIView {
         } catch {}
     }
   
-    func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, point: CGPoint, title: String?, image: UIImage?, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)?) {
+    func makeToast(_ message: String?, duration: TimeInterval = ToastManager.shared.duration, point: CGPoint, title: String?, image: ToastImage = .none, style: ToastStyle = ToastManager.shared.style, completion: ((_ didTap: Bool) -> Void)?) {
         do {
             let toast = try toastViewForMessage(message, title: title, image: image, style: style)
             showToast(toast, duration: duration, point: point, completion: completion)
@@ -257,9 +257,9 @@ public extension UIView {
         hideToast(toast)
     }
     
-    func toastViewForMessage(_ message: String?, title: String?, image: UIImage?, style: ToastStyle) throws -> UIView {
+    func toastViewForMessage(_ message: String?, title: String?, image: ToastImage = .none, style: ToastStyle) throws -> UIView {
         // sanity
-        guard message != nil || title != nil || image != nil else {
+        guard message != nil || title != nil else {
             throw ToastError.missingParameters
         }
         
@@ -268,7 +268,6 @@ public extension UIView {
         var imageView: UIImageView?
         
         let wrapperView = UIView()
-        wrapperView.backgroundColor = style.backgroundColor
         wrapperView.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin, .flexibleTopMargin, .flexibleBottomMargin]
         wrapperView.layer.cornerRadius = style.cornerRadius
         
@@ -278,22 +277,30 @@ public extension UIView {
             wrapperView.layer.shadowRadius = style.shadowRadius
             wrapperView.layer.shadowOffset = style.shadowOffset
         }
-        
-        if let image = image {
-            imageView = UIImageView(image: image)
+        switch image {
+        case .success:
+            wrapperView.backgroundColor = UIColor.rgbHex("#DDF75B")
+        case .fail:
+            wrapperView.backgroundColor = UIColor.rgbHex("#F0166C")
+        case .warning:
+            wrapperView.backgroundColor = UIColor.rgbHex("#FF7A34")
+        case .none:
+            wrapperView.backgroundColor = UIColor.rgbHex("#434343")
+        }
+        if image != .none {
+            imageView = UIImageView(image: UIImage(named: image.rawValue))
             imageView?.contentMode = .scaleAspectFit
             imageView?.frame = CGRect(x: style.horizontalPadding, y: style.verticalPadding, width: style.imageSize.width, height: style.imageSize.height)
         }
-        
+
         var imageRect = CGRect.zero
-        
         if let imageView = imageView {
             imageRect.origin.x = style.horizontalPadding
             imageRect.origin.y = style.verticalPadding
             imageRect.size.width = imageView.bounds.size.width
             imageRect.size.height = imageView.bounds.size.height
         }
-
+        
         if let title = title {
             titleLabel = UILabel()
             titleLabel?.numberOfLines = style.titleNumberOfLines
@@ -316,7 +323,7 @@ public extension UIView {
             messageLabel?.text = message
             messageLabel?.numberOfLines = style.messageNumberOfLines
             messageLabel?.font = style.messageFont
-            messageLabel?.textAlignment = (image != nil) ? .left : style.messageAlignment
+            messageLabel?.textAlignment = (image != .none) ? .left : style.messageAlignment
             messageLabel?.lineBreakMode = .byTruncatingTail;
             messageLabel?.textColor = style.messageColor
             messageLabel?.backgroundColor = UIColor.clear
@@ -436,17 +443,17 @@ public struct ToastStyle {
     /**
      The corner radius. Default is 4.0.
     */
-    public var cornerRadius: CGFloat = 12.0;
+    public var cornerRadius: CGFloat = 20.0;
     
     /**
      The title font. Default is `.boldSystemFont(16.0)`.
     */
-    public var titleFont: UIFont = .systemFont(ofSize: 14.0)
+    public var titleFont: UIFont = .systemFont(ofSize: 12.0, weight: .medium)
     
     /**
      The message font. Default is `.systemFont(ofSize: 16.0)`.
     */
-    public var messageFont: UIFont = .systemFont(ofSize: 14.0)
+    public var messageFont: UIFont = .systemFont(ofSize: 12.0, weight: .medium)
     
     /**
      The title text alignment. Default is `NSTextAlignment.Left`.
@@ -607,7 +614,7 @@ class ToastTool {
     func show(_ message: String?, _ type: ToastImage = .success) {
         guard let msg = message, msg.count > 0 else { return }
         DispatchQueue.main.async {
-            HubTool.share.keyVC()?.view.makeToast(msg, image: UIImage(named: type.rawValue))
+            HubTool.share.keyVC()?.view.makeToast(msg, image: type)
         }
     }
 }

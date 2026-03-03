@@ -143,8 +143,8 @@ class FileCell: UITableViewCell {
         self.nameL.text = model.fileName
     }
 
-    func initData(_ model: OpenUrlData, _ show: Bool) {
-        self.selectBtn.isHidden = !show
+    func initDeepData(_ model: OpenUrlData) {
+        self.selectBtn.isHidden = false
         self.selectBtn.isSelected = model.isSelect
         switch model.file_type {
         case .folder:

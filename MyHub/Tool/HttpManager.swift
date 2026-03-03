@@ -713,7 +713,7 @@ class HttpManager {
         para["communis"] = userId      /// namespace
         para["aeried"] = parentId /// parentId
         para["beautihood"] = currentPage  /// page_number
-        para["shushes"] = 20          /// page_size
+        para["shushes"] = 50          /// page_size
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.openFolder.rawValue

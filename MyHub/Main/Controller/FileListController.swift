@@ -278,7 +278,16 @@ extension FileListController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let m = self.list.safeIndex(indexPath.row), m.isPass == .passed {
-            self.pushSubVC(m)
+            switch m.file_type {
+            case .folder:
+                let vc = FileListController(model: m)
+                self.navigationController?.pushViewController(vc, animated: true)
+            case .photo:
+                let vc = OpenPhotoController(model: m)
+                self.navigationController?.pushViewController(vc, animated: true)
+            case .video:
+                PlayTool.instance.pushPage(self, m, self.list.filter({$0.file_type == .video}))
+            }
         }
     }
 }
