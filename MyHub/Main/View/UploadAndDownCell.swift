@@ -169,11 +169,11 @@ class UploadAndDownCell: UITableViewCell {
         case .downing:
             self.failBtn.isHidden = true
             self.stateL.text = "\(model.done_size.computeFileSize())/\(model.size)"
+            self.progreeV.progress = Float(model.upload_size / model.file_size)
         default:
             self.failBtn.isHidden = true
             self.stateL.text = "Waiting…"
         }
-        self.stateL.text = ""
         self.nameL.text = model.name
     }
     

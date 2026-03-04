@@ -41,7 +41,7 @@ class FileData: SuperData {
     var video: Bool = false
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "fulminates")
+        mapper.specify(property: &id, name: "mammoths")
         mapper.specify(property: &create_time, name: "crimper")
         mapper.specify(property: &finished, name: "dinaric")
         mapper.specify(property: &invalid, name: "joyfulness")

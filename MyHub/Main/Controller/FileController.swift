@@ -103,8 +103,10 @@ class FileController: UIViewController {
         self.sortV.addGestureRecognizer(tap)
         
         view.addSubview(self.noContentV)
+        self.noContentV.isHidden = true
         self.noContentV.snp.makeConstraints { make in
-            make.left.top.bottom.right.equalToSuperview()
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         self.noContentV.clickBlock = { [weak self] type in
             guard let self = self else { return }
@@ -139,6 +141,18 @@ class FileController: UIViewController {
             }
             self.tableView.reloadData()
             self.dismissBottomView()
+        }
+        
+        UploadTool.instance.clickCreateBlock = {[weak self] in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                let vc = NewFolderController(parentId: "")
+                vc.modalPresentationStyle = .overFullScreen
+                vc.newSuccessBlock = {
+                    self.netRequest()
+                }
+                self.present(vc, animated: false)
+            }
         }
     }
     
@@ -210,15 +224,15 @@ class FileController: UIViewController {
             var isDown: Bool = false
             results.forEach { m in
                 if m.file_type != .folder {
-//                    if let mod = dbList.first(where: {$0.id == m.id}) {
-//                        if mod.state != .downDone {
-//                            FileUploadDownTool.instance.downLoad(m)
-//                            isDown = true
-//                        }
-//                    } else {
-//                        FileUploadDownTool.instance.downLoad(m)
-//                        isDown = true
-//                    }
+                    if let mod = dbList.first(where: {$0.id == m.id}) {
+                        if mod.state != .downDone {
+                            UploadDownTool.instance.downLoad(m)
+                            isDown = true
+                        }
+                    } else {
+                        UploadDownTool.instance.downLoad(m)
+                        isDown = true
+                    }
                 }
             }
             if isDown {
@@ -235,6 +249,7 @@ class FileController: UIViewController {
                     let copyVC = ShareCopyController()
                     copyVC.modalPresentationStyle = .overFullScreen
                     copyVC.url = url
+                    copyVC.isIndex = false
                     self.present(copyVC, animated: false)
                 }
             }
@@ -293,27 +308,22 @@ class FileController: UIViewController {
     }
     
     func netRequest() {
-        self.noContentV.isHidden = true
-        let m = VideoData()
-        m.name = "name"
-        self.list.append(m)
-        self.tableView.reloadData()
-//        LoadManager.instance.show(self)
-//        HttpManager.share.selectFolderApi("") { [weak self] status, list, errMsg in
-//            guard let self = self else { return }
-//            DispatchQueue.main.async {
-//                LoadManager.instance.dismiss()
-//                if status == .success {
-//                    self.list = list
-//                    self.sortData(self.sortType, self.sortAsc)
-//                    self.tableView.isHidden = self.list.count == 0
-//                    self.tableView.reloadData()
-//                    self.refreshUI()
-//                } else {
-//                    ToastTool.instance.show(errMsg ?? "Request fail", .fail)
-//                }
-//            }
-//        }
+        LoadManager.instance.show(self)
+        HttpManager.share.selectFolderApi("") { [weak self] status, list, errMsg in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                LoadManager.instance.dismiss()
+                if status == .success {
+                    self.list = list
+                    self.sortData(self.sortType, self.sortAsc)
+                    self.tableView.isHidden = self.list.count == 0
+                    self.tableView.reloadData()
+                    self.refreshUI()
+                } else {
+                    ToastTool.instance.show(errMsg ?? "Request fail", .fail)
+                }
+            }
+        }
     }
     
     func refreshUI() {

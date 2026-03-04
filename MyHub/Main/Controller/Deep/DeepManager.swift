@@ -12,8 +12,10 @@ class DeepManager {
     
     func openBoxDeep(_ linkId: String, _ rootVC: UIViewController) {
         let vc = BoxDeepController(linkId: linkId)
+        TabbarTool.instance.displayOrHidden(false)
+        HubTool.share.deepUrl = ""
         let nav = UINavigationController(rootViewController: vc)
-        vc.modalPresentationStyle = .overFullScreen
+        nav.modalPresentationStyle = .overFullScreen
         rootVC.present(nav, animated: false)
     }
 }

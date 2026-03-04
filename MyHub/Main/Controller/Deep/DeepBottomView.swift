@@ -44,7 +44,7 @@ class DeepBottomView: UIView {
         let btn = UIButton()
         btn.setImage(UIImage(named: "deep_down"), for: .normal)
         btn.backgroundColor = UIColor.rgbHex("#EAFA81", 0.2)
-        btn.layer.cornerRadius = 30
+        btn.layer.cornerRadius = 22
         return btn
     }()
     
@@ -66,7 +66,6 @@ class DeepBottomView: UIView {
     
     func initUI() {
         self.backgroundColor = UIColor.white
-        self.addCornerShadow(32, CGSize(width: -3, height: -3), UIColor.rgbHex("#000000", 0.1), 3)
         self.addSubview(self.stackV)
         self.stackV.addArrangedSubview(self.downBtn)
         self.stackV.addArrangedSubview(self.saveBtn)
@@ -85,7 +84,9 @@ class DeepBottomView: UIView {
         self.saveBtn.snp.makeConstraints { make in
             make.width.equalTo(90)
         }
-        
+        self.setNeedsLayout()
+        self.addCornerShadow(32, CGSize(width: 0, height: 3), UIColor.rgbHex("#000000", 1), 3)
+
         self.playBtn.addTarget(self, action: #selector(clickPlayAction), for: .touchUpInside)
         self.saveBtn.addTarget(self, action: #selector(clickSaveAction), for: .touchUpInside)
         self.downBtn.addTarget(self, action: #selector(clickDownAction), for: .touchUpInside)

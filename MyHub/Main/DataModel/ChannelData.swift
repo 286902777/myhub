@@ -155,12 +155,12 @@ class UserInfoData: SuperData {
     var avtar_url: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "manasic")
-        mapper.specify(property: &app_id, name: "singerie")
-        mapper.specify(property: &username, name: "jlfe7kaln6")
-        mapper.specify(property: &email, name: "skeltering")
-        mapper.specify(property: &user_id, name: "oxyneurine")
-        mapper.specify(property: &avtar_url, name: "kyschty")
+        mapper.specify(property: &id, name: "lustrate")
+        mapper.specify(property: &app_id, name: "camletine")
+        mapper.specify(property: &username, name: "phenetols")
+        mapper.specify(property: &email, name: "carassow")
+        mapper.specify(property: &user_id, name: "depictment")
+        mapper.specify(property: &avtar_url, name: "laundryman")
     }
 }
 // MARK: - DeleteUser

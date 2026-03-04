@@ -65,7 +65,7 @@ class BoxDeepHeadView: UIView {
         self.addSubview(lineL)
         self.stackV.addArrangedSubview(self.allL)
         self.stackV.addArrangedSubview(self.arrowV)
-
+        self.stackV.isHidden = true
         iconV.snp.makeConstraints { make in
             make.top.equalTo(20)
             make.left.equalTo(14)
@@ -90,12 +90,12 @@ class BoxDeepHeadView: UIView {
             make.left.equalTo(14)
         }
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeadAction))
-        self.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeadAction))
+//        self.addGestureRecognizer(tap)
     }
     
     func setDeepHeadData(_ data: OpenUserData) {
-        self.iconV.setImage(data.avtar_url)
+        self.iconV.setImage(data.avtar_url, placeholder: "")
         self.nameL.text = data.username
     }
     

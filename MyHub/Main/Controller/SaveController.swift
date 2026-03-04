@@ -19,7 +19,7 @@ class SaveController: UIViewController {
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
-        collectionView.contentInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        collectionView.contentInset = UIEdgeInsets(top: 16, left: 14, bottom: 16, right: 14)
         collectionView.register(SaveCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.dataSource = self
@@ -83,9 +83,11 @@ extension SaveController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let m = self.list.safeIndex(indexPath.item) {
-//            let vc = DeepController(linkId: m.linkId)
-//            vc.hidesBottomBarWhenPushed = true
-//            self.navigationController?.pushViewController(vc, animated: true)
+            if m.platform == .box {
+                DeepManager.share.openBoxDeep(m.linkId, self)
+            } else {
+                
+            }
         }
     }
     

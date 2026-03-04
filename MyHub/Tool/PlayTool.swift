@@ -17,6 +17,7 @@ class PlayTool {
         PlayTool.instance.list = list.filter({$0.file_type == .video})
         let vc = PlayVideoController(model: mod, history: history)
         vc.hidesBottomBarWhenPushed = true
+        TabbarTool.instance.displayOrHidden(false)
         vc.premiumBlock = { [weak self] in
             guard let self = self else { return }
 //            if PremiumTool.instance.isMember {

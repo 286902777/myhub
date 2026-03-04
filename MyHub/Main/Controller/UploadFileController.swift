@@ -60,15 +60,16 @@ class UploadFileController: UIViewController {
         
         NotificationCenter.default.addObserver(forName: Noti_Upload, object: nil, queue: .main) { [weak self] data in
             guard let self = self else { return }
-            if let _ = data.userInfo?["mod"] as? FileTransData {
-                self.addData()
-//                for (idx, item) in self.list.enumerated() {
-//                    if (item.id == mod.transId) {
-//                        item.upload_size = mod.doneSize
-//                        item.state = mod.state
-//                        self.tableView.reloadRows(at: [IndexPath(row: idx, section: 0)], with: .none)
-//                    }
-//                }
+            if let mod = data.userInfo?["mod"] as? FileTransData {
+                for (idx, item) in self.list.enumerated() {
+                    for (row, data) in item.lists.enumerated() {
+                        if (data.id == mod.transId) {
+                            data.upload_size = mod.doneSize
+                            data.state = mod.state
+                            self.tableView.reloadRows(at: [IndexPath(row: row, section: idx)], with: .none)
+                        }
+                    }
+                }
             }
         }
         
@@ -107,7 +108,8 @@ class UploadFileController: UIViewController {
         }
         self.view.addSubview(self.noContentV)
         self.noContentV.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         self.noContentV.upBtn.isHidden = true
         self.noContentV.infoL.text = "No files."
@@ -164,7 +166,7 @@ class UploadFileController: UIViewController {
         self.addData()
     }
     
-    func resetUpload(_ model: VideoData) {
+    func tryUpload(_ model: VideoData) {
         UploadDownTool.instance.upload(model)
     }
 }
@@ -195,6 +197,14 @@ extension UploadFileController: UITableViewDelegate, UITableViewDataSource {
                                 self.addData()
                             }
                             self.present(vc, animated: false)
+                        }
+                    }
+                    uCell.failBlock = {[weak self] in
+                        guard let self = self else { return }
+                        data.state = .uploadWait
+                        DispatchQueue.main.async {
+                            self.tableView.reloadRows(at: [indexPath], with: .none)
+                            self.tryUpload(data)
                         }
                     }
                     return uCell
@@ -258,22 +268,28 @@ extension UploadFileController: UITableViewDelegate, UITableViewDataSource {
             make.centerY.equalToSuperview()
         }
         delBtn.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 96, height: 32))
-            make.right.equalTo(-14)
+            make.centerY.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 72, height: 32))
         }
         if let m = self.list.safeIndex(section) {
             label.text = m.state.rawValue + " · " + "\(m.lists.count)"
         }
-        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeadAction(_:)))
-        view.tag = section
-        view.addGestureRecognizer(tap)
+        delBtn.tag = section
+        delBtn.addTarget(self, action: #selector(clickHeadAction(_:)), for: .touchUpInside)
         return view
     }
     
-    @objc func clickHeadAction(_ sender: UITapGestureRecognizer) {
-        if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
-            self.removeData(m.state)
+    @objc func clickHeadAction(_ sender: UIButton) {
+        if let m = self.list.safeIndex(sender.tag) {
+            let vc = AlertController(title: "Delete", info: "Do you want to delete these files?")
+            vc.modalPresentationStyle = .overFullScreen
+            vc.okBlock = {[weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.removeData(m.state)
+                }
+            }
+            self.present(vc, animated: false)
         }
     }
 }

@@ -38,7 +38,7 @@ class SaveCell: UICollectionViewCell {
         self.backgroundColor = .white
         self.layer.cornerRadius = 14
         self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.rgbHex("#DDF75B", 0.12).cgColor
+        self.layer.borderColor = UIColor.rgbHex("#DDF75B").cgColor
         self.layer.masksToBounds = true
         self.setUI()
     }
@@ -61,7 +61,7 @@ class SaveCell: UICollectionViewCell {
             make.left.right.equalToSuperview()
         }
         self.nameL.snp.makeConstraints { make in
-            make.top.equalTo(self.nameL.snp.bottom).offset(6)
+            make.top.equalTo(self.subNameL.snp.bottom).offset(6)
             make.left.right.equalToSuperview()
         }
     }

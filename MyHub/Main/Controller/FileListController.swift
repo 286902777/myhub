@@ -68,9 +68,9 @@ class FileListController: SuperController {
         }
         self.view.addSubview(self.uploadBtn)
         self.uploadBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview()
+            make.right.equalTo(-14)
             make.bottom.equalTo(-(BottomSafeH + 49))
-            make.size.equalTo(CGSize(width: 84, height: 30))
+            make.size.equalTo(CGSize(width: 56, height: 56))
         }
         self.uploadBtn.addTarget(self, action: #selector(clickUploadAction), for: .touchUpInside)
         self.netRequest()
@@ -158,6 +158,7 @@ class FileListController: SuperController {
                     let copyVC = ShareCopyController()
                     copyVC.modalPresentationStyle = .overFullScreen
                     copyVC.url = url
+                    copyVC.isIndex = false
                     self.present(copyVC, animated: false)
                 }
             }

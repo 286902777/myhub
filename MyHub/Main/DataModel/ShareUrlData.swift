@@ -34,28 +34,28 @@ class ShareRootData: SuperData {
 }
 
 class ShareData: SuperData {
-    var id: String = ""
-    var user_id: String = ""
-    var create_time: Double = 0
-    var update_time: Double = 0
-    var share_type: HUB_ShareType = .file
+//    var id: String = ""
+//    var user_id: String = ""
+//    var create_time: Double = 0
+//    var update_time: Double = 0
+//    var share_type: HUB_ShareType = .file
     var url: String = ""
-    var expire_unit: HUB_ShareDateType = .none
-    var expire_unit_value: Int = 0
-    var expire_time: Int = 0
-    var items: [ShareFileItemData] = []
+//    var expire_unit: HUB_ShareDateType = .none
+//    var expire_unit_value: Int = 0
+//    var expire_time: Int = 0
+//    var items: [ShareFileItemData] = []
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "roughs")
-        mapper.specify(property: &user_id, name: "5cb5cpczf2")
-        mapper.specify(property: &create_time, name: "brambrack")
-        mapper.specify(property: &update_time, name: "iodinating")
-        mapper.specify(property: &share_type, name: "emmetropic")
-        mapper.specify(property: &url, name: "tossut")
-        mapper.specify(property: &expire_unit, name: "inhalers")
-        mapper.specify(property: &expire_unit_value, name: "absorbency")
-        mapper.specify(property: &expire_time, name: "absorbency")
-        mapper.specify(property: &items, name: "oots")
+//        mapper.specify(property: &id, name: "u8c6opifeq")
+//        mapper.specify(property: &user_id, name: "powters")
+//        mapper.specify(property: &create_time, name: "hakamim")
+//        mapper.specify(property: &update_time, name: "persuade")
+//        mapper.specify(property: &share_type, name: "frapler")
+        mapper.specify(property: &url, name: "spitting")
+//        mapper.specify(property: &expire_unit, name: "pfnzojbksy")
+//        mapper.specify(property: &expire_unit_value, name: "uwdstbx2qv")
+//        mapper.specify(property: &expire_time, name: "dewberries")
+//        mapper.specify(property: &items, name: "hvrkgbosn_")
     }
 }
 
@@ -135,12 +135,12 @@ class OpenUrlData: SuperData {
     }
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &file_id, name: "glancer")
-        mapper.specify(property: &create_time, name: "skywriters")
-        mapper.specify(property: &vid_qty, name: "reverters")
-        mapper.specify(property: &directory, name: "watchmanly")
-        mapper.specify(property: &video, name: "plentitude")
-        mapper.specify(property: &file_meta, name: "estragole")
+        mapper.specify(property: &file_id, name: "ubeh56cemj")
+        mapper.specify(property: &create_time, name: "engraphia")
+        mapper.specify(property: &vid_qty, name: "ondine")
+        mapper.specify(property: &directory, name: "smudgeless")
+        mapper.specify(property: &video, name: "evinces")
+        mapper.specify(property: &file_meta, name: "bart")
     }
 }
 
@@ -151,10 +151,10 @@ class OpenFileMetaData: SuperData {
     var size: Double = 0
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &display_name, name: "herniary")
-        mapper.specify(property: &ext, name: "fv6xnkvids")
-        mapper.specify(property: &thumbnail, name: "nvzlnh4k82")
-        mapper.specify(property: &size, name: "xce_7pujkz")
+        mapper.specify(property: &display_name, name: "steelmaker")
+        mapper.specify(property: &ext, name: "beamed")
+        mapper.specify(property: &thumbnail, name: "plutocrats")
+        mapper.specify(property: &size, name: "neshly")
     }
 }
 

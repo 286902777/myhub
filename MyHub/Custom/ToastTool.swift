@@ -277,20 +277,11 @@ public extension UIView {
             wrapperView.layer.shadowRadius = style.shadowRadius
             wrapperView.layer.shadowOffset = style.shadowOffset
         }
-        switch image {
-        case .success:
-            wrapperView.backgroundColor = UIColor.rgbHex("#DDF75B")
-        case .fail:
-            wrapperView.backgroundColor = UIColor.rgbHex("#F0166C")
-        case .warning:
-            wrapperView.backgroundColor = UIColor.rgbHex("#FF7A34")
-        case .none:
-            wrapperView.backgroundColor = UIColor.rgbHex("#434343")
-        }
+    
         if image != .none {
             imageView = UIImageView(image: UIImage(named: image.rawValue))
             imageView?.contentMode = .scaleAspectFit
-            imageView?.frame = CGRect(x: style.horizontalPadding, y: style.verticalPadding, width: style.imageSize.width, height: style.imageSize.height)
+            imageView?.frame = CGRect(x: style.horizontalPadding, y: 0, width: style.imageSize.width, height: style.imageSize.height)
         }
 
         var imageRect = CGRect.zero
@@ -307,7 +298,6 @@ public extension UIView {
             titleLabel?.font = style.titleFont
             titleLabel?.textAlignment = style.titleAlignment
             titleLabel?.lineBreakMode = .byTruncatingTail
-            titleLabel?.textColor = style.titleColor
             titleLabel?.backgroundColor = UIColor.clear
             titleLabel?.text = title;
             
@@ -325,7 +315,6 @@ public extension UIView {
             messageLabel?.font = style.messageFont
             messageLabel?.textAlignment = (image != .none) ? .left : style.messageAlignment
             messageLabel?.lineBreakMode = .byTruncatingTail;
-            messageLabel?.textColor = style.messageColor
             messageLabel?.backgroundColor = UIColor.clear
             
             let maxMessageSize = CGSize(width: (self.bounds.size.width * style.maxWidthPercentage) - imageRect.size.width, height: self.bounds.size.height * style.maxHeightPercentage)
@@ -337,6 +326,25 @@ public extension UIView {
             }
         }
   
+        switch image {
+        case .success:
+            messageLabel?.textColor = UIColor.rgbHex("#14171C")
+            titleLabel?.textColor = UIColor.rgbHex("#14171C")
+            wrapperView.backgroundColor = UIColor.rgbHex("#DDF75B")
+        case .fail:
+            messageLabel?.textColor = .white
+            titleLabel?.textColor = .white
+            wrapperView.backgroundColor = UIColor.rgbHex("#F0166C")
+        case .warning:
+            messageLabel?.textColor = .white
+            titleLabel?.textColor = .white
+            wrapperView.backgroundColor = UIColor.rgbHex("#FF7A34")
+        case .none:
+            messageLabel?.textColor = .white
+            titleLabel?.textColor = .white
+            wrapperView.backgroundColor = UIColor.rgbHex("#434343")
+        }
+        
         var titleRect = CGRect.zero
         
         if let titleLabel = titleLabel {
@@ -363,7 +371,9 @@ public extension UIView {
         let wrapperHeight = max((textMaxY + style.verticalPadding), (imageRect.size.height + (style.verticalPadding * 2.0)))
         
         wrapperView.frame = CGRect(x: 0.0, y: 0.0, width: wrapperWidth, height: wrapperHeight)
-        
+        if image != .none {
+            imageView?.frame = CGRect(x: style.horizontalPadding, y: (wrapperHeight - style.imageSize.height) * 0.5, width: style.imageSize.width, height: style.imageSize.height)
+        }
         if let titleLabel = titleLabel {
             titleRect.size.width = longerWidth
             titleLabel.frame = titleRect

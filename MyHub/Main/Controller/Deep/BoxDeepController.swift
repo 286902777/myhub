@@ -112,7 +112,7 @@ class BoxDeepController: UIViewController {
             make.left.equalTo(14)
             make.right.equalTo(-14)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            make.height.equalTo(0)
+            make.height.equalTo(64)
         }
         self.bottomView.isHidden = true
         self.bottomView.clickBlock = { [weak self] idx in
@@ -138,6 +138,7 @@ class BoxDeepController: UIViewController {
                     guard HubTool.share.userIsLogin(self) else { return }
                     HubTool.share.eventSource = .download
                     HubTool.share.adsPlayState = .download
+                    self.downFile()
 //                    AdmobTool.instance.show(.mode_down) { success in
 //                        if success == false {
 //                            self.downData()
@@ -177,6 +178,7 @@ class BoxDeepController: UIViewController {
     }
     
     @objc func clickCloseAction() {
+        TabbarTool.instance.displayOrHidden(true)
         self.dismiss(animated: false)
     }
     
@@ -196,7 +198,7 @@ class BoxDeepController: UIViewController {
             DispatchQueue.main.async {
                 LoadManager.instance.dismiss()
                 if status == .success {
-                    let firstLink: Bool = UserDefaults.standard.bool(forKey: FirstOpenLink)
+//                    let firstLink: Bool = UserDefaults.standard.bool(forKey: FirstOpenLink)
 //                    EventTool.instance.addEvent(type: .custom, event: .landpageExpose, paramter: [EventParaName.value.rawValue: EventParaValue.box.rawValue, EventParaName.linkSource.rawValue: ESBaseTool.instance.isLinkDeep ? EventParaValue.delayLink.rawValue : EventParaValue.link.rawValue, EventParaName.isFirstLink.rawValue: !firstLink])
                     self.tableView.isHidden = false
                     LoginManager.share.userId = model.user.id
@@ -230,9 +232,8 @@ class BoxDeepController: UIViewController {
         HubTool.share.uploadPlatform = .box
         switch model.file_type {
         case .folder:
-            break
-//            let vc = FolderListController(model: ESBaseTool.instance.changeModel(model, linkId: self.linkId, uId: self.userModel.id, platform: ESBaseTool.instance.platform), linkId: self.linkId, userId: self.userModel.id, userName: self.userModel.username, platform: ESBaseTool.instance.platform)
-//            self.navigationController?.pushViewController(vc, animated: true)
+            let vc = BoxDeepListController(model: HubTool.share.changeModel(model, linkId: self.linkId, uId: self.userModel.id, platform: HubTool.share.platform), linkId: self.linkId, userId: self.userModel.id, userName: self.userModel.username, platform: HubTool.share.platform)
+            self.navigationController?.pushViewController(vc, animated: true)
         case .photo:
             let vc = OpenPhotoController(model: HubTool.share.changeModel(model, linkId: self.linkId, uId: self.userModel.id, platform: HubTool.share.platform))
             self.navigationController?.pushViewController(vc, animated: true)
@@ -297,7 +298,7 @@ extension BoxDeepController: UITableViewDelegate, UITableViewDataSource {
             make.centerY.equalToSuperview()
         }
         let btn = UIButton()
-        btn.setTitle("", for: .normal)
+        btn.setTitle("Select all", for: .normal)
         btn.titleLabel?.font = UIFont.GoogleSans(weight: .medium, size: 12)
         btn.setTitleColor(UIColor.rgbHex("#14171C", 0.5), for: .normal)
         btn.addTarget(self, action: #selector(clickAllAction), for: .touchUpInside)

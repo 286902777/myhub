@@ -597,7 +597,6 @@ class HttpManager {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(HttpManager.share.userHostAddress, forHTTPHeaderField: "host")
         request.setValue(HttpHeadValue.downLoadUrl.rawValue, forHTTPHeaderField: userHeadKey)
-//        request.setValue(LoginManager.share.userToken, forHTTPHeaderField: tokenKey)
         
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
@@ -609,10 +608,10 @@ class HttpManager {
                 if let info = data {
                     if let json = String(data: info, encoding: .utf8), let address = json.AESMovieAddress(), address.count > 0 {
                         completion(status, address, nil)
+                        return
                     }
-                } else {
-                    completion(.other, "", "Request fail!")
                 }
+                completion(.other, "", "Request fail!")
             case .permission:
                 HttpManager.share.premissonLaterLogin()
                 completion(status, "", nil)

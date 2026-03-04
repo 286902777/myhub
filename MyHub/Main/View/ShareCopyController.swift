@@ -29,6 +29,7 @@ class ShareCopyController: UIViewController {
         label.font = UIFont.GoogleSans(weight: .medium, size: 18)
         label.textColor = UIColor.rgbHex("#14171C")
         label.text = "Copy completed"
+        label.textAlignment = .center
         return label
     }()
     
@@ -37,7 +38,8 @@ class ShareCopyController: UIViewController {
         label.numberOfLines = 0
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.5
-        label.attributedText = NSAttributedString(string: "Copy completed. Please ensure the shared content is legal, complies with all regulations, and does not include illegal or infringing material. Any violations will result in content removal and possible account suspension.", attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.GoogleSans(weight: .regular, size: 14), .foregroundColor: UIColor.rgbHex("#14171C")])
+        paragraphStyle.alignment = .center
+        label.attributedText = NSAttributedString(string: "Please ensure the shared content is legal, complies with all regulations, and does not include illegal or infringing material. Any violations will result in content removal and possible account suspension.", attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.GoogleSans(weight: .regular, size: 14), .foregroundColor: UIColor.rgbHex("#14171C")])
         return label
     }()
     
@@ -60,6 +62,8 @@ class ShareCopyController: UIViewController {
             
     var url: String = ""
     
+    var isIndex: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -68,48 +72,52 @@ class ShareCopyController: UIViewController {
     }
 
     func setUI() {
-        self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
-        self.contentV.addRedius([.topLeft, .topRight], 12)
-        self.okBtn.titleLabel?.font = UIFont.GoogleSans(weight: .regular, size: 14)
+        if self.isIndex {
+            self.view.backgroundColor = .clear
+        } else {
+            self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
+        }
         self.view.addSubview(self.contentV)
-        self.view.addSubview(self.imageV)
         self.view.addSubview(self.closeBtn)
+        self.contentV.addSubview(self.imageV)
         self.contentV.addSubview(self.titleL)
         self.contentV.addSubview(self.infoL)
         self.contentV.addSubview(self.okBtn)
 
         self.contentV.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+            make.left.equalTo(14)
+            make.right.equalTo(-14)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         
         self.imageV.snp.makeConstraints { make in
-            make.top.equalTo(24)
+            make.top.equalTo(16)
             make.centerX.equalToSuperview()
             make.size.equalTo(CGSize(width: 147, height: 80))
         }
         
         self.closeBtn.snp.makeConstraints { make in
             make.right.equalToSuperview()
-            make.bottom.equalTo(self.imageV.snp.top)
+            make.bottom.equalTo(self.contentV.snp.top)
             make.size.equalTo(CGSize(width: 52, height: 52))
         }
  
         self.titleL.snp.makeConstraints { make in
-            make.top.equalTo(24)
+            make.top.equalTo(self.imageV.snp.bottom).offset(16)
             make.left.equalTo(16)
             make.right.equalTo(-16)
         }
         self.infoL.snp.makeConstraints { make in
-            make.top.equalTo(self.titleL.snp.bottom).offset(24)
+            make.top.equalTo(self.titleL.snp.bottom).offset(16)
             make.left.equalTo(14)
             make.right.equalTo(-14)
         }
         self.okBtn.snp.makeConstraints { make in
-            make.top.equalTo(self.infoL.snp.bottom).offset(28)
+            make.top.equalTo(self.infoL.snp.bottom).offset(16)
             make.left.equalTo(16)
             make.right.equalTo(-16)
             make.height.equalTo(44)
-            make.bottom.equalTo(-(BottomSafeH + 16))
+            make.bottom.equalTo(-16)
         }
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         self.okBtn.addTarget(self, action: #selector(clickOkAction), for: .touchUpInside)
@@ -117,7 +125,9 @@ class ShareCopyController: UIViewController {
     
     @objc func clickOkAction() {
         ToastTool.instance.show("Employ MyHub to streamline sharing and management of your records.")
-        self.dismiss(animated: false)
+        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 2) { [weak self] in
+            self?.dismiss(animated: false)
+        }
     }
     
     @objc func clickCloseAction() {

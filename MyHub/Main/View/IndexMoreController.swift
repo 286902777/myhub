@@ -71,7 +71,7 @@ class IndexMoreController: UIViewController {
     }
     
     func setUI() {
-        self.view.backgroundColor = UIColor.rgbHex("#000000", 0.5)
+        self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.nameL)
         self.contentView.addSubview(self.collectV)
@@ -150,9 +150,9 @@ class IndexMoreController: UIViewController {
                 self.collectV.reloadData()
             }
             if let mod = HubDB.instance.readDatas().first(where: {$0.id == self.model.id}) {
-//                FileUploadDownTool.instance.downLoad(mod)
-//            } else {
-//                FileUploadDownTool.instance.downLoad(self.model)
+                UploadDownTool.instance.downLoad(mod)
+            } else {
+                UploadDownTool.instance.downLoad(self.model)
             }
         case .downloading:
             break
@@ -165,13 +165,25 @@ class IndexMoreController: UIViewController {
             vc.resultBlock = { [weak self] url in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
+                    self.view.isHidden = false
                     let copyVC = ShareCopyController()
                     copyVC.modalPresentationStyle = .overFullScreen
                     copyVC.url = url
                     self.present(copyVC, animated: false)
                 }
             }
-            self.present(vc, animated: false)
+            vc.closeBlock = {[weak self]  in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.view.isHidden = false
+                }
+            }
+            self.present(vc, animated: false) { [weak self]  in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.view.isHidden = true
+                }
+            }
         case .rename:
             guard self.userIsLogin() else { return }
             let vc = NewFolderController(parentId: "")

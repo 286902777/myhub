@@ -61,7 +61,7 @@ class ShareDayController: UIViewController {
     private var type: HUB_ShareDateType = .none
 
     var clickBlock:((_ name: HUB_ShareDayName, _ type: HUB_ShareDateType) -> Void)?
-    
+
     init(name: HUB_ShareDayName, type: HUB_ShareDateType) {
         super.init(nibName: nil, bundle: nil)
         self.name = name
@@ -79,7 +79,7 @@ class ShareDayController: UIViewController {
     }
     
     func setUI() {
-        self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
+        self.view.backgroundColor = UIColor.clear
         self.view.addSubview(self.contentV)
         self.view.addSubview(self.closeBtn)
         self.contentV.addSubview(self.titleL)

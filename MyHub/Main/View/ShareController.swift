@@ -108,7 +108,8 @@ class ShareController: UIViewController {
     private var list: [VideoData] = []
 
     var resultBlock: ((_ url: String) -> Void)?
-    
+    var closeBlock: (() -> Void)?
+
     init(list: [VideoData]) {
         self.list = list
         super.init(nibName: nil, bundle: nil)
@@ -141,6 +142,7 @@ class ShareController: UIViewController {
             make.right.equalTo(-14)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
+        
         self.closeBtn.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.bottom.equalTo(self.contentV.snp.top)
@@ -230,6 +232,8 @@ class ShareController: UIViewController {
     }
     
     @objc func clickCloseAction() {
-        self.dismiss(animated: false)
+        self.dismiss(animated: false) { [weak self] in
+            self?.closeBlock?()
+        }
     }
 }

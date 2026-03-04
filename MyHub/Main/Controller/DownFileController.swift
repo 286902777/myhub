@@ -122,7 +122,8 @@ class DownFileController: UIViewController {
         }
         self.view.addSubview(self.noContentV)
         self.noContentV.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.top.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
         self.noContentV.upBtn.isHidden = true
         self.noContentV.infoL.text = "No files."
@@ -187,17 +188,22 @@ class DownFileController: UIViewController {
         self.addData()
     }
     
-    func removeData() {
-        self.list.forEach { m in
-            
-        }
-        self.list.removeAll()
-        self.tableView.reloadData()
-        self.refreshUI()
-    }
-    
     func resetDown(_ model: VideoData) {
         UploadDownTool.instance.downLoad(model)
+    }
+    
+    @objc func clickHeadAction(_ sender: UIButton) {
+        if let m = self.list.safeIndex(sender.tag) {
+            let vc = AlertController(title: "Delete", info: "Do you want to delete these files?")
+            vc.modalPresentationStyle = .overFullScreen
+            vc.okBlock = {[weak self] in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.removeData(m.state)
+                }
+            }
+            self.present(vc, animated: false)
+        }
     }
 }
 
@@ -272,6 +278,39 @@ extension DownFileController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.list.count
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        32
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 32))
+        view.backgroundColor = .clear
+        let label = UILabel()
+        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
+        label.textColor = UIColor.rgbHex("#14171C", 0.75)
+        let delBtn = UIButton()
+        delBtn.titleLabel?.font = UIFont.GoogleSans(size: 12)
+        delBtn.setTitle(" Delete", for: .normal)
+        delBtn.setImage(UIImage(named: "delete_down"), for: .normal)
+        delBtn.setTitleColor(UIColor.rgbHex("#FF1A75"), for: .normal)
+        view.addSubview(label)
+        view.addSubview(delBtn)
+        label.snp.makeConstraints { make in
+            make.left.equalTo(14)
+            make.centerY.equalToSuperview()
+        }
+        delBtn.snp.makeConstraints { make in
+            make.centerY.right.equalToSuperview()
+            make.size.equalTo(CGSize(width: 72, height: 32))
+        }
+        if let m = self.list.safeIndex(section) {
+            label.text = m.state.rawValue + " · " + "\(m.lists.count)"
+        }
+        delBtn.tag = section
+        delBtn.addTarget(self, action: #selector(clickHeadAction(_:)), for: .touchUpInside)
+        return view
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -92,6 +92,11 @@ class DownController: SuperController {
     
     let uploadVC = UploadFileController()
     let downVC = DownFileController()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        TabbarTool.instance.displayOrHidden(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navbar.backBtn.isHidden = true
@@ -130,8 +135,9 @@ class DownController: SuperController {
         
         let ftap = UITapGestureRecognizer(target: self, action: #selector(clickFilterAction(_:)))
         let stap = UITapGestureRecognizer(target: self, action: #selector(clickFilterAction(_:)))
-        self.downV.addGestureRecognizer(ftap)
+        self.uploadV.addGestureRecognizer(ftap)
         self.downV.addGestureRecognizer(stap)
+        addController()
     }
     
     func addController() {

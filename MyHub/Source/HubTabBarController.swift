@@ -35,7 +35,11 @@ class HubTabBarController: UIViewController {
         }
         NotificationCenter.default.addObserver(forName: Noti_Logout, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.exitLogin()
+            self.tabIdxToIndex()
+        }
+        NotificationCenter.default.addObserver(forName: Noti_ChangeTabbarToIndex, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.tabIdxToIndex()
         }
     }
     
@@ -104,7 +108,7 @@ class HubTabBarController: UIViewController {
         }
     }
     
-    func exitLogin() {
+    func tabIdxToIndex() {
         self.currentIdx = 0
         self.tabbar.currentIdx = self.currentIdx
         if let currentVC = self.controllers.first {

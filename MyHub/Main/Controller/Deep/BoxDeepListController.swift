@@ -42,7 +42,7 @@ class BoxDeepListController: UIViewController {
     let headView: BoxDeepListHeadView = BoxDeepListHeadView.view()
     let bottomView: DeepBottomView = DeepBottomView.view()
     private var list: [VideoData] = []
-
+    private var allSelect: Bool = false
     init(model: VideoData, linkId: String, userId: String, userName: String, platform: HUB_PlatformType) {
         self.model = model
         self.linkId = linkId
@@ -99,9 +99,29 @@ class BoxDeepListController: UIViewController {
             make.left.equalTo(14)
             make.right.equalTo(-14)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            make.height.equalTo(0)
+            make.height.equalTo(64)
         }
         self.bottomView.isHidden = true
+        self.headView.clickBlock = { [weak self] idx in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch idx {
+                case 0:
+                    self.navigationController?.popViewController(animated: true)
+                default:
+                    self.clickAllAction()
+                }
+            }
+        }
+    }
+    
+    func clickAllAction() {
+        self.allSelect = !self.allSelect
+        self.list.forEach { m in
+            m.isSelect = self.allSelect
+        }
+        self.disPlayBottom()
+        self.tableView.reloadData()
     }
     
     func addFooter() {

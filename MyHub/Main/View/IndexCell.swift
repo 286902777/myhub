@@ -38,22 +38,27 @@ class IndexCell: UITableViewCell {
         return label
     }()
     
+    lazy var stackBgV: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        return view
+    }()
+    
     lazy var stackV: UIStackView = {
         let view = UIStackView()
-        view.spacing = 0
+        view.spacing = 4
         view.axis = .horizontal
+        return view
+    }()
+    
+    lazy var stateV: UIImageView = {
+        let view = UIImageView()
         return view
     }()
     
     lazy var stateL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10, weight: .regular)
-        label.textColor = UIColor.rgbHex("#E10A35")
-        return label
-    }()
-    
-    lazy var spaceL: UILabel = {
-        let label = UILabel()
+        label.font = UIFont.GoogleSans(weight: .medium, size: 10)
         return label
     }()
     
@@ -83,10 +88,12 @@ class IndexCell: UITableViewCell {
         self.mainV.addSubview(iconV)
         self.mainV.addSubview(nameL)
         self.mainV.addSubview(infoL)
-        self.mainV.addSubview(stackV)
+        self.mainV.addSubview(stackBgV)
+        self.mainV.addSubview(self.moreBtn)
+
+        self.stackBgV.addSubview(stackV)
+        self.stackV.addArrangedSubview(self.stateV)
         self.stackV.addArrangedSubview(self.stateL)
-        self.stackV.addArrangedSubview(self.spaceL)
-        self.stackV.addArrangedSubview(self.moreBtn)
 
         mainV.snp.makeConstraints { make in
             make.edges.equalTo(UIEdgeInsets(top: 0, left: 14, bottom: 10, right: 14))
@@ -99,28 +106,34 @@ class IndexCell: UITableViewCell {
             make.size.equalTo(CGSize(width: 44, height: 44))
         }
         
+        stackBgV.snp.makeConstraints { make in
+            make.top.right.equalToSuperview()
+            make.height.equalTo(28)
+        }
         stackV.snp.makeConstraints { make in
-            make.centerY.right.equalToSuperview()
-            make.height.equalTo(44)
+            make.left.equalTo(6)
+            make.right.equalTo(-6)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(18)
+        }
+        
+        stateV.snp.makeConstraints { make in
+            make.width.equalTo(18)
         }
         
         moreBtn.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 44, height: 44))
             make.right.centerY.equalToSuperview()
         }
-   
-        spaceL.snp.makeConstraints { make in
-            make.width.equalTo(12)
-        }
         
         nameL.snp.makeConstraints { make in
             make.left.equalTo(iconV.snp.right).offset(12)
-            make.right.equalTo(stackV.snp.left)
+            make.right.equalTo(stackBgV.snp.left)
             make.bottom.equalTo(self.mainV.snp.centerY).offset(-5)
         }
         infoL.snp.makeConstraints { make in
             make.left.equalTo(iconV.snp.right).offset(12)
-            make.right.equalTo(stackV.snp.left)
+            make.right.equalTo(stackBgV.snp.left)
             make.top.equalTo(self.mainV.snp.centerY).offset(5)
         }
         self.moreBtn.addTarget(self, action: #selector(clickMoreAction), for: .touchUpInside)
@@ -138,16 +151,54 @@ class IndexCell: UITableViewCell {
             self.iconV.setImage(data.thumbnail, placeholder: "video_bg")
             self.infoL.text = "\(data.size) · \(data.pubData.dateToYMD())"
         }
-//        self.moreBtn.isHidden = data.isPass != .passed
-        self.spaceL.isHidden = data.isPass == .passed
-        self.stateL.isHidden = data.isPass == .passed
+        self.moreBtn.isHidden = data.isPass != .passed
+        self.stackBgV.isHidden = data.isPass == .passed
         switch data.isPass {
         case .initl:
             self.stateL.text = "Reviewing"
-        case .passed:
-            self.stateL.text = ""
+            self.stateL.textColor = UIColor.rgbHex("#FF7A34")
+            self.stateV.image = UIImage(named: "initl")
+            self.stackBgV.backgroundColor = UIColor.rgbHex("#FF7A34", 0.1)
+            self.nameL.snp.remakeConstraints { make in
+                make.left.equalTo(iconV.snp.right).offset(12)
+                make.bottom.equalTo(self.mainV.snp.centerY).offset(-5)
+                make.right.equalTo(self.stackBgV.snp.left).offset(-14)
+            }
+            self.infoL.snp.remakeConstraints { make in
+                make.right.equalTo(self.stackBgV.snp.left).offset(-14)
+                make.left.equalTo(iconV.snp.right).offset(12)
+                make.top.equalTo(self.mainV.snp.centerY).offset(5)
+            }
+            self.stackBgV.layoutIfNeeded()
+            self.stackBgV.addRedius([.bottomLeft], 14, self.stackBgV.bounds)
         case .rejected:
-            self.stateL.text = "Failed"
+            self.stateL.text = "Review filed"
+            self.stateL.textColor = UIColor.rgbHex("#FF1A75")
+            self.stateV.image = UIImage(named: "rejected")
+            self.stackBgV.backgroundColor = UIColor.rgbHex("#FF1A75", 0.1)
+            self.nameL.snp.remakeConstraints { make in
+                make.left.equalTo(iconV.snp.right).offset(12)
+                make.bottom.equalTo(self.mainV.snp.centerY).offset(-5)
+                make.right.equalTo(self.stackBgV.snp.left).offset(-14)
+            }
+            self.infoL.snp.remakeConstraints { make in
+                make.right.equalTo(self.stackBgV.snp.left).offset(-14)
+                make.left.equalTo(iconV.snp.right).offset(12)
+                make.top.equalTo(self.mainV.snp.centerY).offset(5)
+            }
+            self.stackBgV.layoutIfNeeded()
+            self.stackBgV.addRedius([.bottomLeft], 14, self.stackBgV.bounds)
+        default:
+            self.nameL.snp.remakeConstraints { make in
+                make.left.equalTo(iconV.snp.right).offset(12)
+                make.bottom.equalTo(self.mainV.snp.centerY).offset(-5)
+                make.right.equalTo(self.moreBtn.snp.left).offset(-14)
+            }
+            self.infoL.snp.remakeConstraints { make in
+                make.left.equalTo(iconV.snp.right).offset(12)
+                make.top.equalTo(self.mainV.snp.centerY).offset(5)
+                make.right.equalTo(self.moreBtn.snp.left).offset(-14)
+            }
         }
         self.nameL.text = data.name
     }

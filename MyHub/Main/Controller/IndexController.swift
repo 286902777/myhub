@@ -220,8 +220,9 @@ class IndexController: SuperController {
     func driveDeep(_ linkId: String) {
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
             guard let self = self else { return }
-            self.tabBarController?.selectedIndex = 0
+            NotificationCenter.default.post(name: Noti_ChangeTabbarToIndex, object: nil, userInfo: nil)
             self.popRootVC()
+            DeepManager.share.openBoxDeep(linkId, self)
 //            let vc = DriveDeepController(linkId: linkId)
 //            vc.returnBlock = {
 //                PlayManager.instance.adsPushPremium(HubTool.share.adsPlayState, .vip_home, self)
@@ -474,27 +475,27 @@ class IndexController: SuperController {
                 }
             }
         }
-        group.enter()
-        queue.async { [weak self] in
-            guard let self = self else { return }
-            if let m = self.channelList.first(where: {$0.platform != .box}) {
-                let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
-                    if refresh {
-                        self.netRequestUpload()
-                        return
-                    }
-                    if status == .success {
-                        if list.count > 0 {
-                            let userArr = self.insertUser(self.channelList, list, m.platform)
-                            channels = userArr
-                        }
-                    }
-                    group.leave()
-                }
-            } else {
-                group.leave()
-            }
-        }
+//        group.enter()
+//        queue.async { [weak self] in
+//            guard let self = self else { return }
+//            if let m = self.channelList.first(where: {$0.platform != .box}) {
+//                let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
+//                    if refresh {
+//                        self.netRequestUpload()
+//                        return
+//                    }
+//                    if status == .success {
+//                        if list.count > 0 {
+//                            let userArr = self.insertUser(self.channelList, list, m.platform)
+//                            channels = userArr
+//                        }
+//                    }
+//                    group.leave()
+//                }
+//            } else {
+//                group.leave()
+//            }
+//        }
         group.notify(queue: queue) {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -524,19 +525,20 @@ class IndexController: SuperController {
     }
     
     @objc func clickHeadAction(_ sender: UITapGestureRecognizer) {
-        if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
-            if m.type == .channel {
-//                let vc = ChannelListController()
-//                vc.model = m.users.first ?? ChannelUserData()
+        self.driveDeep("2028752637255618561")
+//        if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
+//            if m.type == .channel {
+////                let vc = ChannelListController()
+////                vc.model = m.users.first ?? ChannelUserData()
+////                vc.hidesBottomBarWhenPushed = true
+////                self.navigationController?.pushViewController(vc, animated: true)
+//            } else {
+//                let vc = IndexListController(list: m.lists, type: m.type)
 //                vc.hidesBottomBarWhenPushed = true
+//                TabbarTool.instance.displayOrHidden(false)
 //                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                let vc = IndexListController(list: m.lists, type: m.type)
-                vc.hidesBottomBarWhenPushed = true
-                TabbarTool.instance.displayOrHidden(false)
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
+//            }
+//        }
     }
 }
 
@@ -546,7 +548,17 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
         if let m = self.list.safeIndex(indexPath.section) {
             switch m.type {
             case .history:
-                break
+                let hisCell: IndexHistoryListCell = tableView.dequeueReusableCell(withIdentifier: historyCellIdentifier) as! IndexHistoryListCell
+                hisCell.initData(m.lists)
+                hisCell.clickBlock = { [weak self] data in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        HubTool.share.playSource = .history
+                        HubTool.share.eventSource = .history
+                        self.pushSubVC(data, m.lists)
+                    }
+                }
+                return hisCell
             case .channel:
                 break
             case .upload:
@@ -634,7 +646,12 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        74
+        if let m = self.list.safeIndex(indexPath.section) {
+            if m.type == .history {
+                return 120
+            }
+        }
+        return 74
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -643,13 +660,8 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
                 HubTool.share.email = mod.email
                 HubTool.share.uId = mod.userId
                 HubTool.share.uploadPlatform = mod.platform
-                if m.type == .history {
-                    HubTool.share.playSource = .history
-                    HubTool.share.eventSource = .history
-                } else {
-                    HubTool.share.playSource = .history
-                    HubTool.share.eventSource = .history
-                }
+                HubTool.share.playSource = .upload_home
+                HubTool.share.eventSource = .upload
                 self.pushSubVC(mod, m.lists)
             }
         }
