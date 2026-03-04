@@ -85,7 +85,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func configAppFlyer() {
         AppsFlyerLib.shared().appsFlyerDevKey = "sfasdfa"
-        AppsFlyerLib.shared().appleAppID = "61231231224623"
+        AppsFlyerLib.shared().appleAppID = "83975813745891"
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().deepLinkDelegate = self
         AppsFlyerLib.shared().start()

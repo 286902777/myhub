@@ -2,7 +2,7 @@
 //  TackManager.swift
 //  MyHub
 //
-//  Created by Ever on 2026/3/4.
+//  Created by hub on 2026/3/4.
 //
 
 import Foundation
