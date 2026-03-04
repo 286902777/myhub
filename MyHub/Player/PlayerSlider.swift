@@ -10,7 +10,7 @@ import UIKit
 class PlayerSlider: UISlider {
     private var lastThumbBounds = CGRect.zero
 
-    var thumbClickableOffset = CGPoint(x: 30.0, y: 40.0)
+    var thumbClickableOffset = CGPoint(x: 20.0, y: 20.0)
 
     var verticalSliderOffset: CGFloat = 0.0
 

@@ -53,6 +53,7 @@ class CircleProgress: UIView {
         textLabel.textColor = .white
         textLabel.textAlignment = .center
         textLabel.font = UIFont.GoogleSans(weight: .medium, size: 16)
+        textLabel.text = "0MB"
         return textLabel
     }()
     
@@ -61,6 +62,7 @@ class CircleProgress: UIView {
         textLabel.textColor = UIColor.rgbHex("#FFFFFF", 0.5)
         textLabel.textAlignment = .center
         textLabel.font = UIFont.GoogleSans(weight: .medium, size: 12)
+        textLabel.text = "/500MB"
         return textLabel
     }()
     

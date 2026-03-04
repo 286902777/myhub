@@ -157,6 +157,13 @@ enum HUB_PremiumSource: String {
 class HubTool {
     static let share = HubTool()
     
+    var isTrackUser: Bool = false {
+        didSet {
+            UserDefaults.standard.set(isTrackUser, forKey: HUB_TrackUser)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     var preMethod: HUB_PremiumMethod = .vip_auto
     
     var preSource: HUB_PremiumSource = .vip_home

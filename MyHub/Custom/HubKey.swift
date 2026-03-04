@@ -25,6 +25,8 @@ let HUB_FirstAdLoading: String = "HUB_FirstAdLoading"
 
 let HUB_LastPlatform: String = "HUB_LastPlatform"
 
+let HUB_TrackUser: String = "HUB_TrackUser"
+
 let HUB_AppDown: String = "HUB_AppDown"
 
 let HUB_FirstOpenApp: String = "HUB_FirstOpenApp"

@@ -69,7 +69,7 @@ class IndexHeadView: UIView {
         self.userNameL.text = LoginManager.share.userName
         if let m = model {
             self.circleV.useLabel.text = m.user_space.computeFileSize()
-            self.circleV.totalLabel.text = m.max_space.computeFileSize()
+            self.circleV.totalLabel.text = "/" + m.max_space.computeFileSize()
             self.circleV.ratio = CGFloat(m.user_space / m.max_space)
         } else {
             self.circleV.useLabel.text = "0MB"

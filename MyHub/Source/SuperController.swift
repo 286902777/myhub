@@ -19,7 +19,7 @@ class SuperController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             guard let self = self else { return }
-            self.startTrack()
+            TackManager.share.startTrack()
         }
     }
     
@@ -40,6 +40,7 @@ class SuperController: UIViewController {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.backAction()
+                TackManager.share.startTrack()
             }
         }
     }
@@ -61,12 +62,6 @@ class SuperController: UIViewController {
             return false
         } else {
             return true
-        }
-    }
-    
-    func startTrack() {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.startTrack()
         }
     }
 }

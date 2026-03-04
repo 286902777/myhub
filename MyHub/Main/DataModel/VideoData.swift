@@ -20,7 +20,7 @@ enum HUB_HomeMoreType: String {
     case downDone = "alert_down_done"
     case share = "share"
     case rename = "rename"
-    case un_rename = "un_rename"
+    case un_rename = "un_name"
     case delete = "delete"
 }
 

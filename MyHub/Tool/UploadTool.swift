@@ -14,9 +14,7 @@ class UploadTool {
     var clickCreateBlock: (() -> Void)?
     
     func openVC(_ controller: UIViewController, _ folder: Bool = false, _ parentId: String = "") {
-        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
-            appDelegate.startTrack()
-        }
+        TackManager.share.startTrack()
         if UserDefaults.standard.bool(forKey: HUB_FirstUpload) {
             self.presetUpload(controller, parentId, folder)
         } else {

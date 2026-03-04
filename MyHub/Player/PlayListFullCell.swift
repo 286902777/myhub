@@ -28,7 +28,7 @@ class PlayListFullCell: UICollectionViewCell {
     lazy var playingV: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.setImage("play_playing")
+        view.image = UIImage(named: "play_playing")
         return view
     }()
 
@@ -88,7 +88,7 @@ class PlayListFullCell: UICollectionViewCell {
         }
         
         playingV.snp.makeConstraints { make in
-            make.left.top.equalToSuperview()
+            make.left.top.equalTo(4)
         }
         
         timeV.snp.makeConstraints { make in

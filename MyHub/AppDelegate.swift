@@ -7,7 +7,6 @@
 
 import UIKit
 import AppsFlyerLib
-import AppTrackingTransparency
 import IQKeyboardManagerSwift
 import IQKeyboardToolbarManager
 
@@ -21,16 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NetManager.instance.startChecking()
         HubDB.instance.config()
         addKeyboard()
-        startTrack()
         return true
     }
 
-    func startTrack() {
-        ATTrackingManager.requestTrackingAuthorization { _ in
-
-        }
-    }
-    
     func addKeyboard() {
         IQKeyboardToolbarManager.shared.isEnabled = true
         IQKeyboardManager.shared.resignOnTouchOutside = true

@@ -17,7 +17,7 @@ class HUBLightView: UIView {
     lazy var proV: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = UIColor.rgbHex("#FFFFFF", 0.4)
-        view.progressTintColor = UIColor.rgbHex("#FFFFFF")
+        view.progressTintColor = UIColor.rgbHex("#DDF75B")
         view.layer.cornerRadius = 1
         view.layer.masksToBounds = true
         return view
@@ -54,7 +54,7 @@ class HUBLightView: UIView {
     
     func setValue(_ light: Bool = true, _ value: Float) {
         self.isHidden = false
-        self.iconV.setImage(light ? "play_light" : "play_sound")
+        self.iconV.image = UIImage(named: light ? "play_lig" : "play_sv")
         self.proV.progress = value
     }
 }

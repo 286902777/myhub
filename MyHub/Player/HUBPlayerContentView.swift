@@ -204,7 +204,7 @@ class HUBPlayerContentView: UIView {
         view.isUserInteractionEnabled = false
         view.maximumValue = 1
         view.minimumValue = 0
-        view.minimumTrackTintColor = .white
+        view.minimumTrackTintColor = UIColor.rgbHex("#DDF75B")
         view.addTarget(self, action: #selector(fixSliderrTouchBegan(_:)), for: .touchDown)
         view.addTarget(self, action: #selector(fixSliderrValueChanged(_:)), for: .valueChanged)
         view.addTarget(self, action: #selector(fixSliderrTouchEnded(_:)), for: [.touchUpInside, .touchCancel, .touchUpOutside])
@@ -596,7 +596,7 @@ private extension HUBPlayerContentView {
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView).offset(-1)
             make.right.equalTo(progressView).offset(1)
-            make.height.equalTo(20)
+            make.height.equalTo(10)
             make.centerY.equalTo(progressView)
         }
 
@@ -613,7 +613,6 @@ private extension HUBPlayerContentView {
         bottomToolView.backgroundColor = config.color.bottomToolbar
         progressView.trackTintColor = config.color.progress
         progressView.progressTintColor = config.color.progressBuffer
-        sliderView.minimumTrackTintColor = config.color.progressFinished
 //        loadingView.updateWithConfigure { $0.backgroundColor = self.config.color.loading }
 
         backButton.setImage(config.image.back, for: .normal)

@@ -79,7 +79,7 @@ public struct HUBPlayerConfigure {
                     play: UIImage? = UIImage(named: "play_play"),
                     pause: UIImage? = UIImage(named: "play_pause"),
                     next: UIImage? = UIImage(named: "play_next"),
-                    unNext: UIImage? = UIImage(named: "play_un_next"),
+                    unNext: UIImage? = UIImage(named: "play_next_un"),
                     thumb: UIImage? = UIImage(named: "play_slider"),
                     full: UIImage? = UIImage(named: "play_full"),
                     down: UIImage? = UIImage(named: "play_down"),
@@ -87,8 +87,8 @@ public struct HUBPlayerConfigure {
                     downDone: UIImage? = UIImage(named: "play_down_done"),
                     qian: UIImage? = UIImage(named: "play_rewind"),
                     hou: UIImage? = UIImage(named: "play_forward"),
-                    light: UIImage? = UIImage(named: "play_light"),
-                    sound: UIImage? = UIImage(named: "play_sound"))
+                    light: UIImage? = UIImage(named: "play_lig"),
+                    sound: UIImage? = UIImage(named: "play_sv"))
         {
             self.back = back
             self.vip = vip

@@ -107,7 +107,7 @@ class PlayListCell: UITableViewCell {
         }
         
         playingV.snp.makeConstraints { make in
-            make.left.top.equalToSuperview()
+            make.left.top.equalTo(4)
         }
         
         timeV.snp.makeConstraints { make in

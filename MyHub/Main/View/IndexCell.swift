@@ -103,7 +103,7 @@ class IndexCell: UITableViewCell {
             make.left.equalTo(12)
             make.top.equalTo(10)
             make.bottom.equalTo(-10)
-            make.size.equalTo(CGSize(width: 44, height: 44))
+            make.width.equalTo(44)
         }
         
         stackBgV.snp.makeConstraints { make in
