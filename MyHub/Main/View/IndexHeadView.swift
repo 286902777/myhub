@@ -22,7 +22,6 @@ class IndexHeadView: UIView {
     
     let userNameL: UILabel = {
         let label = UILabel()
-        label.text = "MyHub"
         label.textColor = .white
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         return label
@@ -67,6 +66,7 @@ class IndexHeadView: UIView {
     }
     
     func setData(_ model: UserSpaceData?) {
+        self.userNameL.text = LoginManager.share.userName
         if let m = model {
             self.circleV.useLabel.text = m.user_space.computeFileSize()
             self.circleV.totalLabel.text = m.max_space.computeFileSize()

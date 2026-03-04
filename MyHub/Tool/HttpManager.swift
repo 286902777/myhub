@@ -755,6 +755,7 @@ class HttpManager {
                                         mod.parent_id = m.parent_id
                                         mod.isPass = m.moderate_type
                                         mod.userId = m.namespace.id
+                                        mod.platform = .box
                                         result.append(mod)
                                     }
                                 }

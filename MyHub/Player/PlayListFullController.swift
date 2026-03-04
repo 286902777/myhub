@@ -67,9 +67,9 @@ class PlayListFullController: UIViewController {
             }
         }
         
-        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
-            self.requestUserLoop()
-        }
+//        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
+//            self.requestUserLoop()
+//        }
     }
     
     deinit {

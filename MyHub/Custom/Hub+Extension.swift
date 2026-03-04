@@ -73,11 +73,11 @@ extension Double {
     
     func computeFileSize() -> String {
         if self >= 1024*1024*1024 {
-            return String(format: "%.1f", self/1024.0/1024.0/1024.0) + "G"
+            return String(format: "%.1f", self/1024.0/1024.0/1024.0) + "GB"
         } else if self >= 1024*1024 {
-            return String(format: "%.1f", self/1024.0/1024.0) + "M"
+            return String(format: "%.1f", self/1024.0/1024.0) + "MB"
         } else {
-            return String(format: "%.1f", self/1024.0) + "K"
+            return String(format: "%.1f", self/1024.0) + "KB"
         }
     }
 }

@@ -113,7 +113,9 @@ class FileListController: SuperController {
                     self.bottomAction(type, selectList)
                 }
             }
-            self.tableView.snp.updateConstraints { make in
+            self.tableView.snp.remakeConstraints { make in
+                make.top.equalTo(self.navbar.snp.bottom)
+                make.left.right.equalToSuperview()
                 make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-84)
             }
         } else {
@@ -133,15 +135,15 @@ class FileListController: SuperController {
             var isDown: Bool = false
             results.forEach { m in
                 if m.file_type != .folder {
-//                    if let mod = dbList.first(where: {$0.id == m.id}) {
-//                        if mod.state != .downDone {
-//                            FileUploadDownTool.instance.downLoad(m)
-//                            isDown = true
-//                        }
-//                    } else {
-//                        FileUploadDownTool.instance.downLoad(m)
-//                        isDown = true
-//                    }
+                    if let mod = dbList.first(where: {$0.id == m.id}) {
+                        if mod.state != .downDone {
+                            UploadDownTool.instance.downLoad(m)
+                            isDown = true
+                        }
+                    } else {
+                        UploadDownTool.instance.downLoad(m)
+                        isDown = true
+                    }
                 }
             }
             if isDown {

@@ -17,7 +17,7 @@ let HUB_UserAppId: String = "HUB_UserAppId"
 let HUB_UserUserId: String = "HUB_UserUserId"
 let HUB_UserIsLogout: String = "HUB_UserIsLogout"
 
-let HUB_BuildId: String = "com.hub.appId"
+let HUB_BuildId: String = "com.hub.myHub"
 
 let app_uuid_key: String = "app_uuid_key"
 

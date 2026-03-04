@@ -113,6 +113,66 @@ class BoxDeepListController: UIViewController {
                 }
             }
         }
+        self.bottomView.clickBlock = { [weak self] idx in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch idx {
+                case 0:
+                    if let m = self.list.first(where: {$0.file_type == .video}) {
+                        PlayTool.instance.pushPage(self, m, self.list)
+                    }
+                case 1:
+                    guard HubTool.share.userIsLogin(self) else { return }
+                    let m: VideoData = VideoData()
+                    m.id = self.linkId
+                    m.linkId = self.linkId
+                    m.userId = self.userId
+                    m.name = self.userName
+                    m.isShare = true
+                    m.platform = self.platform
+                    HubDB.instance.updateMovieData(m)
+                    ToastTool.instance.show("Save Successful​")
+                default:
+                    guard HubTool.share.userIsLogin(self) else { return }
+                    HubTool.share.eventSource = .download
+                    HubTool.share.adsPlayState = .download
+                    self.downFile()
+//                    AdmobTool.instance.show(.mode_down) { success in
+//                        if success == false {
+//                            self.downData()
+//                        }
+//                    }
+                }
+            }
+        }
+    }
+    
+    func downFile() {
+            let list = self.list.filter({$0.file_type != .folder && $0.isSelect == true})
+            let localList = HubDB.instance.readDatas()
+            list.forEach { m in
+                if let localModel = localList.first(where: {$0.id == m.id}) {
+                    if localModel.state != .downDone {
+                        UploadDownTool.instance.downLoad(localModel)
+                    }
+                } else {
+                    let mod: VideoData = VideoData()
+                    mod.id = m.id
+                    mod.pubData = m.pubData
+                    mod.size = m.size
+                    mod.file_size = m.file_size
+                    mod.thumbnail = m.thumbnail
+                    mod.name = m.name
+                    mod.file_type = m.file_type
+                    mod.vid_qty = m.vid_qty
+                    mod.ext = m.ext
+                    mod.linkId = self.linkId
+                    mod.platform = self.platform
+                    mod.userId = self.userId
+                    UploadDownTool.instance.downLoad(mod)
+                }
+            }
+            ToastTool.instance.show("The contents, excluding the folder, have been added to the download list.")
     }
     
     func clickAllAction() {

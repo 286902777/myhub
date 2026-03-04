@@ -52,7 +52,7 @@ class FileBottomView: UIView {
         listArr.append(self.addModel(type: able ? .rename: .disName, title: "Rename", able: able))
         self.collectV.reloadData()
         self.setNeedsLayout()
-        self.collectV.addCornerShadow(42, CGSize(width: 3, height: 3), UIColor.rgbHex("#000000", 0.5), 3)
+        self.collectV.addCornerShadow(42, CGSize(width: 0, height: 0), UIColor.rgbHex("#000000", 0.5), 3)
     }
     
     func addModel(type: HUB_FileBottomType, title: String, able: Bool = true) -> FileBottomData {

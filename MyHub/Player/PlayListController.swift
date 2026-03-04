@@ -66,9 +66,9 @@ class PlayListController: UIViewController {
                 self.scrollToIdx()
             }
         }
-        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
-            self.requestUserLoop()
-        }
+//        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
+//            self.requestUserLoop()
+//        }
     }
     
     func requestUserLoop() {

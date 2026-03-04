@@ -85,7 +85,7 @@ class DeepBottomView: UIView {
             make.width.equalTo(90)
         }
         self.setNeedsLayout()
-        self.addCornerShadow(32, CGSize(width: 0, height: 3), UIColor.rgbHex("#000000", 1), 3)
+        self.addCornerShadow(32, CGSize(width: 0, height: 0), UIColor.rgbHex("#000000", 1), 3)
 
         self.playBtn.addTarget(self, action: #selector(clickPlayAction), for: .touchUpInside)
         self.saveBtn.addTarget(self, action: #selector(clickSaveAction), for: .touchUpInside)
