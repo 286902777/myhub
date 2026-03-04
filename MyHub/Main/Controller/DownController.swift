@@ -143,13 +143,7 @@ class DownController: SuperController {
     func addController() {
         self.pages.append(self.uploadVC)
         self.pages.append(self.downVC)
-        self.downVC.refreshBlock = { [weak self] in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-
-            }
-        }
- 
+    
         if let firstVC = pages.first {
             pageController.setViewControllers([firstVC], direction: .forward, animated: false, completion: nil)
         }

@@ -43,18 +43,17 @@ class UploadFileController: UIViewController {
         }
         NotificationCenter.default.addObserver(forName: Noti_UploadSuccess, object: nil, queue: .main) { [weak self] data in
             guard let self = self else { return }
-            if let _ = data.userInfo?["mod"] as? FileTransData {
+            if let mod = data.userInfo?["mod"] as? FileTransData {
+                self.list.forEach { m in
+                    m.lists.forEach { item in
+                        if (item.id == mod.transId) {
+                            item.state = mod.state
+                            item.done_size = item.file_size
+                            item.obs_fileId = mod.obs_fileId
+                        }
+                    }
+                }
                 self.addData()
-//                self.list.forEach { m in
-//                    for (idx, item) in m.lists.enumerated() {
-//                        if (item.id == mod.transId) {
-//                            item.state = mod.state
-//                            item.done_size = item.file_size
-//                            item.obs_fileId = mod.obs_fileId
-//                            self.tableView.reloadRows(at: [IndexPath(row: idx, section: 0)], with: .none)
-//                        }
-//                    }
-//                }
             }
         }
         
@@ -64,7 +63,7 @@ class UploadFileController: UIViewController {
                 for (idx, item) in self.list.enumerated() {
                     for (row, data) in item.lists.enumerated() {
                         if (data.id == mod.transId) {
-                            data.upload_size = mod.doneSize
+                            data.done_size = mod.doneSize
                             data.state = mod.state
                             self.tableView.reloadRows(at: [IndexPath(row: row, section: idx)], with: .none)
                         }
@@ -252,7 +251,7 @@ extension UploadFileController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 32))
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         label.textColor = UIColor.rgbHex("#14171C", 0.75)

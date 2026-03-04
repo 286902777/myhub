@@ -47,9 +47,9 @@ class FileBottomView: UIView {
     func setReNameState(_ able: Bool) {
         listArr.removeAll()
         listArr.append(self.addModel(type: .download, title: "Download"))
+        listArr.append(self.addModel(type: able ? .rename: .disName, title: "Rename", able: able))
         listArr.append(self.addModel(type: .share, title: "Share"))
         listArr.append(self.addModel(type: .delete, title: "Delete"))
-        listArr.append(self.addModel(type: able ? .rename: .disName, title: "Rename", able: able))
         self.collectV.reloadData()
         self.setNeedsLayout()
         self.collectV.addCornerShadow(42, CGSize(width: 0, height: 0), UIColor.rgbHex("#000000", 0.5), 3)

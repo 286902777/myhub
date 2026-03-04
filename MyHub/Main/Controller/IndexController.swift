@@ -673,7 +673,7 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 32))
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .regular, size: 16)
         label.textColor = UIColor.rgbHex("#434343")

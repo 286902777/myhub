@@ -28,7 +28,6 @@ class DownFileController: UIViewController {
     
     let noContentV: EmptyView = EmptyView.view()
     private var list: [UploadDownData] = []
-    var refreshBlock: (() -> Void)?
     var countBadgeBlock: ((_ num: Int) -> Void)?
 
     override func viewWillAppear(_ animated: Bool) {
@@ -55,37 +54,37 @@ class DownFileController: UIViewController {
         NotificationCenter.default.addObserver(forName: Noti_AddDown, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.addData()
-            self.refreshBlock?()
         }
         NotificationCenter.default.addObserver(forName: Noti_Down, object: nil, queue: .main) { [weak self] data in
             guard let self = self else { return }
-            self.addData()
-//            if let mod = data.userInfo?["mod"] as? FileTransData {
-//                for (idx, item) in self.list.enumerated() {
-//                    if (item.id == mod.transId) {
-//                        item.state = mod.state
-//                        item.done_size = mod.doneSize
-//                        self.tableView.reloadRows(at: [IndexPath(row: idx, section: 0)], with: .none)
-//                    }
-//                }
-//            }
+            if let mod = data.userInfo?["mod"] as? FileTransData {
+                for (idx, item) in self.list.enumerated() {
+                    for (row, m) in item.lists.enumerated() {
+                        if (m.id == mod.transId) {
+                            m.state = mod.state
+                            m.done_size = mod.doneSize
+                            self.tableView.reloadRows(at: [IndexPath(row: row, section: idx)], with: .none)
+                        }
+                    }
+                }
+            }
         }
         NotificationCenter.default.addObserver(forName: Noti_DownSuccess, object: nil, queue: .main) { [weak self] data in
             guard let self = self else { return }
+            if let mod = data.userInfo?["mod"] as? FileTransData {
+                self.list.forEach { item in
+                    item.lists.forEach { m in
+                        if (m.id == mod.transId) {
+                            m.state = mod.state
+                            m.movieAddress = mod.local
+                            if mod.state == .downDone {
+                                HubDB.instance.updateMovieData(m)
+                            }
+                        }
+                    }
+                }
+            }
             self.addData()
-//            if let mod = data.userInfo?["mod"] as? FileTransData {
-//                for (idx, item) in self.list.enumerated() {
-//                    if (item.id == mod.transId) {
-//                        item.state = mod.state
-//                        item.movieAddress = mod.local
-//                        if mod.state == .downDone {
-//                            RealmDB.instance.updateMovieData(item)
-//                        }
-//                        self.tableView.reloadRows(at: [IndexPath(row: idx, section: 0)], with: .none)
-//                    }
-//                }
-//            }
-            self.refreshBlock?()
         }
         
         NotificationCenter.default.addObserver(forName: Noti_NetworkStatus, object: nil, queue: .main) { [weak self] _ in
@@ -110,7 +109,6 @@ class DownFileController: UIViewController {
             
             UploadDownTool.instance.downList.removeAll()
             self.addData()
-            self.refreshBlock?()
         }
     }
     
@@ -238,7 +236,6 @@ extension DownFileController: UITableViewDelegate, UITableViewDataSource {
                                 data.isNet = true
                                 data.movieAddress = ""
                                 HubDB.instance.updateMovieData(data)
-                                self.refreshBlock?()
                                 self.addData()
                             }
                             self.present(vc, animated: false)
@@ -277,6 +274,13 @@ extension DownFileController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let m = self.list.safeIndex(section) {
+            return m.lists.count
+        }
+        return 0
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         self.list.count
     }
     
@@ -286,7 +290,7 @@ extension DownFileController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 32))
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         label.textColor = UIColor.rgbHex("#14171C", 0.75)

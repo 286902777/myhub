@@ -157,9 +157,6 @@ class FileController: UIViewController {
     }
     
     func disPlayBottomView(_ show: Bool) {
-        if self.isShowBottom {
-            return
-        }
         TabbarTool.instance.displayOrHidden(false)
         self.isShowBottom = true
         self.sortV.isHidden = true

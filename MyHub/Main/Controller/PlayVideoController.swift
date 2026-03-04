@@ -230,8 +230,10 @@ class PlayVideoController: UIViewController {
     
     private func requestPlayUrl(_ model: VideoData) {
         if model.platform == .box {
+            LoadManager.instance.show(self)
             HttpManager.share.driveDownLoadUrlApi(model.id) {[weak self] status, address, errMsg in
                 guard let self = self else { return }
+                LoadManager.instance.dismiss()
                 DispatchQueue.main.async {
                     if status == .success {
                         model.history = true

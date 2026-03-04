@@ -13,7 +13,7 @@ enum HUB_FileBottomType: String {
     case share = "share"
     case delete = "delete"
     case rename = "rename"
-    case disName = "un_rename"
+    case disName = "un_name"
 }
 
 class FileBottomData: SuperData {
