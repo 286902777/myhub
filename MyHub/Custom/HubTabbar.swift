@@ -60,6 +60,19 @@ extension CGFloat {
     var clickAddBlock:(() -> Void)?
 
     @objc func clickBarAction(_ sender: UIButton) {
+        if self.currentIdx == sender.tag {
+            return
+        }
+        guard LoginManager.share.isLogin else {
+            if let vc = HubTool.share.keyVC() {
+                LoginManager.share.loginRequest(vc) { [weak self] success in
+                    guard let self = self else { return }
+                    self.currentIdx = sender.tag
+                    self.clickBlock?(self.currentIdx)
+                }
+            }
+            return
+        }
         self.currentIdx = sender.tag
         self.clickBlock?(self.currentIdx)
     }

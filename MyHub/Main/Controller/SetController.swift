@@ -372,7 +372,7 @@ class SetController: SuperController {
         HubDB.instance.config()
         NotificationCenter.default.post(name: Noti_Logout, object: nil, userInfo: nil)
         ToastTool.instance.show("Logout successed!")
-//        self.tabBarController?.selectedIndex = 0
+        
     }
 }
 

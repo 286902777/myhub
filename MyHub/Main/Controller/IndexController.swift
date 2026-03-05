@@ -365,11 +365,18 @@ class IndexController: SuperController {
             make.left.equalTo(14)
             make.centerY.equalToSuperview()
         }
+        self.view.addSubview(self.tableHeadV)
+        self.tableHeadV.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.navbar.snp.bottom)
+            make.height.equalTo(140)
+        }
         self.emptyV.isHidden = true
         self.view.addSubview(self.emptyV)
         self.emptyV.snp.makeConstraints { make in
-            make.top.equalTo(self.navbar.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(self.tableHeadV.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).offset(-CusTabBarHight)
         }
         self.emptyV.clickBlock = { [weak self] type in
             guard let self = self else { return }
@@ -384,11 +391,10 @@ class IndexController: SuperController {
         }
         view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
-            make.top.equalTo(self.navbar.snp.bottom)
+            make.top.equalTo(self.tableHeadV.snp.bottom)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
-        self.tableView.tableHeaderView = self.tableHeadV
     }
     
     // MARK: - Load Data
@@ -507,6 +513,8 @@ class IndexController: SuperController {
                         m.lists = uploads
                         self.requestlist.append(m)
                     }
+                } else {
+                    self.tableHeadV.setData(nil)
                 }
                 self.requestlist.first(where: {$0.type == .channel})?.users = channels
                 if self.requestlist.count == 0 {

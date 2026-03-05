@@ -36,7 +36,6 @@ class IndexHeadView: UIView {
     
     func setup() {
         self.backgroundColor = .clear
-        self.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 140)
         addSubview(self.contentV)
         self.contentV.layer.cornerRadius = 20
         self.contentV.backgroundColor = UIColor.rgbHex("#14171C")
@@ -67,8 +66,8 @@ class IndexHeadView: UIView {
     }
     
     func setData(_ model: UserSpaceData?) {
-        self.userNameL.text = LoginManager.share.userName
         if let m = model {
+            self.userNameL.text = LoginManager.share.userName
             self.circleV.useLabel.text = m.user_space.computeFileSize()
             self.circleV.totalLabel.text = "/" + m.max_space.computeFileSize()
             self.circleV.ratio = CGFloat(m.user_space / m.max_space)
@@ -76,6 +75,7 @@ class IndexHeadView: UIView {
             self.circleV.useLabel.text = "0MB"
             self.circleV.totalLabel.text = "/500MB"
             self.circleV.ratio = 0
+            self.userNameL.text = ""
         }
     }
 }
