@@ -193,12 +193,8 @@ class ShareController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(clickDayAction))
         self.validityV.addGestureRecognizer(tap)
         self.dayL.text = self.name.rawValue
-        var name: String = ""
-        self.list.forEach { m in
-            name = name + m.name
-        }
         self.itemL.text = "contains \(self.list.count) files"
-        self.nameL.text = name
+        self.nameL.text = self.list.map({$0.name}).joined(separator: ",")
     }
     
     @objc func clickDayAction() {

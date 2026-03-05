@@ -52,7 +52,6 @@ class IndexController: SuperController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.requestBoxSpace()
         self.loadData()
         TabbarTool.instance.displayOrHidden(true)
     }
@@ -73,13 +72,11 @@ class IndexController: SuperController {
         }
         NotificationCenter.default.addObserver(forName: Noti_Login, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.requestBoxSpace()
             self.loadData()
         }
         
         NotificationCenter.default.addObserver(forName: Noti_Logout, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.requestBoxSpace()
             self.loadData()
         }
         
@@ -165,33 +162,6 @@ class IndexController: SuperController {
 //        vc.modalPresentationStyle = .overFullScreen
 //        self.present(vc, animated: true)
 //    }
-
-    func requestBoxSpace() {
-        if LoginManager.share.isLogin {
-            HttpManager.share.getBoxSpaceApi { [weak self] status, model, errMsg in
-                guard let self = self else { return}
-                DispatchQueue.main.async {
-                    if status == .success {
-                        let use_space = model.user_space.computeFileSize()
-                        let max_space = model.max_space.computeFileSize()
-                        HubTool.share.spaceUse = use_space
-                        HubTool.share.spaceTotal = max_space
-//                        if (self.isOpenUpload == false) {
-//                            EventTool.instance.addEvent(type: .custom, event: .homeExpose, paramter: [EventParaName.cloudTotal.rawValue: ESBaseTool.instance.spaceTotal, EventParaName.cloudUse.rawValue: ESBaseTool.instance.spaceUse])
-//                            self.isOpenUpload = true
-//                        }
-                        self.tableHeadV.setData(model)
-                    }
-                }
-            }
-        } else {
-//            if (self.isOpenUpload == false) {
-//                EventTool.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
-//                self.isOpenUpload = true
-//            }
-            self.tableHeadV.setData(nil)
-        }
-    }
     
     func appFlyerPushSubVC(_  info: String) {
         guard HubTool.share.showAdomb == false else { return }
@@ -459,6 +429,26 @@ class IndexController: SuperController {
         if LoginManager.share.isLogin == true {
             group.enter()
             queue.async {
+                HttpManager.share.getBoxSpaceApi { [weak self] status, model, errMsg in
+                    guard let self = self else { return}
+                    DispatchQueue.main.async {
+                        if status == .success {
+                            let use_space = model.user_space.computeFileSize()
+                            let max_space = model.max_space.computeFileSize()
+                            HubTool.share.spaceUse = use_space
+                            HubTool.share.spaceTotal = max_space
+                            //                        if (self.isOpenUpload == false) {
+                            //                            EventTool.instance.addEvent(type: .custom, event: .homeExpose, paramter: [EventParaName.cloudTotal.rawValue: ESBaseTool.instance.spaceTotal, EventParaName.cloudUse.rawValue: ESBaseTool.instance.spaceUse])
+                            //                            self.isOpenUpload = true
+                            //                        }
+                            self.tableHeadV.setData(model)
+                        }
+                        group.leave()
+                    }
+                }
+            }
+            group.enter()
+            queue.async {
                 HttpManager.share.selectFolderApi("") { status, list, errMsg in
                     DispatchQueue.main.async {
                         if status == .success {
@@ -474,6 +464,11 @@ class IndexController: SuperController {
                     }
                 }
             }
+        } else {
+            //            if (self.isOpenUpload == false) {
+            //                EventTool.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
+            //                self.isOpenUpload = true
+            //            }
         }
 //        group.enter()
 //        queue.async { [weak self] in
