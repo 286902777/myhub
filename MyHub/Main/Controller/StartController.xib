@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -10,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StartController" customModule="MyHub" customModuleProvider="target">
             <connections>
+                <outlet property="appNameL" destination="PeH-Hu-VCa" id="3vK-RZ-udF"/>
                 <outlet property="nameL" destination="PeH-Hu-VCa" id="Xwk-22-lGK"/>
                 <outlet property="progressV" destination="CFK-qF-PLs" id="7oN-0A-mog"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -20,24 +22,53 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PeH-Hu-VCa">
-                    <rect key="frame" x="153" y="269" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="start_bg" translatesAutoresizingMaskIntoConstraints="NO" id="R4m-zx-S70">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="mAb-9h-pyD">
+                    <rect key="frame" x="132.66666666666666" y="242" width="127.99999999999997" height="128"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyHub" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PeH-Hu-VCa">
+                    <rect key="frame" x="169" y="398" width="55" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
+                    <color key="textColor" red="0.078431372549019607" green="0.090196078431372548" blue="0.10980392156862745" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CFK-qF-PLs">
-                    <rect key="frame" x="121" y="724" width="150" height="4"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CFK-qF-PLs">
+                    <rect key="frame" x="80" y="724" width="233" height="4"/>
+                    <color key="progressTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="trackTintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </progressView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resource loading…" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMq-K4-GMX">
+                    <rect key="frame" x="143" y="701.66666666666663" width="107.33333333333331" height="14.333333333333371"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <color key="textColor" red="0.078431372550000003" green="0.090196078430000007" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-            <point key="canvasLocation" x="-105" y="68"/>
+            <constraints>
+                <constraint firstItem="R4m-zx-S70" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1WM-GD-5c3"/>
+                <constraint firstItem="PeH-Hu-VCa" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="5Ng-mI-LnH"/>
+                <constraint firstItem="jMq-K4-GMX" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Hlc-3a-45r"/>
+                <constraint firstItem="mAb-9h-pyD" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-120" id="Jjp-K8-qE6"/>
+                <constraint firstItem="R4m-zx-S70" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="Jxc-Yi-dcc"/>
+                <constraint firstAttribute="bottom" secondItem="R4m-zx-S70" secondAttribute="bottom" id="aui-di-516"/>
+                <constraint firstItem="CFK-qF-PLs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="80" id="bSe-lf-W8b"/>
+                <constraint firstItem="CFK-qF-PLs" firstAttribute="top" secondItem="jMq-K4-GMX" secondAttribute="bottom" constant="8" id="ilV-jt-V1d"/>
+                <constraint firstItem="CFK-qF-PLs" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="bottom" constant="-128" id="j9B-fc-vCf"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="CFK-qF-PLs" secondAttribute="trailing" constant="80" id="qLx-75-sMQ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="R4m-zx-S70" secondAttribute="trailing" id="ueu-qX-maF"/>
+                <constraint firstItem="mAb-9h-pyD" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="veQ-8v-hnU"/>
+                <constraint firstItem="PeH-Hu-VCa" firstAttribute="top" secondItem="mAb-9h-pyD" secondAttribute="bottom" constant="28" id="xEd-a3-Hbf"/>
+            </constraints>
+            <point key="canvasLocation" x="-106.10687022900763" y="67.605633802816911"/>
         </view>
     </objects>
     <resources>
+        <image name="logo" width="128" height="128"/>
+        <image name="start_bg" width="375" height="812"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

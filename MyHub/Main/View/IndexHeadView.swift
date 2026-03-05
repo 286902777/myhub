@@ -15,7 +15,8 @@ class IndexHeadView: UIView {
     
     let userV: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .red
+        view.image = UIImage(named: "logo")
+        view.backgroundColor = UIColor.rgbHex("#DDF75B")
         view.layer.cornerRadius = 15
         return view
     }()

@@ -79,6 +79,8 @@ class HUBPlayerContentView: UIView {
 
     private let bottomContentView: UIView = UIView()
 
+    private let listFullView: UIView = UIView()
+
 //    lazy var loadingView: ESRotateAnimationView = {
 //        let view = ESRotateAnimationView(frame: .init(x: 0, y: 0, width: 40, height: 40))
 //        view.startAnimation()
@@ -409,22 +411,27 @@ private extension HUBPlayerContentView {
         clipsToBounds = true
         autoresizesSubviews = true
         isUserInteractionEnabled = true
-
+        listFullView.layer.cornerRadius = 16
+        listFullView.backgroundColor = .black
+        
         addSubview(leftV)
         addSubview(rightV)
         addSubview(topToolView)
         addSubview(bottomToolView)
+        addSubview(listFullView)
         addSubview(loadingView)
         
         topToolView.addSubview(backButton)
         topToolView.addSubview(titleLabel)
         topToolView.addSubview(vipButton)
-        topToolView.addSubview(moreButton)
+//        topToolView.addSubview(moreButton)
         bottomToolView.addSubview(bottomContentView)
+        listFullView.addSubview(moreButton)
+        listFullView.addSubview(fullButton)
 
         bottomContentView.addSubview(playButton)
         bottomContentView.addSubview(nextButton)
-        bottomContentView.addSubview(fullButton)
+//        bottomContentView.addSubview(fullButton)
         bottomContentView.addSubview(downButton)
         bottomContentView.addSubview(rateButton)
         bottomContentView.addSubview(currentDurationLabel)
@@ -497,6 +504,22 @@ private extension HUBPlayerContentView {
             make.bottom.equalTo(-BottomSafeH)
         }
   
+        listFullView.snp.makeConstraints { make in
+            make.right.equalTo(-24)
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 44, height: 88))
+        }
+        
+        moreButton.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
+            make.height.equalTo(44)
+        }
+        
+        fullButton.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(44)
+        }
+        
         bottomContentView.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(60)
@@ -517,14 +540,15 @@ private extension HUBPlayerContentView {
             make.right.equalTo(vipButton.snp.left).offset(-15)
             make.centerY.height.equalToSuperview()
         }
+//        vipButton.snp.makeConstraints { make in
+//            make.right.equalTo(moreButton.snp.left).offset(-15)
+//            make.size.equalTo(CGSize(width: 56, height: 24))
+//            make.centerY.equalToSuperview()
+//        }
         vipButton.snp.makeConstraints { make in
-            make.right.equalTo(moreButton.snp.left).offset(-15)
-            make.size.equalTo(CGSize(width: 56, height: 24))
-            make.centerY.equalToSuperview()
-        }
-        moreButton.snp.makeConstraints { make in
             make.right.equalTo(-10)
-            make.size.equalTo(40)
+            make.size.equalTo(CGSize(width: 0, height: 0))
+//            make.size.equalTo(CGSize(width: 56, height: 24))
             make.centerY.equalToSuperview()
         }
         playButton.snp.makeConstraints { make in
@@ -537,14 +561,14 @@ private extension HUBPlayerContentView {
             make.size.equalTo(40)
             make.centerY.equalTo(playButton)
         }
-        fullButton.snp.makeConstraints { make in
-            make.right.equalTo(-8)
-            make.size.equalTo(40)
-            make.centerY.equalTo(playButton)
-        }
+//        fullButton.snp.makeConstraints { make in
+//            make.right.equalTo(-8)
+//            make.size.equalTo(40)
+//            make.centerY.equalTo(playButton)
+//        }
         
         downButton.snp.makeConstraints { make in
-            make.right.equalTo(self.fullButton.snp.left).offset(-4)
+            make.right.equalTo(-8)
             make.size.equalTo(40)
             make.centerY.equalTo(playButton)
         }
@@ -778,7 +802,10 @@ extension HUBPlayerContentView {
             make.right.equalTo(vipButton.snp.left).offset(-10)
         }
         
-        moreButton.snp.updateConstraints { make in
+//        moreButton.snp.updateConstraints { make in
+//            make.right.equalTo(-safeAreaInsets.left - 10)
+//        }
+        vipButton.snp.updateConstraints { make in
             make.right.equalTo(-safeAreaInsets.left - 10)
         }
         playButton.snp.updateConstraints { make in
@@ -793,7 +820,10 @@ extension HUBPlayerContentView {
             make.right.equalTo(-safeAreaInsets.right - 10)
         }
 
-        fullButton.snp.updateConstraints { make in
+//        fullButton.snp.updateConstraints { make in
+//            make.right.equalTo(-safeAreaInsets.right - 8)
+//        }
+        downButton.snp.updateConstraints { make in
             make.right.equalTo(-safeAreaInsets.right - 8)
         }
 
@@ -863,6 +893,7 @@ extension HUBPlayerContentView: UIGestureRecognizerDelegate {
         topToolView.snp.updateConstraints { make in
             make.top.equalTo(screenFull ? 0 : TopSafeH)
         }
+        listFullView.isHidden = false
         bottomToolView.snp.remakeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(screenFull ? 0 :  -BottomSafeH)
@@ -893,6 +924,7 @@ extension HUBPlayerContentView: UIGestureRecognizerDelegate {
         topToolView.snp.updateConstraints { make in
             make.top.equalTo(-50)
         }
+        listFullView.isHidden = true
         bottomToolView.snp.remakeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(self.snp.bottom).offset(20)

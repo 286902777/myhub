@@ -31,19 +31,6 @@ class PlayListFullCell: UICollectionViewCell {
         view.image = UIImage(named: "play_playing")
         return view
     }()
-
-    lazy var timeV: UIView = {
-       let view = UIView()
-        view.backgroundColor = UIColor.rgbHex("#000000", 0.5)
-        return view
-    }()
-    
-    lazy var timeL: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.textColor = UIColor.rgbHex("#FFFFFF")
-        return label
-    }()
     
     lazy var recommonedV: UIView = {
         let view = UIView()
@@ -74,33 +61,22 @@ class PlayListFullCell: UICollectionViewCell {
         self.addSubview(imageV)
         self.addSubview(nameL)
         self.imageV.addSubview(self.playingV)
-        self.imageV.addSubview(timeV)
-        self.timeV.addSubview(timeL)
         self.addSubview(recommonedV)
         self.recommonedV.addSubview(recommonedL)
         imageV.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(81)
+            make.height.equalTo(80)
         }
         nameL.snp.makeConstraints { make in
             make.top.equalTo(imageV.snp.bottom).offset(4)
             make.left.right.equalToSuperview()
+            make.bottom.equalTo(-4)
         }
         
         playingV.snp.makeConstraints { make in
-            make.left.top.equalTo(4)
+            make.center.equalTo(imageV)
         }
         
-        timeV.snp.makeConstraints { make in
-            make.right.bottom.equalToSuperview()
-            make.height.equalTo(14)
-        }
-        
-        timeL.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalTo(4)
-            make.right.equalTo(-4)
-        }
         self.recommonedV.snp.makeConstraints { make in
             make.right.top.equalTo(imageV)
             make.size.equalTo(CGSize(width: 62, height: 15))
@@ -113,18 +89,10 @@ class PlayListFullCell: UICollectionViewCell {
     }
     
     func initData(_ data: VideoData, _ playing: Bool = false) {
-        self.imageV.setImage(data.thumbnail, placeholder: "play_video_cell")
+        self.imageV.setImage(data.thumbnail, placeholder: "deep_video_bg")
         self.nameL.text = data.name
         self.playingV.isHidden = !playing
-        if data.totalTime > 0 {
-            self.timeV.isHidden = false
-            self.timeL.text = data.totalTime.timeToHHMMSS()
-        } else {
-            self.timeV.isHidden = true
-        }
         self.recommonedV.isHidden = !data.recommend
-        self.timeV.layoutIfNeeded()
-        self.timeV.addRedius([.topLeft, .bottomRight], 4, self.timeV.bounds)
     }
 }
 

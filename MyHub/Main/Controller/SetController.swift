@@ -17,8 +17,9 @@ class SetController: SuperController {
     
     lazy var iconV: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "")
-        view.backgroundColor = .red
+        view.image = UIImage(named: "logo")
+        view.backgroundColor = UIColor.rgbHex("#DDF75B")
+        view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 34
         view.layer.masksToBounds = true
         return view
@@ -155,6 +156,9 @@ class SetController: SuperController {
     func setItemView(_ size: String) {
         self.nameL.text = LoginManager.share.userName
         self.list.removeAll()
+        self.gradV.subviews.forEach { v in
+            v.removeFromSuperview()
+        }
         let policy: SetData = SetData()
         policy.idx = 0
         policy.imageName = "privacy"

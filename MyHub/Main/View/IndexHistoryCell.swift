@@ -58,7 +58,7 @@ class IndexHistoryCell: UICollectionViewCell {
      }
     
     func initData(_ model: VideoData) {
-        self.iconV.setImage(model.thumbnail)
+        self.iconV.setImage(model.thumbnail, placeholder: "deep_video_bg")
         self.nameL.text = model.name
     }
 }

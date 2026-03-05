@@ -11,7 +11,9 @@ import SnapKit
 class BoxDeepHeadView: UIView {
     lazy var iconV: UIImageView = {
         let view = UIImageView()
+        view.image = UIImage(named: "logo")
         view.contentMode = .scaleAspectFill
+        view.backgroundColor = UIColor.rgbHex("DDF75B")
         view.layer.cornerRadius = 24
         return view
     }()
@@ -95,7 +97,6 @@ class BoxDeepHeadView: UIView {
     }
     
     func setDeepHeadData(_ data: OpenUserData) {
-        self.iconV.setImage(data.avtar_url, placeholder: "")
         self.nameL.text = data.username
     }
     

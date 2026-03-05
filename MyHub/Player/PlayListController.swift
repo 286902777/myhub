@@ -9,14 +9,6 @@ import UIKit
 import SnapKit
 
 class PlayListController: UIViewController {
-    private lazy var titleL: UILabel = {
-        let label = UILabel()
-        label.text = "Playlist"
-        label.textColor = .white
-        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        return label
-    }()
-    
     private lazy var contentV: UIView = {
         let view = UIView()
         return view
@@ -26,20 +18,39 @@ class PlayListController: UIViewController {
     var selectBlock: ((_ model: VideoData) -> Void)?
     private var currentIdx: Int = 0
     private var currentModel: VideoData = VideoData()
-
-    private lazy var tableView: UITableView = {
-        let table = UITableView.init(frame: .zero, style: .plain)
-        table.delegate = self
-        table.dataSource = self
-        table.separatorStyle = .none
-        table.backgroundColor = .clear
-        table.register(PlayListCell.self, forCellReuseIdentifier: cellIdentifier)
-        if #available(iOS 15.0, *) {
-            table.sectionHeaderTopPadding = 0
-        }
-        table.contentInsetAdjustmentBehavior = .never
-        return table
+    let cellW: CGFloat = floor((ScreenWidth - 36) * 0.5)
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionHeadersPinToVisibleBounds = true
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+        collectionView.register(PlayListCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.contentInsetAdjustmentBehavior = .never
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(
+            UICollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "HeaderView"
+        )
+        return collectionView
     }()
+    
+//    private lazy var tableView: UITableView = {
+//        let table = UITableView.init(frame: .zero, style: .plain)
+//        table.delegate = self
+//        table.dataSource = self
+//        table.separatorStyle = .none
+//        table.backgroundColor = .clear
+//        table.register(PlayListCell.self, forCellReuseIdentifier: cellIdentifier)
+//        if #available(iOS 15.0, *) {
+//            table.sectionHeaderTopPadding = 0
+//        }
+//        table.contentInsetAdjustmentBehavior = .never
+//        return table
+//    }()
     
     private var recommonedUserId: String = ""
     private var recommonedList: [ChannelData] = []
@@ -120,7 +131,7 @@ class PlayListController: UIViewController {
                         self.recommonedList.append(data)
                     }
                     PlayTool.instance.list.append(contentsOf: HubTool.share.channelList(self.recommonedList, linkId: "", uId: self.recommonedUserId, platform: self.currentModel.platform))
-                    self.tableView.reloadData()
+                    self.collectionView.reloadData()
                 } else {
                     ToastTool.instance.show("request fail!", .fail)
                 }
@@ -139,21 +150,15 @@ class PlayListController: UIViewController {
             make.left.right.bottom.equalToSuperview()
             make.height.equalTo(ScreenHeight * 0.6)
         }
-        self.contentV.addSubview(self.titleL)
-        self.contentV.addSubview(self.tableView)
-        self.titleL.snp.makeConstraints { make in
-            make.left.equalTo(16)
-            make.top.equalTo(16)
-        }
-        self.tableView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+        self.contentV.addSubview(self.collectionView)
+        self.collectionView.snp.makeConstraints { make in
+            make.left.top.right.equalToSuperview()
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            make.top.equalTo(self.titleL.snp.bottom).offset(6)
         }
         
         self.contentV.layoutIfNeeded()
-        self.contentV.backgroundColor = UIColor.rgbHex("#000000", 0.6)
-        self.contentV.addEffectView(self.contentV.frame.size, .light)
+        self.contentV.backgroundColor = UIColor.rgbHex("#8c8c8c")
+        self.contentV.addRedius([.topLeft, .topRight], 20)
         let tap = UITapGestureRecognizer(target: self, action: #selector(pageDismiss))
         view.addGestureRecognizer(tap)
         tap.delegate = self
@@ -167,10 +172,10 @@ class PlayListController: UIViewController {
             }
         }
         
-        self.tableView.reloadData()
+        self.collectionView.reloadData()
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.25) { [weak self] in
             guard let self = self else { return }
-            self.tableView.scrollToRow(at: IndexPath(row: self.currentIdx, section: 0), at: .none, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(row: self.currentIdx, section: 0), at: .centeredVertically, animated: false)
         }
     }
     
@@ -179,29 +184,73 @@ class PlayListController: UIViewController {
     }
 }
 
-extension PlayListController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: PlayListCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! PlayListCell
-        if let m = PlayTool.instance.list.safeIndex(indexPath.row) {
-            cell.initData(m, self.currentIdx == indexPath.row)
+extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        PlayTool.instance.list.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PlayListCell
+        if let m = PlayTool.instance.list.safeIndex(indexPath.item) {
+            cell.initData(m, self.currentIdx == indexPath.item)
         }
         return cell
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        PlayTool.instance.list.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        84
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let m = PlayTool.instance.list.safeIndex(indexPath.row) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let m = PlayTool.instance.list.safeIndex(indexPath.item) {
             self.selectBlock?(m)
             self.currentIdx = indexPath.row
-            self.tableView.reloadData()
+            self.collectionView.reloadData()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        CGSize(width: cellW, height: 120)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                       viewForSupplementaryElementOfKind kind: String,
+                       at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "HeaderView",
+                for: indexPath
+            )
+            
+            // 配置 Header
+            header.backgroundColor = UIColor.rgbHex("#8c8c8c")
+            
+            // 添加 UILabel
+            if let label = header.viewWithTag(indexPath.section) as? UILabel {
+                label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
+            } else {
+                let label = UILabel()
+                label.tag = indexPath.section
+                label.frame = CGRect(x: 16, y: 0, width: header.frame.width - 32, height: header.frame.height)
+                label.font = UIFont.GoogleSans(weight: .medium, size: 18)
+                label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
+                label.textColor = .white
+                header.addSubview(label)
+            }
+            return header
+        }
+        return UICollectionReusableView()
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 44)
     }
 }
 

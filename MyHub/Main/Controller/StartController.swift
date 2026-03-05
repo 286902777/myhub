@@ -13,6 +13,7 @@ class StartController: UIViewController {
     
     @IBOutlet weak var progressV: UIProgressView!
     
+    @IBOutlet weak var appNameL: UILabel!
     private var progressValue: Float = 0.0
     private var remainingTime: TimeInterval = 3.0
     private var displayLink: CADisplayLink?
@@ -29,6 +30,7 @@ class StartController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.appNameL.font = UIFont.GoogleSans(weight: .black, size: 24)
         startLoadingProcess()
         setupNotifications()
         setupDisplayLink()

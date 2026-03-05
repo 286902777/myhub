@@ -110,7 +110,7 @@ class IndexListCell: UITableViewCell {
     }
     
     func initData(_ data: VideoData) {
-        self.iconV.setImage(data.thumbnail, placeholder: "video_bg")
+        self.iconV.setImage(data.thumbnail, placeholder: "deep_video_bg")
         self.sizeL.text = "\(data.size) · \(data.pubData.dateToYMD())"
 
 //        self.moreBtn.isHidden = data.isPass != .passed
