@@ -53,9 +53,13 @@ class IndexController: SuperController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.loadData()
-        TabbarTool.instance.displayOrHidden(true)
     }
   
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        TabbarTool.instance.displayOrHidden(true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setup()

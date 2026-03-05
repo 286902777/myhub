@@ -599,7 +599,7 @@ private extension HUBPlayerContentView {
         
         timeDatailV.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.height.equalTo(32)
+            make.height.equalTo(44)
         }
         
         currentDurationLabel.snp.makeConstraints { make in

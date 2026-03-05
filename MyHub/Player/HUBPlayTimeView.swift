@@ -11,7 +11,7 @@ import SnapKit
 class HUBPlayTimeView: UIView {
     lazy var timeL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.GoogleSans(weight: .medium, size: 24)
+        label.font = UIFont.GoogleSans(weight: .medium, size: 20)
         label.textColor = .white
         return label
     }()

@@ -334,6 +334,7 @@ private extension HUBPlayerView {
     func observeStatusAction() {
         guard let playerItem = playerItem else { return }
         if playerItem.status == .readyToPlay {
+            LoadManager.instance.dismiss()
             contentView.playState = .readyToPlay
 //            EventTool.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
 //            EventTool.instance.addEvent(type: .custom, event: .playSuc, paramter: nil)
@@ -363,8 +364,10 @@ private extension HUBPlayerView {
 
             switch waitReadyToPlayState {
             case .nomal:
+                LoadManager.instance.dismiss()
                 break
             case .pause:
+                LoadManager.instance.dismiss()
                 pause()
             case .play:
 //                if HubTool.instance.showAdomb == false {
@@ -375,6 +378,7 @@ private extension HUBPlayerView {
                 play()
             }
         } else if playerItem.status == .failed {
+            LoadManager.instance.dismiss()
 //            EventTool.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
 //            EventTool.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: playerItem.error?.localizedDescription ?? "request fail!"])
 //            if PlayManager.instance.auto == false {

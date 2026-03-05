@@ -83,7 +83,7 @@ public struct HUBPlayerConfigure {
                     thumb: UIImage? = UIImage(named: "play_slider"),
                     full: UIImage? = UIImage(named: "play_full"),
                     down: UIImage? = UIImage(named: "play_down"),
-                    downing: UIImage? = UIImage(named: "alert_down_downing"),
+                    downing: UIImage? = UIImage(named: "play_down_downing"),
                     downDone: UIImage? = UIImage(named: "play_down_done"),
                     qian: UIImage? = UIImage(named: "play_rewind"),
                     hou: UIImage? = UIImage(named: "play_forward"),

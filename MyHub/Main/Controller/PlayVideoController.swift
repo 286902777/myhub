@@ -216,6 +216,7 @@ class PlayVideoController: UIViewController {
     }
     
     private func play() {
+        LoadManager.instance.show(self)
         var isPlay = false
         if let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) {
             isPlay = true
@@ -388,6 +389,7 @@ extension PlayVideoController: HUBPlayerDelegate {
     func playerDidClickBackButton(_ player: HUBPlayer) {
         HubTool.share.adsPlayState = .playBack
         self.isPop = true
+        self.navigationController?.popViewController(animated: true)
 //        AdmobTool.instance.show(.mode_play) { [weak self] success in
 //            guard let self = self else { return}
 //            if success {
@@ -421,6 +423,8 @@ extension PlayVideoController: HUBPlayerDelegate {
         }
         HubTool.share.eventSource = .download
         HubTool.share.adsPlayState = .download
+        ToastTool.instance.show("Added to download list")
+        UploadDownTool.instance.downLoad(self.model)
 //        AdmobTool.instance.show(.mode_down) { [weak self] success in
 //            guard let self = self else { return }
 //            if success {
