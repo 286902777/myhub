@@ -113,15 +113,17 @@ class IndexListCell: UITableViewCell {
         self.iconV.setImage(data.thumbnail, placeholder: "deep_video_bg")
         self.sizeL.text = "\(data.size) · \(data.pubData.dateToYMD())"
 
-//        self.moreBtn.isHidden = data.isPass != .passed
-//        switch data.isPass {
-//        case .initl:
-//            self.stateL.text = "Reviewing"
-//        case .passed:
-//            self.stateL.text = ""
-//        case .rejected:
-//            self.stateL.text = "Failed"
-//        }
+        switch data.isPass {
+        case .initl:
+            self.moreBtn.setImage(UIImage(named: "initl"), for: .normal)
+            self.moreBtn.isUserInteractionEnabled = false
+        case .rejected:
+            self.moreBtn.setImage(UIImage(named: "rejected"), for: .normal)
+            self.moreBtn.isUserInteractionEnabled = false
+        case .passed:
+            self.moreBtn.setImage(UIImage(named: "more"), for: .normal)
+            self.moreBtn.isUserInteractionEnabled = true
+        }
         self.nameL.text = data.name
         if data.totalTime > 0 {
             self.timeV.isHidden = false

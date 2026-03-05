@@ -520,20 +520,19 @@ class IndexController: SuperController {
     }
     
     @objc func clickHeadAction(_ sender: UITapGestureRecognizer) {
-        self.driveDeep("2028752637255618561")
-//        if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
-//            if m.type == .channel {
-////                let vc = ChannelListController()
-////                vc.model = m.users.first ?? ChannelUserData()
-////                vc.hidesBottomBarWhenPushed = true
-////                self.navigationController?.pushViewController(vc, animated: true)
-//            } else {
-//                let vc = IndexListController(list: m.lists, type: m.type)
+        if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
+            if m.type == .channel {
+//                let vc = ChannelListController()
+//                vc.model = m.users.first ?? ChannelUserData()
 //                vc.hidesBottomBarWhenPushed = true
-//                TabbarTool.instance.displayOrHidden(false)
 //                self.navigationController?.pushViewController(vc, animated: true)
-//            }
-//        }
+            } else {
+                let vc = IndexListController(list: m.lists, type: m.type)
+                vc.hidesBottomBarWhenPushed = true
+                TabbarTool.instance.displayOrHidden(false)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
 }
 

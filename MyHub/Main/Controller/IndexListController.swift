@@ -145,7 +145,7 @@ extension IndexListController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let m = self.lists.safeIndex(indexPath.row) {
+        if let m = self.lists.safeIndex(indexPath.row), m.isPass == .passed {
             self.pushSubVC(m, self.lists)
         }
     }
