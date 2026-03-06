@@ -22,6 +22,7 @@ class BoxDeepHeadView: UIView {
         let view = UIStackView()
         view.axis = .horizontal
         view.spacing = 4
+        view.isHidden = true
         return view
     }()
     

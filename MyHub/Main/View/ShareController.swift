@@ -157,6 +157,8 @@ class ShareController: UIViewController {
         }
         self.stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
+            make.left.greaterThanOrEqualTo(14)
+            make.right.lessThanOrEqualTo(-14)
         }
         
         self.validityV.snp.makeConstraints { make in
