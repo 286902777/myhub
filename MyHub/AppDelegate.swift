@@ -9,6 +9,7 @@ import UIKit
 import AppsFlyerLib
 import IQKeyboardManagerSwift
 import IQKeyboardToolbarManager
+import FirebaseCore
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,16 +20,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NetManager.instance.startChecking()
         HubDB.instance.config()
-        addKeyboard()
+        setKeyboard()
+        setFireBase()
         return true
     }
 
-    func addKeyboard() {
+    func setKeyboard() {
         IQKeyboardToolbarManager.shared.isEnabled = true
         IQKeyboardManager.shared.resignOnTouchOutside = true
         IQKeyboardToolbarManager.shared.toolbarConfiguration.previousNextDisplayMode = .alwaysHide
     }
     
+    func setFireBase() {
+        FirebaseApp.configure()
+        FireManager.share.setConfig()
+//        UploadEventService.share.configInit()
+    }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.

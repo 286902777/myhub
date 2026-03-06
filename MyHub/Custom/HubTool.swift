@@ -9,6 +9,7 @@ import UIKit
 import AVFoundation
 import Photos
 import Kingfisher
+import GoogleMobileAds
 
 let ScreenBounds = UIScreen.main.bounds
 
@@ -431,6 +432,51 @@ class HubTool {
             guard let self = self else { return }
             if success == false {
                 self.downEvent(data)
+            }
+        }
+    }
+    
+    func show(_ mode: AdsShowMode = .play, complete: @escaping(_ success: Bool) -> Void) {
+//        if PayManager.share.isVip == true {
+//            SystemManager.share.showAdomb = false
+//            complete(false)
+//            return
+//        }
+        
+        GoogleManager.share.disPlay(mode) { suc, adItem, showPlus in
+            HubTool.share.keyVC()?.view.hideToast()
+            if mode == .playing, suc == false {
+                complete(suc)
+                return
+            }
+            if (showPlus && suc == false) {
+                GoogleManager.share.playPlusAds(.open) { s in
+                    complete(s)
+                    return
+                }
+            }
+            if (suc){
+                DispatchQueue.main.async {
+                    if suc, let vc = HubTool.share.keyVC() {
+                        if let ad = adItem as? InterstitialAd {
+                            ad.present(from: vc)
+                        } else if let ad = adItem as? AppOpenAd {
+                            ad.present(from: vc)
+                        } else if let ad = adItem as? RewardedAd {
+                            ad.present(from: vc, userDidEarnRewardHandler: {
+                            })
+                        } else if let ad = adItem as? RewardedInterstitialAd {
+                            ad.present(from: vc, userDidEarnRewardHandler: {
+                            })
+                        }
+                    }
+                }
+                complete(suc)
+                return
+            }
+            if (showPlus == false) {
+                complete(showPlus)
+                return
             }
         }
     }
