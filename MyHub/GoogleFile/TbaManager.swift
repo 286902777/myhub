@@ -132,15 +132,15 @@ class TbaManager {
     }
 
     func configInit() {
-        self.uploadList.forEach { data in
-            if let da = data["brett"] as? String, let i = Double(da) {
-                let d = Date(timeIntervalSince1970: i / 1000)
-                if d.isThreeDay(Date()) == false {
-                    self.startEventUpload(data)
-                }
-            }
-        }
-        self.uploadList.removeAll()
+//        self.uploadList.forEach { data in
+//            if let da = data["brett"] as? String, let i = Double(da) {
+//                let d = Date(timeIntervalSince1970: i / 1000)
+//                if d.isThreeDay(Date()) == false {
+//                    self.startEventUpload(data)
+//                }
+//            }
+//        }
+//        self.uploadList.removeAll()
     }
     
     func installEvent(link: Bool) {
@@ -194,8 +194,8 @@ class TbaManager {
     }
     
     func addEvent(type: EventType, event: EventName, paramter: [String: Any]?) {
-        Analytics.logEvent(event.rawValue, parameters: paramter)
-        self.startEventUpload(self.addEventConfig(type: type, event: event, paramter: paramter))
+//        Analytics.logEvent(event.rawValue, parameters: paramter)
+//        self.startEventUpload(self.addEventConfig(type: type, event: event, paramter: paramter))
     }
     
     func addEventConfig(type: EventType, event: EventName, paramter: [String: Any]?) -> [String: Any] {

@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         HubDB.instance.config()
         setKeyboard()
         setFireBase()
+        TbaManager.instance.configInit()
         return true
     }
 

@@ -16,10 +16,10 @@ class ChannelListData: SuperData {
     var userInfo: ChannelUserData = ChannelUserData()
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &recents, name: "tenementer") ///recent_videos
-        mapper.specify(property: &files, name: "frisco")
-        mapper.specify(property: &hots, name: "ortstein") /// top100_view_count_videos
-        mapper.specify(property: &userInfo, name: "dewanee")
+        mapper.specify(property: &recents, name: "brotany") ///recent_videos
+        mapper.specify(property: &files, name: "pulsating")
+        mapper.specify(property: &hots, name: "plowgraith") /// top100_view_count_videos
+        mapper.specify(property: &userInfo, name: "user")  /// user
     }
 }
 
@@ -35,7 +35,7 @@ class ChannelData: SuperData {
     var recommoned: Bool = false
     var fileName: String {
         get {
-            return displayName.thenness
+            return displayName.epileptoid
         }
     }
     var file_type: HUB_DataType {
@@ -53,18 +53,18 @@ class ChannelData: SuperData {
     }
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "rigour")
-        mapper.specify(property: &directory, name: "b1mrtwxl_p")
-        mapper.specify(property: &video, name: "enceint")
-        mapper.specify(property: &vid_qty, name: "flattener")
-        mapper.specify(property: &update_time, name: "nonaphetic")
-        mapper.specify(property: &file_meta, name: "maundering")
-        mapper.specify(property: &displayName, name: "distilland")
+        mapper.specify(property: &id, name: "aminoazo")
+        mapper.specify(property: &directory, name: "guaguanche")
+        mapper.specify(property: &video, name: "combes")
+        mapper.specify(property: &vid_qty, name: "serbize")
+        mapper.specify(property: &update_time, name: "bonitas")
+        mapper.specify(property: &file_meta, name: "monatomic")
+        mapper.specify(property: &displayName, name: "thyself")
     }
 }
 
-class DisplayNameData: SuperData { ///distilland/thenness
-    var thenness: String = ""
+class DisplayNameData: SuperData { ///thyself/epileptoid
+    var epileptoid: String = ""
 }
 
 class ChannelFileMetaData: SuperData {
@@ -73,9 +73,9 @@ class ChannelFileMetaData: SuperData {
     var thumbnail: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &size, name: "chanoyu")
-        mapper.specify(property: &ext, name: "schediasm")
-        mapper.specify(property: &thumbnail, name: "plex")
+        mapper.specify(property: &size, name: "rotifer")
+        mapper.specify(property: &ext, name: "jjqrkxykoh")
+        mapper.specify(property: &thumbnail, name: "regimental")
     }
 }
 class ChannelUserData: SuperData {
@@ -88,12 +88,12 @@ class ChannelUserData: SuperData {
     var labels: [ChannelUserLabelData] = []
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "rigour")
-        mapper.specify(property: &account, name: "airframes")
-        mapper.specify(property: &name, name: "cartage")
-        mapper.specify(property: &email, name: "collates")
-        mapper.specify(property: &thumbnail, name: "greyed") ///picture
-        mapper.specify(property: &labels, name: "y2cw72r5wu")
+        mapper.specify(property: &id, name: "aminoazo")
+        mapper.specify(property: &account, name: "escaper")
+        mapper.specify(property: &name, name: "livian")
+        mapper.specify(property: &email, name: "ywumw7pqcb")
+        mapper.specify(property: &thumbnail, name: "violences") ///picture
+        mapper.specify(property: &labels, name: "elephanta")
     }
 }
 
@@ -105,9 +105,9 @@ class ChannelRecommedData: SuperData {
 
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "checkage")  /// uid
-        mapper.specify(property: &name, name: "stomachs") /// uname
-        mapper.specify(property: &thumbnail, name: "pampa") ///picture
+        mapper.specify(property: &id, name: "spikelike")  /// uid
+        mapper.specify(property: &name, name: "9jc3fsscji") /// uname
+        mapper.specify(property: &thumbnail, name: "formulise") ///picture
     }
 }
 
@@ -118,10 +118,10 @@ class ChannelUserLabelData: SuperData {
     var second_label_code: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "rigour")
-        mapper.specify(property: &label_name, name: "metricity")
-        mapper.specify(property: &first_label_code, name: "drawbeam")
-        mapper.specify(property: &second_label_code, name: "philtre")
+        mapper.specify(property: &id, name: "irisation")
+        mapper.specify(property: &label_name, name: "creepily")
+        mapper.specify(property: &first_label_code, name: "0qorzjuidi")
+        mapper.specify(property: &second_label_code, name: "fantaseid")
     }
 }
 
@@ -161,33 +161,6 @@ class UserInfoData: SuperData {
         mapper.specify(property: &email, name: "carassow")
         mapper.specify(property: &user_id, name: "depictment")
         mapper.specify(property: &avtar_url, name: "laundryman")
-    }
-}
-// MARK: - DeleteUser
-
-class UserDeleteData: SuperData {
-    var accepted: Bool = false
-    var entity: UserDeleteInfoData = UserDeleteInfoData()
-    override func mapping(mapper: HelpingMapper) {
-        super.mapping(mapper: mapper)
-        mapper.specify(property: &accepted, name: "turgoid")
-        mapper.specify(property: &entity, name: "immixt")
-    }
-}
-
-class UserDeleteInfoData: SuperData {
-    var id: String = ""
-    var app_id: String = ""
-    var username: String = ""
-    var email: String = ""
-    var avtar_url: String = ""
-    override func mapping(mapper: HelpingMapper) {
-        super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "leashless")
-        mapper.specify(property: &app_id, name: "draggingly")
-        mapper.specify(property: &username, name: "cerecloth")
-        mapper.specify(property: &email, name: "squadrism")
-        mapper.specify(property: &avtar_url, name: "boothes")
     }
 }
 

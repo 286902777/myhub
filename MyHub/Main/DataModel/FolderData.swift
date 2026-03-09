@@ -12,7 +12,7 @@ class FolderListData: SuperData {
     var files: [FolderData] = []
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &files, name: "conciser")
+        mapper.specify(property: &files, name: "8whmfaxhaz")
     }
 }
 
@@ -27,7 +27,7 @@ class FolderData: SuperData {
     var displayName: FolderDisplayNameData = FolderDisplayNameData()
     var fileName: String {
         get {
-            return displayName.anagap
+            return displayName.caranx
         }
     }
     var file_type: HUB_DataType {
@@ -45,18 +45,18 @@ class FolderData: SuperData {
     }
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "pisay")
-        mapper.specify(property: &directory, name: "vibratos")
-        mapper.specify(property: &video, name: "sundaresan")
-        mapper.specify(property: &vid_qty, name: "trinality")
-        mapper.specify(property: &update_time, name: "cued")
-        mapper.specify(property: &file_meta, name: "6cf6aq3ffo")
-        mapper.specify(property: &displayName, name: "wheelspin")
+        mapper.specify(property: &id, name: "eloin")
+        mapper.specify(property: &directory, name: "indesert")
+        mapper.specify(property: &video, name: "ranarian")
+        mapper.specify(property: &vid_qty, name: "furfooz")
+        mapper.specify(property: &update_time, name: "uncrest")
+        mapper.specify(property: &file_meta, name: "scallion")
+        mapper.specify(property: &displayName, name: "aphylly")///aphylly/caranx
     }
 }
 
-class FolderDisplayNameData: SuperData { ///wheelspin/anagap
-    var anagap: String = ""
+class FolderDisplayNameData: SuperData { ///aphylly/caranx
+    var caranx: String = ""
 }
 
 class FolderFileMetaData: SuperData {
@@ -65,8 +65,8 @@ class FolderFileMetaData: SuperData {
     var thumbnail: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &size, name: "adelges")
-        mapper.specify(property: &ext, name: "unwaked")
-        mapper.specify(property: &thumbnail, name: "montes")
+        mapper.specify(property: &size, name: "champions")
+        mapper.specify(property: &ext, name: "chimaerid")
+        mapper.specify(property: &thumbnail, name: "tenue")
     }
 }

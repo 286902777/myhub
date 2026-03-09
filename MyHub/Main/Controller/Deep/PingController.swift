@@ -120,7 +120,8 @@ class PingController: UIViewController {
         
         self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.bottomView.snp.top)
             make.top.equalTo(self.navbar.snp.bottom)
         }
         
@@ -130,7 +131,7 @@ class PingController: UIViewController {
             make.left.equalTo(14)
             make.right.equalTo(-14)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            make.height.equalTo(64)
+            make.height.equalTo(0)
         }
         self.bottomView.isHidden = true
         self.bottomView.clickBlock = { [weak self] idx in
@@ -347,6 +348,9 @@ class PingController: UIViewController {
     func disPlayBottom() {
         let arr = self.dataModel.files.filter({$0.isSelect == true})
         self.bottomView.isHidden = arr.count == 0
+        self.bottomView.snp.updateConstraints { make in
+            make.height.equalTo(arr.count == 0 ? 0 : 64)
+        }
     }
 }
 

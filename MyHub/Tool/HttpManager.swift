@@ -41,11 +41,11 @@ enum HttpApi: String {
     case openFolder = "ammoniuret/isoelastic/artemision"   ///app/file/list_by_parent
 
     /// 承接页接口
-    case channel = "v12"  /// v1/app/open/data
-    case download = "v1asf"     /// v1/app/download/file/
-    case folder = "v1/asdf"     /// v1/app/open/file/{uid}/{dirId}
-    case event = "v1/sdfs"              /// v1/app/events
-    case recommendChannel = "v1/njejxa0kpo"/// v1/app/push_operation_pools
+    case channel = "v1/entrec/reexpel/polled"  /// v1/app/open/data
+    case download = "v1/voce/refrying/urd"     /// v1/app/download/file/
+    case folder = "v1/dentately/maraud/blennoid"     /// v1/app/open/file/{uid}/{dirId}
+    case event = "v1/menialism/hoose"              /// v1/app/events
+    case recommendChannel = "v1/unsieved/dob"/// v1/app/push_operation_pools
 }
 
 enum HttpHeadValue: String {
@@ -70,7 +70,7 @@ class HttpManager {
     
     let userHeadKey: String = "kinspeople" // x-api-id
     
-    let appHeadKey: String = "2as"
+    let appHeadKey: String = "puxg6rzxtl"
     
     let tokenKey: String = "X-Token"
     
@@ -78,7 +78,7 @@ class HttpManager {
     
     let userHostAddress: String = "xbox2c-test-myhub.tbxbxdev.com"
     
-    var appHost: String = "https://c.sdbfsf.com/"
+    var appHost: String = "https://myhub.tbxbxdev.com/"
     
     let pageSize: Int = 500
     //MARK: - Login
@@ -786,18 +786,18 @@ class HttpManager {
         //            "current_page":1, //页码
         //            "page_size":50 //分页大小
         //        }
-        let para: [String: Any] = ["pharmacist": uId,
-                                   "mauve": ["hypocaust": linkId],
-                                   "mistrysted":"v2",
-                                   "eds": page,
-                                   "overran": pageSize]
+        let para: [String: Any] = ["apyrene": uId,
+                                   "thatchwork": ["grivoise": linkId],
+                                   "unlikened":"v2",
+                                   "wracks": page,
+                                   "riposte": pageSize]
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = appHost + HttpApi.channel.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("transiting", forHTTPHeaderField: appHeadKey)
+        request.setValue("tittlebat", forHTTPHeaderField: appHeadKey)
         
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
@@ -831,26 +831,26 @@ class HttpManager {
 
         dbList.forEach { users in
             users.labels.forEach { item in
-                let spara: [String: String] = ["weneth": item.id,
-                                               "doqzea0ily": item.label_name,
-                                               "manhandled": item.first_label_code,
-                                               "sonants": item.second_label_code]
+                let spara: [String: String] = ["irisation": item.id,
+                                               "creepily": item.label_name,
+                                               "0qorzjuidi": item.first_label_code,
+                                               "fantaseid": item.second_label_code]
                 plabs.append(spara)
             }
         }
         
         var para: [String: Any] = [:]
-        para["checkage"] = uId
-        para["flashlight"] = "ios"
-        para["acker"] = Locale.current.identifier
-        para["inceptors"] = ["coontie": plabs]
+        para["spikelike"] = uId
+        para["grandpapa"] = "ios"
+        para["paraglenal"] = Locale.current.identifier
+        para["rally"] = ["ragazze": plabs]
 
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("proviant", forHTTPHeaderField: appHeadKey)
+        request.setValue("aortic", forHTTPHeaderField: appHeadKey)
         
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
@@ -883,14 +883,14 @@ class HttpManager {
     }
     
     func folderData(uId: String, dirId: String, currentPage: Int = 1, _ completion: @escaping (_ status: HttpCode, _ list: [FolderData],  _ errMsg: String?, _ refresh: Bool) -> Void) {
-        let url: String = appHost + HttpApi.folder.rawValue + "/\(uId)" + "/\(dirId)" + "?malope=\(currentPage)&duomos=\(pageSize)"
+        let url: String = appHost + HttpApi.folder.rawValue + "/\(uId)" + "/\(dirId)" + "?bundahish=\(currentPage)&overliing=\(pageSize)"
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
-        request.setValue("glut", forHTTPHeaderField: appHeadKey)
+        request.setValue("italianish", forHTTPHeaderField: appHeadKey)
         let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { [weak self] data, response, error in
             guard let self = self else { return }
             let status = self.getCode(response)
@@ -919,7 +919,7 @@ class HttpManager {
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("sluggish", forHTTPHeaderField: appHeadKey)
+        request.setValue("norroway", forHTTPHeaderField: appHeadKey)
         
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
@@ -945,40 +945,40 @@ class HttpManager {
     
     // MARK: - event upload
     func uploadEventApi(event: BackEventName, currency: String, val: Double, model: VideoData, _ complete: @escaping (_ success: Bool) -> Void) {
-        print("_______sexxxx\(model.userId),\(model.linkId),\(event.rawValue),\(model.platform.rawValue)")
-        let para: [String : Any] = ["anticomet": ["tommer": NetManager.instance.networkName], // network_type
-                                    "fernery": ["unbrooch": HUB_BuildId], // bundle_id
-                                    "vintress": self.appPrimaryKey(), //"app下载事件上报的唯一id，同一设备多次下载app,id不变"
-                                    "decuples": event.rawValue, // event_type
-                                    "ribaldish": ["huntsmen": HubTool.share.eventSource.rawValue], // event_soucre
-                                    "exhalants": model.userId, // uId
-                                    "sonnetised": model.linkId, // link_id
-                                    "gibberose": currency, // cur
-                                    "disparpled": val, // val
-                                    "upstream": UUID().uuidString, // logId
-                                    "digraph": model.id,  // file_id
-                                    "araneae": UIDevice.current.identifierForVendor?.uuidString ?? "", // idfv
-                                    "dupla": ASIdentifierManager.shared().advertisingIdentifier.uuidString, // idfa
-                                    "vj8kj91nn1": self.getOperator(), // operator
-                                    "malaxation": UIDevice.current.systemVersion, // os_version
-                                    "tree": self.getAppUUID(), // distinctId
-                                    "tammy": ["gwgcxlu83j": ["90ztcis93d": self.getTreeKey()]],
+        print("uploadEvent:\(model.userId),\(model.linkId),\(event.rawValue),\(model.platform.rawValue)")
+        let para: [String : Any] = ["gulravage": ["apjohnite": NetManager.instance.networkName], // network_type
+                                    "beakerful": ["usefully": HUB_BuildId], // bundle_id
+                                    "uhy2hbamfj": self.appPrimaryKey(), // unique_id "app下载事件上报的唯一id，同一设备多次下载app,id不变"
+                                    "bottling": event.rawValue, // event_type
+                                    "filagrees": ["taxibus": HubTool.share.eventSource.rawValue], // event_soucre
+                                    "lauans": model.userId, // uId
+                                    "recluses": model.linkId, // link_id
+                                    "mislight": currency, // cur
+                                    "redshirt": val, // val
+                                    "cimbaloms": UUID().uuidString, // logId
+                                    "reprimands": model.id,  // file_id
+                                    "weblike": UIDevice.current.identifierForVendor?.uuidString ?? "", // idfv
+                                    "forgery": ASIdentifierManager.shared().advertisingIdentifier.uuidString, // idfa
+                                    "jqdjkuomgl": self.getOperator(), // operator
+                                    "stilly": UIDevice.current.systemVersion, // os_version
+                                    "pyopoietic": self.getAppUUID(), // distinctId
+                                    "sacs": ["nominators": ["bniwn6vqi8": self.getTreeKey()]],
                                     //device_model
-                                    "chatterer": "ios", // os
-                                    "defervesce": "\(Locale.current.languageCode ?? "en")_\(Locale.current.regionCode ?? "US")", // system_language
-                                    "mapo": "Apple", // manufacturer
-                                    "pressel": Int(Date().timeIntervalSince1970 * 1000), // client_ts
-                                    "primost": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.1.0" // app_version
+                                    "midrashic": "ios", // os
+                                    "chantier": "\(Locale.current.languageCode ?? "en")_\(Locale.current.regionCode ?? "US")", // system_language
+                                    "archaism": "Apple", // manufacturer
+                                    "cornic": Int(Date().timeIntervalSince1970 * 1000), // client_ts
+                                    "toadstone": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.1.0" // app_version
                                     ]
         let url: String = appHost + HttpApi.event.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("pleonast", forHTTPHeaderField: appHeadKey)
+        request.setValue("blindest", forHTTPHeaderField: appHeadKey)
 
         if let pa = try? JSONSerialization.data(withJSONObject: [para], options: []) {
             let aseStr = self.AESEventKey(pa)
-            let d_arr: [String: String] = ["barfing": aseStr]  //ciphertext
+            let d_arr: [String: String] = ["quohogs": aseStr]  //ciphertext
             if let aseBody = try? JSONSerialization.data(withJSONObject: d_arr, options: []) {
                 request.httpBody = aseBody
             }
@@ -1030,7 +1030,7 @@ class HttpManager {
     func premissonLaterLogin() {
         DispatchQueue.main.async {
             if let vc = HubTool.share.keyVC() {
-//                LoginManager.share.loginRequest(vc) { _ in }
+                LoginManager.share.loginRequest(vc) { _ in }
             }
         }
     }
