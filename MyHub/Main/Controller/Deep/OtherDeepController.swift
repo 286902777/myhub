@@ -340,6 +340,7 @@ class OtherDeepController: UIViewController {
     func pushModelVC(_ model: ChannelData) {
         HubTool.share.eventSource = .landpage
         HubTool.share.uploadPlatform = HubTool.share.platform
+        HubTool.share.playSource = .landpage_file
         switch model.file_type {
         case .folder:
             let vc = OtherFolderListController(model: HubTool.share.channelModel(model, linkId: self.linkId, uId: model.recommoned ? self.recommenduId : self.dataModel.userInfo.id, platform: HubTool.share.platform), linkId: self.linkId, userId: model.recommoned ? self.recommenduId :  self.dataModel.userInfo.id, userName: self.dataModel.userInfo.name, platform: HubTool.share.platform, channel: false)

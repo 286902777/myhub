@@ -56,9 +56,9 @@ class DeepRecentlyController: UIViewController {
     
     func pushDataVC(_ mod: ChannelData) {
         if self.linkId.count > 0 {
-            HubTool.share.playSource = .landpage_hot
+            HubTool.share.playSource = .landpage_recently
         } else {
-            HubTool.share.playSource = .channel_hot
+            HubTool.share.playSource = .channel_recently
         }
         HubTool.share.uploadPlatform = self.platform
         switch mod.file_type {

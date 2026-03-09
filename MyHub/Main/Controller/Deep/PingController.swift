@@ -187,7 +187,7 @@ class PingController: UIViewController {
                 mod.vid_qty = m.vid_qty
                 mod.ext = m.file_meta.ext
                 mod.linkId = self.linkId
-                mod.platform = .box
+                mod.platform = self.platform
                 mod.userId = self.userModel.id
                 UploadDownTool.instance.downLoad(mod)
             }
@@ -298,9 +298,10 @@ class PingController: UIViewController {
         }
     }
     
-    func pushModelVC(_ model: ChannelData) {
+    func pushDataVC(_ model: ChannelData) {
         HubTool.share.eventSource = .channelpage
         HubTool.share.uploadPlatform = self.platform
+        HubTool.share.playSource = .channel_file
         switch model.file_type {
         case .folder:
             let vc = OtherFolderListController(model: HubTool.share.channelModel(model, linkId: "", uId: model.recommoned ? self.recommenduId : self.uId, platform: self.platform), linkId: "", userId: model.recommoned ? self.recommenduId : self.uId, userName: model.fileName, platform: self.platform, channel: true)
@@ -391,7 +392,7 @@ extension PingController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let m = self.dataModel.files.safeIndex(indexPath.row) {
-            self.pushModelVC(m)
+            self.pushDataVC(m)
         }
     }
 }
