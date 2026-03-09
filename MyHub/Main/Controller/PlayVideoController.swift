@@ -114,6 +114,7 @@ class PlayVideoController: UIViewController {
                     HubTool.share.downEvent(self.model)
                 }
                 UploadDownTool.instance.downLoad(self.model)
+                HubTool.share.downEvent(self.model)
             }
             if self.isBack {
                 self.premiumBlock?()
@@ -421,8 +422,7 @@ extension PlayVideoController: HUBPlayerDelegate {
         }
         HubTool.share.eventSource = .download
         HubTool.share.adsPlayState = .download
-        ToastTool.instance.show("Added to download list")
-        UploadDownTool.instance.downLoad(self.model)
+        ToastTool.instance.show("Added to download list")        
         HubTool.share.show(.play) { [weak self] success in
             guard let self = self else { return }
             if success {
@@ -431,6 +431,7 @@ extension PlayVideoController: HUBPlayerDelegate {
             } else {
                 ToastTool.instance.show("Added to download list")
                 UploadDownTool.instance.downLoad(self.model)
+                HubTool.share.downEvent(self.model)
                 if self.model.platform != .box {
                     HubTool.share.downEvent(self.model)
                 }

@@ -163,6 +163,33 @@ class UserInfoData: SuperData {
         mapper.specify(property: &avtar_url, name: "laundryman")
     }
 }
+// MARK: - DeleteUser
+
+class UserDeleteData: SuperData {
+    var accepted: Bool = false
+    var entity: UserDeleteInfoData = UserDeleteInfoData()
+    override func mapping(mapper: HelpingMapper) {
+        super.mapping(mapper: mapper)
+        mapper.specify(property: &accepted, name: "turgoid")
+        mapper.specify(property: &entity, name: "immixt")
+    }
+}
+
+class UserDeleteInfoData: SuperData {
+    var id: String = ""
+    var app_id: String = ""
+    var username: String = ""
+    var email: String = ""
+    var avtar_url: String = ""
+    override func mapping(mapper: HelpingMapper) {
+        super.mapping(mapper: mapper)
+        mapper.specify(property: &id, name: "iuyvsixasl")
+        mapper.specify(property: &app_id, name: "enations")
+        mapper.specify(property: &username, name: "courbette")
+        mapper.specify(property: &email, name: "caprioles")
+        mapper.specify(property: &avtar_url, name: "limiest")
+    }
+}
 
 class UserSpaceData: SuperData {
     var user_space: Double = 0 //已用空间

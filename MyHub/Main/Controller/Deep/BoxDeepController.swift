@@ -164,6 +164,7 @@ class BoxDeepController: UIViewController {
                 if let localModel = localList.first(where: {$0.id == m.file_id}) {
                     if localModel.state != .downDone {
                         UploadDownTool.instance.downLoad(localModel)
+                        HubTool.share.downEvent(localModel)
                     }
                 } else {
                     let mod: VideoData = VideoData()

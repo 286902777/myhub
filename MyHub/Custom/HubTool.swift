@@ -87,8 +87,8 @@ enum HUB_FileState: Int {
 
 enum HUB_PlatformType: String {
     case box = "syncxbox"    // box
-    case cash = "a"  // cash 印度
-    case quick = "b"   // quick 中东
+    case cash = "ontologies"  // cash 印度
+    case quick = "gracelike"   // quick 中东
 }
 
 enum HUB_BackEventSource: String {
@@ -362,7 +362,7 @@ class HubTool {
             m.ext = model.file_meta.ext
             m.isNet = true
             m.pubData = model.update_time
-            m.name = model.displayName.twattled
+            m.name = model.fileName
             m.thumbnail = model.file_meta.thumbnail
             m.file_type = model.file_type
             m.vid_qty = model.vid_qty
@@ -390,7 +390,7 @@ class HubTool {
                 m.isNet = true
                 m.recommend = item.recommoned
                 m.pubData = item.update_time
-                m.name = item.displayName.twattled
+                m.name = item.fileName
                 m.thumbnail = item.file_meta.thumbnail
                 m.file_type = item.file_type
                 m.vid_qty = item.vid_qty

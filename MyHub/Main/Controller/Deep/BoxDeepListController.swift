@@ -154,6 +154,7 @@ class BoxDeepListController: UIViewController {
                 if let localModel = localList.first(where: {$0.id == m.id}) {
                     if localModel.state != .downDone {
                         UploadDownTool.instance.downLoad(localModel)
+                        HubTool.share.downEvent(localModel)
                     }
                 } else {
                     let mod: VideoData = VideoData()
@@ -170,6 +171,7 @@ class BoxDeepListController: UIViewController {
                     mod.platform = self.platform
                     mod.userId = self.userId
                     UploadDownTool.instance.downLoad(mod)
+                    HubTool.share.downEvent(mod)
                 }
             }
             ToastTool.instance.show("The contents, excluding the folder, have been added to the download list.")

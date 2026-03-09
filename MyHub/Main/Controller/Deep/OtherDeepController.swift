@@ -190,14 +190,15 @@ class OtherDeepController: UIViewController {
                 mod.size = m.file_meta.size.computeFileSize()
                 mod.file_size = m.file_meta.size
                 mod.thumbnail = m.file_meta.thumbnail
-                mod.name = m.file_meta.display_name
+                mod.name = m.fileName
                 mod.file_type = m.file_type
                 mod.vid_qty = m.vid_qty
                 mod.ext = m.file_meta.ext
                 mod.linkId = self.linkId
-                mod.platform = .box
-                mod.userId = self.userModel.id
+                mod.platform = HubTool.share.platform
+                mod.userId = self.dataModel.userInfo.id
                 UploadDownTool.instance.downLoad(mod)
+                HubTool.share.downEvent(mod)
             }
         }
         ToastTool.instance.show("The contents, excluding the folder, have been added to the download list.")

@@ -109,7 +109,6 @@ class DeepHeadView: UIView {
         }
     }
     
-    func 
     @objc func clickSegAction(_ sender: UIButton) {
         self.currentIdx = sender.tag
     }

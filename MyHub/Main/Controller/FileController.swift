@@ -228,10 +228,12 @@ class FileController: UIViewController {
                     if let mod = dbList.first(where: {$0.id == m.id}) {
                         if mod.state != .downDone {
                             UploadDownTool.instance.downLoad(m)
+                            HubTool.share.downEvent(m)
                             isDown = true
                         }
                     } else {
                         UploadDownTool.instance.downLoad(m)
+                        HubTool.share.downEvent(m)
                         isDown = true
                     }
                 }

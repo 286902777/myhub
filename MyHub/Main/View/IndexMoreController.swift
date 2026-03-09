@@ -157,8 +157,10 @@ class IndexMoreController: UIViewController {
         
         if let mod = HubDB.instance.readDatas().first(where: {$0.id == self.model.id}) {
             UploadDownTool.instance.downLoad(mod)
+            HubTool.share.downEvent(mod)
         } else {
             UploadDownTool.instance.downLoad(self.model)
+            HubTool.share.downEvent(self.model)
         }
     }
     
