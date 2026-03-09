@@ -10,7 +10,7 @@ import UIKit
 class DeepManager {
     static let share = DeepManager()
     
-    func openBoxDeep(_ linkId: String, _ rootVC: UIViewController) {
+    func openBoxDeep(linkId: String, rootVC: UIViewController) {
         let vc = BoxDeepController(linkId: linkId)
         TabbarTool.instance.displayOrHidden(false)
         HubTool.share.deepUrl = ""
@@ -19,12 +19,19 @@ class DeepManager {
         rootVC.present(nav, animated: false)
     }
     
-    func openOtherDeep(_ linkId: String, _ rootVC: UIViewController) {
-        let vc = OtherDeepController(linkId: linkId)
-        TabbarTool.instance.displayOrHidden(false)
-        HubTool.share.deepUrl = ""
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .overFullScreen
-        rootVC.present(nav, animated: false)
+    func openOtherDeep(linkId: String, uId: String, platform: HUB_PlatformType, rootVC: UIViewController) {
+        if linkId.count > 0 {
+            let vc = OtherDeepController(linkId: linkId)
+            TabbarTool.instance.displayOrHidden(false)
+            HubTool.share.deepUrl = ""
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .overFullScreen
+            rootVC.present(nav, animated: false)
+        } else {
+            let vc = PingController(uId: uId, platform: platform)
+            TabbarTool.instance.displayOrHidden(false)
+            HubTool.share.deepUrl = ""
+            rootVC.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

@@ -17,14 +17,14 @@ class GoogleManager: NSObject {
     var spaceTime: Int = 60
     var startTime: Int = 7
     var nativeTime: Int = 7
-    var nativeClickRate: Int = 50
+    var nativeClickRate: Int = 60
     var playingIndex: Int = 5
     var playingTime: Int = 10
     var playMethod: Int = 0
     var playNativeTime: Int = 7
-    var playNativeClickRate: Int = 80
+    var playNativeClickRate: Int = 60
     var s_nativeTime: Int = 7
-    var s_nativeClickRate: Int = 80
+    var s_nativeClickRate: Int = 60
     
     var nativeView: MANativeAdView?
     var maxNaLoad: MANativeAdLoader?
@@ -32,7 +32,7 @@ class GoogleManager: NSObject {
     var admobLoader: AdLoader?
     
     var showMode: AdsShowMode = .play
-    
+    var isPlayingAds: Bool = false
     var admobNativeView: NativeAdView?
     
     var successComplete: (() -> Void)?
@@ -41,7 +41,7 @@ class GoogleManager: NSObject {
     var listData: [GoogleAdsListData] = []
     var installed: Bool = false
     var nativeList: [String] = []
-    private let accessQueue = DispatchQueue(label: "com.safeArray.queue")
+    private let accessQueue = DispatchQueue(label: "com.safelist.queue")
     
     var addNativeDate: TimeInterval?
     var startData: GoogleAdsFireData = GoogleAdsFireData() {
@@ -215,6 +215,8 @@ extension GoogleManager {
                 complete(false, nil, false)
                 return
             }
+        } else {
+            self.isPlayingAds = true
         }
         
         self.showMode = mode == .playing ? .play : mode
@@ -661,7 +663,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         }
         if result {
             let m = VideoData()
-            if self.showMode == .play || self.showMode == .playing {
+            if self.showMode == .play, HubTool.share.isChannelAds == false {
                 if HubTool.share.adsPlayState != .donwloadpage {
                     m.linkId = linkId
                 }
@@ -670,8 +672,10 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
                 m.userId = userId
             }
             
-            if self.showMode == .play || self.showMode == .playing {
-                m.linkId = HubTool.share.playLinkId
+            if self.showMode == .play {
+                if HubTool.share.isChannelAds == false {
+                    m.linkId = HubTool.share.playLinkId
+                }
                 m.userId = HubTool.share.playUserId
             }
             
@@ -705,7 +709,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         guard adsId.count > 0 else { return }
         self.deleteCache(adsId)
         self.admobMaxLoad(self.showMode)
-        if (self.showMode == .playing) {
+        if (self.isPlayingAds) {
             self.postDismiss()
             return
         }

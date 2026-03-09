@@ -75,13 +75,26 @@ class PingController: UIViewController {
         super.viewDidLoad()
         setup()
         addFooter()
+        HubTool.share.currentPlatform = self.platform
         TbaManager.instance.addEvent(type: .custom, event: .channelpageExpose, paramter: [EventParaName.source.rawValue: HubTool.share.channelSource.rawValue])
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
+            HubTool.share.isChannelAds = false
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
                 VipPopManager.instance.openPopPage(self)
+            }
+            if HubTool.share.adsPlayState == .channelPage {
+                HubTool.share.preSource = .vip_Ad
+                HubTool.share.preMethod = .vip_auto
+            }
+        }
+        HubTool.share.adsPlayState = .channelPage
+        HubTool.share.isChannelAds = true
+        HubTool.share.show { success in
+            if !success {
+                HubTool.share.isChannelAds = false
             }
         }
     }

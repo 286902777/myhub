@@ -169,6 +169,8 @@ class HubTool {
     
     var preSource: HUB_PremiumSource = .vip_home
 
+    var isChannelAds: Bool = false
+    
     var deepUrl: String = ""
         
     var isLinkDeep: Bool = false
