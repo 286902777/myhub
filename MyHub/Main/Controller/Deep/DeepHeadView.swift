@@ -71,6 +71,9 @@ class DeepHeadView: UIView {
         return view
     }
     
+    func setData() {
+        
+    }
     func initUI() {
         self.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 160)
         self.addSubview(stackV)

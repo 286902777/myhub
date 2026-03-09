@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserMessagingPlatform
 
 class StartController: UIViewController {
     
@@ -94,8 +95,7 @@ private extension StartController {
 
     func setupDisplayLink() {
         // 计算总时间，确保不小于最小时间
-//        let startTime = max(Double(AdmobTool.instance.startTime), Constants.minLoadingTime)
-        let startTime = max(7, Constants.minLoadingTime)
+        let startTime = max(Double(GoogleManager.share.startTime), Constants.minLoadingTime)
 
         remainingTime = startTime
         
@@ -112,9 +112,7 @@ private extension StartController {
         
         // 计算每帧的进度增量
         let frameDuration = Constants.displayLinkInterval
-//        let progressIncrement = Float(frameDuration / Double(AdmobTool.instance.startTime))
-        let progressIncrement = Float(frameDuration / 7)
-
+        let progressIncrement = Float(frameDuration / Double(GoogleManager.share.startTime))
         remainingTime -= frameDuration
         progressValue = min(progressValue + progressIncrement, 1.0)
 
@@ -138,10 +136,10 @@ private extension StartController {
     }
 
     func setupAdCompletionHandler() {
-//        AdmobTool.instance.successComplete = { [weak self] in
-//            guard let self = self else { return }
-//            self.handleAdLoadingComplete()
-//        }
+        GoogleManager.share.successComplete = {[weak self] in
+            guard let self = self else { return }
+            self.handleAdLoadingComplete()
+        }
     }
     
     func handleAdLoadingComplete() {
@@ -149,46 +147,46 @@ private extension StartController {
         displayLink?.invalidate()
         
         // 平滑完成进度条动画
-//        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-//            self.progressV.setProgress(1.0, animated: true)
-//        } completion: { [weak self] _ in
-//            guard let self = self else { return }
-//            guard HubTool.share.showAdomb == false else { return }
-//            self.showAd()
-//        }
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
+            self.progressV.setProgress(1.0, animated: true)
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
+            guard HubTool.share.showAdomb == false else { return }
+            self.showAd()
+        }
     }
     
     func showAd() {
         guard isEnd == false else { return }
         HubTool.share.adsPlayState = .openCool
-//        AdmobTool.instance.show(.mode_open) { [weak self] success in
-//            guard let self = self else { return }
-//            DispatchQueue.main.async {
-//                if success == false {
-//                    self.goToRootController()
-//                }
-//            }
-//        }
+        HubTool.share.show(.play) { [weak self] success in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if success == false {
+                    self.goToRootController()
+                }
+            }
+        }
     }
 
     func goToRootController() {
-//        guard isEnd == false, HubTool.share.showAdomb == false else { return }
+        guard isEnd == false, HubTool.share.showAdomb == false else { return }
         guard let window = HubTool.share.keyWindow else {
             return
         }
         window.rootViewController = HubTabBarController()
         self.cleanup()
-//#if DEBUG
-//        ConsentInformation.shared.reset()
-//#endif
-//        if let vc = HubTool.share.keyVC() {
-//            AdmobUPMTool.instance.showGoogleView(vc) { consentError in
-//                if let consentError {
-//                    // Consent gathering failed.
-//                    print("Error: \(consentError.localizedDescription)")
-//                }
-//            }
-//        }
+#if DEBUG
+        ConsentInformation.shared.reset()
+#endif
+        if let vc = HubTool.share.keyVC() {
+            GoogleUPMTool.instance.showGoogleView(vc) { consentError in
+                if let consentError {
+                    // Consent gathering failed.
+                    print("Error: \(consentError.localizedDescription)")
+                }
+            }
+        }
     }
 
     func handleAdsDismissed() {
@@ -204,7 +202,7 @@ private extension StartController {
         displayLink = nil
         // 清除回调，避免循环引用
         isEnd = true
-//        AdmobTool.instance.successComplete = nil
+        GoogleManager.share.successComplete = nil
         NotificationCenter.default.removeObserver(self)
     }
 }

@@ -92,13 +92,20 @@ class BoxDeepHeadView: UIView {
             make.height.equalTo(1)
             make.left.equalTo(14)
         }
-        
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeadAction))
-//        self.addGestureRecognizer(tap)
     }
     
+    func setMore() {
+        self.stackV.isHidden = false
+        let tap = UITapGestureRecognizer(target: self, action: #selector(clickHeadAction))
+        self.addGestureRecognizer(tap)
+    }
     func setDeepHeadData(_ data: OpenUserData) {
         self.nameL.text = data.username
+    }
+    
+    func setOtherDeepHeadData(_ data: ChannelUserData) {
+        self.iconV.setImage(data.thumbnail, placeholder: "logo")
+        self.nameL.text = data.name
     }
     
     @objc func clickHeadAction() {

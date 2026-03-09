@@ -18,4 +18,13 @@ class DeepManager {
         nav.modalPresentationStyle = .overFullScreen
         rootVC.present(nav, animated: false)
     }
+    
+    func openOtherDeep(_ linkId: String, _ rootVC: UIViewController) {
+        let vc = OtherDeepController(linkId: linkId)
+        TabbarTool.instance.displayOrHidden(false)
+        HubTool.share.deepUrl = ""
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        rootVC.present(nav, animated: false)
+    }
 }

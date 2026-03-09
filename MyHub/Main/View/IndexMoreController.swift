@@ -68,6 +68,14 @@ class IndexMoreController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
+            if HubTool.share.adsPlayState == .download {
+                self.downFile()
+                VipPopManager.instance.openPopPage(self)
+            }
+        }
     }
     
     func setUI() {
@@ -140,19 +148,29 @@ class IndexMoreController: UIViewController {
         }
     }
     
+    func downFile() {
+        ToastTool.instance.show("Add the download list")
+        if let m = self.listArr.first(where: {$0.imageType == .download}) {
+            m.imageType = .downloading
+            self.collectV.reloadData()
+        }
+        
+        if let mod = HubDB.instance.readDatas().first(where: {$0.id == self.model.id}) {
+            UploadDownTool.instance.downLoad(mod)
+        } else {
+            UploadDownTool.instance.downLoad(self.model)
+        }
+    }
+    
     func clickItemAction(_ mod: HomeMoreData) {
         switch mod.imageType {
         case .download:
             guard self.userIsLogin() else { return }
-            ToastTool.instance.show("Add the download list")
-            if let m = self.listArr.first(where: {$0.imageType == .download}) {
-                m.imageType = .downloading
-                self.collectV.reloadData()
-            }
-            if let mod = HubDB.instance.readDatas().first(where: {$0.id == self.model.id}) {
-                UploadDownTool.instance.downLoad(mod)
-            } else {
-                UploadDownTool.instance.downLoad(self.model)
+            HubTool.share.adsPlayState = .download
+            HubTool.share.show { success in
+                if success == false {
+                    self.downFile()
+                }
             }
         case .downloading:
             break

@@ -217,11 +217,11 @@ extension GoogleManager {
             }
         }
         
-        self.showMode = mode
+        self.showMode = mode == .playing ? .play : mode
         var found: Bool = false
         var data: GoogleAdsCacheData?
         var twoData: GoogleAdsCacheData?
-        if let item = self.listData.first(where: {$0.playMode == mode}) {
+        if let item = self.listData.first(where: {$0.playMode == self.showMode}) {
             for m in item.lists {
                 if let d = self.getCacheModel(m.id) {
                     found = true

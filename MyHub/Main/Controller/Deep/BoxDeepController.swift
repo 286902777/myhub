@@ -74,6 +74,14 @@ class BoxDeepController: UIViewController {
         super.viewDidLoad()
         setup()
         addFooter()
+        NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            guard let vc = HubTool.share.keyVC(), vc.isKind(of: BoxDeepController.self) else { return }
+            if HubTool.share.adsPlayState == .download {
+                self.downFile()
+                VipPopManager.instance.openPopPage(self)
+            }
+        }
     }
     
     func setup() {
@@ -138,12 +146,12 @@ class BoxDeepController: UIViewController {
                     guard HubTool.share.userIsLogin(self) else { return }
                     HubTool.share.eventSource = .download
                     HubTool.share.adsPlayState = .download
-                    self.downFile()
-//                    AdmobTool.instance.show(.mode_down) { success in
-//                        if success == false {
-//                            self.downData()
-//                        }
-//                    }
+                    HubTool.share.show() { success in
+                        if success == false {
+                            self.downFile()
+                            VipPopManager.instance.openPopPage(self)
+                        }
+                    }
                 }
             }
         }
@@ -198,8 +206,8 @@ class BoxDeepController: UIViewController {
             DispatchQueue.main.async {
                 LoadManager.instance.dismiss()
                 if status == .success {
-//                    let firstLink: Bool = UserDefaults.standard.bool(forKey: FirstOpenLink)
-//                    EventTool.instance.addEvent(type: .custom, event: .landpageExpose, paramter: [EventParaName.value.rawValue: EventParaValue.box.rawValue, EventParaName.linkSource.rawValue: ESBaseTool.instance.isLinkDeep ? EventParaValue.delayLink.rawValue : EventParaValue.link.rawValue, EventParaName.isFirstLink.rawValue: !firstLink])
+                    let firstLink: Bool = UserDefaults.standard.bool(forKey: FirstOpenLink)
+                    TbaManager.instance.addEvent(type: .custom, event: .landpageExpose, paramter: [EventParaName.value.rawValue: EventParaValue.box.rawValue, EventParaName.linkSource.rawValue: HubTool.share.isLinkDeep ? EventParaValue.delayLink.rawValue : EventParaValue.link.rawValue, EventParaName.isFirstLink.rawValue: !firstLink])
                     self.tableView.isHidden = false
                     LoginManager.share.userId = model.user.id
                     if self.currentPage == 0 {
@@ -218,7 +226,7 @@ class BoxDeepController: UIViewController {
                     }
                     self.tableView.reloadData()
                 } else {
-//                    EventTool.instance.addEvent(type: .custom, event: .landpageFail, paramter: nil)
+                    TbaManager.instance.addEvent(type: .custom, event: .landpageFail, paramter: nil)
                     if let e = errMsg {
                         ToastTool.instance.show(e, .fail)
                     }

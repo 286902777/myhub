@@ -106,23 +106,22 @@ class PlayVideoController: UIViewController {
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.player.playerView.contentView.loadingView.stop()
-//            if AdmobTool.instance.showMode == .mode_open { return }
-//            guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
-//            
-//            if HubTool.share.adsPlayState == .download {
-//                ToastTool.instance.show("Added to download list")
-//                if self.model.platform != .box {
-//                    HubTool.share.downEvent(self.model)
-//                }
-//                FileUploadDownTool.instance.downLoad(self.model)
-//            }
-//            if self.isBack {
-//                self.premiumBlock?()
-//                self.navigationController?.popViewController(animated: true)
-//            } else {
-//                self.player.pause()
-//                PrePopTool.instance.openPopPage(self)
-//            }
+            guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
+            
+            if HubTool.share.adsPlayState == .download {
+                ToastTool.instance.show("Added to download list")
+                if self.model.platform != .box {
+                    HubTool.share.downEvent(self.model)
+                }
+                UploadDownTool.instance.downLoad(self.model)
+            }
+            if self.isBack {
+                self.premiumBlock?()
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                self.player.pause()
+                VipPopManager.instance.openPopPage(self)
+            }
         }
         NotificationCenter.default.addObserver(forName: Noti_DownSuccess, object: nil, queue: .main) { [weak self] data in
             guard let self = self else { return }
@@ -157,7 +156,7 @@ class PlayVideoController: UIViewController {
                 }
             }
         }
-//        HubTool.share.adsPlayState = .play
+        HubTool.share.adsPlayState = .play
     }
     
     private func loadSource(_ auto: Bool = false) {
@@ -182,16 +181,16 @@ class PlayVideoController: UIViewController {
         HubTool.share.playLinkId = self.model.linkId
         HubTool.share.playUserId = self.model.userId
 
-//        AdmobTool.instance.show(.mode_play) { [weak self] success in
-//            guard let self = self else { return }
-//            if success {
-//                self.player.playerView.contentView.loadingView.stop()
-//                self.player.pause()
-//                let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
-//                UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
-//                UserDefaults.standard.synchronize()
-//            }
-//        }
+        HubTool.share.show(.play) { [weak self] success in
+            guard let self = self else { return }
+            if success {
+                self.player.playerView.contentView.loadingView.stop()
+                self.player.pause()
+                let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
+                UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
+                UserDefaults.standard.synchronize()
+            }
+        }
 
         if self.model.isNet == true, self.model.state != .downDone {
             if self.model.movieAddress.count == 0 {
@@ -389,16 +388,15 @@ extension PlayVideoController: HUBPlayerDelegate {
     func playerDidClickBackButton(_ player: HUBPlayer) {
         HubTool.share.adsPlayState = .playBack
         self.isPop = true
-        self.navigationController?.popViewController(animated: true)
-//        AdmobTool.instance.show(.mode_play) { [weak self] success in
-//            guard let self = self else { return}
-//            if success {
-//                self.isBack = true
-//            } else {
-//                self.premiumBlock?()
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//        }
+        HubTool.share.show(.play) { [weak self] success in
+            guard let self = self else { return}
+            if success {
+                self.isBack = true
+            } else {
+                self.premiumBlock?()
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     func playerSuccessPlaying(_ player: HUBPlayer) {
@@ -425,19 +423,19 @@ extension PlayVideoController: HUBPlayerDelegate {
         HubTool.share.adsPlayState = .download
         ToastTool.instance.show("Added to download list")
         UploadDownTool.instance.downLoad(self.model)
-//        AdmobTool.instance.show(.mode_down) { [weak self] success in
-//            guard let self = self else { return }
-//            if success {
-//                self.player.playerView.contentView.loadingView.stop()
-//                self.player.pause()
-//            } else {
-//                ToastTool.instance.show("Added to download list")
-//                FileUploadDownTool.instance.downLoad(self.model)
-//                if self.model.platform != .box {
-//                    HubTool.share.downEvent(self.model)
-//                }
-//            }
-//        }
+        HubTool.share.show(.play) { [weak self] success in
+            guard let self = self else { return }
+            if success {
+                self.player.playerView.contentView.loadingView.stop()
+                self.player.pause()
+            } else {
+                ToastTool.instance.show("Added to download list")
+                UploadDownTool.instance.downLoad(self.model)
+                if self.model.platform != .box {
+                    HubTool.share.downEvent(self.model)
+                }
+            }
+        }
         self.setDownBtnState(true)
     }
     

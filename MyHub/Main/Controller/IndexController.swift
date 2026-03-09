@@ -155,7 +155,7 @@ class IndexController: SuperController {
                 }
             }
         }
-//        EventTool.share.installEvent(link: false)
+        TbaManager.instance.installEvent(link: false)
     }
     
 //    @objc func clickVipAction() {
@@ -169,7 +169,7 @@ class IndexController: SuperController {
     
     func appFlyerPushSubVC(_  info: String) {
         guard HubTool.share.showAdomb == false else { return }
-//        HubTool.share.addEvent(type: .custom, event: .deeplinkOpen, paramter: [EventParaName.commonLin.rawValue: HubTool.share.isLinkDeep])
+        TbaManager.instance.addEvent(type: .custom, event: .deeplinkOpen, paramter: [EventParaName.commonLin.rawValue: HubTool.share.isLinkDeep])
 
         if let url = URL(string: info), let para = url.parameters {
             if let linkId = para["a"], let platform = para["b"] {
@@ -190,7 +190,7 @@ class IndexController: SuperController {
         }
     }
     
-    // MARK: - open 个人网盘承接页 1996146961945858049
+    // MARK: - open 个人网盘承接页
     func driveDeep(_ linkId: String) {
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
             guard let self = self else { return }

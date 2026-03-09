@@ -116,36 +116,36 @@ class HUBPlayerView: UIView {
             let time = ceil(currentDuration)
             guard time > 0 else { return }
 
-//            let count = UserDefaults.standard.integer(forKey: ES_PlayingCount)
-//            if Int(time) >= AdmobTool.instance.playingTime, count >= AdmobTool.instance.playingIndex, ESBaseTool.instance.isCountMiddlePlay == false {
-//                ESBaseTool.instance.isCountMiddlePlay = true
-//                ESBaseTool.instance.adsPlayState = .play
-//                AdmobTool.instance.show(.mode_playing) { [weak self] success in
-//                    guard let self = self else { return }
-//                    if success {
-//                        self.pause()
-//                        UserDefaults.standard.set(0, forKey: ES_PlayingCount)
-//                        UserDefaults.standard.synchronize()
-//                    }
-//                }
-//            }
-//            if Int(time) % AdmobTool.instance.playMiddleTime == 0 {
-//                ESBaseTool.instance.adsPlayState = .playTen
-//                AdmobTool.instance.show(.mode_play) { [weak self] success in
-//                    guard let self = self else { return }
-//                    if success {
-//                        self.pause()
-//                        let count = UserDefaults.standard.integer(forKey: ES_OpenVipPop)
-//                        UserDefaults.standard.set(count + 1, forKey: ES_OpenVipPop)
-//                        UserDefaults.standard.synchronize()
-//                    }
-//                }
-//            }
-//            let total = ceil(totalDuration)
-//            if Int(time) == Int(total * 0.3), total >= 15, self.showPopLoad == false {
-//                self.loadPopupHander?()
-//                self.showPopLoad = true
-//            }
+            let count = UserDefaults.standard.integer(forKey: HUB_PlayingCount)
+            if Int(time) >= GoogleManager.share.playingTime, count >= GoogleManager.share.playingIndex, HubTool.share.isCountMiddlePlay == false {
+                HubTool.share.isCountMiddlePlay = true
+                HubTool.share.adsPlayState = .play
+                HubTool.share.show(.playing) { [weak self] success in
+                    guard let self = self else { return }
+                    if success {
+                        self.pause()
+                        UserDefaults.standard.set(0, forKey: HUB_PlayingCount)
+                        UserDefaults.standard.synchronize()
+                    }
+                }
+            }
+            if Int(time) % GoogleManager.share.playMiddleTime == 0 {
+                HubTool.share.adsPlayState = .playTen
+                HubTool.share.show(.play) { [weak self] success in
+                    guard let self = self else { return }
+                    if success {
+                        self.pause()
+                        let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
+                        UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
+                        UserDefaults.standard.synchronize()
+                    }
+                }
+            }
+            let total = ceil(totalDuration)
+            if Int(time) == Int(total * 0.3), total >= 15, self.showPopLoad == false {
+                self.loadPopupHander?()
+                self.showPopLoad = true
+            }
         }
     }
 
@@ -321,10 +321,9 @@ private extension HUBPlayerView {
 
     func appDidEnterPlayground() {
         isEnterBackground = false
-//        if let vc = HubTool.share.keyVC(), vc.isKind(of: VideoPlayController.self) || vc.isKind(of: FullScreenController.self) || vc.isKind(of: PlayListController.self) || vc.isKind(of: PlayListFullController.self) {
-//            play()
-//        }
-        play()
+        if let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) || vc.isKind(of: FullScreenController.self) || vc.isKind(of: PlayListController.self) || vc.isKind(of: PlayListFullController.self) {
+            play()
+        }
     }
 }
 
@@ -336,12 +335,12 @@ private extension HUBPlayerView {
         if playerItem.status == .readyToPlay {
             LoadManager.instance.dismiss()
             contentView.playState = .readyToPlay
-//            EventTool.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
-//            EventTool.instance.addEvent(type: .custom, event: .playSuc, paramter: nil)
-//
-//            if PlayManager.instance.auto == false {
-//                EventTool.instance.addEvent(type: .custom, event: .playSource, paramter: [EventParaName.value.rawValue: ESBaseTool.instance.playSource.rawValue])
-//            }
+            TbaManager.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
+            TbaManager.instance.addEvent(type: .custom, event: .playSuc, paramter: nil)
+
+            if PlayTool.instance.auto == false {
+                TbaManager.instance.addEvent(type: .custom, event: .playSource, paramter: [EventParaName.value.rawValue: HubTool.share.playSource.rawValue])
+            }
             totalDuration = TimeInterval(playerItem.duration.value) / TimeInterval(playerItem.duration.timescale)
 
             self.playSuccessTappedHandler?()
@@ -370,20 +369,19 @@ private extension HUBPlayerView {
                 LoadManager.instance.dismiss()
                 pause()
             case .play:
-//                if HubTool.instance.showAdomb == false {
-//                    play()
-//                } else {
-//                    pause()
-//                }
-                play()
+                if HubTool.share.showAdomb == false {
+                    play()
+                } else {
+                    pause()
+                }
             }
         } else if playerItem.status == .failed {
             LoadManager.instance.dismiss()
-//            EventTool.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
-//            EventTool.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: playerItem.error?.localizedDescription ?? "request fail!"])
-//            if PlayManager.instance.auto == false {
-//                EventTool.instance.addEvent(type: .custom, event: .playSource, paramter: [EventParaName.value.rawValue: ESBaseTool.instance.playSource.rawValue])
-//            }
+            TbaManager.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
+            TbaManager.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: playerItem.error?.localizedDescription ?? "request fail!"])
+            if PlayTool.instance.auto == false {
+                TbaManager.instance.addEvent(type: .custom, event: .playSource, paramter: [EventParaName.value.rawValue: HubTool.share.playSource.rawValue])
+            }
             contentView.playState = .failed
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
@@ -485,7 +483,7 @@ extension HUBPlayerView {
         guard Thread.isMainThread else { return DispatchQueue.main.async { self.presentWithOrientation(orientation) } }
         guard superview != nil else { return }
         guard fullScreenController == nil else { return }
-//        guard ESBaseTool.instance.showAdomb == false else { return }
+        guard HubTool.share.showAdomb == false else { return }
         guard contentView.screenState == .small else { return }
         guard let topController = findTop(from: keyWindow?.rootViewController) else { return }
         if topController.isKind(of: PlayListController.self) {
@@ -519,7 +517,7 @@ extension HUBPlayerView {
     func play() {
         guard !isEnterBackground else { return }
         guard !isUserPause else { return }
-//        guard ESBaseTool.instance.showAdomb == false else { return }
+        guard HubTool.share.showAdomb == false else { return }
         guard let playerItem = playerItem else { return }
         guard playerItem.status == .readyToPlay else {
             contentView.playState = .waiting
