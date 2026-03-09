@@ -218,7 +218,7 @@ class PingController: UIViewController {
                     self.tableView.isHidden = false
                     if self.currentPage == 1 {
                         self.dataModel = model
-                        self.headView.setHeadData(model)
+                        self.headView.setHeadData(model, linkId: "", uId: model.userInfo.id, name: model.userInfo.name, platform: self.platform)
                         HubTool.share.uId = model.userInfo.id
                     } else {
                         self.dataModel.files.append(contentsOf: model.files)

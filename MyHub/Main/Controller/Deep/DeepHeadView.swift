@@ -71,9 +71,11 @@ class DeepHeadView: UIView {
         return view
     }
     
-    func setData() {
-        
+    func setData(_ data: ChannelListData, linkId: String, uId: String, name: String, platform: HUB_PlatformType) {
+        self.hotVC.setDatas(lists: data.hots, linkId: linkId, uId: uId, name: name, platform: platform)
+        self.recentlyVC.setDatas(lists: data.recents, linkId: linkId, uId: uId, name: name, platform: platform)
     }
+    
     func initUI() {
         self.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 160)
         self.addSubview(stackV)
@@ -107,6 +109,7 @@ class DeepHeadView: UIView {
         }
     }
     
+    func 
     @objc func clickSegAction(_ sender: UIButton) {
         self.currentIdx = sender.tag
     }

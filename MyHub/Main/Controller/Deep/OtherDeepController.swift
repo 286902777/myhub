@@ -238,6 +238,7 @@ class OtherDeepController: UIViewController {
                         HubTool.share.email = model.userInfo.email
                         HubTool.share.boxUId = ""
                         HubTool.share.boxLinkId = ""
+                        self.hotHeadView.setData(model, linkId: self.linkId, uId: model.userInfo.id, name: model.userInfo.name, platform: HubTool.share.platform)
                         UserDefaults.standard.set(model.userInfo.email, forKey: EventSaveEmail)
                         UserDefaults.standard.set(self.linkId, forKey: EventSaveLinkId)
                         UserDefaults.standard.set(model.userInfo.id, forKey: EventSaveUserId)

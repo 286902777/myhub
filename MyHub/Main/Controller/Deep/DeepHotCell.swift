@@ -74,10 +74,10 @@ class DeepHotCell: UICollectionViewCell {
         }
     }
     
-    func initData(_ model: VideoData, _ isHot: Bool = false) {
+    func initData(_ model: ChannelData, _ isHot: Bool = false) {
         self.hotV.isHidden = !isHot
-        self.iconV.setImage(model.thumbnail, placeholder: "deep_video_bg")
-        self.nameL.text = model.name
+        self.iconV.setImage(model.file_meta.thumbnail, placeholder: "deep_video_bg")
+        self.nameL.text = model.fileName
     }
 }
 
