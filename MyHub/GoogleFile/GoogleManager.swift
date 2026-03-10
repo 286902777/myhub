@@ -70,15 +70,6 @@ class GoogleManager: NSObject {
         return mod
     }
     
-    func initConfig() {
-        guard installed == false else { return }
-        installed = true
-        self.admobMaxLoad(.play)
-        //        self.admobMaxLoad(.playing)
-        //        self.admobMaxLoad(.plus)
-        //        self.admobMaxLoad(.three)
-    }
-    
     func readAdsFile() {
         let path = Bundle.main.path(forResource: "GooglsAds", ofType: "json")
         if let p = path {

@@ -10,18 +10,22 @@ import AppsFlyerLib
 import IQKeyboardManagerSwift
 import IQKeyboardToolbarManager
 import FirebaseCore
+import GoogleMobileAds
+import AppLovinSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var completionHandler: (() -> Void)?
     var window: UIWindow?
-
+    let alKey: String = "xedgdn"
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         NetManager.instance.startChecking()
         HubDB.instance.config()
         setKeyboard()
         setFireBase()
+        setGoogleAds()
         TbaManager.instance.configInit()
         return true
     }
@@ -35,7 +39,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setFireBase() {
         FirebaseApp.configure()
         FireManager.share.setConfig()
-//        UploadEventService.share.configInit()
+    }
+    
+    func setGoogleAds()  {
+        GoogleManager.share.readAdsFile()
+        MobileAds.shared.start { status in
+            // Optional: Log each adapter's initialization latency.
+            let adapterStatuses = status.adapterStatusesByClassName
+            for adapter in adapterStatuses {
+                let adapterStatus = adapter.value
+                NSLog("Ad Name: %@, Description: %@, Latency: %f", adapter.key,
+                      adapterStatus.description, adapterStatus.latency)
+            }
+            
+            ALSdk.shared().settings.isMuted = true
+            ALSdkSettings().isMuted = true
+            let config = ALSdkInitializationConfiguration(sdkKey: self.alKey) { builder in
+                builder.mediationProvider = ALMediationProviderMAX
+            }
+
+            ALSdk.shared().initialize(with: config) { _ in
+                if !GoogleManager.share.installed {
+                    GoogleManager.share.admobMaxLoad(.play)
+                }
+            }
+        }
     }
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
