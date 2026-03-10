@@ -37,7 +37,7 @@ class GoogleManager: NSObject {
     
     var successComplete: (() -> Void)?
     
-    var cacheLists: [String: GoogleAdsCacheData] = [:]
+    var cacheArray: [String: GoogleAdsCacheData] = [:]
     var listData: [GoogleAdsListData] = []
     var installed: Bool = false
     var nativeList: [String] = []
@@ -114,16 +114,16 @@ extension GoogleManager {
     
     func insertCacheModel(_ adsId: String, _ item: GoogleAdsCacheData) {
         print("--------------------addinsertCache---\(adsId)----\(item.mode.rawValue)")
-        guard self.cacheLists.keys.contains(adsId) else {
-            self.cacheLists.updateValue(item, forKey: adsId)
+        guard self.cacheArray.keys.contains(adsId) else {
+            self.cacheArray.updateValue(item, forKey: adsId)
             return
         }
     }
     
     func deleteCache(_ adsId: String) {
         print("--------------------adddeleteCache\(adsId)")
-        self.cacheLists.removeValue(forKey: adsId)
-        //        if let m = self.cacheLists.first(where: {$0.mode == mode}), m.lists.count > 0 {
+        self.cacheArray.removeValue(forKey: adsId)
+        //        if let m = self.cacheArray.first(where: {$0.mode == mode}), m.lists.count > 0 {
         //            m.lists.removeFirst()
         //        }
     }
@@ -135,19 +135,19 @@ extension GoogleManager {
     func refreshCache() {
         let t = Date().timeIntervalSince1970
         var adsList: [String] = []
-        for (key, value) in self.cacheLists {
+        for (key, value) in self.cacheArray {
             if (t - value.time < 3500) {
                 adsList.append(key)
             }
         }
         adsList.forEach { key in
-            self.cacheLists.removeValue(forKey: key)
+            self.cacheArray.removeValue(forKey: key)
         }
     }
     
-    func getCacheModel(_ adsId: String) -> GoogleAdsCacheData? {
-        return self.cacheLists[adsId]
-        //        if let item = self.cacheLists.first(where: {$0.mode == mode}) {
+    func getCacheData(_ adsId: String) -> GoogleAdsCacheData? {
+        return self.cacheArray[adsId]
+        //        if let item = self.cacheArray.first(where: {$0.mode == mode}) {
         //            return item.lists
         //        }
         //        return []
@@ -226,11 +226,11 @@ extension GoogleManager {
         var twoData: GoogleAdsCacheData?
         if let item = self.listData.first(where: {$0.playMode == self.showMode}) {
             for m in item.lists {
-                if let d = self.getCacheModel(m.id) {
+                if let d = self.getCacheData(m.id) {
                     found = true
                     data = d
                 }
-                if let td  = self.getCacheModel(m.s_id) {
+                if let td  = self.getCacheData(m.s_id) {
                     found = true
                     twoData = td
                 }
@@ -312,7 +312,7 @@ extension GoogleManager {
         if let item = self.listData.first(where: {$0.playMode == mode}), idx < item.lists.count {
             let model = item.lists[idx]
             print("--------------------add__\(mode.rawValue)__\(model.id)")
-            if let _ = self.getCacheModel(model.id) {
+            if let _ = self.getCacheData(model.id) {
                 return
             } else {
                 switch model.type {
@@ -695,12 +695,12 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         var adsType: AdsType = .open
         if let item = self.listData.first(where: {$0.playMode == self.showMode}) {
             for m in item.lists {
-                if let d = self.getCacheModel(m.id) {
+                if let d = self.getCacheData(m.id) {
                     adsId = m.id
                     adsType = d.adsType
                     break
                 }
-                if let td = self.getCacheModel(m.s_id) {
+                if let td = self.getCacheData(m.s_id) {
                     adsId = m.s_id
                     adsType = td.adsType
                     break

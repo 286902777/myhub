@@ -109,12 +109,7 @@ class BoxDeepController: UIViewController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(self.headView.snp.bottom)
         }
-//        self.headView.clickBlock = { [weak self] in
-//            guard let self = self else { return }
-//            DispatchQueue.main.async {
-//                
-//            }
-//        }
+
         self.view.addSubview(self.bottomView)
         self.bottomView.snp.makeConstraints { make in
             make.left.equalTo(14)

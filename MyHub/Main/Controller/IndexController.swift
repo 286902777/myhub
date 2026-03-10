@@ -177,14 +177,14 @@ class IndexController: SuperController {
                 guard self.canClackInfo(linkId) else { return }
                 self.driveDeep(linkId)
             }
-            if let linkId = para["unmenial"], let platform = para["tackingly"] {
+            if let linkId = para["s"], let platform = para["c"] {
                 guard self.canClackInfo(linkId) else { return }
                 HubTool.share.platform = HUB_PlatformType(rawValue: platform) ?? .cash
                 UserDefaults.standard.set(linkId, forKey: EventSaveLinkId)
                 UserDefaults.standard.set(platform, forKey: EventSavePlatform)
                 UserDefaults.standard.synchronize()
                 HubTool.share.currentPlatform = HUB_PlatformType(rawValue: platform) ?? .cash
-                self.platformDeep(linkId)
+                self.platformDeep(linkId, HubTool.share.platform)
             }
             HubTool.share.deepUrl = ""
         }
@@ -196,31 +196,17 @@ class IndexController: SuperController {
             guard let self = self else { return }
             NotificationCenter.default.post(name: Noti_ChangeTabbarToIndex, object: nil, userInfo: nil)
             self.popRootVC()
-            DeepManager.share.openBoxDeep(linkId, self)
-//            let vc = DriveDeepController(linkId: linkId)
-//            vc.returnBlock = {
-//                PlayManager.instance.adsPushPremium(HubTool.share.adsPlayState, .vip_home, self)
-//            }
-//            HubTool.share.deepUrl = ""
-//            vc.hidesBottomBarWhenPushed = true
-//            self.navigationController?.pushViewController(vc, animated: true)
+            DeepManager.share.openBoxDeep(linkId: linkId, rootVC: self)
         }
     }
     
     // MARK: - open 中东印度承接页
-    func platformDeep(_ linkId: String) {
+    func platformDeep(_ linkId: String, _ platform: HUB_PlatformType) {
         self.uploadDownApp(linkId)
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
             guard let self = self else { return }
-            self.tabBarController?.selectedIndex = 0
             self.popRootVC()
-//            let vc = PlatformDeepController(linkId: linkId)
-//            vc.returnBlock = {
-//                PlayManager.instance.adsPushPremium(HubTool.share.adsPlayState, .vip_home, self)
-//            }
-//            HubTool.share.deepUrl = ""
-//            vc.hidesBottomBarWhenPushed = true
-//            self.navigationController?.pushViewController(vc, animated: true)
+            DeepManager.share.openOtherDeep(linkId: linkId, uId: "", platform: platform, rootVC: self)
         }
     }
     
