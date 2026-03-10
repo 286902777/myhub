@@ -388,14 +388,14 @@ class IndexController: SuperController {
         self.historyList = HubDB.instance.readDatas().filter({$0.history == true}).sorted(by: {$0.date > $1.date})
         if self.historyList.count > 0 {
             if self.isHisUpload == false {
-//                EventTool.instance.addEvent(type: .custom, event: .homeHistoryExpose, paramter: nil)
+                TbaManager.instance.addEvent(type: .custom, event: .homeHistoryExpose, paramter: nil)
                 self.isHisUpload = true
             }
         }
         self.channelList = HubDB.instance.readUsers()
         if self.channelList.count > 0 {
             if self.isGroupUpload == false {
-//                EventTool.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
+                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
                 self.isGroupUpload = true
             }
         }
@@ -433,10 +433,10 @@ class IndexController: SuperController {
                             let max_space = model.max_space.computeFileSize()
                             HubTool.share.spaceUse = use_space
                             HubTool.share.spaceTotal = max_space
-                            //                        if (self.isOpenUpload == false) {
-                            //                            EventTool.instance.addEvent(type: .custom, event: .homeExpose, paramter: [EventParaName.cloudTotal.rawValue: ESBaseTool.instance.spaceTotal, EventParaName.cloudUse.rawValue: ESBaseTool.instance.spaceUse])
-                            //                            self.isOpenUpload = true
-                            //                        }
+                            if (self.isOpenUpload == false) {
+                                TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: [EventParaName.cloudTotal.rawValue: HubTool.share.spaceTotal, EventParaName.cloudUse.rawValue: HubTool.share.spaceUse])
+                                self.isOpenUpload = true
+                            }
                             self.tableHeadV.setData(model)
                         }
                         group.leave()
@@ -461,10 +461,10 @@ class IndexController: SuperController {
                 }
             }
         } else {
-            //            if (self.isOpenUpload == false) {
-            //                EventTool.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
-            //                self.isOpenUpload = true
-            //            }
+            if (self.isOpenUpload == false) {
+                TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
+                self.isOpenUpload = true
+            }
         }
 //        group.enter()
 //        queue.async { [weak self] in

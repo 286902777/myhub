@@ -31,7 +31,6 @@ enum EventName: String {
     case adsshowFail = "DcsU"
     case adsclick = "uhj"
     case historyExpose = "gIUJ"
-    case historyClick = "zKuGvJH"
     case deeplinkOpen = "BGUGg"
     case channellistExpose = "CwzluBD"
     case channellistClick = "ENsHnRSZVY"

@@ -52,23 +52,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
 //        PremiumTool.instance.requestProductInfo(type: .refresh)
 //        PremiumTool.instance.requestServiceReceiptData(product: nil, type: .refresh)
-//        if isOpen == false {
-//            EventTool.instance.addEvent(type: .session, event: .session, paramter: nil)
-//            isOpen = true
-//            return
-//        }
-//        if let vc = ESBaseTool.instance.keyVC(), vc.isKind(of: AdmobController.self) {
-//            return
-//        }
-//        guard ESBaseTool.instance.showAdomb == false else { return }
-//        guard ESBaseTool.instance.toPay == false else { return }
-//
-//        if isOpen {
-//            ESBaseTool.instance.adsPlayState = .openHot
-//            AdmobTool.instance.show(.mode_open) { _ in
-//                
-//            }
-//        }
+        if noFirst == false {
+            TbaManager.instance.addEvent(type: .session, event: .session, paramter: nil)
+            noFirst = true
+            return
+        }
+
+        guard HubTool.share.showAdomb == false else { return }
+//        guard HubTool.share.toPay == false else { return }
+        if noFirst {
+            HubTool.share.adsPlayState = .openHot
+            HubTool.share.show() { _ in
+                
+            }
+        }
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {

@@ -34,7 +34,7 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
-//        EventTool.instance.addEvent(type: .custom, event: .loginPageExpose, paramter: [EventParaName.value.rawValue: ESBaseTool.instance.loginSource.rawValue])
+        TbaManager.instance.addEvent(type: .custom, event: .loginPageExpose, paramter: [EventParaName.value.rawValue: HubTool.share.loginSource.rawValue])
     }
     
     func setUI() {
@@ -78,7 +78,7 @@ class LoginController: UIViewController {
     }
 
     @objc func clickLoginAction() {
-//        EventTool.instance.addEvent(type: .custom, event: .loginClick, paramter: [EventParaName.value.rawValue: "apple"])
+        TbaManager.instance.addEvent(type: .custom, event: .loginClick, paramter: [EventParaName.value.rawValue: "apple"])
 
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -97,7 +97,7 @@ class LoginController: UIViewController {
             DispatchQueue.main.async {
                 LoadManager.instance.dismiss()
                 if status == .success {
-//                    EventTool.instance.addEvent(type: .custom, event: .loginSuc, paramter: [EventParaName.value.rawValue: "apple"])
+                    TbaManager.instance.addEvent(type: .custom, event: .loginSuc, paramter: [EventParaName.value.rawValue: "apple"])
                     LoginManager.share.userId = model.user.id
                     LoginManager.share.userUserId = model.user.user_id
                     LoginManager.share.userName = model.user.username
@@ -111,7 +111,7 @@ class LoginController: UIViewController {
                         self.loginSuccessBlock?()
                     }
                 } else {
-//                    EventTool.instance.addEvent(type: .custom, event: .loginFail, paramter: [EventParaName.value.rawValue: "apple", EventParaName.reason.rawValue: errMsg ?? "request fail!"])
+                    TbaManager.instance.addEvent(type: .custom, event: .loginFail, paramter: [EventParaName.value.rawValue: "apple", EventParaName.reason.rawValue: errMsg ?? "request fail!"])
                     LoginManager.share.userId = ""
                     LoginManager.share.userUserId = ""
                     LoginManager.share.userName = ""
@@ -159,7 +159,7 @@ extension LoginController: ASAuthorizationControllerDelegate {
         case .canceled: print("cancel")
         default:
             let msg: String = String(describing: authError?.localizedDescription)
-//            EventTool.instance.addEvent(type: .custom, event: .loginFail, paramter: [EventParaName.value.rawValue: "apple", EventParaName.reason.rawValue:             msg.count == 0 ? "request fail!" : msg])
+            TbaManager.instance.addEvent(type: .custom, event: .loginFail, paramter: [EventParaName.value.rawValue: "apple", EventParaName.reason.rawValue:             msg.count == 0 ? "request fail!" : msg])
             print("fail: \(String(describing: authError?.localizedDescription))")
         }
     }
