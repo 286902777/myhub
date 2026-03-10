@@ -16,13 +16,13 @@ class GoogleManager: NSObject {
     var playMiddleTime: Int = 600
     var spaceTime: Int = 60
     var startTime: Int = 7
-    var nativeTime: Int = 7
-    var nativeClickRate: Int = 60
     var playingIndex: Int = 5
     var playingTime: Int = 10
     var playMethod: Int = 0
     var playNativeTime: Int = 7
     var playNativeClickRate: Int = 60
+    var nativeTime: Int = 7
+    var nativeClickRate: Int = 60
     var s_nativeTime: Int = 7
     var s_nativeClickRate: Int = 60
     
