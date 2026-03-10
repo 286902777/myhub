@@ -18,7 +18,7 @@ class GoogleNativeController: UIViewController {
     var adsRate: Int = 0
     var isClickAds: Bool = false
     var timer: DispatchSourceTimer?
-    let queue = DispatchQueue(label: "admobNative")
+    let queue = DispatchQueue(label: "googleAds")
     private var isUpAds: Bool = false
     private var isUpClose: Bool = false
     private var showC: Int = 0
@@ -163,13 +163,13 @@ class GoogleNativeController: UIViewController {
         self.timer?.setEventHandler { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.sumTime()
+                self.nextTime()
             }
         }
         self.timer?.resume()
     }
     
-    @objc func sumTime() {
+    @objc func nextTime() {
         self.adsTime -= 1
         self.timeL.text = "\(self.adsTime)"
         self.s_timeL.text = "\(self.adsTime)"

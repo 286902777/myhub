@@ -17,8 +17,8 @@ enum BackEventName: String {
     case view_app = "c" //承接页打开链接
     case down_video = "d" // 下载文件
     case down_app = "e" //下载App
-//    case app_adv_profit = "app_adv_profit" //app本地广告收益
-//    case app_play_video = "app_play_video" //app本地视频播放
+    //    case app_adv_profit = "app_adv_profit" //app本地广告收益
+    //    case app_play_video = "app_play_video" //app本地视频播放
     case new_user_active_by_play_video = "f"//用户下载app，并完成一次播放后触发事件
     case download_app_first_time_open = "s"
 }
@@ -32,14 +32,14 @@ enum HttpApi: String {
     case deleteFile = "emparl/widegab/nucleotide" /// app/file/delete_files
     case createFolder = "spurlike/nonnumeral/pitsaw"  /// app/file/create_directory
     case lsDir = "plumbago/peerless/sampi/chases" /// app/user/file/list
-  
+    
     case fixName = "spagnuolo/dahoman/cimbal"  ///  app/file/rename_file
     case shareFile = "indorsable/idrisid/conditione"  /// app/file/share_files
     case downLoadUrl = "6twb5vdamb/evangels/bauno"  ///app/file/download_url
     case selectFiles = "unparallel/ghzb2txj6l/amoritish/kgsxniyaxn"  /// app/user/file/list_by_file_ids
     case openShareUrl = "braker/raying/steppe"  /// app/user_share_link/open
     case openFolder = "ammoniuret/isoelastic/artemision"   ///app/file/list_by_parent
-
+    
     /// 承接页接口
     case channel = "v1/entrec/reexpel/polled"  /// v1/app/open/data
     case download = "v1/voce/refrying/urd"     /// v1/app/download/file/
@@ -330,7 +330,6 @@ class HttpManager {
     }
     func createFolderApi(parentId: String, fileName: String, _ completion: @escaping (_ status: HttpCode, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
-        
         para["triplanes"] = LoginManager.share.userId ///namespace
         para["prejudges"] = parentId // parent_id
         para["oryx"] = fileName /// filename
@@ -623,48 +622,48 @@ class HttpManager {
         task.resume()
     }
     
-//    func selectReView(_ currentPage: Int, _ completion: @escaping (_ status: HttpCode, _ list: [ReviewData], _ errMsg: String?) -> ()) {
-//        var para: [String: Any] = [:]
-//        para["dims"] = LoginManager.share.userId ///namespace
-//        //        para["disulfoton"] = "" // file_id
-//        para["epichirema"] = currentPage // page_number
-//        para["implume"] = 20 // page_size
-//        //        para["leisten"] = ["createTime__DESC"] // sort
-//
-//        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-//        let session: URLSession = URLSession(configuration: configuration)
-//        let url: String = userHost + HttpApi.selectReview.rawValue
-//        var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
-//        request.httpMethod = "POST"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        request.setValue(HttpManager.share.userHostAddress, forHTTPHeaderField: "host")
-//        request.setValue(HttpHeadValue.selectReview.rawValue, forHTTPHeaderField: userHeadKey)
-//        request.setValue(LoginManager.share.userToken, forHTTPHeaderField: tokenKey)
-//
-//        if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
-//            request.httpBody = pa
-//        }
-//        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
-//            let status = self.getCode(response)
-//            switch status {
-//            case .success:
-//                if let info = data {
-//                    let json = String(data: info, encoding: .utf8)
-//                    if let mod = ReviewRootData.deserialize(from: json) {
-//                        completion(status, mod.records, nil)
-//                    }
-//                } else {
-//                    completion(status, [], "Request fail!")
-//                }
-//            case .permission:
-//                HttpManager.share.premissonLaterLogin()
-//            default:
-//                completion(status, [], error?.localizedDescription)
-//                return
-//            }
-//        })
-//        task.resume()
-//    }
+    //    func selectReView(_ currentPage: Int, _ completion: @escaping (_ status: HttpCode, _ list: [ReviewData], _ errMsg: String?) -> ()) {
+    //        var para: [String: Any] = [:]
+    //        para["dims"] = LoginManager.share.userId ///namespace
+    //        //        para["disulfoton"] = "" // file_id
+    //        para["epichirema"] = currentPage // page_number
+    //        para["implume"] = 20 // page_size
+    //        //        para["leisten"] = ["createTime__DESC"] // sort
+    //
+    //        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
+    //        let session: URLSession = URLSession(configuration: configuration)
+    //        let url: String = userHost + HttpApi.selectReview.rawValue
+    //        var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
+    //        request.httpMethod = "POST"
+    //        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    //        request.setValue(HttpManager.share.userHostAddress, forHTTPHeaderField: "host")
+    //        request.setValue(HttpHeadValue.selectReview.rawValue, forHTTPHeaderField: userHeadKey)
+    //        request.setValue(LoginManager.share.userToken, forHTTPHeaderField: tokenKey)
+    //
+    //        if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
+    //            request.httpBody = pa
+    //        }
+    //        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+    //            let status = self.getCode(response)
+    //            switch status {
+    //            case .success:
+    //                if let info = data {
+    //                    let json = String(data: info, encoding: .utf8)
+    //                    if let mod = ReviewRootData.deserialize(from: json) {
+    //                        completion(status, mod.records, nil)
+    //                    }
+    //                } else {
+    //                    completion(status, [], "Request fail!")
+    //                }
+    //            case .permission:
+    //                HttpManager.share.premissonLaterLogin()
+    //            default:
+    //                completion(status, [], error?.localizedDescription)
+    //                return
+    //            }
+    //        })
+    //        task.resume()
+    //    }
     
     // MARK: - Open Share Url
     func getShareUrlApi(_ linkId: String, _ currentPage: Int, _ completion: @escaping (_ status: HttpCode, _ model: OpenRootData, _ errMsg: String?) -> ()) {
@@ -672,7 +671,7 @@ class HttpManager {
         para["acetine"] = linkId           /// linkId
         para["laplandish"] = currentPage  /// page_number
         para["elric"] = 20        /// page_size
-//        para["qqrdyn8f5o"] = ""
+        //        para["qqrdyn8f5o"] = ""
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.openShareUrl.rawValue
@@ -734,8 +733,8 @@ class HttpManager {
                     let json = String(data: info, encoding: .utf8)
                     if let list = [OpenFolderData].deserialize(from: json) {
                         DispatchQueue.main.async {
-                        let localList = HubDB.instance.readDatas()
-                        var result: [VideoData] = []
+                            let localList = HubDB.instance.readDatas()
+                            var result: [VideoData] = []
                             list.forEach { mm in
                                 if let m = mm {
                                     if let localModel = localList.first(where: {$0.id == m.file_id}) {
@@ -825,10 +824,10 @@ class HttpManager {
     
     func channelUserList(_ uId: String, _ platform: HUB_PlatformType, _ completion: @escaping (_ status: HttpCode, _ list: [ChannelRecommedData], _ errMsg: String?, _ refresh: Bool) -> ()) {
         let url: String = appHost + HttpApi.recommendChannel.rawValue
-
+        
         var plabs: [[String: String]] = []
         let dbList = HubDB.instance.readUsers().filter({$0.platform == platform})
-
+        
         dbList.forEach { users in
             users.labels.forEach { item in
                 let spara: [String: String] = ["irisation": item.id,
@@ -844,7 +843,7 @@ class HttpManager {
         para["grandpapa"] = "ios"
         para["paraglenal"] = Locale.current.identifier
         para["rally"] = ["ragazze": plabs]
-
+        
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
@@ -951,12 +950,6 @@ class HttpManager {
                                     "uhy2hbamfj": self.appPrimaryKey(), // unique_id "app下载事件上报的唯一id，同一设备多次下载app,id不变"
                                     "bottling": event.rawValue, // event_type
                                     "filagrees": ["taxibus": HubTool.share.eventSource.rawValue], // event_soucre
-                                    "lauans": model.userId, // uId
-                                    "recluses": model.linkId, // link_id
-                                    "mislight": currency, // cur
-                                    "redshirt": val, // val
-                                    "cimbaloms": UUID().uuidString, // logId
-                                    "reprimands": model.id,  // file_id
                                     "weblike": UIDevice.current.identifierForVendor?.uuidString ?? "", // idfv
                                     "forgery": ASIdentifierManager.shared().advertisingIdentifier.uuidString, // idfa
                                     "jqdjkuomgl": self.getOperator(), // operator
@@ -964,18 +957,24 @@ class HttpManager {
                                     "pyopoietic": self.getAppUUID(), // distinctId
                                     "sacs": ["nominators": ["bniwn6vqi8": self.getTreeKey()]],
                                     //device_model
+                                    "lauans": model.userId, // uId
+                                    "recluses": model.linkId, // link_id
+                                    "mislight": currency, // cur
+                                    "redshirt": val, // val
+                                    "cimbaloms": UUID().uuidString, // logId
+                                    "reprimands": model.id,  // file_id
                                     "midrashic": "ios", // os
                                     "chantier": "\(Locale.current.languageCode ?? "en")_\(Locale.current.regionCode ?? "US")", // system_language
                                     "archaism": "Apple", // manufacturer
                                     "cornic": Int(Date().timeIntervalSince1970 * 1000), // client_ts
                                     "toadstone": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.1.0" // app_version
-                                    ]
+        ]
         let url: String = appHost + HttpApi.event.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("blindest", forHTTPHeaderField: appHeadKey)
-
+        
         if let pa = try? JSONSerialization.data(withJSONObject: [para], options: []) {
             let aseStr = self.AESEventKey(pa)
             let d_arr: [String: String] = ["quohogs": aseStr]  //ciphertext
@@ -988,8 +987,8 @@ class HttpManager {
         let session: URLSession = URLSession(configuration: configuration)
         
         let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
-             if let _ = error {
-                 let refresh = HttpManager.share.refreshAppHostUrl()
+            if let _ = error {
+                let refresh = HttpManager.share.refreshAppHostUrl()
                 print("_______se\(model.userId),\(model.linkId),\(event.rawValue),\(model.platform.rawValue)")
                 complete(refresh == false)
             } else {
@@ -999,7 +998,7 @@ class HttpManager {
                         complete(boolValue)
                     } catch {
                         let refresh = HttpManager.share.refreshAppHostUrl()
-                        print("_serviceInfo______success\(model.userId),\(model.linkId),\(event.rawValue),\(model.platform.rawValue)")
+                        print("serviceInfo______success\(model.userId),\(model.linkId),\(event.rawValue),\(model.platform.rawValue)")
                         complete(refresh == false)
                     }
                 }
@@ -1016,10 +1015,10 @@ class HttpManager {
         var offv = "38c9Z2"
         offv = "2Xk4dLo" + offv
         offv = offv + "Q2a"
-//        #if DEBUG
-//        let token = "kCXpPZnxCut7LohE6J1r5tHL75CwBMQU"
-//        let offv = "2Xk4dLo38c9Z2Q2a"
-//        #endif
+        //        #if DEBUG
+        //        let token = "kCXpPZnxCut7LohE6J1r5tHL75CwBMQU"
+        //        let offv = "2Xk4dLo38c9Z2Q2a"
+        //        #endif
         do {
             bts = try AES(key: key, iv: offv, padding: .pkcs5).encrypt(data.bytes)
         } catch {}
