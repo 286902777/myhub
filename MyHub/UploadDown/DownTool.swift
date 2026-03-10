@@ -60,7 +60,7 @@ class DownTool: NSObject, URLSessionDownloadDelegate {
         if let url = URL(string: model.movieAddress) {
             self.model = model
             // 1. 创建后台配置（必须用唯一的 identifier）
-            let config = URLSessionConfiguration.background(withIdentifier: "com.myhub.ground")
+            let config = URLSessionConfiguration.background(withIdentifier: "com.myhub.down")
             // 2. 创建 URLSession，并设置 delegate（就是当前 ViewController）
             backgroundSession = URLSession(configuration: config, delegate: self, delegateQueue: nil)
             // 3. 创建下载任务
