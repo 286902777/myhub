@@ -211,6 +211,7 @@ extension GoogleManager {
         
         let date = Date().timeIntervalSince1970
         if mode != .playing {
+            self.isPlayingAds = false
             if Int(ceil(date - self.playTime)) < self.spaceTime {
                 complete(false, nil, false)
                 return

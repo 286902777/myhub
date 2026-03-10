@@ -2,9 +2,16 @@
   "spaceTime": 60,
   "startTime": 7,
   "adsTime": 60,
-  "playTime": 600,
+  "playMiddleTime": 600,
   "nativeTime": 7,
-  "nativeClickRate": 80,
+  "nativeClickRate": 60,
+  "playingIndex": 5,
+  "playingTime": 10,
+  "playMethod": 1,
+  "playNativeTime": 7,
+  "playNativeClickRate": 60,
+  "s_NativeTime": 7,
+  "s_NativeClickRate": 60,
   "play": [
       {
           "source": "admob",
