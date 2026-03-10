@@ -120,10 +120,7 @@ class GoogleNativeController: UIViewController {
         } else {
             self.s_mainView.isHidden = true
         }
-        
-        self.closeView.isUserInteractionEnabled = false
-        self.s_closeView.isUserInteractionEnabled = false
-        
+                
         if GoogleManager.share.showMode != .playing {
             self.adsTime = GoogleManager.share.nativeTime
             self.adsRate = GoogleManager.share.nativeClickRate
@@ -139,11 +136,12 @@ class GoogleNativeController: UIViewController {
             self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
             self.isShowCloseBtn()
         }
-        self.view.isUserInteractionEnabled = true
+        self.closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)
+        self.s_closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)
         NotificationCenter.default.addObserver(forName: Noti_ClickNativeAds, object: nil, queue: .main) {  [weak self] _ in
             guard let self = self else { return }
             self.isClickAds = true
-            guard self.adsTime > 0 else {
+            if self.adsTime == 0 {
                 if self.showC == 1 {
                     self.closeView.isHidden = true
                     self.closeBtn.isHidden = false
@@ -155,30 +153,11 @@ class GoogleNativeController: UIViewController {
                     self.s_closeView.isHidden = true
                     self.s_closeBtn.isHidden = false
                 }
-                return
             }
         }
-        self.closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)
-        self.s_closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)
     }
     
     func strat() {
-        guard self.adsTime > 0 else {
-            if self.showC == 1 {
-                self.closeView.isHidden = true
-                self.closeBtn.isHidden = false
-                self.s_closeView.isHidden = true
-                self.s_closeBtn.isHidden = true
-            } else {
-                self.closeView.isHidden = true
-                self.closeBtn.isHidden = true
-                self.s_closeView.isHidden = true
-                self.s_closeBtn.isHidden = false
-            }
-            self.timeL.isHidden = true
-            self.s_timeL.isHidden = true
-            return
-        }
         self.timer = DispatchSource.makeTimerSource(queue: self.queue)
         self.timer?.schedule(deadline: .now() + 1, repeating: 1)
         self.timer?.setEventHandler { [weak self] in
