@@ -40,13 +40,13 @@ class HUBRateView: UIView {
         self.isHidden = true
         self.layer.cornerRadius = 12
         self.layer.masksToBounds = true
-        self.addEffectView(CGSize(width: 80, height: 192))
         self.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.left.equalTo(4)
             make.right.equalTo(-4)
         }
+        self.addEffectView(CGSize(width: 80, height: 192))
     }
     
     func setData(_ state: HUB_RateState) {
