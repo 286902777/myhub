@@ -17,12 +17,20 @@ class PlayListFullController: UIViewController {
         return label
     }()
     
+    lazy var closeBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "close"), for: .normal)
+        return btn
+    }()
+    
     private lazy var contentV: UIView = {
         let view = UIView()
+        view.layer.cornerRadius = 20
+        view.backgroundColor = UIColor.rgbHex("#000000", 0.25)
         return view
     }()
     
-    let cellIdentifier: String = "PlayListFullCellIdentifier"
+    let cellIdentifier: String = "PlayListCellIdentifier"
     var selectBlock: ((_ model: VideoData) -> Void)?
     private var currentIdx: Int = 0
     private var currentModel: VideoData = VideoData()
@@ -33,7 +41,7 @@ class PlayListFullController: UIViewController {
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
-        collectionView.register(PlayListFullCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.register(PlayListCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -86,18 +94,23 @@ class PlayListFullController: UIViewController {
         self.view.backgroundColor = .clear
         self.view.addSubview(self.contentV)
         self.contentV.snp.makeConstraints { make in
-            make.top.right.bottom.equalToSuperview()
-            make.width.equalTo(276)
+            make.top.equalTo(14)
+            make.right.equalTo(-14)
+            make.bottom.equalTo(-14)
+            make.width.equalTo(348)
         }
         self.contentV.addSubview(self.collectionV)
     
         self.collectionV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        self.contentV.backgroundColor = UIColor.rgbHex("#8c8c8c")
-        let tap = UITapGestureRecognizer(target: self, action: #selector(pageDismiss))
-        view.addGestureRecognizer(tap)
-        tap.delegate = self
+        self.view.addSubview(self.closeBtn)
+        self.closeBtn.addTarget(self, action: #selector(pageDismiss), for: .touchUpInside)
+        self.closeBtn.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.right.equalTo(self.contentV.snp.left)
+            make.size.equalTo(CGSize(width: 52, height: 52))
+        }
     }
     
     func scrollToIdx() {
@@ -183,7 +196,7 @@ extension PlayListFullController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PlayListFullCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PlayListCell
         if let m = PlayTool.instance.list.safeIndex(indexPath.item) {
             cell.initData(m, self.currentIdx == indexPath.item)
         }
@@ -218,7 +231,7 @@ extension PlayListFullController: UICollectionViewDelegate, UICollectionViewData
             )
             
             // 配置 Header
-            header.backgroundColor = UIColor.rgbHex("#8c8c8c")
+            header.backgroundColor = UIColor.clear
             
             // 添加 UILabel
             if let label = header.viewWithTag(indexPath.section) as? UILabel {
@@ -226,11 +239,13 @@ extension PlayListFullController: UICollectionViewDelegate, UICollectionViewData
             } else {
                 let label = UILabel()
                 label.tag = indexPath.section
-                label.frame = CGRect(x: 16, y: 0, width: header.frame.width - 32, height: header.frame.height)
-                label.font = UIFont.GoogleSans(weight: .medium, size: 18)
+                label.font = UIFont.GoogleSans(weight: .bold, size: 18)
                 label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
                 label.textColor = .white
                 header.addSubview(label)
+                label.snp.makeConstraints { make in
+                    make.left.centerY.equalToSuperview()
+                }
             }
             return header
         }
@@ -243,7 +258,7 @@ extension PlayListFullController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: 120, height: 100)
+        CGSize(width: 156, height: 86)
     }
 }
 

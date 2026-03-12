@@ -164,6 +164,8 @@ class HubTool {
         }
     }
     
+    var isTabbarSave: Bool = false
+    
     var preMethod: HUB_PremiumMethod = .vip_auto
     
     var preSource: HUB_PremiumSource = .vip_home

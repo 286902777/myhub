@@ -82,7 +82,7 @@ class FileUploadTool: NSObject {
                             UploadDownTool.instance.uploadList.removeAll(where: {$0.date == uploadModel.date})
                             UploadDownTool.instance.uploadNext(uploadModel)
                         } else {
-                            ToastTool.instance.show(errMsg ?? "Request fail", .fail)
+                            ToastTool.instance.show("Upload fail!", .fail)
                             let m = FileTransData()
                             m.state = .uploadFaid
                             m.transId = uploadModel.id

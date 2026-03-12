@@ -10,7 +10,6 @@ import SnapKit
 import MJRefresh
 
 class BoxDeepController: UIViewController {
-
     lazy var closeBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "close"), for: .normal)
@@ -147,7 +146,23 @@ class BoxDeepController: UIViewController {
                 }
             }
         }
+        
+        NotificationCenter.default.addObserver(forName: Noti_ClosePresent, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.dismissAllChildControllers()
+        }
     }
+    
+    func dismissAllChildControllers(animated: Bool = false) {
+        if let presentedController = self.presentedViewController {
+            presentedController.dismiss(animated: animated) { [weak self] in
+                self?.dismissAllChildControllers(animated: animated)
+            }
+        } else {
+            self.dismiss(animated: false)
+        }
+    }
+    
     
     func downFile() {
             let list = self.list.filter({$0.file_type != .folder && $0.isSelect == true})
@@ -233,7 +248,9 @@ class BoxDeepController: UIViewController {
         switch model.file_type {
         case .folder:
             let vc = BoxDeepListController(model: HubTool.share.changeModel(model, linkId: self.linkId, uId: self.userModel.id, platform: HubTool.share.platform), linkId: self.linkId, userId: self.userModel.id, userName: self.userModel.username, platform: HubTool.share.platform)
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: false)
+//            self.navigationController?.pushViewController(vc, animated: true)
         case .photo:
             let vc = OpenPhotoController(model: HubTool.share.changeModel(model, linkId: self.linkId, uId: self.userModel.id, platform: HubTool.share.platform))
             self.navigationController?.pushViewController(vc, animated: true)

@@ -17,8 +17,8 @@ class HUBLightView: UIView {
     lazy var proV: UIProgressView = {
         let view = UIProgressView()
         view.trackTintColor = UIColor.rgbHex("#FFFFFF", 0.4)
-        view.progressTintColor = UIColor.rgbHex("#DDF75B")
-        view.layer.cornerRadius = 1
+        view.progressTintColor = UIColor.rgbHex("#FFFFFF")
+        view.layer.cornerRadius = 2
         view.layer.masksToBounds = true
         return view
     }()
@@ -34,9 +34,9 @@ class HUBLightView: UIView {
     
     func initUI() {
         self.isHidden = true
-        self.layer.cornerRadius = 16
+        self.layer.cornerRadius = 12
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor.rgbHex("#000000", 0.5)
+        self.backgroundColor = UIColor.rgbHex("#14171C", 0.5)
         self.addSubview(self.iconV)
         self.addSubview(self.proV)
         self.iconV.snp.makeConstraints { make in

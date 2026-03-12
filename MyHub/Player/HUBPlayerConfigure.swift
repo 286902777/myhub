@@ -152,7 +152,7 @@ public struct HUBPlayerConfigure {
     /// 图片
     public var image = HUBPlayerImage()
     /// 滑块水平偏移量
-    public var thumbImageOffset = 0.0
+    public var thumbImageOffset = 5.0
     /// 滑块点击范围偏移
     public var thumbClickableOffset = CGPoint(x: 10, y: 10)
 }

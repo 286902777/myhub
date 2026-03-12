@@ -51,10 +51,11 @@ class BoxDeepListHeadView: UIView {
         }
         self.allBtn.snp.makeConstraints { make in
             make.width.equalTo(78)
-            make.top.bottom.right.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.right.equalTo(-14)
         }
         self.nameL.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerY.equalToSuperview()
             make.left.equalTo(self.backBtn.snp.right)
             make.right.equalTo(self.allBtn.snp.left)
         }

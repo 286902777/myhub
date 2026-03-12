@@ -9,8 +9,16 @@ import UIKit
 import SnapKit
 
 class PlayListController: UIViewController {
+    lazy var closeBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "close"), for: .normal)
+        return btn
+    }()
+    
     private lazy var contentV: UIView = {
         let view = UIView()
+        view.layer.cornerRadius = 20
+        view.backgroundColor = UIColor.rgbHex("#000000", 0.25)
         return view
     }()
     
@@ -18,7 +26,8 @@ class PlayListController: UIViewController {
     var selectBlock: ((_ model: VideoData) -> Void)?
     private var currentIdx: Int = 0
     private var currentModel: VideoData = VideoData()
-    let cellW: CGFloat = floor((ScreenWidth - 36) * 0.5)
+    let cellW: CGFloat = floor((ScreenWidth - 64) * 0.5)
+    let cellH: CGFloat = floor((ScreenWidth - 64) * 0.5 * 0.55)
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionHeadersPinToVisibleBounds = true
@@ -146,22 +155,24 @@ class PlayListController: UIViewController {
     func initUI() {
         self.view.backgroundColor = .clear
         self.view.addSubview(self.contentV)
+        self.view.addSubview(self.closeBtn)
         self.contentV.snp.makeConstraints { make in
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalTo(ScreenHeight * 0.6)
+            make.left.equalTo(14)
+            make.right.equalTo(-14)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.height.equalTo(ScreenHeight * 0.4)
         }
         self.contentV.addSubview(self.collectionView)
         self.collectionView.snp.makeConstraints { make in
-            make.left.top.right.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.edges.equalToSuperview()
         }
-        
-        self.contentV.layoutIfNeeded()
-        self.contentV.backgroundColor = UIColor.rgbHex("#8c8c8c")
-        self.contentV.addRedius([.topLeft, .topRight], 20)
-        let tap = UITapGestureRecognizer(target: self, action: #selector(pageDismiss))
-        view.addGestureRecognizer(tap)
-        tap.delegate = self
+      
+        self.closeBtn.addTarget(self, action: #selector(pageDismiss), for: .touchUpInside)
+        self.closeBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview()
+            make.bottom.equalTo(self.contentV.snp.top)
+            make.size.equalTo(CGSize(width: 52, height: 52))
+        }
     }
     
     func scrollToIdx() {
@@ -214,7 +225,7 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        CGSize(width: cellW, height: 120)
+        CGSize(width: cellW, height: cellH)
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -229,19 +240,21 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
             )
             
             // 配置 Header
-            header.backgroundColor = UIColor.rgbHex("#8c8c8c")
-            
+            header.backgroundColor = UIColor.clear
+
             // 添加 UILabel
             if let label = header.viewWithTag(indexPath.section) as? UILabel {
                 label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
             } else {
                 let label = UILabel()
                 label.tag = indexPath.section
-                label.frame = CGRect(x: 16, y: 0, width: header.frame.width - 32, height: header.frame.height)
                 label.font = UIFont.GoogleSans(weight: .medium, size: 18)
                 label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
                 label.textColor = .white
                 header.addSubview(label)
+                label.snp.makeConstraints { make in
+                    make.left.centerY.equalToSuperview()
+                }
             }
             return header
         }

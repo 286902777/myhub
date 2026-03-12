@@ -159,11 +159,11 @@ class HUBPlayerContentView: UIView {
     private lazy var rateButton: UIButton = {
         let btn = UIButton()
         btn.setTitle("1.0x", for: .normal)
-        btn.titleLabel?.font = UIFont.GoogleSans(weight: .regular, size: 14)
+        btn.titleLabel?.font = UIFont.GoogleSans(weight: .medium, size: 14)
         btn.setTitleColor(.white, for: .normal)
-        btn.layer.cornerRadius = 8
+        btn.layer.cornerRadius = 6
         btn.layer.borderColor = UIColor.white.cgColor
-        btn.layer.borderWidth = 2
+        btn.layer.borderWidth = 1
         btn.layer.masksToBounds = true
         btn.backgroundColor = .clear
         btn.addTarget(self, action: #selector(rateButtonAction), for: .touchUpInside)
@@ -173,7 +173,7 @@ class HUBPlayerContentView: UIView {
     private lazy var currentDurationLabel: UILabel = {
         let view = UILabel()
         view.text = "00:00"
-        view.font = .monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        view.font = UIFont.GoogleSans(weight: .regular, size: 12)
         view.textColor = .white
         view.textAlignment = .center
         view.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -184,7 +184,7 @@ class HUBPlayerContentView: UIView {
     private lazy var totalDurationLabel: UILabel = {
         let view = UILabel()
         view.text = "00:00"
-        view.font = .monospacedDigitSystemFont(ofSize: 14, weight: .regular)
+        view.font = UIFont.GoogleSans(weight: .regular, size: 12)
         view.textColor = .white
         view.textAlignment = .center
         view.setContentCompressionResistancePriority(.required, for: .horizontal)
@@ -206,7 +206,7 @@ class HUBPlayerContentView: UIView {
         view.isUserInteractionEnabled = false
         view.maximumValue = 1
         view.minimumValue = 0
-        view.minimumTrackTintColor = UIColor.rgbHex("#DDF75B")
+        view.minimumTrackTintColor = UIColor.white
         view.addTarget(self, action: #selector(fixSliderrTouchBegan(_:)), for: .touchDown)
         view.addTarget(self, action: #selector(fixSliderrValueChanged(_:)), for: .valueChanged)
         view.addTarget(self, action: #selector(fixSliderrTouchEnded(_:)), for: [.touchUpInside, .touchCancel, .touchUpOutside])
@@ -412,7 +412,7 @@ private extension HUBPlayerContentView {
         autoresizesSubviews = true
         isUserInteractionEnabled = true
         listFullView.layer.cornerRadius = 16
-        listFullView.backgroundColor = .black
+        listFullView.backgroundColor = UIColor.rgbHex("#14171C", 0.5)
         
         addSubview(leftV)
         addSubview(rightV)
@@ -428,11 +428,11 @@ private extension HUBPlayerContentView {
         bottomToolView.addSubview(bottomContentView)
         listFullView.addSubview(moreButton)
         listFullView.addSubview(fullButton)
+        listFullView.addSubview(downButton)
 
         bottomContentView.addSubview(playButton)
         bottomContentView.addSubview(nextButton)
 //        bottomContentView.addSubview(fullButton)
-        bottomContentView.addSubview(downButton)
         bottomContentView.addSubview(rateButton)
         bottomContentView.addSubview(currentDurationLabel)
         bottomContentView.addSubview(totalDurationLabel)
@@ -505,19 +505,26 @@ private extension HUBPlayerContentView {
         }
   
         listFullView.snp.makeConstraints { make in
-            make.right.equalTo(-24)
+            make.right.equalTo(-16)
             make.centerY.equalToSuperview()
-            make.size.equalTo(CGSize(width: 44, height: 88))
+            make.size.equalTo(CGSize(width: 52, height: 160))
+        }
+
+        fullButton.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalTo(CGSize(width: 48, height: 48))
         }
         
         moreButton.snp.makeConstraints { make in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(44)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 48, height: 48))
+            make.bottom.equalTo(self.fullButton.snp.top)
         }
         
-        fullButton.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.height.equalTo(44)
+        downButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.size.equalTo(CGSize(width: 48, height: 48))
+            make.top.equalTo(self.fullButton.snp.bottom)
         }
         
         bottomContentView.snp.makeConstraints { make in
@@ -552,13 +559,13 @@ private extension HUBPlayerContentView {
             make.centerY.equalToSuperview()
         }
         playButton.snp.makeConstraints { make in
-            make.left.equalTo(8)
-            make.size.equalTo(40)
+            make.left.equalTo(6)
+            make.size.equalTo(44)
             make.bottom.equalToSuperview()
         }
         nextButton.snp.makeConstraints { make in
             make.left.equalTo(self.playButton.snp.right).offset(4)
-            make.size.equalTo(40)
+            make.size.equalTo(44)
             make.centerY.equalTo(playButton)
         }
 //        fullButton.snp.makeConstraints { make in
@@ -567,22 +574,16 @@ private extension HUBPlayerContentView {
 //            make.centerY.equalTo(playButton)
 //        }
         
-        downButton.snp.makeConstraints { make in
-            make.right.equalTo(-8)
-            make.size.equalTo(40)
-            make.centerY.equalTo(playButton)
-        }
-        
         rateButton.snp.makeConstraints { make in
-            make.right.equalTo(self.downButton.snp.left).offset(-12)
+            make.right.equalTo(-16)
             make.size.equalTo(CGSize(width: 54, height: 24))
             make.centerY.equalTo(playButton)
         }
         
         rateView.snp.makeConstraints { make in
             make.size.equalTo(CGSizeMake(80, 192))
-            make.centerX.equalTo(rateButton)
-            make.bottom.equalTo(rateButton.snp.top).offset(-12)
+            make.right.equalTo(rateButton.snp.right)
+            make.bottom.equalTo(rateButton.snp.top).offset(-16)
         }
         
         lightV.snp.makeConstraints { make in
@@ -603,25 +604,25 @@ private extension HUBPlayerContentView {
         }
         
         currentDurationLabel.snp.makeConstraints { make in
-            make.left.equalTo(10)
+            make.left.equalTo(16)
             make.top.equalToSuperview()
         }
         totalDurationLabel.snp.makeConstraints { make in
-            make.right.equalTo(-10)
+            make.right.equalTo(-16)
             make.top.equalToSuperview()
         }
         
         progressView.snp.makeConstraints { make in
             make.left.equalTo(currentDurationLabel.snp.right).offset(15 + config.thumbImageOffset)
             make.centerY.equalTo(currentDurationLabel)
-            make.height.equalTo(2)
+            make.height.equalTo(4)
             make.right.equalTo(totalDurationLabel.snp.left).offset(-15 - config.thumbImageOffset)
         }
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView).offset(-1)
             make.right.equalTo(progressView).offset(1)
             make.height.equalTo(10)
-            make.centerY.equalTo(progressView)
+            make.centerY.equalTo(currentDurationLabel).offset(1)
         }
 
         placeholderStackView.snp.makeConstraints { make in
@@ -802,6 +803,9 @@ extension HUBPlayerContentView {
             make.right.equalTo(vipButton.snp.left).offset(-10)
         }
         
+        listFullView.snp.updateConstraints { make in
+            make.right.equalTo(-safeAreaInsets.right - 16)
+        }
 //        moreButton.snp.updateConstraints { make in
 //            make.right.equalTo(-safeAreaInsets.left - 10)
 //        }
@@ -809,21 +813,21 @@ extension HUBPlayerContentView {
             make.right.equalTo(-safeAreaInsets.left - 10)
         }
         playButton.snp.updateConstraints { make in
-            make.left.equalTo(safeAreaInsets.left + 8)
+            make.left.equalTo(safeAreaInsets.left + 6)
         }
         
         currentDurationLabel.snp.updateConstraints { make in
-            make.left.equalTo(safeAreaInsets.left + 10)
+            make.left.equalTo(safeAreaInsets.left + 16)
         }
         
         totalDurationLabel.snp.updateConstraints { make in
-            make.right.equalTo(-safeAreaInsets.right - 10)
+            make.right.equalTo(-safeAreaInsets.right - 16)
         }
 
 //        fullButton.snp.updateConstraints { make in
 //            make.right.equalTo(-safeAreaInsets.right - 8)
 //        }
-        downButton.snp.updateConstraints { make in
+        rateButton.snp.updateConstraints { make in
             make.right.equalTo(-safeAreaInsets.right - 8)
         }
 
@@ -857,6 +861,7 @@ extension HUBPlayerContentView {
     
     func setDisplayDuration(_ forward: Bool) {
         self.displayTimeV.setValue(forward)
+        self.soundPlayer?.play()
     }
     
     func setTimeDetailDuration(_ old: TimeInterval, _ new: TimeInterval) {

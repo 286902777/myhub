@@ -147,17 +147,8 @@ class PlayVideoController: UIViewController {
             make.left.right.equalToSuperview()
         }
         self.player.delegate = self
-        NotificationCenter.default.addObserver(forName: Noti_DownSuccess, object: nil, queue: .main) { [weak self] data in
-            guard let self = self else { return }
-            if let mod = data.userInfo?["mod"] as? FileTransData {
-                if self.model.id == mod.transId {
-                    self.model.state = mod.state
-                    self.model.movieAddress = mod.local
-                    HubDB.instance.updateMovieData(self.model)
-                }
-            }
-        }
-//        HubTool.share.adsPlayState = .play
+
+        HubTool.share.adsPlayState = .play
     }
     
     private func loadSource(_ auto: Bool = false) {
@@ -197,8 +188,12 @@ class PlayVideoController: UIViewController {
             if self.model.movieAddress.count == 0 {
                 self.requestPlayUrl(self.model)
             } else {
-                self.player.url = URL(string: self.model.movieAddress)
-                self.play()
+                if self.containsValidURL(self.model.movieAddress) {
+                    self.player.url = URL(string: self.model.movieAddress)
+                    self.play()
+                } else {
+                    self.requestPlayUrl(self.model)
+                }
             }
         } else {
             let local = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
@@ -213,6 +208,19 @@ class PlayVideoController: UIViewController {
         }
         
         self.setNextStatus()
+    }
+    
+    func containsValidURL(_ text: String) -> Bool {
+        let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue)
+
+        let matches = detector?.matches(in: text,
+                                        options: [],
+                                        range: NSRange(location: 0, length: text.utf16.count))
+
+        return matches?.contains { match in
+            guard let url = match.url else { return false }
+            return UIApplication.shared.canOpenURL(url)
+        } ?? false
     }
     
     private func play() {
@@ -232,7 +240,7 @@ class PlayVideoController: UIViewController {
     private func requestPlayUrl(_ model: VideoData) {
         if model.platform == .box {
             LoadManager.instance.show(self)
-            HttpManager.share.driveDownLoadUrlApi(model.id) {[weak self] status, address, errMsg in
+            HttpManager.share.boxVideoUrlApi(model.id) {[weak self] status, address, errMsg in
                 guard let self = self else { return }
                 LoadManager.instance.dismiss()
                 DispatchQueue.main.async {

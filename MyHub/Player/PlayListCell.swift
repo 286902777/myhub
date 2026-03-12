@@ -11,24 +11,35 @@ import SnapKit
 class PlayListCell: UICollectionViewCell {
     lazy var nameL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         label.textColor = UIColor.white
-        label.numberOfLines = 2
-        return label
+	        return label
     }()
     
     lazy var imageV: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.layer.cornerRadius = 4
+        view.layer.cornerRadius = 16
         view.layer.masksToBounds = true
         return view
     }()
     
-    lazy var playingV: UIImageView = {
-        let view = UIImageView()
-        view.contentMode = .scaleAspectFill
-        view.image = UIImage(named: "play_playing")
+    lazy var playingV: UIView = {
+        let view = UIView()
+        let imageV = UIImageView()
+        view.backgroundColor = UIColor.rgbHex("#DDF75B")
+        imageV.contentMode = .scaleAspectFill
+        imageV.image = UIImage(named: "play_playing")
+        view.addSubview(imageV)
+        imageV.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        return view
+    }()
+    
+    lazy var nameBgV: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.rgbHex("#14171C", 0.25)
         return view
     }()
     
@@ -59,24 +70,32 @@ class PlayListCell: UICollectionViewCell {
     
     func setUI() {
         self.addSubview(imageV)
-        self.addSubview(nameL)
-        self.imageV.addSubview(self.playingV)
+        self.addSubview(nameBgV)
+        self.nameBgV.addSubview(nameL)
+        self.addSubview(self.playingV)
         self.addSubview(recommonedV)
         self.recommonedV.addSubview(recommonedL)
         imageV.snp.makeConstraints { make in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(100)
+            make.edges.equalToSuperview()
+        }
+        nameBgV.snp.makeConstraints { make in
+            make.left.bottom.right.equalToSuperview()
+            make.height.equalTo(28)
         }
         nameL.snp.makeConstraints { make in
-            make.top.equalTo(imageV.snp.bottom).offset(4)
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(-4)
+            make.left.equalTo(8)
+            make.right.equalTo(-8)
+            make.centerY.equalToSuperview()
         }
         
         playingV.snp.makeConstraints { make in
-            make.center.equalTo(imageV)
+            make.left.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: 36, height: 36))
         }
-        
+
+        playingV.layoutIfNeeded()
+        playingV.addRedius([.topLeft, .bottomRight], 16, self.playingV.bounds)
+
         self.recommonedV.snp.makeConstraints { make in
             make.right.top.equalTo(imageV)
             make.size.equalTo(CGSize(width: 62, height: 15))

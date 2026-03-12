@@ -74,9 +74,9 @@ class HttpManager {
     
     let tokenKey: String = "X-Token"
     
-    let userHost: String = "https://xbox2c-test-myhub.tbxbxdev.com/"
+    let userHost: String = "https://api.mhmyhubxs.com/"
     
-    let userHostAddress: String = "xbox2c-test-myhub.tbxbxdev.com"
+    let userHostAddress: String = "api.mhmyhubxs.com"
     
     var appHost: String = "https://c.sdbfsf.com/"
     
@@ -396,6 +396,7 @@ class HttpManager {
                             list.forEach { mm in
                                 guard let m = mm, m.file_id.count > 0 else { return }
                                 if let localModel = localList.first(where: {$0.id == m.file_id}) {
+                                    localModel.isPass = m.moderate_type
                                     result.append(localModel)
                                 } else {
                                     let mod = VideoData()
@@ -580,7 +581,7 @@ class HttpManager {
     }
     
     
-    func driveDownLoadUrlApi(_ fileId: String, _ completion: @escaping (_ status: HttpCode, _ address: String, _ errMsg: String?) -> ()) {
+    func boxVideoUrlApi(_ fileId: String, _ completion: @escaping (_ status: HttpCode, _ address: String, _ errMsg: String?) -> ()) {
         var para: [String: Any] = [:]
         if LoginManager.share.isLogin {
             para["blaewort"] = LoginManager.share.userId

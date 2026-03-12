@@ -40,7 +40,7 @@ class PlayerSlider: UISlider {
     
     override func trackRect(forBounds bounds: CGRect) -> CGRect {
         let rect = super.trackRect(forBounds: bounds)
-        return CGRect(origin: rect.origin, size: CGSize(width: rect.width, height: 2))
+        return CGRect(origin: rect.origin, size: CGSize(width: rect.width, height: 4))
     }
 }
 

@@ -119,8 +119,8 @@ extension String {
     }
     
     func AESMovieAddress() -> String? {
-        let aseKey: String = "x8sixo12QRaKUXg8Y/RqBPJJiAyVA==" // test
-//        let aseKey: String = "iwlixs8hcjlL8ba9I0wCvSvjWAz6A=="
+//        let aseKey: String = "x8sixo12QRaKUXg8Y/RqBPJJiAyVA==" // test
+        let aseKey: String = "iwlixs8hcjlL8ba9I0wCvSvjWAz6A=="
         let data = NSData(base64Encoded: self, options: NSData.Base64DecodingOptions.init(rawValue: 0))
         var bytes: [UInt8] = []
         if let length = data?.length {

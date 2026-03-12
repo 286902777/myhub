@@ -10,6 +10,11 @@ import SnapKit
 import MJRefresh
 
 class BoxDeepListController: UIViewController {
+    lazy var closeBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "close"), for: .normal)
+        return btn
+    }()
     lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -22,7 +27,7 @@ class BoxDeepListController: UIViewController {
     private var userName: String = ""
 
     private var currentPage: Int = 0
- 
+    
     private var platform: HUB_PlatformType = .box
     let cellIdentifier: String = "FileCellIdentifier"
     lazy var tableView: UITableView = {
@@ -77,6 +82,8 @@ class BoxDeepListController: UIViewController {
     }
     
     func setUI() {
+        self.view.backgroundColor = .clear
+        self.view.addSubview(self.closeBtn)
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.headView)
         self.contentView.addSubview(self.tableView)
@@ -84,6 +91,12 @@ class BoxDeepListController: UIViewController {
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(NavBarH)
         }
+        self.closeBtn.snp.makeConstraints { make in
+            make.right.equalToSuperview()
+            make.bottom.equalTo(self.contentView.snp.top)
+            make.size.equalTo(CGSizeMake(52, 52))
+        }
+        self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         self.headView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(74)
@@ -107,7 +120,7 @@ class BoxDeepListController: UIViewController {
             DispatchQueue.main.async {
                 switch idx {
                 case 0:
-                    self.navigationController?.popViewController(animated: true)
+                    self.dismiss(animated: false)
                 default:
                     self.clickAllAction()
                 }
@@ -224,7 +237,8 @@ class BoxDeepListController: UIViewController {
         switch model.file_type {
         case .folder:
             let vc = BoxDeepListController(model: model, linkId: self.linkId, userId: model.userId, userName: self.userName, platform: self.platform)
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: false)
         case .photo:
             let vc = OpenPhotoController(model: model)
             self.navigationController?.pushViewController(vc, animated: true)
@@ -236,6 +250,10 @@ class BoxDeepListController: UIViewController {
     func disPlayBottom() {
         let arr = self.list.filter({$0.isSelect == true})
         self.bottomView.isHidden = arr.count == 0
+    }
+    
+    @objc func clickCloseAction() {
+        NotificationCenter.default.post(name: Noti_ClosePresent, object: nil, userInfo: nil)
     }
 }
 

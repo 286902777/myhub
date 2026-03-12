@@ -17,7 +17,7 @@ class DownTool: NSObject, URLSessionDownloadDelegate {
 
     func startFile(_ model: VideoData) {
         if model.platform == .box {
-            HttpManager.share.driveDownLoadUrlApi(model.id) { [weak self] status, address, errMsg in
+            HttpManager.share.boxVideoUrlApi(model.id) { [weak self] status, address, errMsg in
                 guard let self = self else { return }
                 if status == .success {
                     model.movieAddress = address
