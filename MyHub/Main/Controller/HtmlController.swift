@@ -10,8 +10,8 @@ import WebKit
 import SnapKit
 
 enum HUB_WebLink: String {
-    case privacy = "https://s.com/privacy/"
-    case terms = "https://s.com/terms/"
+    case privacy = "https://myhubweb.com/privacy/"
+    case terms = "https://myhubweb.com/terms/"
 }
 class HtmlController: SuperController {
     

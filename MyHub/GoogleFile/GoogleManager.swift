@@ -211,6 +211,8 @@ extension GoogleManager {
             self.isPlayingAds = true
         }
         
+        TbaManager.instance.addEvent(type: .custom, event: .adsneedShow, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
+        
         self.showMode = mode == .playing ? .play : mode
         var found: Bool = false
         var data: GoogleAdsCacheData?
@@ -246,7 +248,6 @@ extension GoogleManager {
             complete(false, nil, false)
             return
         }
-        TbaManager.instance.addEvent(type: .custom, event: .adsneedShow, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         
         switch item.source {
         case .admob:

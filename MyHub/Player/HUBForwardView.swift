@@ -16,7 +16,7 @@ class HUBForwardView: UIView {
     
     lazy var infoL: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.GoogleSans(weight: .medium, size: 14)
         label.textColor = .white
         return label
     }()
@@ -32,9 +32,9 @@ class HUBForwardView: UIView {
     
     func setUI() {
         self.isHidden = true
-        self.layer.cornerRadius = 16
+        self.layer.cornerRadius = 12
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor.rgbHex("#000000", 0.5)
+        self.backgroundColor = UIColor.rgbHex("#14171C", 0.5)
         self.addSubview(self.iconV)
         self.addSubview(self.infoL)
         self.iconV.snp.makeConstraints { make in
@@ -51,7 +51,7 @@ class HUBForwardView: UIView {
     
     func setValue(_ forward: Bool) {
         self.isHidden = false
-        self.iconV.setImage(forward ? "play_forward" : "play_rewind")
+        self.iconV.image = UIImage(named: forward ? "play_forward" : "play_rewind")
         self.infoL.text = forward ? "Forward 10s" : "Rewind 10s"
         if self.isHidden == false {
             DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.0) { [weak self] in

@@ -172,7 +172,7 @@ class IndexController: SuperController {
         TbaManager.instance.addEvent(type: .custom, event: .deeplinkOpen, paramter: [EventParaName.commonLin.rawValue: HubTool.share.isLinkDeep])
 
         if let url = URL(string: info), let para = url.parameters {
-            if let linkId = para["a"], let platform = para["b"] {
+            if let linkId = para["video"], let platform = para["bealach"] {
                 HubTool.share.platform = HUB_PlatformType(rawValue: platform) ?? .box
                 guard self.canClackInfo(linkId) else { return }
                 self.driveDeep(linkId)
@@ -494,10 +494,12 @@ class IndexController: SuperController {
                     if let mmm = self.requestlist.first(where: {$0.type == .upload}) {
                         mmm.lists = uploads
                     } else {
-                        let m = HomeListData()
-                        m.type = .upload
-                        m.lists = uploads
-                        self.requestlist.append(m)
+                        if uploads.count > 0 {
+                            let m = HomeListData()
+                            m.type = .upload
+                            m.lists = uploads
+                            self.requestlist.append(m)
+                        }
                     }
                 } else {
                     self.tableHeadV.setData(nil)

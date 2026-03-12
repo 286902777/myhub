@@ -91,7 +91,11 @@ class HubTabBarController: UIViewController {
             default:
                 HubTool.share.loginSource = .set
             }
-            UploadTool.instance.openVC(self, self.currentIdx == 1)
+            if self.currentIdx == 1 {
+                UploadTool.instance.openVC(self, HubTool.share.isTabbarSave == false)
+            } else {
+                UploadTool.instance.openVC(self, false)
+            }
         }
         self.tabbar.clickBlock = { [weak self] idx in
             guard let self = self else { return }

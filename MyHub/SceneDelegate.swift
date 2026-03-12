@@ -81,8 +81,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func configAppFlyer() {
-        AppsFlyerLib.shared().appsFlyerDevKey = "sfasdfa"
-        AppsFlyerLib.shared().appleAppID = "83975813745891"
+        AppsFlyerLib.shared().appsFlyerDevKey = "u9uiDsNFzCs2FkhLYhhkp6"
+        AppsFlyerLib.shared().appleAppID = "6760330680"
         AppsFlyerLib.shared().delegate = self
         AppsFlyerLib.shared().deepLinkDelegate = self
         AppsFlyerLib.shared().start()
@@ -108,13 +108,12 @@ extension SceneDelegate: AppsFlyerLibDelegate, DeepLinkDelegate {
     }
     
     func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             if let data = conversionInfo as NSDictionary? as? [String: Any] {
-                if let done = data["is_first_launch"] as? Bool, done == true {
+                if let launch = data["is_first_launch"] as? Bool, launch == true {
                     if !data.keys.contains("deep_link_value") && data.keys.contains("fruit_name") {
-                        if let url: String = data["fruit_name"] as? String, url.count > 0 {
-                            print("close --- linkname")
-                            HubTool.share.deepUrl = url
+                        if let adress: String = data["fruit_name"] as? String,  adress.count > 0 {
+                            HubTool.share.deepUrl = adress
                             self.reSetTabbarVC()
                         }
                     }

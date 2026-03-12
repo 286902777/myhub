@@ -12,7 +12,7 @@ class HUBRateCell: UITableViewCell {
     lazy var nameL: UILabel = {
         let label = UILabel()
         label.font = UIFont.GoogleSans(weight: .medium, size: 14)
-        label.textColor = UIColor.rgbHex("#112031")
+        label.textColor = UIColor.white
         return label
     }()
 
@@ -41,10 +41,10 @@ class HUBRateCell: UITableViewCell {
     func initData(_ model: RateData) {
         self.nameL.text = "\(model.name.rawValue)x"
         if model.select {
-            self.nameL.textColor = UIColor.rgbHex("#112031")
-            self.backgroundColor = UIColor.rgbHex("#FFFFFF")
+            self.nameL.textColor = UIColor.rgbHex("#14171C")
+            self.backgroundColor = UIColor.rgbHex("#DDF75B")
         } else {
-            self.nameL.textColor = UIColor.rgbHex("#FFFFFF", 0.75)
+            self.nameL.textColor = UIColor.rgbHex("#FFFFFF")
             self.backgroundColor = .clear
         }
     }

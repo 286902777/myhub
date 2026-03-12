@@ -84,11 +84,13 @@ class SecendController: SuperController {
                 fileImgV.isHidden = false
                 saveL.textColor = UIColor.rgbHex("#14171C", 0.5)
                 saveImgV.isHidden = true
+                HubTool.share.isTabbarSave = false
             } else {
                 saveL.textColor = UIColor.rgbHex("#14171C")
                 saveImgV.isHidden = false
                 fileL.textColor = UIColor.rgbHex("#14171C", 0.5)
                 fileImgV.isHidden = true
+                HubTool.share.isTabbarSave = true
             }
             self.fileVC.dismissBottomView()
             let currentVC = pages[currentIdx]

@@ -137,7 +137,10 @@ class DirFileData: SuperData {
         mapper.specify(property: &file_meta, name: "saliently")
         mapper.specify(property: &namespace, name: "surnames")
         mapper.specify(property: &create_time, name: "immotioned")
-        mapper.specify(property: &moderate_type, name: "chuje")
+        mapper.specify(property: &moderate_type, name: "chuje") { (info) -> (HUB_ModerateType) in
+            let result = HUB_ModerateType(rawValue: info.uppercased())
+            return result ?? .initl
+        }
     }
 }
 

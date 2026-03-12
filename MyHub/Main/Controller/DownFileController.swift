@@ -144,7 +144,6 @@ class DownFileController: UIViewController {
             comMod.lists = comList
             self.list.append(comMod)
         }
-      
         self.tableView.reloadData()
         self.refreshUI()
     }

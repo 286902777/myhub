@@ -38,7 +38,7 @@ class HUBRateView: UIView {
     
     func initUI() {
         self.isHidden = true
-        self.layer.cornerRadius = 4
+        self.layer.cornerRadius = 12
         self.layer.masksToBounds = true
         self.addEffectView(CGSize(width: 80, height: 192))
         self.addSubview(self.tableView)

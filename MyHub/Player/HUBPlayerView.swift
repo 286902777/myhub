@@ -167,7 +167,6 @@ class HUBPlayerView: UIView {
 
     private(set) var rate: Float = 1.0 {
         didSet {
-            player?.rate = rate
             pause()
             isUserPause = false
             play()
@@ -528,6 +527,7 @@ extension HUBPlayerView {
             bufferingSomeSecond()
             return
         }
+        player?.automaticallyWaitsToMinimizeStalling = false
         if contentView.playState == .ended {
             player?.seek(to: CMTimeMake(value: 0, timescale: 1), toleranceBefore: .zero, toleranceAfter: .zero)
             self.contentView.currentRate = 1.0
@@ -544,7 +544,6 @@ extension HUBPlayerView {
             waitReadyToPlayState = .nomal
             bufferTimer = nil
         }
-        player?.play()
     }
 
     func pause() {

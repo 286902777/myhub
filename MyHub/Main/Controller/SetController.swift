@@ -327,7 +327,7 @@ class SetController: SuperController {
     }
     
     func openEmail() {
-        let email = "sd@outlook.com"
+        let email = "nica@ltmromrecicling.com"
         let subject = ""
         let body = ""
         if let url = URL(string: "mailto:\(email)?subject=\(subject.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&body=\(body.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") {

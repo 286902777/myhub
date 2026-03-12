@@ -88,7 +88,7 @@ extension SaveController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let m = self.list.safeIndex(indexPath.item) {
             if m.platform == .box {
-                DeepManager.share.openBoxDeep(linkId: "2029736476119535618", rootVC: self)
+                DeepManager.share.openBoxDeep(m.linkId, self)
             } else {
                 DeepManager.share.openOtherDeep(linkId: m.linkId, uId: m.userId, platform: m.platform, rootVC: self)
             }
