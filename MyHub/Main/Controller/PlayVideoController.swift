@@ -402,7 +402,11 @@ extension PlayVideoController: HUBPlayerDelegate {
                 self.isBack = true
             } else {
                 self.premiumBlock?()
-                self.navigationController?.popViewController(animated: true)
+                if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.dismiss(animated: false)
+                }
             }
         }
     }

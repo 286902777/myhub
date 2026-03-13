@@ -29,7 +29,12 @@ class PlayTool {
 //                self.adsPushPremium(.playBack, .vip_Ad, controller)
 //            }
         }
-        controller.navigationController?.pushViewController(vc, animated: true)
+        if let vs = controller.navigationController?.viewControllers, vs.count > 0 {
+            controller.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            vc.modalPresentationStyle = .overFullScreen
+            controller.present(vc, animated: false)
+        }
     }
     
     func adsPushPremium(_ state: HUB_AdsPlayState, _ source: HUB_PremiumSource, _ controller: UIViewController) {

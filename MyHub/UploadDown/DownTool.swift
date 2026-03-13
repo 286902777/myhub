@@ -130,14 +130,11 @@ class DownTool: NSObject, URLSessionDownloadDelegate {
     
     // 后台任务全部完成后，系统会调用此方法（但通常你不需要在这里处理文件）
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        print("🔔 所有后台任务事件已完成")
         DispatchQueue.main.async {
             if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
                 appDelegate.callCompletionHandlerIfAvailable()
             }
         }
-        // 注意：你通常需要在这里调用之前保存的 completionHandler（见 AppDelegate）
-        // 但由于我们没有保存它，这里只是示意
     }
     
     func cancelReqeust() {
