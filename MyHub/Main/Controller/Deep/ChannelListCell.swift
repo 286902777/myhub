@@ -1,15 +1,15 @@
 //
-//  IndexHistoryListCell.swift
+//  ChannelListCell.swift
 //  MyHub
 //
-//  Created by hub on 2/10/26.
+//  Created by myhub-ios on 3/13/26.
 //
 
 import UIKit
 import SnapKit
 
-class IndexHistoryListCell: UITableViewCell {
-    let cellIdentifier: String = "IndexHistoryCellIdentifier"
+class ChannelListCell: UITableViewCell {
+    let cellIdentifier: String = "ChannelCellIdentifier"
     lazy var collectionV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -25,9 +25,9 @@ class IndexHistoryListCell: UITableViewCell {
         return collectionView
     }()
     
-    private var listArr: [VideoData] = []
+    private var listArr: [ChannelUserData] = []
     
-    var clickBlock: ((_ data: VideoData) -> Void)?
+    var clickBlock: ((_ data: ChannelUserData) -> Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
@@ -50,13 +50,13 @@ class IndexHistoryListCell: UITableViewCell {
         }
     }
     
-    func initData(_ list: [VideoData]) {
+    func initData(_ list: [ChannelUserData]) {
         self.listArr = list
         self.collectionV.reloadData()
     }
 }
 
-extension IndexHistoryListCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ChannelListCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -65,26 +65,21 @@ extension IndexHistoryListCell: UICollectionViewDelegate, UICollectionViewDataSo
         return listArr.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! IndexHistoryCell
-        if let mod = listArr.safeIndex(indexPath.item) {
-            cell.initData(mod)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ChannelCell
+        if let data = listArr.safeIndex(indexPath.item) {
+            cell.initData(data)
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let mod = self.listArr.safeIndex(indexPath.item) {
-            HubTool.share.email = mod.email
-            HubTool.share.uId = mod.userId
-            HubTool.share.uploadPlatform = mod.platform
-            HubTool.share.playSource = .history
-            HubTool.share.eventSource = .history
-            self.clickBlock?(mod)
+          
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 192, height: 108)
+        return CGSize(width: 90, height: 126)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -95,3 +90,4 @@ extension IndexHistoryListCell: UICollectionViewDelegate, UICollectionViewDataSo
         8
     }
 }
+

@@ -116,7 +116,8 @@ class OtherDeepController: UIViewController {
         self.headView.clickBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                
+                let vc = PingController(uId: self.dataModel.userInfo.id, platform: HubTool.share.platform)
+                self.navigationController?.pushViewController(vc, animated: true)
             }
         }
         self.tableView.tableHeaderView = self.hotHeadView
@@ -146,15 +147,20 @@ class OtherDeepController: UIViewController {
             case 1:
                 guard HubTool.share.userIsLogin(self) else { return }
                 DispatchQueue.main.async {
-                    let m: VideoData = VideoData()
-                    m.id = self.linkId
-                    m.linkId = self.linkId
-                    m.userId = self.dataModel.userInfo.id
-                    m.name = self.dataModel.userInfo.name
-                    m.isShare = true
-                    m.platform = HubTool.share.platform
-                    HubDB.instance.updateMovieData(m)
-                    ToastTool.instance.show("Save Successful​")
+                    let arr = HubDB.instance.readDatas().filter({$0.isShare == true})
+                    if let _ = arr.first(where: {$0.id == self.linkId}) {
+                        ToastTool.instance.show("The file has been saved")
+                    } else {
+                        let m: VideoData = VideoData()
+                        m.id = self.linkId
+                        m.linkId = self.linkId
+                        m.userId = self.dataModel.userInfo.id
+                        m.name = self.dataModel.userInfo.name
+                        m.isShare = true
+                        m.platform = HubTool.share.platform
+                        HubDB.instance.updateMovieData(m)
+                        ToastTool.instance.show("Save Successful​")
+                    }
                 }
             default:
                 guard HubTool.share.userIsLogin(self) else { return }

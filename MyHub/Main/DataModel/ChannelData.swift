@@ -132,7 +132,6 @@ enum HUB_ChannelType: String {
 
 class UserInfoListData: SuperData {
     var type: HUB_ChannelType = .recommend
-    var recommends: [ChannelRecommedData] = []
     var users: [ChannelUserData] = []
 }
 

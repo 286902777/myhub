@@ -823,7 +823,7 @@ class HttpManager {
         task.resume()
     }
     
-    func channelUserList(_ uId: String, _ platform: HUB_PlatformType, _ completion: @escaping (_ status: HttpCode, _ list: [ChannelRecommedData], _ errMsg: String?, _ refresh: Bool) -> ()) {
+    func channelUserList(_ uId: String, _ platform: HUB_PlatformType, _ completion: @escaping (_ status: HttpCode, _ list: [ChannelUserData], _ errMsg: String?, _ refresh: Bool) -> ()) {
         let url: String = appHost + HttpApi.recommendChannel.rawValue
         
         var plabs: [[String: String]] = []
@@ -863,10 +863,15 @@ class HttpManager {
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
                     if let list = [ChannelRecommedData].deserialize(from: json) {
-                        var results: [ChannelRecommedData] = []
+                        var results: [ChannelUserData] = []
                         list.forEach { mmm in
                             if let mod = mmm {
-                                results.append(mod)
+                                let m = ChannelUserData()
+                                m.id = mod.id
+                                m.name = mod.name
+                                m.thumbnail = mod.thumbnail
+                                m.platform = platform
+                                results.append(m)
                             }
                         }
                         completion(status, results, nil, false)

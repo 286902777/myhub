@@ -152,15 +152,20 @@ class PingController: UIViewController {
             case 1:
                 guard HubTool.share.userIsLogin(self) else { return }
                 DispatchQueue.main.async {
-                    let m: VideoData = VideoData()
-                    m.id = self.uId
-                    m.linkId = ""
-                    m.userId = self.uId
-                    m.name = self.dataModel.userInfo.name
-                    m.isShare = true
-                    m.platform = self.platform
-                    HubDB.instance.updateMovieData(m)
-                    ToastTool.instance.show("Save Successful​")
+                    let arr = HubDB.instance.readDatas().filter({$0.isShare == true})
+                    if let _ = arr.first(where: {$0.id == self.uId}) {
+                        ToastTool.instance.show("The file has been saved")
+                    } else {
+                        let m: VideoData = VideoData()
+                        m.id = self.uId
+                        m.linkId = ""
+                        m.userId = self.uId
+                        m.name = self.dataModel.userInfo.name
+                        m.isShare = true
+                        m.platform = self.platform
+                        HubDB.instance.updateMovieData(m)
+                        ToastTool.instance.show("Save Successful​")
+                    }
                 }
             default:
                 guard HubTool.share.userIsLogin(self) else { return }
