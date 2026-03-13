@@ -1031,7 +1031,7 @@ class HttpManager {
     func premissonLaterLogin() {
         DispatchQueue.main.async {
             if let vc = HubTool.share.keyVC() {
-//                LoginManager.share.loginRequest(vc) { _ in }
+                LoginManager.share.loginRequest(vc) { _ in }
             }
         }
     }

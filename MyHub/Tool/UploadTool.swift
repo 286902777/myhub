@@ -45,8 +45,7 @@ class UploadTool {
                 guard let self = self else { return }
                 self.clickCreateBlock?()
             }
-            uploadVC.uploadBlock = { [weak self] in
-                guard let self = self else { return }
+            uploadVC.uploadBlock = {
                 ToastTool.instance.show("Added to the upload list")
             }
             controller.present(uploadVC, animated: false)

@@ -136,15 +136,20 @@ class BoxDeepListController: UIViewController {
                     }
                 case 1:
                     guard HubTool.share.userIsLogin(self) else { return }
-                    let m: VideoData = VideoData()
-                    m.id = self.linkId
-                    m.linkId = self.linkId
-                    m.userId = self.userId
-                    m.name = self.userName
-                    m.isShare = true
-                    m.platform = self.platform
-                    HubDB.instance.updateMovieData(m)
-                    ToastTool.instance.show("Save Successful​")
+                    let arr = HubDB.instance.readDatas().filter({$0.isShare == true})
+                    if let _ = arr.first(where: {$0.id == self.linkId}) {
+                        ToastTool.instance.show("The file has been saved")
+                    } else {
+                        let m: VideoData = VideoData()
+                        m.id = self.linkId
+                        m.linkId = self.linkId
+                        m.userId = self.userId
+                        m.name = self.userName
+                        m.isShare = true
+                        m.platform = self.platform
+                        HubDB.instance.updateMovieData(m)
+                        ToastTool.instance.show("Save Successful​")
+                    }
                 default:
                     guard HubTool.share.userIsLogin(self) else { return }
                     HubTool.share.eventSource = .download

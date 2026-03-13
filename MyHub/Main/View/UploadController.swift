@@ -164,7 +164,8 @@ extension UploadController {
         let authStatus = PHPhotoLibrary.authorizationStatus()
         switch authStatus {
         case .notDetermined:
-            PHPhotoLibrary.requestAuthorization({ (status) in
+            PHPhotoLibrary.requestAuthorization({ [weak self] (status) in
+                guard let self = self else { return }
                 DispatchQueue.main.async {
                     if status == .authorized {
                         self.openPhotoPage()

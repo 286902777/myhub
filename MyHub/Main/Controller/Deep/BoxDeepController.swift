@@ -124,15 +124,20 @@ class BoxDeepController: UIViewController {
                     }
                 case 1:
                     guard HubTool.share.userIsLogin(self) else { return }
-                    let m: VideoData = VideoData()
-                    m.id = self.linkId
-                    m.linkId = self.linkId
-                    m.userId = self.userModel.id
-                    m.name = self.userModel.username
-                    m.isShare = true
-                    m.platform = .box
-                    HubDB.instance.updateMovieData(m)
-                    ToastTool.instance.show("Save Successful​")
+                    let arr = HubDB.instance.readDatas().filter({$0.isShare == true})
+                    if let _ = arr.first(where: {$0.id == self.linkId}) {
+                        ToastTool.instance.show("The file has been saved")
+                    } else {
+                        let m: VideoData = VideoData()
+                        m.id = self.linkId
+                        m.linkId = self.linkId
+                        m.userId = self.userModel.id
+                        m.name = self.userModel.username
+                        m.isShare = true
+                        m.platform = .box
+                        HubDB.instance.updateMovieData(m)
+                        ToastTool.instance.show("Save Successful​")
+                    }
                 default:
                     guard HubTool.share.userIsLogin(self) else { return }
                     HubTool.share.eventSource = .download
@@ -159,7 +164,9 @@ class BoxDeepController: UIViewController {
                 self?.dismissAllChildControllers(animated: animated)
             }
         } else {
-            self.dismiss(animated: false)
+            self.dismiss(animated: false) {
+                TabbarTool.instance.displayOrHidden(true)
+            }
         }
     }
     
@@ -216,7 +223,6 @@ class BoxDeepController: UIViewController {
 //                    let firstLink: Bool = UserDefaults.standard.bool(forKey: FirstOpenLink)
 //                    EventTool.instance.addEvent(type: .custom, event: .landpageExpose, paramter: [EventParaName.value.rawValue: EventParaValue.box.rawValue, EventParaName.linkSource.rawValue: ESBaseTool.instance.isLinkDeep ? EventParaValue.delayLink.rawValue : EventParaValue.link.rawValue, EventParaName.isFirstLink.rawValue: !firstLink])
                     self.tableView.isHidden = false
-                    LoginManager.share.userId = model.user.id
                     if self.currentPage == 0 {
                         self.userModel = model.user
                         self.headView.setDeepHeadData(model.user)

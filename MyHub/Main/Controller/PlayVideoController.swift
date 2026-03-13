@@ -397,7 +397,11 @@ extension PlayVideoController: HUBPlayerDelegate {
     func playerDidClickBackButton(_ player: HUBPlayer) {
         HubTool.share.adsPlayState = .playBack
         self.isPop = true
-        self.navigationController?.popViewController(animated: true)
+        if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: false)
+        }
 //        AdmobTool.instance.show(.mode_play) { [weak self] success in
 //            guard let self = self else { return}
 //            if success {
