@@ -28,6 +28,8 @@ class DeepManager {
             nav.modalPresentationStyle = .overFullScreen
             rootVC.present(nav, animated: false)
         } else {
+            HubTool.share.channelSource = .homeChannel
+            HubTool.share.platform = platform
             let vc = PingController(uId: uId, platform: platform)
             TabbarTool.instance.displayOrHidden(false)
             HubTool.share.deepUrl = ""

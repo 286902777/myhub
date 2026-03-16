@@ -116,6 +116,8 @@ class OtherDeepController: UIViewController {
         self.headView.clickBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                HubTool.share.channelSource = .homeChannel
+                HubTool.share.platform = HubTool.share.platform
                 let vc = PingController(uId: self.dataModel.userInfo.id, platform: HubTool.share.platform)
                 self.navigationController?.pushViewController(vc, animated: true)
             }

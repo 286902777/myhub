@@ -562,6 +562,8 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
                 channelCell.clickBlock = { [weak self] data in
                     guard let self = self else { return }
                     DispatchQueue.main.async {
+                        HubTool.share.channelSource = .homeChannel
+                        HubTool.share.platform = data.platform
                         let vc = PingController(uId: data.id, platform: data.platform)
                         vc.hidesBottomBarWhenPushed = true
                         TabbarTool.instance.displayOrHidden(false)

@@ -25,6 +25,21 @@ class ChannelInfoController: SuperController {
         return collectionView
     }()
     
+    private var moreBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "channel_open"), for: .normal)
+        btn.backgroundColor = UIColor.rgbHex("#FAFAFA")
+        btn.layer.cornerRadius = 13
+        btn.layer.masksToBounds = true
+        btn.addTarget(self, action: #selector(clickShowAction), for: .touchUpInside)
+        return btn
+    }()
+    
+    private var isShow: Bool = false {
+        didSet {
+            self.moreBtn.setImage(UIImage(named: isShow ? "channel_close" : "channel_open"), for: .normal)
+        }
+    }
     let cellW: CGFloat = floor((ScreenWidth - 44) / 3)
     let cellH: CGFloat = floor((ScreenWidth - 44) / 3) + 30
     
@@ -76,6 +91,11 @@ class ChannelInfoController: SuperController {
             }
         }
     }
+    
+    @objc func clickShowAction() {
+        self.isShow = !self.isShow
+        self.collectionV.reloadData()
+    }
 }
 
 extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -85,7 +105,19 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let user = listArr.safeIndex(section) {
-            return user.users.count
+            if section == 0 {
+                if user.users.count > 6 {
+                    if self.isShow {
+                        return user.users.count
+                    } else {
+                        return 6
+                    }
+                } else {
+                    return user.users.count
+                }
+            } else {
+                return user.users.count
+            }
         }
         return 0
     }
@@ -99,6 +131,8 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let user = self.listArr.safeIndex(indexPath.section), let data = user.users.safeIndex(indexPath.item) {
+            HubTool.share.channelSource = .channelList
+            HubTool.share.platform = data.platform
             let vc = PingController(uId: data.id, platform: data.platform)
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -114,6 +148,45 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                       viewForSupplementaryElementOfKind kind: String,
+                       at indexPath: IndexPath) -> UICollectionReusableView {
+        
+        if kind == UICollectionView.elementKindSectionHeader {
+            let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "HeaderView",
+                for: indexPath
+            )
+            // 配置 Header
+            header.backgroundColor = UIColor.clear
+            guard indexPath.section == 0, let m = self.listArr.safeIndex(indexPath.section), m.users.count > 6 else {
+                 return UICollectionReusableView()
+            }
+            if let _ = header.viewWithTag(indexPath.section) as? UIButton {
+                
+            } else {
+                header.addSubview(self.moreBtn)
+                self.moreBtn.tag = indexPath.section
+                self.moreBtn.snp.makeConstraints { make in
+                    make.top.equalTo(4)
+                    make.centerX.equalToSuperview()
+                    make.size.equalTo(CGSize(width: 120, height: 24))
+                }
+            }
+            return header
+        }
+        return UICollectionReusableView()
+    }
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard section == 0, let m = self.listArr.safeIndex(section), m.users.count > 6 else {
+            return .zero
+        }
+        return CGSize(width: collectionView.frame.width, height: 40)
     }
 }
 
