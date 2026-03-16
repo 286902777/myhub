@@ -153,36 +153,67 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView,
                        viewForSupplementaryElementOfKind kind: String,
                        at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        if kind == UICollectionView.elementKindSectionHeader {
-            let header = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: "HeaderView",
-                for: indexPath
-            )
-            // 配置 Header
-            header.backgroundColor = UIColor.clear
-            guard indexPath.section == 0, let m = self.listArr.safeIndex(indexPath.section), m.users.count > 6 else {
-                 return UICollectionReusableView()
-            }
-            if let _ = header.viewWithTag(indexPath.section) as? UIButton {
-                
-            } else {
-                header.addSubview(self.moreBtn)
-                self.moreBtn.tag = indexPath.section
-                self.moreBtn.snp.makeConstraints { make in
-                    make.top.equalTo(4)
-                    make.centerX.equalToSuperview()
-                    make.size.equalTo(CGSize(width: 120, height: 24))
+        if indexPath.section == 0 {
+            if kind == UICollectionView.elementKindSectionFooter {
+                let footer = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "FooterView",
+                    for: indexPath
+                )
+                // 配置 Header
+                footer.backgroundColor = UIColor.clear
+                guard let m = self.listArr.safeIndex(indexPath.section), m.users.count > 6 else {
+                    return UICollectionReusableView()
                 }
+                if let _ = footer.viewWithTag(indexPath.section) as? UIButton {
+                    
+                } else {
+                    footer.addSubview(self.moreBtn)
+                    self.moreBtn.tag = indexPath.section
+                    self.moreBtn.snp.makeConstraints { make in
+                        make.top.equalTo(4)
+                        make.centerX.equalToSuperview()
+                        make.size.equalTo(CGSize(width: 120, height: 24))
+                    }
+                }
+                return footer
             }
-            return header
+        } else {
+            if kind == UICollectionView.elementKindSectionHeader {
+                let header = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: "HeaderView",
+                    for: indexPath
+                )
+                header.backgroundColor = UIColor.clear
+                if let _ = header.viewWithTag(indexPath.section) as? UILabel {
+                    
+                } else {
+                    let label = UILabel()
+                    label.text = "Recommend"
+                    label.font = UIFont.GoogleSans(size: 16)
+                    label.textColor = UIColor.rgbHex("#434343")
+                    header.addSubview(label)
+                    label.snp.makeConstraints { make in
+                        make.left.equalTo(14)
+                        make.centerY.equalToSuperview()
+                    }
+                }
+                return header
+            }
         }
         return UICollectionReusableView()
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section > 0 {
+            return CGSize(width: collectionView.frame.width, height: 32)
+        }
+        return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         guard section == 0, let m = self.listArr.safeIndex(section), m.users.count > 6 else {
             return .zero
         }
