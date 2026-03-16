@@ -242,11 +242,12 @@ class PingController: UIViewController {
                     } else {
                         self.dataModel.files.append(contentsOf: model.files)
                     }
-                    
                     self.tableView.mj_footer?.endRefreshing()
                     if model.files.count < HttpManager.share.pageSize {
-                        self.isRecommend = true
-                        self.requestUserLoop()
+                        self.tableView.mj_footer?.endRefreshingWithNoMoreData()
+                        self.tableView.mj_footer?.isHidden = true
+//                        self.isRecommend = true
+//                        self.requestUserLoop()
                     } else {
                         self.currentPage += 1
                     }

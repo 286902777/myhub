@@ -20,6 +20,7 @@ class IndexController: SuperController {
     let emptyV: EmptyView = EmptyView.view()
     
     let cellIdentifier: String = "IndexCellIdentifier"
+    let channelCellIdentifier: String = "ChannelListCellIdentifier"
     let historyCellIdentifier: String = "IndexHistoryListCellIdentifier"
     
     let tableHeadV: IndexHeadView = IndexHeadView.view()
@@ -33,6 +34,7 @@ class IndexController: SuperController {
         table.bounces = false
         table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CusTabBarHight + 24, right: 0)
         table.register(IndexCell.self, forCellReuseIdentifier: cellIdentifier)
+        table.register(ChannelListCell.self, forCellReuseIdentifier: channelCellIdentifier)
         table.register(IndexHistoryListCell.self, forCellReuseIdentifier: historyCellIdentifier)
         if #available(iOS 15.0, *) {
             table.sectionHeaderTopPadding = 0
@@ -482,10 +484,7 @@ class IndexController: SuperController {
             //            }
             //        }
         } else {
-            if (self.isOpenUpload == false) {
-                TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
-                self.isOpenUpload = true
-            }
+            TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
         }
         group.notify(queue: queue) {
             DispatchQueue.main.async { [weak self] in
@@ -522,10 +521,11 @@ class IndexController: SuperController {
     @objc func clickHeadAction(_ sender: UITapGestureRecognizer) {
         if let m = self.list.safeIndex(sender.view?.tag ?? 0) {
             if m.type == .channel {
-//                let vc = ChannelListController()
-//                vc.model = m.users.first ?? ChannelUserData()
-//                vc.hidesBottomBarWhenPushed = true
-//                self.navigationController?.pushViewController(vc, animated: true)
+                let vc = ChannelInfoController()
+                vc.model = m.users.first ?? ChannelUserData()
+                vc.hidesBottomBarWhenPushed = true
+                TabbarTool.instance.displayOrHidden(false)
+                self.navigationController?.pushViewController(vc, animated: true)
             } else {
                 let vc = IndexListController(list: m.lists, type: m.type)
                 vc.hidesBottomBarWhenPushed = true
@@ -547,14 +547,28 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
                 hisCell.clickBlock = { [weak self] data in
                     guard let self = self else { return }
                     DispatchQueue.main.async {
+                        HubTool.share.email = data.email
+                        HubTool.share.uId = data.userId
+                        HubTool.share.uploadPlatform = data.platform
                         HubTool.share.playSource = .history
                         HubTool.share.eventSource = .history
-                        self.pushSubVC(data, m.lists)
+                        PlayTool.instance.pushPage(self, data, m.lists, true)
                     }
                 }
                 return hisCell
             case .channel:
-                break
+                let channelCell: ChannelListCell = tableView.dequeueReusableCell(withIdentifier: channelCellIdentifier) as! ChannelListCell
+                channelCell.initData(m.users)
+                channelCell.clickBlock = { [weak self] data in
+                    guard let self = self else { return }
+                    DispatchQueue.main.async {
+                        let vc = PingController(uId: data.id, platform: data.platform)
+                        vc.hidesBottomBarWhenPushed = true
+                        TabbarTool.instance.displayOrHidden(false)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                }
+                return channelCell
             case .upload:
                 if let mod = m.lists.safeIndex(indexPath.row) {
                     cell.initData(mod)
@@ -650,13 +664,18 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let m = self.list.safeIndex(indexPath.section) {
-            if let mod = m.lists.safeIndex(indexPath.row), mod.isPass == .passed {
-                HubTool.share.email = mod.email
-                HubTool.share.uId = mod.userId
-                HubTool.share.uploadPlatform = mod.platform
-                HubTool.share.playSource = .upload_home
-                HubTool.share.eventSource = .upload
-                self.pushSubVC(mod, m.lists)
+            switch m.type {
+            case .upload:
+                if let mod = m.lists.safeIndex(indexPath.row), mod.isPass == .passed {
+                    HubTool.share.email = mod.email
+                    HubTool.share.uId = mod.userId
+                    HubTool.share.uploadPlatform = mod.platform
+                    HubTool.share.playSource = .upload_home
+                    HubTool.share.eventSource = .upload
+                    PlayTool.instance.pushPage(self, mod, m.lists, false)
+                }
+            default:
+                break
             }
         }
     }
@@ -690,20 +709,6 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
         view.tag = section
         view.addGestureRecognizer(tap)
         return view
-    }
-    
-    func pushSubVC(_ model: VideoData, _ lists: [VideoData]) {
-        switch model.file_type {
-        case .folder:
-            break
-        case .photo:
-            let vc = OpenPhotoController(model: model)
-            vc.hidesBottomBarWhenPushed = true
-            TabbarTool.instance.displayOrHidden(false)
-            self.navigationController?.pushViewController(vc, animated: true)
-        case .video:
-            PlayTool.instance.pushPage(self, model, lists.filter({$0.file_type == .video}), true)
-        }
     }
 }
 

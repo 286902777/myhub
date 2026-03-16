@@ -74,7 +74,7 @@ extension ChannelListCell: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let mod = self.listArr.safeIndex(indexPath.item) {
-          
+            self.clickBlock?(mod)
         }
     }
     
