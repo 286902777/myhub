@@ -98,6 +98,7 @@
 				D7AF79122F35E17400CD9DDE /* Resources */,
 				E894FFD7A5AB224B7C6D9E4E /* [CP] Embed Pods Frameworks */,
 				4B7C17BD61397A62AA56A184 /* [CP] Copy Pods Resources */,
+				576E0C5C2F67F52E003B8AA3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -198,6 +199,23 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MyHub/Pods-MyHub-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		576E0C5C2F67F52E003B8AA3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		E894FFD7A5AB224B7C6D9E4E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

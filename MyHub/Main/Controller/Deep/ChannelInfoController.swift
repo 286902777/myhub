@@ -31,7 +31,6 @@ class ChannelInfoController: SuperController {
         btn.backgroundColor = UIColor.rgbHex("#FAFAFA")
         btn.layer.cornerRadius = 13
         btn.layer.masksToBounds = true
-        btn.addTarget(self, action: #selector(clickShowAction), for: .touchUpInside)
         return btn
     }()
     
@@ -52,6 +51,7 @@ class ChannelInfoController: SuperController {
         loadData()
         HubTool.share.eventSource = .channelpage
         TbaManager.instance.addEvent(type: .custom, event: .channellistExpose, paramter: nil)
+        self.moreBtn.addTarget(self, action: #selector(clickShowAction), for: .touchUpInside)
     }
     
     func setUI() {
@@ -121,6 +121,7 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
         }
         return 0
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ChannelCell
         if let m = listArr.safeIndex(indexPath.section), let data = m.users.safeIndex(indexPath.item) {
@@ -204,6 +205,7 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
         }
         return UICollectionReusableView()
     }
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {

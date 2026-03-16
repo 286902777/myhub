@@ -104,8 +104,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = UserData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = UserData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, UserData(), "Request fail!")
@@ -135,8 +137,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = UserDeleteData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = UserDeleteData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, UserDeleteData(), "Request fail!")
@@ -193,8 +197,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = FileData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = FileData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, FileData(), "Request fail!")
@@ -234,8 +240,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = FileCallData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = FileCallData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, FileCallData(), "Request fail!")
@@ -268,8 +276,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = UserSpaceData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = UserSpaceData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, UserSpaceData(), "Request fail!")
@@ -389,8 +399,8 @@ class HttpManager {
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
                     var result: [VideoData] = []
-                    if let list = [DirFileData].deserialize(from: json) {
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.async {
+                        if let list = [DirFileData].deserialize(from: json) {
                             let localList = HubDB.instance.readDatas()
                             list.forEach { mm in
                                 guard let m = mm, m.file_id.count > 0 else { return }
@@ -411,8 +421,8 @@ class HttpManager {
                                     mod.isPass = m.moderate_type
                                     result.append(mod)
                                 }
+                                completion(status, result, nil)
                             }
-                            completion(status, result, nil)
                         }
                     }
                 } else {
@@ -454,9 +464,9 @@ class HttpManager {
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
                     var result: [VideoData] = []
-                    if let list = [SubFilesData].deserialize(from: json) {
-                        let localList = HubDB.instance.readDatas()
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.async {
+                        if let list = [SubFilesData].deserialize(from: json) {
+                            let localList = HubDB.instance.readDatas()
                             list.forEach { mm in
                                 guard let m = mm else { return }
                                 if let localModel = localList.first(where: {$0.id == m.file_Id}) {
@@ -475,8 +485,8 @@ class HttpManager {
                                     mod.isPass = m.moderate_type
                                     result.append(mod)
                                 }
+                                completion(status, result, nil)
                             }
-                            completion(status, result, nil)
                         }
                     }
                 } else {
@@ -562,8 +572,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = ShareRootData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = ShareRootData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, ShareRootData(), "Request fail!")
@@ -691,8 +703,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = OpenRootData.deserialize(from: json) {
-                        completion(status, model, nil)
+                    DispatchQueue.main.async {
+                        if let model = OpenRootData.deserialize(from: json) {
+                            completion(status, model, nil)
+                        }
                     }
                 } else {
                     completion(status, OpenRootData(), "Request fail!")
@@ -732,8 +746,8 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let list = [OpenFolderData].deserialize(from: json) {
-                        DispatchQueue.main.async {
+                    DispatchQueue.main.async {
+                        if let list = [OpenFolderData].deserialize(from: json) {
                             let localList = HubDB.instance.readDatas()
                             var result: [VideoData] = []
                             list.forEach { mm in
@@ -759,8 +773,8 @@ class HttpManager {
                                         result.append(mod)
                                     }
                                 }
+                                completion(status, result, nil)
                             }
-                            completion(status, result, nil)
                         }
                     }
                 } else {
@@ -809,8 +823,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = ChannelListData.deserialize(from: json) {
-                        completion(status, model, nil, false)
+                    DispatchQueue.main.async {
+                        if let model = ChannelListData.deserialize(from: json) {
+                            completion(status, model, nil, false)
+                        }
                     }
                 } else {
                     completion(status, ChannelListData(), "Request fail!", false)
@@ -862,19 +878,21 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let list = [ChannelRecommedData].deserialize(from: json) {
-                        var results: [ChannelUserData] = []
-                        list.forEach { mmm in
-                            if let mod = mmm {
-                                let m = ChannelUserData()
-                                m.id = mod.id
-                                m.name = mod.name
-                                m.thumbnail = mod.thumbnail
-                                m.platform = platform
-                                results.append(m)
+                    DispatchQueue.main.async {
+                        if let list = [ChannelRecommedData].deserialize(from: json) {
+                            var results: [ChannelUserData] = []
+                            list.forEach { mmm in
+                                if let mod = mmm {
+                                    let m = ChannelUserData()
+                                    m.id = mod.id
+                                    m.name = mod.name
+                                    m.thumbnail = mod.thumbnail
+                                    m.platform = platform
+                                    results.append(m)
+                                }
                             }
+                            completion(status, results, nil, false)
                         }
-                        completion(status, results, nil, false)
                     }
                 } else {
                     completion(status, [], "Request fail!", false)
@@ -903,8 +921,10 @@ class HttpManager {
             case .success:
                 if let info = data {
                     let json = String(data: info, encoding: .utf8)
-                    if let model = FolderListData.deserialize(from: json) {
-                        completion(status, model.files, nil, false)
+                    DispatchQueue.main.async {
+                        if let model = FolderListData.deserialize(from: json) {
+                            completion(status, model.files, nil, false)
+                        }
                     }
                 } else {
                     let newHost = HttpManager.share.refreshAppHostUrl()

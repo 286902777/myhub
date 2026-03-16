@@ -8,60 +8,28 @@
 import Foundation
 import GoogleMobileAds
 import AppLovinSDK
+import HandyJSON
 
-enum GoogleAdsSource: String, Codable {
-    case admob, max
-    
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self).lowercased()
-        switch rawValue {
-        case "admob":
-            self = .admob
-        default:
-            self = .max
-
-        }
-    }
+enum GoogleAdsSource: String, HandyJSONEnum {
+    case admob = "admob"
+    case max = "max"
 }
 
-enum AdsShowMode: String, Codable {
-    case play, playing, plus, three
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self).lowercased()
-        switch rawValue {
-        case "play":
-            self = .play
-        case "playing":
-            self = .playing
-        case "plus":
-            self = .plus
-        default:
-            self = .three
-        }
-    }
+enum AdsShowMode: String, HandyJSONEnum {
+    case play = "play"
+    case playing = "playing"
+    case plus = "plus"
+    case three = "three"
 }
 
-enum AdsType: String, Codable {
-    case open ,interstitial, rewarded, native
-    init(from decoder: any Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let rawValue = try container.decode(String.self).lowercased()
-        switch rawValue {
-        case "open":
-            self = .open
-        case "interstitial":
-            self = .interstitial
-        case "rewarded":
-            self = .rewarded
-        default:
-            self = .native
-        }
-    }
+enum AdsType: String, HandyJSONEnum {
+    case open = "open"
+    case interstitial = "interstitial"
+    case rewarded = "rewarded"
+    case native = "native"
 }
 
-nonisolated struct GoogleAdsFireData: Codable {
+class GoogleAdsFireData: SuperData {
     var playMiddleTime: Int = 600
     var spaceTime: Int = 60
     var startTime: Int = 7
@@ -80,42 +48,28 @@ nonisolated struct GoogleAdsFireData: Codable {
     var three: [GoogleAdsData] = []
 }
 
-nonisolated struct GoogleAdsData {
-    var type: AdsType
-    var source: GoogleAdsSource
+class GoogleAdsData: SuperData {
+    var type: AdsType = .open
+    var source: GoogleAdsSource = .admob
     var index: Int = 0
     var id: String = ""
     var s_id: String = ""
     var native: NativeAd?
     var s_native: NativeAd?
-}
-
-extension GoogleAdsData: Codable {
-    private enum CodingKeys: String, CodingKey {
-        case type, index, source, id, s_id
-    }
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let e_type: String = try container.decode(String.self, forKey: .type)
-        self.type = AdsType(rawValue: e_type) ?? .open
-        let e_source: String = try container.decode(String.self, forKey: .source)
-        self.source = GoogleAdsSource(rawValue: e_source) ?? .admob
-        self.id = try container.decode(String.self, forKey: .id)
-        self.s_id = try container.decode(String.self, forKey: .s_id)
-        self.index = try container.decode(Int.self, forKey: .index)
-        self.native = nil
-        self.s_native = nil
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(id, forKey: .id)
-        try container.encode(s_id, forKey: .s_id)
-        try container.encode(index, forKey: .index)
-        try container.encode(type.rawValue, forKey: .type)
-        try container.encode(source.rawValue, forKey: .source)
-    }
+    override func mapping(mapper: HelpingMapper) {
+           super.mapping(mapper: mapper)
+           mapper.specify(property: &type, name: "type") { (info) -> (AdsType) in
+               let ty = AdsType(rawValue: info.lowercased())
+               return ty ?? .interstitial
+           }
+           mapper.specify(property: &source, name: "source") { (info) -> (GoogleAdsSource) in
+               let s = GoogleAdsSource(rawValue: info.lowercased())
+               return s ?? .admob
+           }
+           mapper.specify(property: &id, name: "id")
+           mapper.specify(property: &index, name: "index")
+       }
 }
 
 class GoogleAdsListData: SuperData {

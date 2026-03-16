@@ -8,6 +8,7 @@
 import Foundation
 import AppLovinSDK
 import GoogleMobileAds
+import HandyJSON
 
 class GoogleManager: NSObject {
     static let share = GoogleManager()
@@ -64,7 +65,7 @@ class GoogleManager: NSObject {
     }
     
     func mapAdsData(_ arr: [GoogleAdsData], _ mode: AdsShowMode) -> GoogleAdsListData {
-        var mod = GoogleAdsListData()
+        let mod = GoogleAdsListData()
         mod.lists = arr.sorted(by: {$0.index > $1.index})
         mod.playMode = mode
         return mod
@@ -74,7 +75,7 @@ class GoogleManager: NSObject {
         let path = Bundle.main.path(forResource: "GooglsAds", ofType: "json")
         if let p = path {
             guard let dj = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
-            if let mod = try? JSONDecoder().decode(GoogleAdsFireData.self, from: dj){
+            if let json = try? JSONSerialization.jsonObject(with: dj) as? [String: Any], let mod = GoogleAdsFireData.deserialize(from: json) {
                 self.startData = mod
             }
         }
@@ -341,7 +342,7 @@ extension GoogleManager {
                 print("App -  广告加载成功 placementid: \(model.id)")
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
                 if let adData = info {
-                    var cacheM = GoogleAdsCacheData()
+                    let cacheM = GoogleAdsCacheData()
                     cacheM.id = model.id
                     cacheM.index = model.index
                     cacheM.source = model.source
@@ -584,7 +585,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         for item in self.listData {
             item.lists.forEach { m in
                 if m.id == ad.adUnitIdentifier {
-                    var cModel = GoogleAdsCacheData()
+                    let cModel = GoogleAdsCacheData()
                     cModel.id = ad.adUnitIdentifier
                     cModel.source = .max
                     cModel.ad = item.ad
