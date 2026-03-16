@@ -47,20 +47,6 @@ class PlayListController: UIViewController {
         return collectionView
     }()
     
-//    private lazy var tableView: UITableView = {
-//        let table = UITableView.init(frame: .zero, style: .plain)
-//        table.delegate = self
-//        table.dataSource = self
-//        table.separatorStyle = .none
-//        table.backgroundColor = .clear
-//        table.register(PlayListCell.self, forCellReuseIdentifier: cellIdentifier)
-//        if #available(iOS 15.0, *) {
-//            table.sectionHeaderTopPadding = 0
-//        }
-//        table.contentInsetAdjustmentBehavior = .never
-//        return table
-//    }()
-    
     private var recommonedUserId: String = ""
     private var recommonedList: [ChannelData] = []
 

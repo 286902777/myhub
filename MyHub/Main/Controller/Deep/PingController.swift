@@ -234,9 +234,9 @@ class PingController: UIViewController {
                     return
                 }
                 if status == .success {
-                    self.tableView.isHidden = false
                     if self.currentPage == 1 {
                         self.dataModel = model
+                        HubDB.instance.updateUserInfo(model.userInfo)
                         self.headView.setHeadData(model, linkId: "", uId: model.userInfo.id, name: model.userInfo.name, platform: self.platform)
                         HubTool.share.uId = model.userInfo.id
                     } else {

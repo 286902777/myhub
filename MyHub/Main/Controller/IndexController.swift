@@ -460,33 +460,33 @@ class IndexController: SuperController {
                     }
                 }
             }
+            //        group.enter()
+            //        queue.async { [weak self] in
+            //            guard let self = self else { return }
+            //            if let m = self.channelList.first(where: {$0.platform != .box}) {
+            //                let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
+            //                    if refresh {
+            //                        self.netRequestUpload()
+            //                        return
+            //                    }
+            //                    if status == .success {
+            //                        if list.count > 0 {
+            //                            let userArr = self.insertUser(self.channelList, list, m.platform)
+            //                            channels = userArr
+            //                        }
+            //                    }
+            //                    group.leave()
+            //                }
+            //            } else {
+            //                group.leave()
+            //            }
+            //        }
         } else {
             if (self.isOpenUpload == false) {
                 TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
                 self.isOpenUpload = true
             }
         }
-//        group.enter()
-//        queue.async { [weak self] in
-//            guard let self = self else { return }
-//            if let m = self.channelList.first(where: {$0.platform != .box}) {
-//                let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
-//                    if refresh {
-//                        self.netRequestUpload()
-//                        return
-//                    }
-//                    if status == .success {
-//                        if list.count > 0 {
-//                            let userArr = self.insertUser(self.channelList, list, m.platform)
-//                            channels = userArr
-//                        }
-//                    }
-//                    group.leave()
-//                }
-//            } else {
-//                group.leave()
-//            }
-//        }
         group.notify(queue: queue) {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }

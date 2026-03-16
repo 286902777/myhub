@@ -72,7 +72,7 @@ class IndexListController: SuperController {
             vc.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(vc, animated: true)
         case .video:
-            PlayTool.instance.pushPage(self, model, lists.filter({$0.file_type == .video}))
+            PlayTool.instance.pushPage(self, model, lists.filter({$0.file_type == .video}), self.type == .history)
         }
     }
 }

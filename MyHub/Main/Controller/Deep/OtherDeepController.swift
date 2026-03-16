@@ -241,6 +241,7 @@ class OtherDeepController: UIViewController {
                     if self.currentPage == 1 {
                         self.dataModel = model
                         self.headView.setOtherDeepHeadData(model.userInfo)
+                        HubDB.instance.updateUserInfo(model.userInfo)
                         HubTool.share.uId = model.userInfo.id
                         HubTool.share.linkId = self.linkId
                         HubTool.share.email = model.userInfo.email
