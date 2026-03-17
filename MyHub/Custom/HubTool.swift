@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import Photos
 import Kingfisher
-import GoogleMobileAds
+import 	GoogleMobileAds
 
 let ScreenBounds = UIScreen.main.bounds
 
@@ -189,9 +189,9 @@ class HubTool {
     var currentPlatform: HUB_PlatformType = .cash {
         didSet {
             if currentPlatform == .cash {
-                HttpManager.share.appHost = "https://api.a.com/"
+                HttpManager.share.appHost = "https://api.myhubapce.com/"
             } else {
-                HttpManager.share.appHost = "https://api.b.com/"
+                HttpManager.share.appHost = "https://api.myhubgraphicq.com/"
             }
         }
     }

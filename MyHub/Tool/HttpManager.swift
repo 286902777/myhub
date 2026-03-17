@@ -12,15 +12,15 @@ import CoreTelephony
 import HandyJSON
 
 enum BackEventName: String {
-    case adv_profit = "a" //广告收益
-    case play_video = "b" //播放视频
-    case view_app = "c" //承接页打开链接
-    case down_video = "d" // 下载文件
-    case down_app = "e" //下载App
+    case adv_profit = "preenlarge" //广告收益
+    case play_video = "wristed" //播放视频
+    case view_app = "bisellia" //承接页打开链接
+    case down_video = "vetoist" // 下载文件
+    case down_app = "barit" //下载App
     //    case app_adv_profit = "app_adv_profit" //app本地广告收益
     //    case app_play_video = "app_play_video" //app本地视频播放
-    case new_user_active_by_play_video = "f"//用户下载app，并完成一次播放后触发事件
-    case download_app_first_time_open = "s"
+    case new_user_active_by_play_video = "prefix"//用户下载app，并完成一次播放后触发事件
+    case download_app_first_time_open = "turbofans"
 }
 
 enum HttpApi: String {
@@ -78,7 +78,7 @@ class HttpManager {
     
     let userHostAddress: String = "api.mhmyhubxs.com"
     
-    var appHost: String = "https://myhub.tbxbxdev.com/"
+    var appHost: String = "https://api.myhubapce.com/"
     
     let pageSize: Int = 500
     //MARK: - Login
@@ -1131,18 +1131,18 @@ extension HttpManager {
     
     func refreshAppHostUrl() -> Bool {
         var url: String = ""
-        let threeList: [String] = ["https://api.ss.com/", "https://api.sds.com/"]
-        let middleList: [String] = ["https://api.sdf.com/", "https://api.sdsaa.com/"]
+        let threeList: [String] = ["https://api.myhubapce.com/", "https://api.myhubconvicts.com/"]
+        let middleList: [String] = ["https://api.myhubgraphicq.com/", "https://api.myhubberqth.com/"]
         if HubTool.share.platform == .cash {
             if HttpManager.share.appHost == threeList.last {
                 return false
             }
-            url = threeList.filter({$0 != HttpManager.share.appHost}).first ?? "https://api.ssd.com/"
+            url = threeList.filter({$0 != HttpManager.share.appHost}).first ?? "https://api.myhubapce.com/"
         } else {
             if HttpManager.share.appHost == middleList.last {
                 return false
             }
-            url = middleList.filter({$0 != HttpManager.share.appHost}).first ?? "https://api.sda.com/"
+            url = middleList.filter({$0 != HttpManager.share.appHost}).first ?? "https://api.myhubgraphicq.com/"
         }
         HttpManager.share.appHost = url
         return true

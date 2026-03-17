@@ -324,7 +324,7 @@ class PlayVideoController: UIViewController {
         }
     }
     
-    private func uploadFirstPlay() {
+    private func backFirstPlaySuccess() {
         if UserDefaults.standard.bool(forKey: HUB_UploadFirstDeepPlay) == false, UserDefaults.standard.bool(forKey: HUB_AppDown) == true, HubTool.share.linkId.count > 0 {
             let m = VideoData()
             m.linkId = HubTool.share.linkId
@@ -333,7 +333,7 @@ class PlayVideoController: UIViewController {
             HttpManager.share.uploadEventApi(event: .new_user_active_by_play_video, currency: "", val: 0, model: m) { [weak self] success in
                 guard let self = self else { return }
                 if success == false {
-                    self.uploadFirstPlay()
+                    self.backFirstPlaySuccess()
                 } else {
                     UserDefaults.standard.set(true, forKey: HUB_UploadFirstDeepPlay)
                     UserDefaults.standard.synchronize()
@@ -342,11 +342,11 @@ class PlayVideoController: UIViewController {
         }
     }
     
-    private func uploadPlaySuccess() {
+    private func backPlaySuccess() {
         HttpManager.share.uploadEventApi(event: .play_video, currency: "", val: 0, model: self.model) { [weak self] success in
             guard let self = self else { return }
             if success == false {
-                self.uploadPlaySuccess()
+                self.backPlaySuccess()
             }
         }
     }
@@ -412,8 +412,8 @@ extension PlayVideoController: HUBPlayerDelegate {
     }
     
     func playerSuccessPlaying(_ player: HUBPlayer) {
-        self.uploadFirstPlay()
-        self.uploadPlaySuccess()
+        self.backFirstPlaySuccess()
+        self.backPlaySuccess()
     }
 
     func playerDidFinishPlaying(_ player: HUBPlayer) {
