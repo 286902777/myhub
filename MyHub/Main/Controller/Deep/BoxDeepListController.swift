@@ -248,7 +248,8 @@ class BoxDeepListController: UIViewController {
             self.present(vc, animated: false)
         case .photo:
             let vc = OpenPhotoController(model: model)
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: false)
         case .video:
             PlayTool.instance.pushPage(self, model, self.list)
         }
