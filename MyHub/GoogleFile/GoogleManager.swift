@@ -72,7 +72,7 @@ class GoogleManager: NSObject {
     }
     
     func readAdsFile() {
-        let path = Bundle.main.path(forResource: "GooglsAds", ofType: "json")
+        let path = Bundle.main.path(forResource: "GoogleAds", ofType: "json")
         if let p = path {
             guard let dj = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
             if let json = try? JSONSerialization.jsonObject(with: dj) as? [String: Any], let mod = GoogleAdsFireData.deserialize(from: json) {
@@ -232,7 +232,6 @@ extension GoogleManager {
                     break
                 }
             }
-            
             if found == false {
                 TbaManager.instance.addEvent(type: .custom, event: .adsshowFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1", EventParaName.code.rawValue: EventParaValue.noPading.rawValue])
                 self.admobMaxLoad(self.showMode)

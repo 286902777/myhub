@@ -119,11 +119,7 @@ class PingController: UIViewController {
         
         
         self.view.addSubview(self.tableView)
-        self.tableView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.bottomView.snp.top)
-            make.top.equalTo(self.navbar.snp.bottom)
-        }
+  
         
         self.tableView.tableHeaderView = self.headView
         self.view.addSubview(self.bottomView)
@@ -132,6 +128,11 @@ class PingController: UIViewController {
             make.right.equalTo(-14)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.height.equalTo(0)
+        }
+        self.tableView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.bottomView.snp.top)
+            make.top.equalTo(self.navbar.snp.bottom)
         }
         self.bottomView.isHidden = true
         self.bottomView.clickBlock = { [weak self] idx in
@@ -324,7 +325,7 @@ class PingController: UIViewController {
         HubTool.share.playSource = .channel_file
         switch model.file_type {
         case .folder:
-            let vc = OtherFolderListController(model: HubTool.share.channelModel(model, linkId: "", uId: model.recommoned ? self.recommenduId : self.uId, platform: self.platform), linkId: "", userId: model.recommoned ? self.recommenduId : self.uId, userName: model.fileName, platform: self.platform, channel: true)
+            let vc = PingListController(model: HubTool.share.channelModel(model, linkId: "", uId: model.recommoned ? self.recommenduId : self.uId, platform: self.platform), linkId: "", userId: model.recommoned ? self.recommenduId : self.uId, userName: model.fileName, platform: self.platform, channel: true)
             self.navigationController?.pushViewController(vc, animated: true)
         case .photo:
             let vc = OpenPhotoController(model: HubTool.share.channelModel(model, linkId: "", uId: "", platform: self.platform))

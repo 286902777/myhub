@@ -55,17 +55,21 @@ class PlayVideoController: UIViewController {
             return
         } else {
             if self.isPop == false, self.player.isPlaying {
-//                HubTool.share.adsPlayState = .playBack
-//                AdmobTool.instance.show(.mode_play) { [weak self] success in
-//                    guard let self = self else { return}
-//                    if success {
-//                        self.isBack = true
-//                    } else {
-//                        self.premiumBlock?()
-//                        self.navigationController?.popViewController(animated: true)
-//                    }
-//                }
-//                return
+                HubTool.share.adsPlayState = .playBack
+                HubTool.share.show(.play) { [weak self] success in
+                    guard let self = self else { return}
+                    if success {
+                        self.isBack = true
+                    } else {
+                        self.premiumBlock?()
+                        if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+                            self.navigationController?.popViewController(animated: true)
+                        } else {
+                            self.dismiss(animated: false)
+                        }
+                    }
+                }
+                return
             }
         }
     }
@@ -118,7 +122,11 @@ class PlayVideoController: UIViewController {
             }
             if self.isBack {
                 self.premiumBlock?()
-                self.navigationController?.popViewController(animated: true)
+                if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.dismiss(animated: false)
+                }
             } else {
                 self.player.pause()
                 VipPopManager.instance.openPopPage(self)

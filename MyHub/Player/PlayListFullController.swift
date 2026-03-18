@@ -37,7 +37,7 @@ class PlayListFullController: UIViewController {
 
     lazy var collectionV: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionHeadersPinToVisibleBounds = true
+//        layout.sectionHeadersPinToVisibleBounds = true
         layout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)

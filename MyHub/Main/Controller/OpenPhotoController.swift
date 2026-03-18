@@ -39,4 +39,12 @@ class OpenPhotoController: SuperController {
         }
         self.imageV.setImage(self.model.thumbnail, placeholder: "")
     }
+    
+    override func backAction() {
+        if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: false)
+        }
+    }
 }

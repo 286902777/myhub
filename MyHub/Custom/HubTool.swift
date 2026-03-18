@@ -92,67 +92,66 @@ enum HUB_PlatformType: String {
 }
 
 enum HUB_BackEventSource: String {
-    case landpage = "landpage"
-    case channelpage = "channelpage"
-    case history = "history"
-    case mid_recommend = "mid_recommend"
-    case playlist_recommend = "playlist_recommend"
-    case download = "download"
-    case upload = "upload"
+    case landpage = "palpocil"
+    case channelpage = "kf28gf4c5p"
+    case history = "ritratto"
+    case mid_recommend = "unhanged"
+    case playlist_recommend = "scaffolds"
+    case download = "airiferous"
 }
 
 enum HUB_PlaySource: String {
-    case channel_hot = "a"
-    case channel_recently = "b"
-    case channel_file = "c"
-    case channel_recommend = "f"
-    case landpage_hot = "e"
-    case landpage_recently = "x"
-    case landpage_file = "bs"
-    case landpage_recommend = "se"
-    case download_list = "bx"
-    case upload_home = "bas"
-    case playlist_file = "wer"
-    case playlist_recommend = "bsx"
-    case history = "bsadf"
-    case cloud = "baer"
+    case channel_hot = "uHwBa"
+    case channel_recently = "ZQBr"
+    case channel_file = "SPkNk"
+    case channel_recommend = "fDE"
+    case landpage_hot = "TWUg"
+    case landpage_recently = "eEs"
+    case landpage_file = "jFDLemqb"
+    case landpage_recommend = "WZJPm"
+    case download_list = "ruMAzZP"
+    case upload_home = "eHvDbGjvqN"
+    case playlist_file = "RNng"
+    case playlist_recommend = "iRyisTgEV"
+    case history = "gmJgWUMeT"
+    case cloud = "DkBlOUgAM"
 }
 
 enum HUB_AdsPlayState: String {
-    case channelPage = "ss"
-    case download = "sa"
-    case donwloadpage = "sb"
-    case playTen = "b"
-    case playNext = "c"
-    case playBack = "d"
-    case openCool = "e"
-    case openHot = "f"
-    case play = "g"
+    case channelPage = "KwkM"
+    case download = "zeZOUc"
+    case donwloadpage = "xGUyFb"
+    case playTen = "NddCCnCej"
+    case playNext = "dkOkpgJFKt"
+    case playBack = "hCDH"
+    case openCool = "ouCqsRU"
+    case openHot = "gUifXYT"
+    case play = "QIscp"
 }
 
 enum HUB_ChannelSourceType: String {
     //landpage_avtor、landpage_hot_recently、landpage_recommend、home_channel、channellist、channelpage_recommend
 
-    case homeChannel = "a"
-    case channelList = "b"
-    case landpageAvtor = "c"
-    case landpage_hot_recently = "d"
-    case landpage_recommend = "e"
-    case channelpage_recommend = "f"
+    case homeChannel = "yoGJGA"
+    case channelList = "VOhMOQpk"
+    case landpageAvtor = "ZtKHth"
+    case landpage_hot_recently = "NPr"
+    case landpage_recommend = "WZJPm"
+    case channelpage_recommend = "iagJjhSJ"
 }
 
 enum HUB_PremiumMethod: String {
-    case vip_auto = "a"
-    case vip_click = "b"
+    case vip_auto = "PRA"
+    case vip_click = "vyrnBPrwz"
 }
 
 enum HUB_PremiumSource: String {
-    case vip_home = "a"
-    case vip_playPage = "b"
-    case vip_chennelPage = "c"
-    case vip_landPage = "d"
-    case vip_Ad = "e"
-    case vip_Accelerate = "f"
+    case vip_home = "iJSg"
+    case vip_playPage = "qvYWiS"
+    case vip_channelPage = "KwkM"
+    case vip_landPage = "Eiq"
+    case vip_Ad = "GdpJUF"
+    case vip_Accelerate = "NzlseKW"
 }
 
 class HubTool {

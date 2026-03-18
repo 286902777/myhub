@@ -192,6 +192,22 @@ class FileCell: UITableViewCell {
         self.nameL.text = model.fileName
     }
     
+    func initVideoData(_ model: VideoData) {
+        self.selectBtn.isSelected = model.isSelect
+        switch model.file_type {
+        case .folder:
+            self.iconV.image = UIImage(named: "folder_bg")
+            self.infoL.text = "\(model.vid_qty) Files"
+        case .photo:
+            self.iconV.setImage(model.thumbnail, placeholder: "photo_bg")
+            self.infoL.text = model.pubData.dateToYMD()
+        case .video:
+            self.iconV.setImage(model.thumbnail, placeholder: "video_bg")
+            self.infoL.text = "\(model.file_size.computeFileSize()) · \(model.pubData.dateToYMD())"
+        }
+        self.nameL.text = model.name
+    }
+    
     func initDirData(_ data: VideoData) {
         self.selectBtn.isSelected = data.isSelect
         let hasSize = data.file_size > 0

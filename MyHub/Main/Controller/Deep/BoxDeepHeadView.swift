@@ -15,6 +15,7 @@ class BoxDeepHeadView: UIView {
         view.contentMode = .scaleAspectFill
         view.backgroundColor = UIColor.rgbHex("DDF75B")
         view.layer.cornerRadius = 24
+        view.layer.masksToBounds = true
         return view
     }()
     
@@ -78,7 +79,7 @@ class BoxDeepHeadView: UIView {
         stackV.snp.makeConstraints { make in
             make.right.equalTo(-14)
             make.centerY.equalTo(iconV)
-            make.size.equalTo(CGSize(width: 56, height: 20))
+            make.height.equalTo(12)
         }
         
         nameL.snp.makeConstraints { make in

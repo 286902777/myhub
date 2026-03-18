@@ -13,12 +13,14 @@ class DeepHotCell: UICollectionViewCell {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 16
+        view.layer.masksToBounds = true
         view.image = UIImage(named: "video_bg")
         return view
     }()
     
     private lazy var hotV: UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFit
         view.image = UIImage(named: "hot_icon")
         return view
     }()
@@ -38,11 +40,6 @@ class DeepHotCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 14
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.rgbHex("#DDF75B").cgColor
-        self.layer.masksToBounds = true
         self.setUI()
     }
     required init?(coder aDecoder: NSCoder) {
@@ -53,7 +50,7 @@ class DeepHotCell: UICollectionViewCell {
     func setUI() {
         self.addSubview(iconV)
         self.addSubview(hotV)
-        self.addSubview(nameV)
+        self.iconV.addSubview(nameV)
         self.nameV.addSubview(self.nameL)
         self.iconV.snp.makeConstraints { make in
             make.top.equalTo(6)
@@ -62,9 +59,10 @@ class DeepHotCell: UICollectionViewCell {
         }
         self.hotV.snp.makeConstraints { make in
             make.left.top.equalToSuperview()
+            make.size.equalTo(CGSize(width: 49, height: 22))
         }
         self.nameV.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(self.iconV)
+            make.left.right.bottom.equalToSuperview()
             make.height.equalTo(32)
         }
         self.nameL.snp.makeConstraints { make in

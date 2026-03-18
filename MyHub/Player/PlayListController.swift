@@ -30,7 +30,7 @@ class PlayListController: UIViewController {
     let cellH: CGFloat = floor((ScreenWidth - 64) * 0.5 * 0.55)
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionHeadersPinToVisibleBounds = true
+//        layout.sectionHeadersPinToVisibleBounds = true
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
         collectionView.register(PlayListCell.self, forCellWithReuseIdentifier: cellIdentifier)

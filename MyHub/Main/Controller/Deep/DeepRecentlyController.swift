@@ -15,7 +15,7 @@ class DeepRecentlyController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 12, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 0)
         collectionView.register(DeepHotCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.dataSource = self

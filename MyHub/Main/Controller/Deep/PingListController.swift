@@ -1,26 +1,23 @@
 //
-//  OtherFolderListController.swift
+//  PingListController.swift
 //  MyHub
 //
-//  Created by hub on 3/9/26.
+//  Created by myhub-ios on 3/17/26.
 //
 
 import UIKit
 import SnapKit
 import MJRefresh
 
-class OtherFolderListController: UIViewController {
-    lazy var closeBtn: UIButton = {
+class PingListController: SuperController {
+    lazy var allBtn: UIButton = {
         let btn = UIButton()
-        btn.setImage(UIImage(named: "close"), for: .normal)
+        btn.setTitle("Select all", for: .normal)
+        btn.titleLabel?.font = UIFont.GoogleSans(weight: .medium, size: 12)
+        btn.setTitleColor(UIColor.rgbHex("#14171C", 0.5), for: .normal)
         return btn
     }()
-    lazy var contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.addRedius([.topLeft, .topRight], 20)
-        return view
-    }()
+        
     private var model: VideoData = VideoData()
     private var linkId: String = ""
     private var userId: String = ""
@@ -44,7 +41,6 @@ class OtherFolderListController: UIViewController {
         return table
     }()
     
-    let headView: BoxDeepListHeadView = BoxDeepListHeadView.view()
     let bottomView: DeepBottomView = DeepBottomView.view()
     private var list: [VideoData] = []
     private var allSelect: Bool = false
@@ -92,30 +88,21 @@ class OtherFolderListController: UIViewController {
     }
     
     func setUI() {
-        self.view.addSubview(self.closeBtn)
-        self.view.addSubview(self.contentView)
-        self.contentView.addSubview(self.headView)
-        self.contentView.addSubview(self.tableView)
-        self.contentView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(NavBarH)
-        }
-        self.closeBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.bottom.equalTo(self.contentView.snp.top)
-            make.size.equalTo(CGSizeMake(52, 52))
-        }
-        self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
-        self.headView.snp.makeConstraints { make in
-            make.left.top.right.equalToSuperview()
-            make.height.equalTo(74)
-        }
+        self.navbar.nameL.text = self.model.name
+        self.view.addSubview(self.tableView)
         self.tableView.snp.makeConstraints { make in
-            make.top.equalTo(self.headView.snp.bottom)
+            make.top.equalTo(self.navbar.snp.bottom)
             make.left.right.bottom.equalToSuperview()
         }
         
-        self.headView.nameL.text = self.model.name
+        self.navbar.bgView.addSubview(self.allBtn)
+        self.allBtn.snp.makeConstraints { make in
+            make.width.equalTo(78)
+            make.top.bottom.equalToSuperview()
+            make.right.equalTo(-14)
+        }
+        self.allBtn.addTarget(self, action: #selector(clickAllAction), for: .touchUpInside)
+
         self.view.addSubview(self.bottomView)
         self.bottomView.snp.makeConstraints { make in
             make.left.equalTo(14)
@@ -124,17 +111,7 @@ class OtherFolderListController: UIViewController {
             make.height.equalTo(64)
         }
         self.bottomView.isHidden = true
-        self.headView.clickBlock = { [weak self] idx in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch idx {
-                case 0:
-                    self.dismiss(animated: false)
-                default:
-                    self.clickAllAction()
-                }
-            }
-        }
+        
         self.bottomView.clickBlock = { [weak self] idx in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -176,10 +153,15 @@ class OtherFolderListController: UIViewController {
         }
     }
     
-    @objc func clickCloseAction() {
-        NotificationCenter.default.post(name: Noti_ClosePresent, object: nil, userInfo: nil)
+    @objc func clickAllAction() {
+        self.allSelect = !self.allSelect
+        self.list.forEach { m in
+            m.isSelect = self.allSelect
+        }
+        self.disPlayBottom()
+        self.tableView.reloadData()
     }
-    
+
     func downFile() {
         let list = self.list.filter({$0.file_type != .folder && $0.isSelect == true})
         let localList = HubDB.instance.readDatas()
@@ -208,15 +190,6 @@ class OtherFolderListController: UIViewController {
             }
         }
         ToastTool.instance.show("The contents, excluding the folder, have been added to the download list.")
-    }
-    
-    func clickAllAction() {
-        self.allSelect = !self.allSelect
-        self.list.forEach { m in
-            m.isSelect = self.allSelect
-        }
-        self.disPlayBottom()
-        self.tableView.reloadData()
     }
     
     func addFooter() {
@@ -303,7 +276,7 @@ class OtherFolderListController: UIViewController {
     }
 }
 
-extension OtherFolderListController: UITableViewDelegate, UITableViewDataSource {
+extension PingListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FileCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FileCell
         if let m = self.list.safeIndex(indexPath.row) {

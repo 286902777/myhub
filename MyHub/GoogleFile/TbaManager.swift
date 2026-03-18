@@ -12,50 +12,50 @@ import UIKit
 import FirebaseAnalytics
 
 enum EventName: String {
-    case homeExpose = "KtMcPuTGNu"
-    case homeChannelExpose = "lLRpJsDnvK"
-    case homeHistoryExpose = "XfFT"
-    case cloudpageExpose = "xOKJ"
-    case landpageExpose = "LEBokHR"
-    case landpageFail = "aqEnefl"
-    case landpageUploadedExpose = "voBe"
-    case playStartAll = "hxLqpY"
-    case playSource = "VgY"
-    case playSuc = "NIzy"
-    case playFail = "cMNAfJ"
-    case adsreqPlacement = "kUEL"
-    case adsreqSuc = "vac"
-    case adsreqFail = "ePfmh"
-    case adsneedShow = "FkXOIJ"
-    case adsshowPlacement = "sFkGxw"
-    case adsshowFail = "DcsU"
-    case adsclick = "uhj"
-    case historyExpose = "gIUJ"
-    case deeplinkOpen = "BGUGg"
-    case channellistExpose = "CwzluBD"
-    case channellistClick = "ENsHnRSZVY"
-    case channelpageExpose = "hEJh"
+    case homeExpose = "dUSxTIvT"
+    case homeChannelExpose = "itmI"
+    case homeHistoryExpose = "MFhoBwBelt"
+    case cloudpageExpose = "KEGML"
+    case landpageExpose = "ZIzYHWJRVQ"
+    case landpageFail = "QFvpL"
+    case landpageUploadedExpose = "rNUruNqRsH"
+    case playStartAll = "bEUwNcWVIU"
+    case playSource = "TWPsMDM"
+    case playSuc = "vzJUSX"
+    case playFail = "TmOBv"
+    case adsreqPlacement = "XFtVvaQEjX"
+    case adsreqSuc = "AIPdKo"
+    case adsreqFail = "jLysg"
+    case adsneedShow = "yVq"
+    case adsshowPlacement = "PlNLcI"
+    case adsshowFail = "SmqSOyHnqx"
+    case adsclick = "cCB"
+    case historyExpose = "dvVHfmkw"
+    case deeplinkOpen = "ezEJGdb"
+    case channellistExpose = "XoGcml"
+    case channellistClick = "YXIzY"
+    case channelpageExpose = "FSRpVuO"
     
-    case shareClick = "XNphvtULkM"
-    case downloadpageExpose = "fnYuXergDg"
-    case downloadSuc = "bVnIAIij"
-    case downloadFail = "cHUSG"
-    case downloadClick = "nghUQP"
-    case uploadpageExpose = "oEqUeltWuf"
-    case uploadSuc = "SNZD"
-    case uploadFail = "vsrAWzFWiW"
-    case uploadClick = "HZEGUb"
+//    case shareClick = "aQNzEEw"
+//    case downloadpageExpose = "fnYuXergDg"
+//    case downloadSuc = "bVnIAIij"
+//    case downloadFail = "cHUSG"
+//    case downloadClick = "nghUQP"
+//    case uploadpageExpose = "oEqUeltWuf"
+//    case uploadSuc = "SNZD"
+//    case uploadFail = "vsrAWzFWiW"
+//    case uploadClick = "HZEGUb"
 
-    case loginPageExpose = "yLk"
-    case loginClick = "JQR"
-    case loginSuc = "RPPdVxTPct"
-    case loginFail = "RQrPS"
-    case logout = "KjTBPycn"
+    case loginPageExpose = "BQKOQgKMK"
+    case loginClick = "EUq"
+    case loginSuc = "YRmStAzG"
+    case loginFail = "wTAr"
+    case logout = "RPw"
     
-    case premiumVipExpose = "QOqV"
-    case premiumVipClick = "zLFqPYKGA"
-    case premiumVipSuc = "opzqyUov"
-    case premiumVipFail = "MZyCXKYU"
+    case premiumVipExpose = "Mzzrw"
+    case premiumVipClick = "IOMnMsATQM"
+    case premiumVipSuc = "DolmVr"
+    case premiumVipFail = "tYauMz"
     
     case install = "install"
     case max = "ads"
@@ -63,56 +63,56 @@ enum EventName: String {
 }
 
 enum EventParaName: String {
-    case value = "uzIelRWW"
-    case type = "AsipS"
-    case method = "wdw"
-    case source = "uVxxp"
-    case code = "tcjVUeEx"
-    case history = "vpApGgRGL"
-    case iplayerUid = "ESNn"
-    case iplayerEmail = "ZFHT"
-    case iplayerLinkid = "VoAyg"
-    case iplayerResource = "xATaYnw"
-    case iplayerRecentEmail = "SfznYMKuGR"
-    case iplayerRecentUid = "Rko"
-    case channelPlatform = "ENkB"
-    case iplayerUser = "HsmdaSQSGW"
-    case linkSource = "uLsjfBMj"
-    case isFirstLink = "SEGOrUgeC"
-    case adCount = "swUuWnhoL"
-    case isNewUser = "NEGEBf"
-    case adType = "KAOmDPoJ"
-    case entrance = "IIXO"
-    case landpageLinkId = "aoRFoLMezC"
-    case cloudTotal = "FcAAC"
-    case cloudUse = "WFWhOWlthN"
-    case reason = "WxfwPrhNM"
-    case commonLin = "aRn"
-    case vip_popup = "ZubKrZV"
-    case vip_auto = "xlEtY"
+    case value = "GpUzBiopN"
+    case type = "kfJGYbCjU"
+    case method = "lksmyXiJ"
+    case source = "HGxkSZ"
+    case code = "IDyfH"
+    case history = "evEQBeK"
+    case iplayerUid = "zbYbWfdfx"
+    case iplayerEmail = "XYbPkM"
+    case iplayerLinkid = "PIjy"
+    case iplayerResource = "xCu"
+    case iplayerRecentEmail = "mGSwDq"
+    case iplayerRecentUid = "UWQSHrYwRZ"
+    case channelPlatform = "tTZgucgYed"
+    case iplayerUser = "ZRyz"
+    case linkSource = "UDeFxxrD"
+    case isFirstLink = "CPKshp"
+    case adCount = "dyHV"
+    case isNewUser = "ZPNwwFXaoi"
+    case adType = "TNA"
+    case entrance = "AUqtLKQ"
+    case landpageLinkId = "tvqHlD"
+    case cloudTotal = "pIIsYJHbsY"
+    case cloudUse = "RinoHtQe"
+    case reason = "xhZuGDBQjH"
+    case commonLin = "vTVUA"
+    case vip_popup = "SrTJmUyh"
+    case vip_auto = "QECJvibezr"
 }
 
 enum EventParaValue: String {
     case noPading = "no_pading"
-    case history = "vKVPL"
-    case home = "dYJvb"
-    case list = "zDoi"
-    case recommend = "bThaB"
-    case lifeTime = "MyWAOm"
-    case year = "jGUF"
-    case weak = "latGQjsTx"
-    case vip_page = "tzlfhxfNPT"
-    case vip_click = "XqJFH"
-    case vip_playPage = "NuVtn"
-    case vip_chennelPage = "rnIyviei"
-    case vip_landPage = "LHhuo"
-    case vip_Ad = "udAFtZiml"
-    case vip_Accelerate = "GGxFhBKs"
-    case delayLink = "LFLpIPahYN"
-    case link = "pPFOxSa"
-    case box = "XuN"
-    case cash = "bovtB"
-    case quick = " "
+    case history = "gmJgWUMeT"
+    case home = "iJSg"
+    case list = "cPzBn"
+    case recommend = "LCL"
+    case lifeTime = "lrXtJZVNc"
+    case year = "PwLPe"
+    case weak = "sKcTXNH"
+    case vip_page = "ZKiHRPq"
+    case vip_click = "vyrnBPrwz"
+    case vip_playPage = "qvYWiS"
+    case vip_channelPage = "KwkM"
+    case vip_landPage = "Eiq"
+    case vip_Ad = "GdpJUF"
+    case vip_Accelerate = "NzlseKW"
+    case delayLink = "ayO"
+    case link = "cfo"
+    case box = "EHT"
+    case cash = "LzgfRaO"
+    case quick = "rySvz"
 }
 
 enum EventType {
@@ -122,7 +122,9 @@ enum EventType {
 class TbaManager {
     static let instance = TbaManager()
     
-    let hostUrl = "https://xzzx.sdf.com/cc/nn"
+    let hostUrl = "https://test-hilum.myhubweb.com/hoboken/litigant" // test
+
+//    let hostUrl = "https://hilum.myhubweb.com/yoke/magic"
 
     var uploadList: [[String: Any]] = UserDefaults.standard.value(forKey: EventUploadArray) == nil ? [] : UserDefaults.standard.value(forKey: EventUploadArray) as! [[String: Any]] {
         didSet {
@@ -157,12 +159,12 @@ class TbaManager {
     }
     
     func startEventUpload(_ para: [String: Any]) {
-        var request: URLRequest = URLRequest(url: URL(string: hostUrl)!)
+        var request: URLRequest = URLRequest(url: URL(string: hostUrl + "?basis=" + "\(self.idfv())")!)
         request.timeoutInterval = 12
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("mcc", forHTTPHeaderField: "rot") // operator
-        request.setValue(self.distinctId(), forHTTPHeaderField: "chosen") // distinct_id
+        request.setValue("\(Int(Date().timeIntervalSince1970 * 1000))", forHTTPHeaderField: "gig") // client_ts
+        request.setValue("\(UIDevice.current.systemVersion)", forHTTPHeaderField: "ritchie") // os_version
 
         if (JSONSerialization.isValidJSONObject(para)) {
             let body = try? JSONSerialization.data(withJSONObject: para, options: [])
@@ -178,7 +180,7 @@ class TbaManager {
             }
             if let response = response as? HTTPURLResponse, response.statusCode == 200 {
                 debugPrint("[eventUpload] success!")
-                if para["ticklish"] as? String == EventName.landpageExpose.rawValue {
+                if para["screechy"] as? String == EventName.landpageExpose.rawValue {
                     let firstLink: Bool = UserDefaults.standard.bool(forKey: FirstOpenLink)
                     if firstLink == false {
                         UserDefaults.standard.set(true, forKey: FirstOpenLink)
@@ -198,20 +200,26 @@ class TbaManager {
     }
     
     func addEventConfig(type: EventType, event: EventName, paramter: [String: Any]?) -> [String: Any] {
-        var paras: [String: Any] = [:]
-        paras["ella"] = HUB_BuildId
-        paras["mph"] = "abetted" // {“benny”: “android”, “abetted”: “ios”, “elude”: “web”, “prior”: “macos”, “flexible”: “windows”}
-        paras["con"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
-        paras["chosen"] = self.distinctId() // 用户排重字段，统计涉及到的排重用户数就是依据该字段，对接时需要和产品确认
-        paras["novo"] = self.idfa()
-        paras["soupy"] = UUID().uuidString // 日志唯一id，用于排重日志
-        paras["brett"] = "\(Int(Date().timeIntervalSince1970 * 1000))"
-        paras["boris"] = "Apple"
-        paras["careful"] = self.iPhoneSysInfo() // 手机型号
-        paras["leaky"] = UIDevice.current.systemVersion
-        paras["rot"] = "mcc"
-        paras["cheney"] = "\(Locale.current.languageCode ?? "en")_\(Locale.current.regionCode ?? "EN")"
-        paras["hazel"] = self.idfv()
+        var lparas: [String: Any] = [:]
+        lparas["drudge"] = HUB_BuildId
+        lparas["bitt"] = self.distinctId() // 用户排重字段，统计涉及到的排重用户数就是依据该字段，对接时需要和产品确认
+        lparas["brutal"] = self.iPhoneSysInfo() // 手机型号
+        lparas["bursitis"] = self.idfa()
+        lparas["basis"] = self.idfv()
+        lparas["ritchie"] = UIDevice.current.systemVersion
+        
+        var marjory: [String: Any] = [:]
+        marjory["cortez"] = "dubhe" // 映射关系: {“saigon”: “android”, “dubhe”: “ios”, “con”: “web”, “fitful”: “macos”, “train”: “windows”}
+        marjory["usage"] = "\(Locale.current.languageCode ?? "en")_\(Locale.current.regionCode ?? "EN")"
+        
+        var epsilon: [String: Any] = [:]
+        epsilon["gaul"] = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        epsilon["ermine"] = UUID().uuidString // 日志唯一id，用于排重日志
+        epsilon["gig"] = "\(Int(Date().timeIntervalSince1970 * 1000))"
+        epsilon["trojan"] = "mcc"
+
+        var wilfred: [String: Any] = [:]
+        wilfred["threat"] = "Apple"
 
         let email = UserDefaults.standard.string(forKey: EventSaveEmail)
         let userId = UserDefaults.standard.string(forKey: EventSaveUserId)
@@ -221,7 +229,7 @@ class TbaManager {
         let channel_platform: String = HUB_PlatformType(rawValue: platform) == .cash ? EventParaValue.cash.rawValue : EventParaValue.quick.rawValue
 
         // MARK: - 全局参数
-        let decaturParas: [String: Any] = [
+        let cpa: [String: Any] = [
             "\(EventParaName.iplayerUid.rawValue)": userId ?? "", // iplayer_uid
             "\(EventParaName.iplayerEmail.rawValue)": email ?? "", // iplayer_email
             "\(EventParaName.iplayerLinkid.rawValue)": linkId ?? "", // iplayer_linkid
@@ -234,45 +242,50 @@ class TbaManager {
             "lweGSV": HubTool.share.isPod, //pad
         ]
         
-        paras["absolve"] = decaturParas
-        
+        var paras: [String: Any] = [:]
+        paras["cpa"] = cpa
+        paras["l"] = lparas
+        paras["marjory"] = marjory
+        paras["epsilon"] = epsilon
+        paras["wilfred"] = wilfred
+
         switch type {
         case .install:
-            paras["ticklish"] = "herself"
-            paras["occur"] = "build/\(Bundle.main.infoDictionary?["CFBundleVersion"] ?? "1.0.0")" // 系统构建版本，Build.ID， 以 build/ 开头
-            paras["ego"] = ""// webview中的user_agent, 注意为webview的，android中的useragent有;wv关键字
-            paras["colloq"] = "remote" // 用户是否启用了限制跟踪，0: 没有限制，1: 限制了；映射关系: {“evzone”: 0, “remote”: 1}
-            paras["nichols"] = 0
-            paras["excerpt"] = 0
-            paras["bowditch"] = 0
-            paras["leadeth"] = 0
-            paras["veer"] = 0
-            paras["okra"] = 0
+            paras["screechy"] = "economy"
+            paras["arrear"] = "build/\(Bundle.main.infoDictionary?["CFBundleVersion"] ?? "1.0.0")" // 系统构建版本，Build.ID， 以 build/ 开头
+            paras["tamp"] = ""// webview中的user_agent, 注意为webview的，android中的useragent有;wv关键字
+            paras["nauseum"] = HubTool.share.isTrackUser ? "talky" : "loathe"// 用户是否启用了限制跟踪，0：没有限制，1：限制了；枚举值，映射关系: {“talky”: 0, “loathe”: 1}
+            paras["heavy"] = 0
+            paras["club"] = 0
+            paras["armco"] = 0
+            paras["urology"] = 0
+            paras["tachyon"] = 0
+            paras["despotic"] = 0
         case .session:
-            paras["ticklish"] = "addict"
+            paras["screechy"] = "asbestos"
         case .ad:
-            paras["ticklish"] = "hanukkah"
+            paras["screechy"] = "cushion"
             if let paramter = paramter {
                 for item in paramter.keys {
                     paras[item] = paramter[item]
                 }
             }
         case .custom:
-            paras["ticklish"] = event.rawValue
-            paras["our"] = paramter
+            paras["screechy"] = event.rawValue
+            paras["shepard"] = paramter
         }
         return paras
     }
     
     func adsValueInfos(value: Double, currency: String, source: String, platform: String, unitid: String, placement: String, format: String) -> [String: Any] {
         let param: [String: Any] = [
-            "idly": value, // 预估收益, admob取出来的值可以直接使用（x/10^6）=> 美元， Max的值为美元, 需要 * 10^6在上报
-            "upward": currency, // 预估收益的货币单位
-            "tass": source, // 广告网络，广告真实的填充平台，例如admob的bidding，填充了Facebook的广告，此值为Facebook
-            "hyacinth": platform, // 广告SDK，admob，max等
-            "adequacy": unitid, // 广告位id，例如: ca-app-pub-7068043263440714/75724612
-            "exponent": placement, // 广告位逻辑编号，例如: page1_bottom, connect_finished
-            "charity": format // 广告类型，插屏，原生，banner，激励视频等
+            "lyrebird": value, // 预估收益, admob取出来的值可以直接使用（x/10^6）=> 美元， Max的值为美元, 需要 * 10^6在上报
+            "ar": currency, // 预估收益的货币单位
+            "balboa": source, // 广告网络，广告真实的填充平台，例如admob的bidding，填充了Facebook的广告，此值为Facebook
+            "sherrill": platform, // 广告SDK，admob，max等
+            "umbrage": unitid, // 广告位id，例如: ca-app-pub-7068043263440714/75724612
+            "conclude": placement, // 广告位逻辑编号，例如: page1_bottom, connect_finished
+            "maureen": format // 广告类型，插屏，原生，banner，激励视频等
         ]
         Analytics.logEvent("Ad_impression_revenue", parameters: [
                           AnalyticsParameterAdPlatform: platform,

@@ -19,7 +19,7 @@ class ChannelListData: SuperData {
         mapper.specify(property: &recents, name: "brotany") ///recent_videos
         mapper.specify(property: &files, name: "pulsating")
         mapper.specify(property: &hots, name: "plowgraith") /// top100_view_count_videos
-        mapper.specify(property: &userInfo, name: "user")  /// user
+        mapper.specify(property: &userInfo, name: "irrumation")  /// user
     }
 }
 

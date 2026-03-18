@@ -85,6 +85,22 @@ class OtherDeepController: UIViewController {
                 VipPopManager.instance.openPopPage(self)
             }
         }
+        NotificationCenter.default.addObserver(forName: Noti_ClosePresent, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.dismissAllChildControllers()
+        }
+    }
+    
+    func dismissAllChildControllers(animated: Bool = false) {
+        if let presentedController = self.presentedViewController {
+            presentedController.dismiss(animated: animated) { [weak self] in
+                self?.dismissAllChildControllers(animated: animated)
+            }
+        } else {
+            self.dismiss(animated: false) {
+                TabbarTool.instance.displayOrHidden(true)
+            }
+        }
     }
     
     func setup() {
@@ -108,11 +124,8 @@ class OtherDeepController: UIViewController {
             make.height.equalTo(82)
         }
         self.contentView.addSubview(self.tableView)
-        self.tableView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.top.equalTo(self.headView.snp.bottom)
-            make.bottom.equalTo(self.bottomView.snp.top)
-        }
+
+        self.headView.setMore()
         self.headView.clickBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -129,6 +142,12 @@ class OtherDeepController: UIViewController {
             make.right.equalTo(-14)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
             make.height.equalTo(0)
+        }
+        
+        self.tableView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(self.headView.snp.bottom)
+            make.bottom.equalTo(self.bottomView.snp.top)
         }
         self.bottomView.isHidden = true
         self.bottomView.clickBlock = { [weak self] idx in
@@ -355,7 +374,8 @@ class OtherDeepController: UIViewController {
         switch model.file_type {
         case .folder:
             let vc = OtherFolderListController(model: HubTool.share.channelModel(model, linkId: self.linkId, uId: model.recommoned ? self.recommenduId : self.dataModel.userInfo.id, platform: HubTool.share.platform), linkId: self.linkId, userId: model.recommoned ? self.recommenduId :  self.dataModel.userInfo.id, userName: self.dataModel.userInfo.name, platform: HubTool.share.platform, channel: false)
-            self.navigationController?.pushViewController(vc, animated: true)
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: false)
         case .photo:
             let vc = OpenPhotoController(model: HubTool.share.channelModel(model, linkId: "", uId: "", platform: HubTool.share.platform))
             self.navigationController?.pushViewController(vc, animated: true)

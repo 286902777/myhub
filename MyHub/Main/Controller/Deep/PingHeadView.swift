@@ -13,6 +13,7 @@ class PingHeadView: UIView {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.layer.cornerRadius = 30
+        view.layer.masksToBounds = true
         return view
     }()
     

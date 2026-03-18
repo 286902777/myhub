@@ -179,7 +179,7 @@ class IndexController: SuperController {
                 guard self.canClackInfo(linkId) else { return }
                 self.driveDeep(linkId)
             }
-            if let linkId = para["s"], let platform = para["c"] {
+            if let linkId = para["spanged"], let platform = para["unfixed"] {
                 guard self.canClackInfo(linkId) else { return }
                 HubTool.share.platform = HUB_PlatformType(rawValue: platform) ?? .cash
                 UserDefaults.standard.set(linkId, forKey: EventSaveLinkId)
@@ -394,13 +394,13 @@ class IndexController: SuperController {
                 self.isHisUpload = true
             }
         }
-        self.channelList = HubDB.instance.readUsers()
-        if self.channelList.count > 0 {
-            if self.isGroupUpload == false {
-                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
-                self.isGroupUpload = true
-            }
-        }
+//        self.channelList = HubDB.instance.readUsers()
+//        if self.channelList.count > 0 {
+//            if self.isGroupUpload == false {
+//                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
+//                self.isGroupUpload = true
+//            }
+//        }
         self.netRequestUpload()
     }
     
@@ -412,15 +412,17 @@ class IndexController: SuperController {
             m.lists = self.historyList
             self.requestlist.append(m)
         }
-        if self.channelList.count > 0 {
-            let m = HomeListData()
-            m.type = .channel
-            m.users = self.channelList
-            self.requestlist.append(m)
-        }
+//        if self.channelList.count > 0 {
+//            let m = HomeListData()
+//            m.type = .channel
+//            m.users = self.channelList
+//            self.requestlist.append(m)
+//        }
 
         var channels: [ChannelUserData] = []
         var uploads: [VideoData] = []
+        
+        var userData: UserSpaceData = UserSpaceData()
         
         let group = DispatchGroup()
         let queue = DispatchQueue.global()
@@ -429,37 +431,32 @@ class IndexController: SuperController {
             queue.async {
                 HttpManager.share.getBoxSpaceApi { [weak self] status, model, errMsg in
                     guard let self = self else { return}
-                    DispatchQueue.main.async {
-                        if status == .success {
-                            let use_space = model.user_space.computeFileSize()
-                            let max_space = model.max_space.computeFileSize()
-                            HubTool.share.spaceUse = use_space
-                            HubTool.share.spaceTotal = max_space
-                            if (self.isOpenUpload == false) {
-                                TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: [EventParaName.cloudTotal.rawValue: HubTool.share.spaceTotal, EventParaName.cloudUse.rawValue: HubTool.share.spaceUse])
-                                self.isOpenUpload = true
-                            }
-                            self.tableHeadV.setData(model)
+                    if status == .success {
+                        let use_space = model.user_space.computeFileSize()
+                        let max_space = model.max_space.computeFileSize()
+                        HubTool.share.spaceUse = use_space
+                        HubTool.share.spaceTotal = max_space
+                        userData = model
+                        if (self.isOpenUpload == false) {
+                            TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: [EventParaName.cloudTotal.rawValue: HubTool.share.spaceTotal, EventParaName.cloudUse.rawValue: HubTool.share.spaceUse])
+                            self.isOpenUpload = true
                         }
-                        group.leave()
                     }
+                    group.leave()
                 }
             }
             group.enter()
             queue.async {
                 HttpManager.share.selectFolderApi("") { status, list, errMsg in
-                    DispatchQueue.main.async {
-                        if status == .success {
-                            let arr = list.filter({$0.file_type != .folder})
-                            if arr.count > 0 {
-                                uploads = arr
-                            }
-                            group.leave()
-                        } else {
-                            ToastTool.instance.show(errMsg ?? "Request fail", .fail)
-                            group.leave()
+                    if status == .success {
+                        let arr = list.filter({$0.file_type != .folder})
+                        if arr.count > 0 {
+                            uploads = arr
                         }
+                    } else {
+                        ToastTool.instance.show(errMsg ?? "Request fail", .fail)
                     }
+                    group.leave()
                 }
             }
             //        group.enter()
@@ -500,6 +497,7 @@ class IndexController: SuperController {
                             self.requestlist.append(m)
                         }
                     }
+                    self.tableHeadV.setData(userData)
                 } else {
                     self.tableHeadV.setData(nil)
                 }
@@ -673,7 +671,6 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
                     HubTool.share.uId = mod.userId
                     HubTool.share.uploadPlatform = mod.platform
                     HubTool.share.playSource = .upload_home
-                    HubTool.share.eventSource = .upload
                     PlayTool.instance.pushPage(self, mod, m.lists, false)
                 }
             default:

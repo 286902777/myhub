@@ -421,8 +421,8 @@ class HttpManager {
                                     mod.isPass = m.moderate_type
                                     result.append(mod)
                                 }
-                                completion(status, result, nil)
                             }
+                            completion(status, result, nil)
                         }
                     }
                 } else {
@@ -485,8 +485,8 @@ class HttpManager {
                                     mod.isPass = m.moderate_type
                                     result.append(mod)
                                 }
-                                completion(status, result, nil)
                             }
+                            completion(status, result, nil)
                         }
                     }
                 } else {
@@ -773,8 +773,8 @@ class HttpManager {
                                         result.append(mod)
                                     }
                                 }
-                                completion(status, result, nil)
                             }
+                            completion(status, result, nil)
                         }
                     }
                 } else {
