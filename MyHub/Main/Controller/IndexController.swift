@@ -299,20 +299,8 @@ class IndexController: SuperController {
         return true
     }
     
-    func insertUser(_ users: [ChannelUserData], _ list: [ChannelRecommedData],  _ platform: HUB_PlatformType) -> [ChannelUserData] {
+    func insertUser(_ users: [ChannelUserData], _ list: [ChannelUserData],  _ platform: HUB_PlatformType) -> [ChannelUserData] {
         var datas: [ChannelUserData] = []
-        for item in list {
-            if let _ = users.first(where: ({$0.id == item.id})) {
-                
-            } else {
-                let m = ChannelUserData()
-                m.id = item.id
-                m.name = item.name
-                m.platform = platform
-                m.thumbnail = item.thumbnail
-                datas.append(m)
-            }
-        }
         
         var userArr: [ChannelUserData] = users
         if users.count > 2 {
@@ -394,13 +382,13 @@ class IndexController: SuperController {
                 self.isHisUpload = true
             }
         }
-//        self.channelList = HubDB.instance.readUsers()
-//        if self.channelList.count > 0 {
-//            if self.isGroupUpload == false {
-//                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
-//                self.isGroupUpload = true
-//            }
-//        }
+        self.channelList = HubDB.instance.readUsers()
+        if self.channelList.count > 0 {
+            if self.isGroupUpload == false {
+                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
+                self.isGroupUpload = true
+            }
+        }
         self.tableView.reloadData()
         self.netRequestUpload()
     }
@@ -413,12 +401,12 @@ class IndexController: SuperController {
             m.lists = self.historyList
             self.requestlist.append(m)
         }
-//        if self.channelList.count > 0 {
-//            let m = HomeListData()
-//            m.type = .channel
-//            m.users = self.channelList
-//            self.requestlist.append(m)
-//        }
+        if self.channelList.count > 0 {
+            let m = HomeListData()
+            m.type = .channel
+            m.users = self.channelList
+            self.requestlist.append(m)
+        }
 
         var channels: [ChannelUserData] = []
         var uploads: [VideoData] = []
@@ -460,27 +448,27 @@ class IndexController: SuperController {
                     group.leave()
                 }
             }
-            //        group.enter()
-            //        queue.async { [weak self] in
-            //            guard let self = self else { return }
-            //            if let m = self.channelList.first(where: {$0.platform != .box}) {
-            //                let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
-            //                    if refresh {
-            //                        self.netRequestUpload()
-            //                        return
-            //                    }
-            //                    if status == .success {
-            //                        if list.count > 0 {
-            //                            let userArr = self.insertUser(self.channelList, list, m.platform)
-            //                            channels = userArr
-            //                        }
-            //                    }
-            //                    group.leave()
-            //                }
-            //            } else {
-            //                group.leave()
-            //            }
-            //        }
+            group.enter()
+            queue.async { [weak self] in
+                guard let self = self else { return }
+                if let m = self.channelList.first(where: {$0.platform != .box}) {
+                    let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
+                        if refresh {
+                            self.netRequestUpload()
+                            return
+                        }
+                        if status == .success {
+                            if list.count > 0 {
+                                let userArr = self.insertUser(self.channelList, list, m.platform)
+                                channels = userArr
+                            }
+                        }
+                        group.leave()
+                    }
+                } else {
+                    group.leave()
+                }
+            }
         } else {
             TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
         }
