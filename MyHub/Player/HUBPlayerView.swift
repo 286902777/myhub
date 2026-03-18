@@ -114,33 +114,33 @@ class HUBPlayerView: UIView {
             guard currentDuration != oldValue else { return }
             contentView.setCurrentDuration(min(currentDuration, totalDuration))
             let time = ceil(currentDuration)
-            guard time > 0 else { return }
+            guard time > 0, self.isPlaying else { return }
 
-            let count = UserDefaults.standard.integer(forKey: HUB_PlayingCount)
-            if Int(time) >= GoogleManager.share.playingTime, count >= GoogleManager.share.playingIndex, HubTool.share.isCountMiddlePlay == false {
-                HubTool.share.isCountMiddlePlay = true
-                HubTool.share.adsPlayState = .play
-                HubTool.share.show(.playing) { [weak self] success in
-                    guard let self = self else { return }
-                    if success {
-                        self.pause()
-                        UserDefaults.standard.set(0, forKey: HUB_PlayingCount)
-                        UserDefaults.standard.synchronize()
-                    }
-                }
-            }
-            if Int(time) % GoogleManager.share.playMiddleTime == 0 {
-                HubTool.share.adsPlayState = .playTen
-                HubTool.share.show(.play) { [weak self] success in
-                    guard let self = self else { return }
-                    if success {
-                        self.pause()
-                        let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
-                        UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
-                        UserDefaults.standard.synchronize()
-                    }
-                }
-            }
+//            let count = UserDefaults.standard.integer(forKey: HUB_PlayingCount)
+//            if Int(time) >= GoogleManager.share.playingTime, count >= GoogleManager.share.playingIndex, HubTool.share.isCountMiddlePlay == false {
+//                HubTool.share.isCountMiddlePlay = true
+//                HubTool.share.adsPlayState = .play
+//                HubTool.share.show(.playing) { [weak self] success in
+//                    guard let self = self else { return }
+//                    if success {
+//                        self.pause()
+//                        UserDefaults.standard.set(0, forKey: HUB_PlayingCount)
+//                        UserDefaults.standard.synchronize()
+//                    }
+//                }
+//            }
+//            if Int(time) % GoogleManager.share.playMiddleTime == 0 {
+//                HubTool.share.adsPlayState = .playTen
+//                HubTool.share.show(.play) { [weak self] success in
+//                    guard let self = self else { return }
+//                    if success {
+//                        self.pause()
+//                        let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
+//                        UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
+//                        UserDefaults.standard.synchronize()
+//                    }
+//                }
+//            }
             let total = ceil(totalDuration)
             if Int(time) == Int(total * 0.3), total >= 15, self.showPopLoad == false {
                 self.loadPopupHander?()

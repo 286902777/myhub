@@ -236,11 +236,12 @@ class TbaManager {
             "\(EventParaName.iplayerResource.rawValue)": HubTool.share.fileId, // iplayer_resource
             "\(EventParaName.iplayerRecentEmail.rawValue)": email ?? "", // iplayer_recent_email
             "\(EventParaName.channelPlatform.rawValue)": channel_platform,// channel_platform = quick/cash/PONslcD
-            "EvIvAh": HubTool.share.isSim, // sim
-            "PzR": HubTool.share.isEmulator, // simulator
-            "vkeMwVs": HubTool.share.isVpn, //vpn
-            "lweGSV": HubTool.share.isPod, //pad
+            "ROflKzbQG": HubTool.share.isSim, // sim
+            "THmFN": HubTool.share.isEmulator, // simulator
+            "wayCOYDI": HubTool.share.isVpn, //vpn
+            "PVufZ": HubTool.share.isPod, //pad
         ]
+        
         
         var paras: [String: Any] = [:]
         paras["cpa"] = cpa

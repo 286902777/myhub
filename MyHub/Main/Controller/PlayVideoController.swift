@@ -56,6 +56,7 @@ class PlayVideoController: UIViewController {
         } else {
             if self.isPop == false, self.player.isPlaying {
                 HubTool.share.adsPlayState = .playBack
+                self.player.pause()
                 HubTool.share.show(.play) { [weak self] success in
                     guard let self = self else { return}
                     if success {

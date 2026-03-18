@@ -42,7 +42,6 @@ class FireManager {
                                 if let mod = GoogleAdsFireData.deserialize(from: json) {
                                     GoogleManager.share.startData = mod
                                 }
-                                
                             }
                             let plusJson: String = self.deConfig["MyHub_Two_Ads"].stringValue
                             if plusJson.count > 0 {

@@ -364,6 +364,7 @@ class HubTool {
             m.isNet = true
             m.pubData = model.update_time
             m.name = model.fileName
+            m.isPass = .passed
             m.thumbnail = model.file_meta.thumbnail
             m.file_type = model.file_type
             m.vid_qty = model.vid_qty
@@ -392,6 +393,7 @@ class HubTool {
                 m.recommend = item.recommoned
                 m.pubData = item.update_time
                 m.name = item.fileName
+                m.isPass = .passed
                 m.thumbnail = item.file_meta.thumbnail
                 m.file_type = item.file_type
                 m.vid_qty = item.vid_qty

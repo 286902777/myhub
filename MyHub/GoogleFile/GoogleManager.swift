@@ -712,7 +712,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         } else {
             playPlusAds(adsType) { [weak self] s in
                 guard let self = self else { return }
-                if (s == false) {
+                if s == false {
                     self.reSetAdsData()
                     self.postDismiss()
                 }

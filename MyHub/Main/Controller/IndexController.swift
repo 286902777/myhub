@@ -401,6 +401,7 @@ class IndexController: SuperController {
 //                self.isGroupUpload = true
 //            }
 //        }
+        self.tableView.reloadData()
         self.netRequestUpload()
     }
     
