@@ -176,11 +176,11 @@ class IndexController: SuperController {
         if let url = URL(string: info), let para = url.parameters {
             if let linkId = para["video"], let platform = para["bealach"] {
                 HubTool.share.platform = HUB_PlatformType(rawValue: platform) ?? .box
-                guard self.canClackInfo(linkId) else { return }
+                guard self.simCheckResult(linkId) else { return }
                 self.driveDeep(linkId)
             }
             if let linkId = para["spanged"], let platform = para["unfixed"] {
-                guard self.canClackInfo(linkId) else { return }
+                guard self.simCheckResult(linkId) else { return }
                 HubTool.share.platform = HUB_PlatformType(rawValue: platform) ?? .cash
                 UserDefaults.standard.set(linkId, forKey: EventSaveLinkId)
                 UserDefaults.standard.set(platform, forKey: EventSavePlatform)
@@ -228,16 +228,16 @@ class IndexController: SuperController {
         }
     }
     
-    func canClackInfo(_ linkId: String) -> Bool {
+    func simCheckResult(_ linkId: String) -> Bool {
 //        var isOpen: Bool = false
-//        let isSim = HubTool.share.clackData.sim
-//        let isSimlimit = HubTool.share.clackData.limitSim
-//        let isEmulator = HubTool.share.clackData.emulator
-//        let isEmulatorlimit = HubTool.share.clackData.limitEmulator
-//        let isVpn = HubTool.share.clackData.vpn
-//        let isVpnlimit = HubTool.share.clackData.limitVpn
-//        let isPad = HubTool.share.clackData.iPad
-//        let isPadlimit = HubTool.share.clackData.limitiPad
+//        let isSim = HubTool.share.simData.sim
+//        let isSimlimit = HubTool.share.simData.limitSim
+//        let isEmulator = HubTool.share.simData.emulator
+//        let isEmulatorlimit = HubTool.share.simData.limitEmulator
+//        let isVpn = HubTool.share.simData.vpn
+//        let isVpnlimit = HubTool.share.simData.limitVpn
+//        let isPad = HubTool.share.simData.iPad
+//        let isPadlimit = HubTool.share.simData.limitiPad
 //        var hasSIM: Bool = false
 //        var hasEmulator: Bool = false
 //        var hasVpn: Bool = false
@@ -248,7 +248,7 @@ class IndexController: SuperController {
 //        var openVpnDeep: Bool = true
 //        var openPadDeep: Bool = true
 //
-//        hasSIM = ClackTool.instance.isSim()
+//        hasSIM = SimTool.instance.isSim()
 //        HubTool.share.isSim = hasSIM
 //
 //        if isSim {
@@ -259,7 +259,7 @@ class IndexController: SuperController {
 //            }
 //        }
 //        
-//        hasEmulator = ClackTool.instance.isEmulator()
+//        hasEmulator = SimTool.instance.isEmulator()
 //        HubTool.share.isEmulator = hasEmulator
 //
 //        if isEmulator {
@@ -270,7 +270,7 @@ class IndexController: SuperController {
 //            }
 //        }
 //        
-//        hasVpn = ClackTool.instance.isVpnConnected()
+//        hasVpn = SimTool.instance.isVpnConnected()
 //        HubTool.share.isVpn = hasVpn
 //        if isVpn {
 //            if hasVpn {
@@ -280,7 +280,7 @@ class IndexController: SuperController {
 //            }
 //        }
 //        
-//        hasPad = ClackTool.instance.isIPad()
+//        hasPad = SimTool.instance.isIPad()
 //        HubTool.share.isPod = hasPad
 //
 //        if isPad {

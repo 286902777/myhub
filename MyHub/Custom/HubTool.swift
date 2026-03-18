@@ -9,7 +9,7 @@ import UIKit
 import AVFoundation
 import Photos
 import Kingfisher
-import 	GoogleMobileAds
+import GoogleMobileAds
 
 let ScreenBounds = UIScreen.main.bounds
 
@@ -228,7 +228,7 @@ class HubTool {
 
     var isPod: Bool = false
     
-//    var clackData: ClackData = ClackData()
+    var simData: SimModel = SimModel()
     
     var spaceUse: String = ""
     
