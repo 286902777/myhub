@@ -18,7 +18,7 @@ class GoogleNativeController: UIViewController {
     var adsRate: Int = 0
     var isClickAds: Bool = false
     var timer: DispatchSourceTimer?
-    let queue = DispatchQueue(label: "googleAds")
+    let queue = DispatchQueue(label: "googleNativeAds")
     private var isUpAds: Bool = false
     private var isUpClose: Bool = false
     private var showC: Int = 0
@@ -120,11 +120,12 @@ class GoogleNativeController: UIViewController {
         } else {
             self.s_mainView.isHidden = true
         }
-                
+            
+        self.view.backgroundColor = UIColor.rgbHex("#000000", GoogleManager.share.showMode == .playing ? 0.4 : 1.0)
+
         if GoogleManager.share.showMode != .playing {
             self.adsTime = GoogleManager.share.nativeTime
             self.adsRate = GoogleManager.share.nativeClickRate
-            self.view.backgroundColor = UIColor.rgbHex("#000000")
             self.timeL.isHidden = !self.isUpAds
             self.s_timeL.isHidden = self.isUpAds
             self.strat()
@@ -133,7 +134,6 @@ class GoogleNativeController: UIViewController {
             self.adsTime = GoogleManager.share.playNativeTime
             self.adsRate = GoogleManager.share.playNativeClickRate
             self.timeL.isHidden = true
-            self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
             self.isShowCloseBtn()
         }
         self.closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)

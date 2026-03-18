@@ -363,7 +363,6 @@ private extension HUBPlayerView {
             switch waitReadyToPlayState {
             case .nomal:
                 LoadManager.instance.dismiss()
-                break
             case .pause:
                 LoadManager.instance.dismiss()
                 pause()
