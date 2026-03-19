@@ -28,6 +28,7 @@ class OtherDeepController: UIViewController {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
         table.dataSource = self
+        table.isHidden = true
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.register(FileCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -68,6 +69,7 @@ class OtherDeepController: UIViewController {
         super.viewDidLoad()
         setup()
         addFooter()
+        self.hotHeadView.isHidden = true
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
@@ -263,6 +265,7 @@ class OtherDeepController: UIViewController {
                         HubTool.share.email = model.userInfo.email
                         HubTool.share.boxUId = ""
                         HubTool.share.boxLinkId = ""
+                        self.hotHeadView.isHidden = false
                         self.hotHeadView.setData(model, linkId: self.linkId, uId: model.userInfo.id, name: model.userInfo.name, platform: HubTool.share.platform)
                         UserDefaults.standard.set(model.userInfo.email, forKey: EventSaveEmail)
                         UserDefaults.standard.set(self.linkId, forKey: EventSaveLinkId)
@@ -280,6 +283,7 @@ class OtherDeepController: UIViewController {
                     } else {
                         self.currentPage += 1
                     }
+                    self.tableView.isHidden = false
                     self.tableView.reloadData()
                 } else {
                     TbaManager.instance.addEvent(type: .custom, event: .landpageFail, paramter: nil)

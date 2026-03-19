@@ -46,6 +46,7 @@ class BoxDeepListController: UIViewController {
     
     let headView: BoxDeepListHeadView = BoxDeepListHeadView.view()
     let bottomView: DeepBottomView = DeepBottomView.view()
+    let emptyView: FileEmptyView = FileEmptyView.view()
     private var list: [VideoData] = []
     private var allSelect: Bool = false
     init(model: VideoData, linkId: String, userId: String, userName: String, platform: HUB_PlatformType) {
@@ -79,6 +80,14 @@ class BoxDeepListController: UIViewController {
         super.viewDidLoad()
         setUI()
         addFooter()
+        NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            guard let vc = HubTool.share.keyVC(), vc.isKind(of: BoxDeepListController.self) else { return }
+            if HubTool.share.adsPlayState == .download {
+                self.downFile()
+                VipPopManager.instance.openPopPage(self)
+            }
+        }
     }
     
     func setUI() {
@@ -87,6 +96,8 @@ class BoxDeepListController: UIViewController {
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.headView)
         self.contentView.addSubview(self.tableView)
+        self.contentView.addSubview(self.emptyView)
+
         self.contentView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(NavBarH)
@@ -100,6 +111,10 @@ class BoxDeepListController: UIViewController {
         self.headView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(74)
+        }
+        self.emptyView.snp.makeConstraints { make in
+            make.top.equalTo(self.headView.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         }
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.headView.snp.bottom)
@@ -154,12 +169,12 @@ class BoxDeepListController: UIViewController {
                     guard HubTool.share.userIsLogin(self) else { return }
                     HubTool.share.eventSource = .download
                     HubTool.share.adsPlayState = .download
-                    self.downFile()
-//                    AdmobTool.instance.show(.mode_down) { success in
-//                        if success == false {
-//                            self.downData()
-//                        }
-//                    }
+                    HubTool.share.show(.play) { success in
+                        if success == false {
+                            self.downFile()
+                            VipPopManager.instance.openPopPage(self)
+                        }
+                    }
                 }
             }
         }
@@ -231,6 +246,13 @@ class BoxDeepListController: UIViewController {
                         self.tableView.mj_footer?.isHidden = true
                     } else {
                         self.currentPage += 1
+                    }
+                    if self.list.count == 0 {
+                        self.emptyView.isHidden = false
+                        self.tableView.isHidden = true
+                    } else {
+                        self.emptyView.isHidden = true
+                        self.tableView.isHidden = false
                     }
                     self.tableView.reloadData()
                 } else {

@@ -46,6 +46,7 @@ class OtherFolderListController: UIViewController {
     
     let headView: BoxDeepListHeadView = BoxDeepListHeadView.view()
     let bottomView: DeepBottomView = DeepBottomView.view()
+    let emptyView: FileEmptyView = FileEmptyView.view()
     private var list: [VideoData] = []
     private var allSelect: Bool = false
     private var isChannel: Bool = false
@@ -86,6 +87,7 @@ class OtherFolderListController: UIViewController {
         self.view.addSubview(self.closeBtn)
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.headView)
+        self.contentView.addSubview(self.emptyView)
         self.contentView.addSubview(self.tableView)
         self.contentView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
@@ -100,6 +102,10 @@ class OtherFolderListController: UIViewController {
         self.headView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(74)
+        }
+        self.emptyView.snp.makeConstraints { make in
+            make.top.equalTo(self.headView.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         }
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.headView.snp.bottom)
@@ -242,6 +248,13 @@ class OtherFolderListController: UIViewController {
                             self.tableView.mj_footer?.isHidden = true
                         } else {
                             self.currentPage += 1
+                        }
+                        if self.list.count == 0 {
+                            self.emptyView.isHidden = false
+                            self.tableView.isHidden = true
+                        } else {
+                            self.emptyView.isHidden = true
+                            self.tableView.isHidden = false
                         }
                         self.tableView.reloadData()
                     } else {
