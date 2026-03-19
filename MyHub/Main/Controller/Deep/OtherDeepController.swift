@@ -55,15 +55,6 @@ class OtherDeepController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.dataModel.files.forEach { m in
-            m.isSelect = false
-        }
-        self.tableView.reloadData()
-        self.bottomView.isHidden = true
-    }
-    
     init(linkId: String) {
         super.init(nibName: nil, bundle: nil)
         self.linkId = linkId
@@ -87,6 +78,7 @@ class OtherDeepController: UIViewController {
         }
         NotificationCenter.default.addObserver(forName: Noti_ClosePresent, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
+            self.hiddenBottomView()
             self.dismissAllChildControllers()
         }
     }
@@ -129,6 +121,7 @@ class OtherDeepController: UIViewController {
         self.headView.clickBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                self.hiddenBottomView()
                 HubTool.share.channelSource = .homeChannel
                 HubTool.share.platform = HubTool.share.platform
                 let vc = PingController(uId: self.dataModel.userInfo.id, platform: HubTool.share.platform)
@@ -159,6 +152,7 @@ class OtherDeepController: UIViewController {
                     pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: HubTool.share.platform))
                 }
                 DispatchQueue.main.async {
+                    self.hiddenBottomView()
                     if let m = self.dataModel.files.first(where: {$0.file_type == .video}) {
                         PlayTool.instance.pushPage(self, HubTool.share.channelModel(m, linkId: self.linkId, uId: self.dataModel.userInfo.id, platform: HubTool.share.platform), pushList)
                     } else if let m = self.recommendList.first(where: {$0.file_type == .video}) {
@@ -233,6 +227,7 @@ class OtherDeepController: UIViewController {
     
     @objc func clickCloseAction() {
         TabbarTool.instance.displayOrHidden(true)
+        self.hiddenBottomView()
         self.dismiss(animated: false)
     }
     
@@ -368,6 +363,7 @@ class OtherDeepController: UIViewController {
     }
     
     func pushModelVC(_ model: ChannelData) {
+        self.hiddenBottomView()
         HubTool.share.eventSource = .landpage
         HubTool.share.uploadPlatform = HubTool.share.platform
         HubTool.share.playSource = .landpage_file
@@ -406,6 +402,17 @@ class OtherDeepController: UIViewController {
         self.bottomView.snp.updateConstraints { make in
             make.height.equalTo(arr.count == 0 ? 0 : 64)
         }
+    }
+    
+    func hiddenBottomView() {
+        self.dataModel.files.forEach { m in
+            m.isSelect = false
+        }
+        self.bottomView.isHidden = true
+        self.bottomView.snp.updateConstraints { make in
+            make.height.equalTo(0)
+        }
+        self.tableView.reloadData()
     }
 }
 
