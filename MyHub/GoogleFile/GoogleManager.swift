@@ -196,6 +196,8 @@ extension GoogleManager {
         //            complete(false, nil, false)
         //            return
         //        }
+        complete(false, nil, false)
+        return
         guard HubTool.share.showAdomb == false else {
             complete(false, nil, false)
             return

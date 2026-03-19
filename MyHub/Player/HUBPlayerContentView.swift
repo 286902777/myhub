@@ -95,7 +95,7 @@ class HUBPlayerContentView: UIView {
         }
     }
     
-    lazy var loadingView: HUBPlayLoadView = HUBPlayLoadView.view()
+//    lazy var loadingView: HUBPlayLoadView = HUBPlayLoadView.view()
     
     private lazy var backButton: UIButton = {
         let view = UIButton()
@@ -361,29 +361,31 @@ class HUBPlayerContentView: UIView {
                 playButton.isSelected = false
                 placeholderStackView.isHidden = placeholderView == nil
                 self.isShowLoad = true
-                loadingView.start()
+//                loadingView.start()
             case .waiting:
                 sliderView.isUserInteractionEnabled = false
                 placeholderStackView.isHidden = true
                 self.isShowLoad = true
-                loadingView.start()
+//                loadingView.start()
             case .readyToPlay:
                 sliderView.isUserInteractionEnabled = true
             case .playing:
+                LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = true
                 playButton.isSelected = true
                 placeholderStackView.isHidden = true
                 self.isShowLoad = false
-                loadingView.stop()
+//                loadingView.stop()
             case .buffering:
                 sliderView.isUserInteractionEnabled = true
                 placeholderStackView.isHidden = true
                 self.isShowLoad = true
-                loadingView.start()
+//                loadingView.start()
             case .failed:
+                LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = false
                 self.isShowLoad = false
-                loadingView.stop()
+//                loadingView.stop()
             case .pause:
                 sliderView.isUserInteractionEnabled = true
                 playButton.isSelected = false
@@ -392,7 +394,7 @@ class HUBPlayerContentView: UIView {
                 playButton.isSelected = false
                 placeholderStackView.isHidden = placeholderView == nil
                 self.isShowLoad = false
-                loadingView.stop()
+//                loadingView.stop()
             }
         }
     }
@@ -401,7 +403,7 @@ class HUBPlayerContentView: UIView {
         self.soundPlayer?.pause()
         self.isShowLoad = true
 //        loadingView.pushVip = true
-        loadingView.start()
+//        loadingView.start()
     }
 }
 
@@ -419,7 +421,7 @@ private extension HUBPlayerContentView {
         addSubview(topToolView)
         addSubview(bottomToolView)
         addSubview(listFullView)
-        addSubview(loadingView)
+//        addSubview(loadingView)
         
         topToolView.addSubview(backButton)
         topToolView.addSubview(titleLabel)
@@ -467,18 +469,18 @@ private extension HUBPlayerContentView {
 
         addGestureRecognizer(panGesture)
 
-        loadingView.clickBlock = { [weak self] click  in
-            guard let self = self else { return }
-            if click {
-                self.delegate?.contentView(self, didClickVipButton: true)
-            } else {
-                self.soundPlayer?.play()
-            }
-        }
-        loadingView.stateBlock = {[weak self] in
-            guard let self = self else { return }
-            self.isShowLoad = false
-        }
+//        loadingView.clickBlock = { [weak self] click  in
+//            guard let self = self else { return }
+//            if click {
+//                self.delegate?.contentView(self, didClickVipButton: true)
+//            } else {
+//                self.soundPlayer?.play()
+//            }
+//        }
+//        loadingView.stateBlock = {[weak self] in
+//            guard let self = self else { return }
+//            self.isShowLoad = false
+//        }
         guard !config.isHiddenToolbarWhenStart else { return }
         autoFadeOutTooView()
     }
@@ -533,9 +535,9 @@ private extension HUBPlayerContentView {
             make.bottom.equalToSuperview()
         }
         
-        loadingView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+//        loadingView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
         
         backButton.snp.makeConstraints { make in
             make.left.equalTo(10)

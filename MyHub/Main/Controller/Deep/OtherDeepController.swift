@@ -267,6 +267,9 @@ class OtherDeepController: UIViewController {
                         HubTool.share.boxLinkId = ""
                         self.hotHeadView.isHidden = false
                         self.hotHeadView.setData(model, linkId: self.linkId, uId: model.userInfo.id, name: model.userInfo.name, platform: HubTool.share.platform)
+                        self.hotHeadView.clickBlock = { data, hot in
+                            self.pushHotRecentData(HubTool.share.channelModel(data, linkId: self.linkId, uId: model.userInfo.id, platform: HubTool.share.platform), HubTool.share.channelList(hot ? model.hots : model.recents, linkId: self.linkId, uId: model.userInfo.id, platform: HubTool.share.platform))
+                        }
                         UserDefaults.standard.set(model.userInfo.email, forKey: EventSaveEmail)
                         UserDefaults.standard.set(self.linkId, forKey: EventSaveLinkId)
                         UserDefaults.standard.set(model.userInfo.id, forKey: EventSaveUserId)
@@ -279,7 +282,9 @@ class OtherDeepController: UIViewController {
                     self.tableView.mj_footer?.endRefreshing()
                     if model.files.count < HttpManager.share.pageSize {
                         self.isRecommend = true
-                        self.requestUserLoop()
+//                        self.requestUserLoop()
+                        self.tableView.mj_footer?.endRefreshingWithNoMoreData()
+                        self.tableView.mj_footer?.isHidden = true
                     } else {
                         self.currentPage += 1
                     }
@@ -292,6 +297,21 @@ class OtherDeepController: UIViewController {
                     }
                 }
             }
+        }
+    }
+    
+    func pushHotRecentData(_ mod: VideoData, _ list: [VideoData]) {
+        switch mod.file_type {
+        case .video:
+            PlayTool.instance.pushPage(self, mod, list)
+        case .folder:
+            let vc = OtherFolderListController(model: mod, linkId: self.linkId, userId: self.dataModel.userInfo.id, userName: self.dataModel.userInfo.name, platform: HubTool.share.platform, channel: false)
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: true)
+        case .photo:
+            let vc = OpenPhotoController(model: mod)
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: true)
         }
     }
     
