@@ -353,7 +353,7 @@ extension GoogleManager {
                         self.successComplete?()
                     }
                     adData.paidEventHandler = { value in
-                        let nvalue = value.value.doubleValue
+                        let nvalue = value.value.doubleValue * 1000000
                         let currencyCode = value.currencyCode
                         let p: String = mode.rawValue
                         
@@ -404,7 +404,7 @@ extension GoogleManager {
                         self.successComplete?()
                     }
                     adData.paidEventHandler = { value in
-                        let nvalue = value.value.doubleValue
+                        let nvalue = value.value.doubleValue * 1000000
                         let currencyCode = value.currencyCode
                         let p: String = mode.rawValue
                         let para = TbaManager.instance.adsValueInfos(value: nvalue, currency: currencyCode, source: adData.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "", platform: "admob", unitid: adData.adUnitID, placement: "", format: p)
@@ -456,7 +456,7 @@ extension GoogleManager {
                         self.successComplete?()
                     }
                     adData.paidEventHandler = { value in
-                        let nvalue = value.value.doubleValue
+                        let nvalue = value.value.doubleValue * 1000000
                         let currencyCode = value.currencyCode
                         let p: String = mode.rawValue
                         
@@ -500,7 +500,7 @@ extension GoogleManager: NativeAdLoaderDelegate, NativeAdDelegate {
         cacheModel.adsType = .native
         self.insertCacheModel(adLoader.adUnitID, cacheModel)
         nativeAd.paidEventHandler = { value in
-            let nvalue = value.value.doubleValue
+            let nvalue = value.value.doubleValue * 1000000
             let currencyCode = value.currencyCode
             let p: String = self.showMode.rawValue
             let para = TbaManager.instance.adsValueInfos(value: nvalue, currency: currencyCode, source: nativeAd.responseInfo.loadedAdNetworkResponseInfo?.adNetworkClassName ?? "", platform: "admob", unitid: adLoader.adUnitID, placement: "", format: p)
@@ -634,7 +634,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
     
     func didPayRevenue(for ad: MAAd) {
         print("App -  didPayRevenue")
-        let revenue = ad.revenue // In USD
+        let revenue = ad.revenue * 1000000 // In USD
         let adUnitId = ad.adUnitIdentifier // The MAX Ad Unit ID
         let networkName = ad.networkName // Display name of the network that showed the ad (e.g. "AdColony")
         let p: String = self.showMode.rawValue

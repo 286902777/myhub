@@ -192,27 +192,28 @@ class HUBPlayLoadView: UIView {
     
     
     func start() {
-        self.isHidden = false
-//        self.mainV.isHidden = PremiumTool.instance.isMember
-//        self.memberV.isHidden = !PremiumTool.instance.isMember
-        var showLength = Int.random(in: 5...9)
-        self.timer?.invalidate()
-        self.timer = nil
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                showLength -= 1
-                if showLength <= 0 {
-                    self.stop()
-                    print("bbbbbb-dismis")
-                    self.clickBlock?(false)
-                }
-//                if PremiumTool.instance.isMember == false {
-//                    let size = Int.random(in: 0...999)
-//                    self.speedL.text = "Current line congestion... \(size)kb/s"
+        self.clickBlock?(false)
+//        self.isHidden = false
+////        self.mainV.isHidden = PremiumTool.instance.isMember
+////        self.memberV.isHidden = !PremiumTool.instance.isMember
+//        var showLength = Int.random(in: 5...9)
+//        self.timer?.invalidate()
+//        self.timer = nil
+//        self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] _ in
+//            guard let self = self else { return }
+//            DispatchQueue.main.async {
+//                showLength -= 1
+//                if showLength <= 0 {
+//                    self.stop()
+//                    print("bbbbbb-dismis")
+//                    self.clickBlock?(false)
 //                }
-            }
-        })
+////                if PremiumTool.instance.isMember == false {
+////                    let size = Int.random(in: 0...999)
+////                    self.speedL.text = "Current line congestion... \(size)kb/s"
+////                }
+//            }
+//        })
     }
     
     func stop() {

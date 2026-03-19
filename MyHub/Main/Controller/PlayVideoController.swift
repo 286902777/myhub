@@ -451,7 +451,6 @@ extension PlayVideoController: HUBPlayerDelegate {
             } else {
                 ToastTool.instance.show("Added to download list")
                 UploadDownTool.instance.downLoad(self.model)
-                HubTool.share.downEvent(self.model)
                 if self.model.platform != .box {
                     HubTool.share.downEvent(self.model)
                 }

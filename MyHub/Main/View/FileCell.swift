@@ -144,7 +144,7 @@ class FileCell: UITableViewCell {
         self.selectBtn.isSelected = model.isSelect
         switch model.file_type {
         case .folder:
-            self.iconV.image = UIImage(named: "folder_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "folder_bg")
             self.infoL.text = "\(model.vid_qty) Files"
         case .photo:
             self.iconV.setImage(model.file_meta.thumbnail, placeholder: "photo_bg")
@@ -161,7 +161,7 @@ class FileCell: UITableViewCell {
         self.selectBtn.isSelected = model.isSelect
         switch model.file_type {
         case .folder:
-            self.iconV.image = UIImage(named: "folder_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "folder_bg")
             self.infoL.text = "\(model.create_time.dateToYMD())"
         case .photo:
             self.iconV.setImage(model.file_meta.thumbnail, placeholder: "photo_bg")
@@ -178,7 +178,7 @@ class FileCell: UITableViewCell {
         switch model.file_type {
         case .folder:
             self.selectBtn.isHidden = true
-            self.iconV.image = UIImage(named: "folder_bg")
+            self.iconV.setImage(model.file_meta.thumbnail, placeholder: "folder_bg")
             self.infoL.text = "\(model.vid_qty) Files"
         case .photo:
             self.selectBtn.isHidden = true
@@ -196,7 +196,7 @@ class FileCell: UITableViewCell {
         self.selectBtn.isSelected = model.isSelect
         switch model.file_type {
         case .folder:
-            self.iconV.image = UIImage(named: "folder_bg")
+            self.iconV.setImage(model.thumbnail, placeholder: "folder_bg")
             self.infoL.text = "\(model.vid_qty) Files"
         case .photo:
             self.iconV.setImage(model.thumbnail, placeholder: "photo_bg")
@@ -213,7 +213,7 @@ class FileCell: UITableViewCell {
         let hasSize = data.file_size > 0
         switch data.file_type {
         case .folder:
-            self.iconV.image = UIImage(named: "folder_bg")
+            self.iconV.setImage(data.thumbnail, placeholder: "folder_bg")
         case .photo:
             self.iconV.setImage(data.thumbnail, placeholder: "photo_bg")
         case .video:

@@ -24,13 +24,14 @@ class PingListController: SuperController {
     private var userName: String = ""
     
     private var currentPage: Int = 0
-    
+    let emptyView: FileEmptyView = FileEmptyView.view()
     private var platform: HUB_PlatformType = .box
     let cellIdentifier: String = "FileCellIdentifier"
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
         table.dataSource = self
+        table.isHidden = true
         table.separatorStyle = .none
         table.backgroundColor = .clear
         table.register(FileCell.self, forCellReuseIdentifier: cellIdentifier)
@@ -89,7 +90,12 @@ class PingListController: SuperController {
     
     func setUI() {
         self.navbar.nameL.text = self.model.name
+        self.view.addSubview(self.emptyView)
         self.view.addSubview(self.tableView)
+        self.emptyView.snp.makeConstraints { make in
+            make.top.equalTo(self.navbar.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
+        }
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.navbar.snp.bottom)
             make.left.right.bottom.equalToSuperview()
@@ -222,6 +228,13 @@ class PingListController: SuperController {
                             self.tableView.mj_footer?.isHidden = true
                         } else {
                             self.currentPage += 1
+                        }
+                        if self.list.count == 0 {
+                            self.emptyView.isHidden = false
+                            self.tableView.isHidden = true
+                        } else {
+                            self.emptyView.isHidden = true
+                            self.tableView.isHidden = false
                         }
                         self.tableView.reloadData()
                     } else {

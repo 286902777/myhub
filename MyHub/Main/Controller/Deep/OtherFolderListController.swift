@@ -46,6 +46,7 @@ class OtherFolderListController: UIViewController {
     
     let headView: BoxDeepListHeadView = BoxDeepListHeadView.view()
     let bottomView: DeepBottomView = DeepBottomView.view()
+    let emptyView: FileEmptyView = FileEmptyView.view()
     private var list: [VideoData] = []
     private var allSelect: Bool = false
     private var isChannel: Bool = false
@@ -68,15 +69,6 @@ class OtherFolderListController: UIViewController {
         self.navigationController?.navigationBar.isHidden = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.list.forEach { m in
-            m.isSelect = false
-        }
-        self.tableView.reloadData()
-        self.bottomView.isHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
@@ -95,6 +87,7 @@ class OtherFolderListController: UIViewController {
         self.view.addSubview(self.closeBtn)
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.headView)
+        self.contentView.addSubview(self.emptyView)
         self.contentView.addSubview(self.tableView)
         self.contentView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
@@ -109,6 +102,10 @@ class OtherFolderListController: UIViewController {
         self.headView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(74)
+        }
+        self.emptyView.snp.makeConstraints { make in
+            make.top.equalTo(self.headView.snp.bottom)
+            make.left.right.bottom.equalToSuperview()
         }
         self.tableView.snp.makeConstraints { make in
             make.top.equalTo(self.headView.snp.bottom)
@@ -129,6 +126,7 @@ class OtherFolderListController: UIViewController {
             DispatchQueue.main.async {
                 switch idx {
                 case 0:
+                    self.hiddenBottomView()
                     self.dismiss(animated: false)
                 default:
                     self.clickAllAction()
@@ -140,6 +138,7 @@ class OtherFolderListController: UIViewController {
             DispatchQueue.main.async {
                 switch idx {
                 case 0:
+                    self.hiddenBottomView()
                     if let m = self.list.first(where: {$0.file_type == .video}) {
                         PlayTool.instance.pushPage(self, m, self.list)
                     }
@@ -250,6 +249,13 @@ class OtherFolderListController: UIViewController {
                         } else {
                             self.currentPage += 1
                         }
+                        if self.list.count == 0 {
+                            self.emptyView.isHidden = false
+                            self.tableView.isHidden = true
+                        } else {
+                            self.emptyView.isHidden = true
+                            self.tableView.isHidden = false
+                        }
                         self.tableView.reloadData()
                     } else {
                         ToastTool.instance.show(errMsg, .fail)
@@ -282,6 +288,7 @@ class OtherFolderListController: UIViewController {
     }
     
     func pushModelVC(_ model: VideoData) {
+        self.hiddenBottomView()
         switch model.file_type {
         case .folder:
             let vc = OtherFolderListController(model: model, linkId: self.linkId, userId: model.userId, userName: self.userName, platform: self.platform, channel: self.isChannel)
@@ -296,10 +303,23 @@ class OtherFolderListController: UIViewController {
         }
     }
     
-    
     func disPlayBottom() {
         let arr = self.list.filter({$0.isSelect == true})
         self.bottomView.isHidden = arr.count == 0
+        self.bottomView.snp.updateConstraints { make in
+            make.height.equalTo(arr.count == 0 ? 0 : 64)
+        }
+    }
+    
+    func hiddenBottomView() {
+        self.list.forEach { m in
+            m.isSelect = false
+        }
+        self.bottomView.isHidden = true
+        self.bottomView.snp.updateConstraints { make in
+            make.height.equalTo(0)
+        }
+        self.tableView.reloadData()
     }
 }
 
