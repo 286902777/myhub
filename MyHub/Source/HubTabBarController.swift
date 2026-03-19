@@ -11,9 +11,11 @@ import SnapKit
 class HubTabBarController: UIViewController {
     let tabbar = HubTabBar()
     
+    var hasDeep: Bool = false
+    
     var currentIdx: Int = 0
     private var controllers: [UIViewController] = []
-
+    
     lazy var pageController: UIPageViewController = {
         let vc = UIPageViewController(
             transitionStyle: .scroll,    // 滚动式切换
@@ -37,9 +39,27 @@ class HubTabBarController: UIViewController {
             guard let self = self else { return }
             self.tabIdxToIndex()
         }
-        NotificationCenter.default.addObserver(forName: Noti_ChangeTabbarToIndex, object: nil, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: Noti_AppDeep, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.tabIdxToIndex()
+            if HubTool.share.deepUrl.count > 0 {
+                self.popRootVC()
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            if HubTool.share.deepUrl.count > 0 {
+                self.popRootVC()
+            }
+        }
+    }
+    
+    func popRootVC() {
+        if HubTool.share.showAdomb == false {
+            guard let window = HubTool.share.keyWindow else {
+                return
+            }
+            window.rootViewController = HubTabBarController()
         }
     }
     
@@ -48,12 +68,12 @@ class HubTabBarController: UIViewController {
         let fileVC = UINavigationController(rootViewController: SecendController())
         let uploadVC = UINavigationController(rootViewController: DownController())
         let setVC = UINavigationController(rootViewController: SetController())
-
+        
         self.controllers.append(homeVC)
         self.controllers.append(fileVC)
         self.controllers.append(uploadVC)
         self.controllers.append(setVC)
-
+        
         if let _ = self.controllers.first {
             pageController.setViewControllers([homeVC], direction: .forward, animated: false, completion: nil)
         }

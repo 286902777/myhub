@@ -60,6 +60,9 @@ class IndexController: SuperController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         TabbarTool.instance.displayOrHidden(true)
+        if HubTool.share.deepUrl.count > 0 {
+            self.appFlyerPushSubVC(HubTool.share.deepUrl)
+        }
     }
     
     override func viewDidLoad() {
@@ -67,15 +70,7 @@ class IndexController: SuperController {
         self.setup()
         databaseInfo()
         uploadFirstOpenApp()
-        if HubTool.share.deepUrl.count > 0 {
-            self.appFlyerPushSubVC(HubTool.share.deepUrl)
-        }
-        NotificationCenter.default.addObserver(forName: Noti_AppDeep, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            if HubTool.share.deepUrl.count > 0 {
-                self.appFlyerPushSubVC(HubTool.share.deepUrl)
-            }
-        }
+
         NotificationCenter.default.addObserver(forName: Noti_Login, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.loadData()
@@ -121,13 +116,6 @@ class IndexController: SuperController {
             }
             UploadDownTool.instance.uploadList.removeAll()
             UploadDownTool.instance.downList.removeAll()
-        }
-        
-        NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            if HubTool.share.deepUrl.count > 0 {
-                self.appFlyerPushSubVC(HubTool.share.deepUrl)
-            }
         }
     }
     
@@ -194,22 +182,13 @@ class IndexController: SuperController {
     
     // MARK: - open 个人网盘承接页
     func driveDeep(_ linkId: String) {
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
-            guard let self = self else { return }
-            NotificationCenter.default.post(name: Noti_ChangeTabbarToIndex, object: nil, userInfo: nil)
-            self.popRootVC()
-            DeepManager.share.openBoxDeep(linkId: linkId, rootVC: self)
-        }
+        DeepManager.share.openBoxDeep(linkId: linkId, rootVC: self)
     }
     
     // MARK: - open 中东印度承接页
     func platformDeep(_ linkId: String, _ platform: HUB_PlatformType) {
         self.uploadDownApp(linkId)
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) { [weak self] in
-            guard let self = self else { return }
-            self.popRootVC()
-            DeepManager.share.openOtherDeep(linkId: linkId, uId: "", platform: platform, rootVC: self)
-        }
+        DeepManager.share.openOtherDeep(linkId: linkId, uId: "", platform: platform, rootVC: self)
     }
     
     func uploadDownApp(_ linkId: String) {
@@ -330,19 +309,6 @@ class IndexController: SuperController {
             }
         }
         return userArr
-    }
-    
-    func popRootVC() {
-        if let keyVC = HubTool.share.keyVC(), keyVC.isKind(of: IndexController.self) {
-            return
-        } else {
-            if let vc = HubTool.share.keyWindow?.rootViewController, vc.presentedViewController != nil {
-                vc.dismiss(animated: false)
-            }
-            if self.navigationController?.viewControllers.count ?? 0 > 1 {
-                self.navigationController?.popToRootViewController(animated: false)
-            }
-        }
     }
     
     func setup() {
