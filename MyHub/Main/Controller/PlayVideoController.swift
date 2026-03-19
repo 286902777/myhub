@@ -104,13 +104,13 @@ class PlayVideoController: UIViewController {
         self.setDownBtnState()
         NotificationCenter.default.addObserver(forName: Noti_ShowAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.player.playerView.contentView.loadingView.stop()
+//            self.player.playerView.contentView.loadingView.stop()
             self.player.pause()
         }
         
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.player.playerView.contentView.loadingView.stop()
+//            self.player.playerView.contentView.loadingView.stop()
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
             
             if HubTool.share.adsPlayState == .download {
@@ -184,7 +184,7 @@ class PlayVideoController: UIViewController {
         HubTool.share.show(.play) { [weak self] success in
             guard let self = self else { return }
             if success {
-                self.player.playerView.contentView.loadingView.stop()
+//                self.player.playerView.contentView.loadingView.stop()
                 self.player.pause()
                 let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
                 UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
@@ -433,7 +433,7 @@ extension PlayVideoController: HUBPlayerDelegate {
     
     func playerDidClickDownButton(_ player: HUBPlayer) {
         if (LoginManager.share.isLogin == false) {
-            self.player.playerView.contentView.loadingView.stop()
+//            self.player.playerView.contentView.loadingView.stop()
             self.player.pause()
             LoginManager.share.loginRequest(self) { success in
                
@@ -446,7 +446,7 @@ extension PlayVideoController: HUBPlayerDelegate {
         HubTool.share.show(.play) { [weak self] success in
             guard let self = self else { return }
             if success {
-                self.player.playerView.contentView.loadingView.stop()
+//                self.player.playerView.contentView.loadingView.stop()
                 self.player.pause()
             } else {
                 ToastTool.instance.show("Added to download list")

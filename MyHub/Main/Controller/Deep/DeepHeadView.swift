@@ -62,7 +62,7 @@ class DeepHeadView: UIView {
         )
         return vc
     }()
-    
+    var clickBlock: ((_ data: ChannelData, _ hot: Bool) -> Void)?
     let hotVC: DeepHotController = DeepHotController()
     let recentlyVC: DeepRecentlyController = DeepRecentlyController()
     class func view() -> DeepHeadView {
@@ -73,7 +73,15 @@ class DeepHeadView: UIView {
     
     func setData(_ data: ChannelListData, linkId: String, uId: String, name: String, platform: HUB_PlatformType) {
         self.hotVC.setDatas(lists: data.hots, linkId: linkId, uId: uId, name: name, platform: platform)
+        self.hotVC.clickBlock = { [weak self] data in
+            guard let self = self else { return }
+            self.clickBlock?(data, true)
+        }
         self.recentlyVC.setDatas(lists: data.recents, linkId: linkId, uId: uId, name: name, platform: platform)
+        self.recentlyVC.clickBlock = { [weak self] data in
+            guard let self = self else { return }
+            self.clickBlock?(data, false)
+        }
     }
     
     func initUI() {

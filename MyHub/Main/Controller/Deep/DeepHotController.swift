@@ -11,6 +11,8 @@ import SnapKit
 class DeepHotController: UIViewController {
     let cellIdentifier: String = "DeepHotCellIdentifier"
     
+    var clickBlock: ((_ data: ChannelData) -> Void)?
+    
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -61,16 +63,7 @@ class DeepHotController: UIViewController {
             HubTool.share.playSource = .channel_hot
         }
         HubTool.share.uploadPlatform = self.platform
-        switch mod.file_type {
-        case .video:
-            PlayTool.instance.pushPage(self, HubTool.share.channelModel(mod, linkId: self.linkId, uId: self.uId, platform: self.platform), HubTool.share.channelList(self.lists, linkId: self.linkId, uId: self.uId, platform: self.platform))
-        case .folder:
-            let vc = OtherFolderListController(model: HubTool.share.channelModel(mod, linkId: self.linkId, uId: self.uId, platform: self.platform), linkId: self.linkId, userId: self.uId, userName: self.name, platform: self.platform, channel: self.linkId.count == 0)
-            self.navigationController?.pushViewController(vc, animated: true)
-        case .photo:
-            let vc = OpenPhotoController(model: HubTool.share.channelModel(mod, linkId: self.linkId, uId: self.uId, platform: self.platform))
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        self.clickBlock?(mod)
     }
 }
 

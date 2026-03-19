@@ -235,6 +235,9 @@ class PingController: UIViewController {
                         self.dataModel = model
                         HubDB.instance.updateUserInfo(model.userInfo)
                         self.headView.setHeadData(model, linkId: "", uId: model.userInfo.id, name: model.userInfo.name, platform: self.platform)
+                        self.headView.clickBlock = { data, hot in
+                            self.pushHotRecentData(HubTool.share.channelModel(data, linkId: "", uId: model.userInfo.id, platform: self.platform), HubTool.share.channelList(hot ? model.hots : model.recents, linkId: "", uId: model.userInfo.id, platform: self.platform))
+                        }
                         HubTool.share.uId = model.userInfo.id
                     } else {
                         self.dataModel.files.append(contentsOf: model.files)
@@ -255,6 +258,19 @@ class PingController: UIViewController {
                     }
                 }
             }
+        }
+    }
+    
+    func pushHotRecentData(_ mod: VideoData, _ list: [VideoData]) {
+        switch mod.file_type {
+        case .video:
+            PlayTool.instance.pushPage(self, mod, list)
+        case .folder:
+            let vc = OtherFolderListController(model: mod, linkId: "", userId: self.dataModel.userInfo.id, userName: self.dataModel.userInfo.name, platform: HubTool.share.platform, channel: false)
+            self.navigationController?.pushViewController(vc, animated: true)
+        case .photo:
+            let vc = OpenPhotoController(model: mod)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
