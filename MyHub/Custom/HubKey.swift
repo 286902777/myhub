@@ -94,6 +94,8 @@ let Noti_DeepDown = NSNotification.Name(rawValue: "Noti_HUB_DeepDown")
 
 let Noti_AppDeep = NSNotification.Name(rawValue: "Noti_HUB_AppDeep")
 
+let Noti_OpenAppDeep = NSNotification.Name(rawValue: "Noti_HUB_OpenAppDeep")
+
 let Noti_DeleteFileSuccess = NSNotification.Name(rawValue: "Noti_HUB_DeleteFileSuccess")
 
 let Noti_ReNameSuccess = NSNotification.Name(rawValue: "Noti_HUB_ReNameSuccess")
@@ -105,7 +107,5 @@ let Noti_DismissAds = NSNotification.Name(rawValue: "Noti_HUB_DismissAds")
 let Noti_ClickNativeAds = NSNotification.Name(rawValue: "Noti_HUB_ClickNativeAds")
 
 let Noti_TabbarShow = NSNotification.Name(rawValue: "Noti_TabbarShow")
-
-let Noti_ChangeTabbarToIndex = NSNotification.Name(rawValue: "Noti_ChangeTabbarToIndex")
 
 let Noti_ClosePresent = NSNotification.Name(rawValue: "Noti_ClosePresent")

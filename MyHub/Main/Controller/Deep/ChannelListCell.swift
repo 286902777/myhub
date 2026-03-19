@@ -14,7 +14,7 @@ class ChannelListCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout:layout)
-        collectionView.register(IndexHistoryCell.self, forCellWithReuseIdentifier: cellIdentifier)
+        collectionView.register(ChannelCell.self, forCellWithReuseIdentifier: cellIdentifier)
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.dataSource = self
         collectionView.delegate = self

@@ -37,10 +37,21 @@ class HubTabBarController: UIViewController {
             guard let self = self else { return }
             self.tabIdxToIndex()
         }
-        NotificationCenter.default.addObserver(forName: Noti_ChangeTabbarToIndex, object: nil, queue: .main) { [weak self] _ in
+        
+        NotificationCenter.default.addObserver(forName: Noti_AppDeep, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            self.tabIdxToIndex()
+            self.popRootVC()
+            DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1) {
+                NotificationCenter.default.post(name: Noti_OpenAppDeep, object: nil, userInfo: nil)
+            }
         }
+    }
+    
+    func popRootVC() {
+        guard let window = HubTool.share.keyWindow else {
+            return
+        }
+        window.rootViewController = HubTabBarController()
     }
     
     func addControllers() {

@@ -138,7 +138,7 @@ class FileController: UIViewController {
             }
             self.tableView.reloadData()
         }
-        NotificationCenter.default.addObserver(forName: Noti_AppDeep, object: nil, queue: .main) { [weak self] _ in
+        NotificationCenter.default.addObserver(forName: Noti_OpenAppDeep, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.list.forEach { m in
                 m.isSelect = false
