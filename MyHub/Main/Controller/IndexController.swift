@@ -60,6 +60,9 @@ class IndexController: SuperController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         TabbarTool.instance.displayOrHidden(true)
+        if HubTool.share.deepUrl.count > 0 {
+            self.appFlyerPushSubVC(HubTool.share.deepUrl)
+        }
     }
     
     override func viewDidLoad() {
@@ -67,15 +70,7 @@ class IndexController: SuperController {
         self.setup()
         databaseInfo()
         uploadFirstOpenApp()
-        if HubTool.share.deepUrl.count > 0 {
-            self.appFlyerPushSubVC(HubTool.share.deepUrl)
-        }
-        NotificationCenter.default.addObserver(forName: Noti_OpenAppDeep, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            if HubTool.share.deepUrl.count > 0 {
-                self.appFlyerPushSubVC(HubTool.share.deepUrl)
-            }
-        }
+
         NotificationCenter.default.addObserver(forName: Noti_Login, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.loadData()
@@ -121,13 +116,6 @@ class IndexController: SuperController {
             }
             UploadDownTool.instance.uploadList.removeAll()
             UploadDownTool.instance.downList.removeAll()
-        }
-        
-        NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
-            guard let self = self else { return }
-            if HubTool.share.deepUrl.count > 0 {
-                self.appFlyerPushSubVC(HubTool.share.deepUrl)
-            }
         }
     }
     
