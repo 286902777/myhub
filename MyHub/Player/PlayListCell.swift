@@ -43,21 +43,6 @@ class PlayListCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var recommonedV: UIView = {
-        let view = UIView()
-        view.isHidden = true
-        return view
-    }()
-    
-    lazy var recommonedL: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 9, weight: .medium)
-        label.text = "Recommend"
-        label.textAlignment = .center
-        label.textColor = UIColor.rgbHex("#FFFFFF")
-        return label
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .clear
@@ -73,8 +58,6 @@ class PlayListCell: UICollectionViewCell {
         self.addSubview(nameBgV)
         self.nameBgV.addSubview(nameL)
         self.addSubview(self.playingV)
-        self.addSubview(recommonedV)
-        self.recommonedV.addSubview(recommonedL)
         imageV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -94,24 +77,13 @@ class PlayListCell: UICollectionViewCell {
         }
 
         playingV.layoutIfNeeded()
-        playingV.addRedius([.topLeft, .bottomRight], 16, self.playingV.bounds)
-
-        self.recommonedV.snp.makeConstraints { make in
-            make.right.top.equalTo(imageV)
-            make.size.equalTo(CGSize(width: 62, height: 15))
-        }
-        self.recommonedL.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-        self.recommonedV.addRedius([.topRight, .bottomLeft], 4, CGRectMake(0, 0, 62, 15))
-        self.recommonedV.addGradLayer(UIColor.rgbHex("#8D5CED"), UIColor.rgbHex("#C3A4FF"), CGRectMake(0, 0, 62, 15), true)
+        playingV.addRedius([.topLeft, .bottomRight], 16, self.playingV.bounds) 
     }
     
-    func initData(_ data: VideoData, _ playing: Bool = false) {
+    func initData(_ data: VideoData) {
         self.imageV.setImage(data.thumbnail, placeholder: "deep_video_bg")
         self.nameL.text = data.name
-        self.playingV.isHidden = !playing
-        self.recommonedV.isHidden = !data.recommend
+        self.playingV.isHidden = !data.isSelect
     }
 }
 

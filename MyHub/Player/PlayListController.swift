@@ -25,6 +25,7 @@ class PlayListController: UIViewController {
     let cellIdentifier: String = "PlayListCellIdentifier"
     var selectBlock: ((_ model: VideoData) -> Void)?
     private var currentIdx: Int = 0
+    private var currentScetion: Int = 0
     private var currentModel: VideoData = VideoData()
     let cellW: CGFloat = floor((ScreenWidth - 64) * 0.5)
     let cellH: CGFloat = floor((ScreenWidth - 64) * 0.5 * 0.55)
@@ -50,6 +51,8 @@ class PlayListController: UIViewController {
     private var recommonedUserId: String = ""
     private var recommonedList: [ChannelData] = []
 
+    private var lists: [ChannelRecommendData] = []
+    
     private var isHistory: Bool = false
     init(model: VideoData, history: Bool) {
         self.currentModel = model
@@ -64,21 +67,34 @@ class PlayListController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initUI()
-        self.scrollToIdx()
         NotificationCenter.default.addObserver(forName: Noti_NextPlay, object: nil, queue: .main) { [weak self] data in
             guard let self = self else { return }
             if let m = data.userInfo?["mod"] as? VideoData {
                 self.currentModel = m
+                self.currentModel.isSelect = true
                 self.scrollToIdx()
             }
         }
-//        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
-//            self.requestUserLoop()
-//        }
+        let m = ChannelRecommendData()
+        m.type = .playlist
+        m.lists = PlayTool.instance.list.filter({$0.recommend == false})
+        self.lists.append(m)
+        let remArr = PlayTool.instance.list.filter({$0.recommend == true})
+        if remArr.count > 0 {
+            let reData = ChannelRecommendData()
+            reData.type = .recommend
+            reData.lists = remArr
+            self.lists.append(reData)
+        }
+        self.collectionView.reloadData()
+       
+        self.scrollToIdx()
+        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
+            self.requestUserLoop()
+        }
     }
     
     func requestUserLoop() {
-        LoadManager.instance.show(self)
         let userList = HubDB.instance.readUsers().filter({$0.platform == self.currentModel.platform})
         if userList.count > 0 {
             let userListCount: UInt32 = UInt32(userList.count - 1)
@@ -114,7 +130,6 @@ class PlayListController: UIViewController {
     func requestRecommoned() {
         HttpManager.share.channel("", self.recommonedUserId, 1) { [weak self] status, model, errMsg, refresh in
             guard let self = self else { return }
-            LoadManager.instance.dismiss()
             DispatchQueue.main.async {
                 if refresh {
                     self.requestRecommoned()
@@ -125,17 +140,22 @@ class PlayListController: UIViewController {
                         data.recommoned = true
                         self.recommonedList.append(data)
                     }
-                    PlayTool.instance.list.append(contentsOf: HubTool.share.channelList(self.recommonedList, linkId: "", uId: self.recommonedUserId, platform: self.currentModel.platform))
+                    let arr = HubTool.share.channelList(self.recommonedList, linkId: "", uId: self.recommonedUserId, platform: self.currentModel.platform)
+                    PlayTool.instance.list.append(contentsOf: arr)
+                    if let data = self.lists.first(where: {$0.type == .recommend}) {
+                        data.lists.append(contentsOf: arr)
+                    } else {
+                        let m = ChannelRecommendData()
+                        m.type = .recommend
+                        m.lists = arr
+                        self.lists.append(m)
+                    }
                     self.collectionView.reloadData()
                 } else {
                     ToastTool.instance.show("request fail!", .fail)
                 }
             }
         }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     func initUI() {
@@ -162,17 +182,20 @@ class PlayListController: UIViewController {
     }
     
     func scrollToIdx() {
-        for (i, item) in PlayTool.instance.list.enumerated() {
-            if (item.id == self.currentModel.id) {
-                currentIdx = i
-                break
+        for (i, item) in self.lists.enumerated() {
+            for (j, data) in item.lists.enumerated() {
+                if (data.id == self.currentModel.id) {
+                    self.currentIdx = j
+                    self.currentScetion = i
+                    data.isSelect = true
+                    break
+                }
             }
         }
         
-        self.collectionView.reloadData()
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.25) { [weak self] in
             guard let self = self else { return }
-            self.collectionView.scrollToItem(at: IndexPath(row: self.currentIdx, section: 0), at: .centeredVertically, animated: false)
+            self.collectionView.scrollToItem(at: IndexPath(row: self.currentIdx, section: self.currentScetion), at: .centeredVertically, animated: false)
         }
     }
     
@@ -183,22 +206,41 @@ class PlayListController: UIViewController {
 
 extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        PlayTool.instance.list.count
+        if let m = self.lists.safeIndex(section) {
+            return m.lists.count
+        }
+        return 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        self.lists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PlayListCell
-        if let m = PlayTool.instance.list.safeIndex(indexPath.item) {
-            cell.initData(m, self.currentIdx == indexPath.item)
+        if let m = self.lists.safeIndex(indexPath.section) {
+            if let data = m.lists.safeIndex(indexPath.item) {
+                cell.initData(data)
+            }
         }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let m = PlayTool.instance.list.safeIndex(indexPath.item) {
-            self.selectBlock?(m)
-            self.currentIdx = indexPath.row
-            self.collectionView.reloadData()
+        for (i, item) in self.lists.enumerated() {
+            for (j, data) in item.lists.enumerated() {
+                if data.isSelect {
+                    data.isSelect = false
+                    collectionView.reloadItems(at: [IndexPath(item: j, section: i)])
+                }
+            }
+        }
+        if let m = self.lists.safeIndex(indexPath.section) {
+            if let data = m.lists.safeIndex(indexPath.item) {
+                data.isSelect = true
+                self.selectBlock?(data)
+                collectionView.reloadItems(at: [indexPath])
+            }
         }
     }
     
@@ -224,23 +266,20 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
                 withReuseIdentifier: "HeaderView",
                 for: indexPath
             )
-            
+            header.subviews.forEach { v in
+                v.removeFromSuperview()
+            }
             // 配置 Header
             header.backgroundColor = UIColor.clear
-
-            // 添加 UILabel
-            if let label = header.viewWithTag(indexPath.section) as? UILabel {
-                label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
-            } else {
-                let label = UILabel()
-                label.tag = indexPath.section
-                label.font = UIFont.GoogleSans(weight: .medium, size: 18)
-                label.text = indexPath.section == 0 ? "PlayList" : "Recommend"
-                label.textColor = .white
-                header.addSubview(label)
-                label.snp.makeConstraints { make in
-                    make.left.centerY.equalToSuperview()
-                }
+            let label = UILabel()
+            label.font = UIFont.GoogleSans(weight: .medium, size: 18)
+            label.textColor = .white
+            header.addSubview(label)
+            label.snp.makeConstraints { make in
+                make.left.centerY.equalToSuperview()
+            }
+            if let m = self.lists.safeIndex(indexPath.section) {
+                label.text = m.type.rawValue
             }
             return header
         }

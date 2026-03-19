@@ -44,9 +44,7 @@ class ChannelListCell: UITableViewCell {
     func setUpUI() {
         self.addSubview(self.collectionV)
         self.collectionV.snp.makeConstraints { make in
-            make.left.right.top.equalToSuperview()
-            make.height.equalTo(108)
-            make.bottom.equalTo(-12)
+            make.edges.equalToSuperview()
         }
     }
     
@@ -79,7 +77,7 @@ extension ChannelListCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 90, height: 126)
+        return CGSize(width: 90, height: 120)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

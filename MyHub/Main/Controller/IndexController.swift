@@ -280,8 +280,14 @@ class IndexController: SuperController {
     
     func insertUser(_ users: [ChannelUserData], _ list: [ChannelUserData],  _ platform: HUB_PlatformType) -> [ChannelUserData] {
         var datas: [ChannelUserData] = []
-        
         var userArr: [ChannelUserData] = users
+        for item in list {
+            if let _ = users.first(where: ({$0.id == item.id})) {
+                
+            } else {
+                datas.append(item)
+            }
+        }
         if users.count > 2 {
             for (idx, _) in users.enumerated() {
                 if idx % 2 == 0, idx > 0 {
@@ -610,7 +616,9 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let m = self.list.safeIndex(indexPath.section) {
-            if m.type == .history {
+            if m.type == .upload {
+                return 74
+            } else {
                 return 120
             }
         }

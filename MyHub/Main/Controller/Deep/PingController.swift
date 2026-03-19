@@ -116,11 +116,7 @@ class PingController: UIViewController {
                 TackManager.share.startTrack()
             }
         }
-        
-        
         self.view.addSubview(self.tableView)
-  
-        
         self.tableView.tableHeaderView = self.headView
         self.view.addSubview(self.bottomView)
         self.bottomView.snp.makeConstraints { make in

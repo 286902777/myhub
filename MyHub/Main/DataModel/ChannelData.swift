@@ -162,6 +162,16 @@ class UserInfoData: SuperData {
         mapper.specify(property: &avtar_url, name: "laundryman")
     }
 }
+
+enum ChannelRecommendType: String, HandyJSONEnum {
+    case playlist = "PlayList"
+    case recommend = "Recommend"
+}
+
+class ChannelRecommendData: SuperData {
+    var type: ChannelRecommendType = .playlist
+    var lists: [VideoData] = []
+}
 // MARK: - DeleteUser
 
 class UserDeleteData: SuperData {

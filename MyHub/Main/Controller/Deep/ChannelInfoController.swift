@@ -22,6 +22,14 @@ class ChannelInfoController: SuperController {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: BottomSafeH, right: 14)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(
+            UICollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: "HeaderView")
+        collectionView.register(
+            UICollectionReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+            withReuseIdentifier: "FooterView")
         return collectionView
     }()
     
@@ -161,6 +169,9 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
                     withReuseIdentifier: "FooterView",
                     for: indexPath
                 )
+                footer.subviews.forEach { v in
+                    v.removeFromSuperview()
+                }
                 // 配置 Header
                 footer.backgroundColor = UIColor.clear
                 guard let m = self.listArr.safeIndex(indexPath.section), m.users.count > 6 else {
@@ -186,6 +197,9 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
                     withReuseIdentifier: "HeaderView",
                     for: indexPath
                 )
+                header.subviews.forEach { v in
+                    v.removeFromSuperview()
+                }
                 header.backgroundColor = UIColor.clear
                 if let _ = header.viewWithTag(indexPath.section) as? UILabel {
                     
@@ -196,8 +210,7 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
                     label.textColor = UIColor.rgbHex("#434343")
                     header.addSubview(label)
                     label.snp.makeConstraints { make in
-                        make.left.equalTo(14)
-                        make.centerY.equalToSuperview()
+                        make.left.centerY.equalToSuperview()
                     }
                 }
                 return header
