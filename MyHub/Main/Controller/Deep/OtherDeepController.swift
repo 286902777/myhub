@@ -42,7 +42,8 @@ class OtherDeepController: UIViewController {
     let headView: BoxDeepHeadView = BoxDeepHeadView.view()
     let bottomView: DeepBottomView = DeepBottomView.view()
     let hotHeadView: DeepHeadView = DeepHeadView.view()
-    private var allSelect: Bool = false
+    private var videoSelect: Bool = false
+    private var recommendSelect: Bool = false
     private var dataModel: ChannelListData = ChannelListData()
     private var linkId: String = ""
     private var currentPage: Int = 1
@@ -282,9 +283,7 @@ class OtherDeepController: UIViewController {
                     self.tableView.mj_footer?.endRefreshing()
                     if model.files.count < HttpManager.share.pageSize {
                         self.isRecommend = true
-//                        self.requestUserLoop()
-                        self.tableView.mj_footer?.endRefreshingWithNoMoreData()
-                        self.tableView.mj_footer?.isHidden = true
+                        self.requestUserLoop()
                     } else {
                         self.currentPage += 1
                     }
@@ -411,10 +410,18 @@ class OtherDeepController: UIViewController {
             }
         }
     }
-    @objc func clickAllAction() {
-        self.allSelect = !self.allSelect
-        self.dataModel.files.forEach { m in
-            m.isSelect = self.allSelect
+    
+    @objc func clickAllAction(_ sender: UIButton) {
+        if sender.tag == 0 {
+            self.videoSelect = !self.videoSelect
+            self.dataModel.files.forEach { m in
+                m.isSelect = self.videoSelect
+            }
+        } else {
+            self.recommendSelect = !self.recommendSelect
+            self.recommendList.forEach { m in
+                m.isSelect = self.recommendSelect
+            }
         }
         self.disPlayBottom()
         self.tableView.reloadData()
@@ -422,14 +429,26 @@ class OtherDeepController: UIViewController {
     
     func disPlayBottom() {
         let arr = self.dataModel.files.filter({$0.isSelect == true})
-        self.bottomView.isHidden = arr.count == 0
-        self.bottomView.snp.updateConstraints { make in
-            make.height.equalTo(arr.count == 0 ? 0 : 64)
+        let reArr = self.recommendList.filter({$0.isSelect == true})
+        if arr.count == 0, reArr.count == 0 {
+            self.bottomView.isHidden = true
+            self.bottomView.snp.updateConstraints { make in
+                make.height.equalTo(0)
+            }
+        } else {
+            self.bottomView.isHidden = false
+            self.bottomView.snp.updateConstraints { make in
+                make.height.equalTo(64)
+            }
         }
+        self.tableView.reloadData()
     }
     
     func hiddenBottomView() {
         self.dataModel.files.forEach { m in
+            m.isSelect = false
+        }
+        self.recommendList.forEach { m in
             m.isSelect = false
         }
         self.bottomView.isHidden = true
@@ -443,14 +462,28 @@ class OtherDeepController: UIViewController {
 extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FileCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! FileCell
-        if let m = self.dataModel.files.safeIndex(indexPath.row) {
-            cell.initPlatformData(m, true)
-            cell.selectBlock = { [weak self] on in
-                guard let self = self else { return }
-                m.isSelect = on
-                self.disPlayBottom()
-                DispatchQueue.main.async {
-                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        if indexPath.section == 0 {
+            if let m = self.dataModel.files.safeIndex(indexPath.row) {
+                cell.initPlatformData(m, true)
+                cell.selectBlock = { [weak self] on in
+                    guard let self = self else { return }
+                    m.isSelect = on
+                    self.disPlayBottom()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                }
+            }
+        } else {
+            if let m = self.recommendList.safeIndex(indexPath.row) {
+                cell.initPlatformData(m, true)
+                cell.selectBlock = { [weak self] on in
+                    guard let self = self else { return }
+                    m.isSelect = on
+                    self.disPlayBottom()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
                 }
             }
         }
@@ -458,7 +491,18 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.dataModel.files.count
+        if section == 0 {
+            return self.dataModel.files.count
+        } else {
+            return self.recommendList.count
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if self.recommendList.count > 0 {
+            return 2
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -473,7 +517,7 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 40))
         view.backgroundColor = .white
         let label = UILabel()
-        label.text = "All Videos"
+        label.text = section == 0 ? "All Videos" : "Recommend"
         label.textColor = UIColor.rgbHex("#141414")
         label.font = UIFont.GoogleSans(weight: .medium, size: 16)
         view.addSubview(label)
@@ -482,10 +526,11 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
             make.centerY.equalToSuperview()
         }
         let btn = UIButton()
+        btn.tag = section
         btn.setTitle("Select all", for: .normal)
         btn.titleLabel?.font = UIFont.GoogleSans(weight: .medium, size: 12)
         btn.setTitleColor(UIColor.rgbHex("#14171C", 0.5), for: .normal)
-        btn.addTarget(self, action: #selector(clickAllAction), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(clickAllAction(_:)), for: .touchUpInside)
         view.addSubview(btn)
         btn.snp.makeConstraints { make in
             make.top.bottom.right.equalToSuperview()
@@ -494,8 +539,14 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
         return view
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let m = self.dataModel.files.safeIndex(indexPath.row) {
-            self.pushModelVC(m)
+        if indexPath.section == 0 {
+            if let m = self.dataModel.files.safeIndex(indexPath.row) {
+                self.pushModelVC(m)
+            }
+        } else {
+            if let m = self.recommendList.safeIndex(indexPath.row) {
+                self.pushModelVC(m)
+            }
         }
     }
 }

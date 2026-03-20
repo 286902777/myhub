@@ -208,74 +208,73 @@ class IndexController: SuperController {
     }
     
     func simCheckResult(_ linkId: String) -> Bool {
-//        var isOpen: Bool = false
-//        let isSim = HubTool.share.simData.sim
-//        let isSimlimit = HubTool.share.simData.limitSim
-//        let isEmulator = HubTool.share.simData.emulator
-//        let isEmulatorlimit = HubTool.share.simData.limitEmulator
-//        let isVpn = HubTool.share.simData.vpn
-//        let isVpnlimit = HubTool.share.simData.limitVpn
-//        let isPad = HubTool.share.simData.iPad
-//        let isPadlimit = HubTool.share.simData.limitiPad
-//        var hasSIM: Bool = false
-//        var hasEmulator: Bool = false
-//        var hasVpn: Bool = false
-//        var hasPad: Bool = false
-//        
-//        var openSimDeep: Bool = true
-//        var openEmulatorDeep: Bool = true
-//        var openVpnDeep: Bool = true
-//        var openPadDeep: Bool = true
-//
-//        hasSIM = SimTool.instance.isSim()
-//        HubTool.share.isSim = hasSIM
-//
-//        if isSim {
-//            if hasSIM {
-//                openSimDeep = !isSimlimit
-//            } else {
-//                openSimDeep = isSimlimit
-//            }
-//        }
-//        
-//        hasEmulator = SimTool.instance.isEmulator()
-//        HubTool.share.isEmulator = hasEmulator
-//
-//        if isEmulator {
-//            if hasEmulator {
-//                openEmulatorDeep = !isEmulatorlimit
-//            } else {
-//                openEmulatorDeep = isEmulatorlimit
-//            }
-//        }
-//        
-//        hasVpn = SimTool.instance.isVpnConnected()
-//        HubTool.share.isVpn = hasVpn
-//        if isVpn {
-//            if hasVpn {
-//                openVpnDeep = !isVpnlimit
-//            } else {
-//                openVpnDeep = isVpnlimit
-//            }
-//        }
-//        
-//        hasPad = SimTool.instance.isIPad()
-//        HubTool.share.isPod = hasPad
-//
-//        if isPad {
-//            if hasPad {
-//                openPadDeep = !isPadlimit
-//            } else {
-//                openPadDeep = isPadlimit
-//            }
-//        }
-//        if openSimDeep, openEmulatorDeep, openVpnDeep, openPadDeep {
-//            isOpen = true
-//        } else {
-//            isOpen = false
-//        }
-//        return isOpen
-        return true
+        var isOpen: Bool = false
+        let isSim = HubTool.share.simData.sim
+        let isSimlimit = HubTool.share.simData.limitSim
+        let isEmulator = HubTool.share.simData.emulator
+        let isEmulatorlimit = HubTool.share.simData.limitEmulator
+        let isVpn = HubTool.share.simData.vpn
+        let isVpnlimit = HubTool.share.simData.limitVpn
+        let isPad = HubTool.share.simData.iPad
+        let isPadlimit = HubTool.share.simData.limitiPad
+        var hasSIM: Bool = false
+        var hasEmulator: Bool = false
+        var hasVpn: Bool = false
+        var hasPad: Bool = false
+        
+        var openSimDeep: Bool = true
+        var openEmulatorDeep: Bool = true
+        var openVpnDeep: Bool = true
+        var openPadDeep: Bool = true
+
+        hasSIM = SimTool.instance.isSim()
+        HubTool.share.isSim = hasSIM
+
+        if isSim {
+            if hasSIM {
+                openSimDeep = !isSimlimit
+            } else {
+                openSimDeep = isSimlimit
+            }
+        }
+        
+        hasEmulator = SimTool.instance.isEmulator()
+        HubTool.share.isEmulator = hasEmulator
+
+        if isEmulator {
+            if hasEmulator {
+                openEmulatorDeep = !isEmulatorlimit
+            } else {
+                openEmulatorDeep = isEmulatorlimit
+            }
+        }
+        
+        hasVpn = SimTool.instance.isVpnConnected()
+        HubTool.share.isVpn = hasVpn
+        if isVpn {
+            if hasVpn {
+                openVpnDeep = !isVpnlimit
+            } else {
+                openVpnDeep = isVpnlimit
+            }
+        }
+        
+        hasPad = SimTool.instance.isIPad()
+        HubTool.share.isPod = hasPad
+
+        if isPad {
+            if hasPad {
+                openPadDeep = !isPadlimit
+            } else {
+                openPadDeep = isPadlimit
+            }
+        }
+        if openSimDeep, openEmulatorDeep, openVpnDeep, openPadDeep {
+            isOpen = true
+        } else {
+            isOpen = false
+        }
+        return isOpen
     }
     
     func insertUser(_ users: [ChannelUserData], _ list: [ChannelUserData],  _ platform: HUB_PlatformType) -> [ChannelUserData] {
@@ -361,7 +360,6 @@ class IndexController: SuperController {
                 self.isGroupUpload = true
             }
         }
-        self.tableView.reloadData()
         self.netRequestUpload()
     }
     
@@ -379,7 +377,15 @@ class IndexController: SuperController {
             m.users = self.channelList
             self.requestlist.append(m)
         }
-
+        self.list.forEach { m in
+            if m.type == .history {
+                m.lists = self.historyList
+            }
+            if m.type == .channel {
+                m.users = self.channelList
+            }
+        }
+        self.tableView.reloadData()
         var channels: [ChannelUserData] = []
         var uploads: [VideoData] = []
         
