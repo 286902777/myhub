@@ -377,6 +377,7 @@ class IndexController: SuperController {
             m.users = self.channelList
             self.requestlist.append(m)
         }
+
         self.list.forEach { m in
             if m.type == .history {
                 m.lists = self.historyList
@@ -385,7 +386,9 @@ class IndexController: SuperController {
                 m.users = self.channelList
             }
         }
+
         self.tableView.reloadData()
+
         var channels: [ChannelUserData] = []
         var uploads: [VideoData] = []
         

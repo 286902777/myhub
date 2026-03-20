@@ -112,7 +112,7 @@ class PlayVideoController: UIViewController {
             guard let self = self else { return }
 //            self.player.playerView.contentView.loadingView.stop()
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
-            
+            LoadManager.instance.dismiss()
             if HubTool.share.adsPlayState == .download {
                 ToastTool.instance.show("Added to download list")
                 if self.model.platform != .box {
