@@ -261,7 +261,7 @@ class PlayVideoController: UIViewController {
                         }
                     } else {
                         if let e = errMsg {
-                            ToastTool.instance.show(e, .fail)
+                            ToastTool.instance.show("request failed", .fail)
                         }
                     }
                 }
@@ -280,7 +280,7 @@ class PlayVideoController: UIViewController {
                         }
                     } else {
                         if let e = errMsg {
-                            ToastTool.instance.show(e, .fail)
+                            ToastTool.instance.show("request failed", .fail)
                         }
                     }
                 }
@@ -432,7 +432,6 @@ extension PlayVideoController: HUBPlayerDelegate {
     
     func playerDidClickDownButton(_ player: HUBPlayer) {
         if (LoginManager.share.isLogin == false) {
-//            self.player.playerView.contentView.loadingView.stop()
             self.player.pause()
             LoginManager.share.loginRequest(self) { success in
                
@@ -445,7 +444,6 @@ extension PlayVideoController: HUBPlayerDelegate {
         HubTool.share.show(.play) { [weak self] success in
             guard let self = self else { return }
             if success {
-//                self.player.playerView.contentView.loadingView.stop()
                 self.player.pause()
             } else {
                 ToastTool.instance.show("Added to download list")
@@ -512,7 +510,7 @@ extension PlayVideoController: HUBPlayerDelegate {
     }
     
     func playerLoadPop(_ player: HUBPlayer) {
-//        guard PremiumTool.instance.isMember == false else { return }
+//        guard PremiumTool.instance.isUser == false else { return }
         if HubTool.share.preMiumCount < 5, HubTool.share.preMiumMagin >= 2 {
             let played = HubTool.share.preMiumLists.contains(where: {$0 == self.model.id})
             if played {
