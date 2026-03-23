@@ -468,8 +468,8 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
                 cell.selectBlock = { [weak self] on in
                     guard let self = self else { return }
                     m.isSelect = on
-                    self.disPlayBottom()
                     DispatchQueue.main.async {
+                        self.disPlayBottom()
                         self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
                 }
@@ -480,8 +480,8 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
                 cell.selectBlock = { [weak self] on in
                     guard let self = self else { return }
                     m.isSelect = on
-                    self.disPlayBottom()
                     DispatchQueue.main.async {
+                        self.disPlayBottom()
                         self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
                 }
