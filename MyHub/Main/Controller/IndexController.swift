@@ -71,6 +71,11 @@ class IndexController: SuperController {
         databaseInfo()
         uploadFirstOpenApp()
 
+        NotificationCenter.default.addObserver(forName: Noti_HomeUpdate, object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.loadData()
+        }
+        
         NotificationCenter.default.addObserver(forName: Noti_Login, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.loadData()

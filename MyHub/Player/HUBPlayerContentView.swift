@@ -368,7 +368,9 @@ class HUBPlayerContentView: UIView {
                 self.isShowLoad = true
 //                loadingView.start()
             case .readyToPlay:
+                LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = true
+                self.isShowLoad = false
             case .playing:
                 LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = true
@@ -623,7 +625,7 @@ private extension HUBPlayerContentView {
         }
         sliderView.snp.makeConstraints { make in
             make.left.equalTo(progressView).offset(-1)
-            make.right.equalTo(progressView).offset(1)
+            make.right.equalTo(progressView).offset(2)
             make.height.equalTo(10)
             make.centerY.equalTo(currentDurationLabel).offset(1)
         }

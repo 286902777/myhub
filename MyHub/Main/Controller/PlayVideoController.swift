@@ -54,6 +54,7 @@ class PlayVideoController: UIViewController {
         if let _ = parent {
             return
         } else {
+            NotificationCenter.default.post(name: Noti_HomeUpdate, object: nil, userInfo: nil)
             if self.isPop == false, self.player.isPlaying {
                 HubTool.share.adsPlayState = .playBack
                 self.player.pause()
@@ -112,7 +113,7 @@ class PlayVideoController: UIViewController {
             guard let self = self else { return }
 //            self.player.playerView.contentView.loadingView.stop()
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
-            
+            LoadManager.instance.dismiss()
             if HubTool.share.adsPlayState == .download {
                 ToastTool.instance.show("Added to download list")
                 if self.model.platform != .box {
@@ -250,7 +251,6 @@ class PlayVideoController: UIViewController {
             LoadManager.instance.show(self)
             HttpManager.share.boxVideoUrlApi(model.id) {[weak self] status, address, errMsg in
                 guard let self = self else { return }
-                LoadManager.instance.dismiss()
                 DispatchQueue.main.async {
                     if status == .success {
                         model.history = true
