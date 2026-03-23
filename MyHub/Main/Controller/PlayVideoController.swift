@@ -261,7 +261,7 @@ class PlayVideoController: UIViewController {
                         }
                     } else {
                         if let e = errMsg {
-                            ToastTool.instance.show("request failed", .fail)
+                            ToastTool.instance.show(e, .fail)
                         }
                     }
                 }
@@ -280,7 +280,7 @@ class PlayVideoController: UIViewController {
                         }
                     } else {
                         if let e = errMsg {
-                            ToastTool.instance.show("request failed", .fail)
+                            ToastTool.instance.show(e, .fail)
                         }
                     }
                 }
@@ -510,7 +510,7 @@ extension PlayVideoController: HUBPlayerDelegate {
     }
     
     func playerLoadPop(_ player: HUBPlayer) {
-//        guard PremiumTool.instance.isUser == false else { return }
+//        guard PremiumTool.instance.isMember == false else { return }
         if HubTool.share.preMiumCount < 5, HubTool.share.preMiumMagin >= 2 {
             let played = HubTool.share.preMiumLists.contains(where: {$0 == self.model.id})
             if played {

@@ -628,7 +628,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, "", nil)
             default:
-                completion(status, "", error?.localizedDescription)
+                completion(status, "", "Request fail!")
                 return
             }
         })
@@ -958,11 +958,11 @@ class HttpManager {
                     }
                 } else {
                     let newHost = HttpManager.share.refreshAppHostUrl()
-                    completion(.other, "", newHost ? "" : "Request fail!", newHost)
+                    completion(.other, "", "Request fail!", newHost)
                 }
             default:
                 let newHost = HttpManager.share.refreshAppHostUrl()
-                completion(status, "", newHost ? "" : "Request fail!", newHost)
+                completion(status, "", "Request fail!", newHost)
             }
         })
         task.resume()
