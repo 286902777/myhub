@@ -120,7 +120,6 @@ class PlayVideoController: UIViewController {
                     HubTool.share.downEvent(self.model)
                 }
                 UploadDownTool.instance.downLoad(self.model)
-                HubTool.share.downEvent(self.model)
             }
             if self.isBack {
                 self.premiumBlock?()
