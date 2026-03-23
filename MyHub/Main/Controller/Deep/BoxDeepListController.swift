@@ -280,6 +280,9 @@ class BoxDeepListController: UIViewController {
     func disPlayBottom() {
         let arr = self.list.filter({$0.isSelect == true})
         self.bottomView.isHidden = arr.count == 0
+        self.bottomView.snp.updateConstraints { make in
+            make.height.equalTo(arr.count == 0 ? 0 : 64)
+        }
     }
     
     @objc func clickCloseAction() {

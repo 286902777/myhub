@@ -76,14 +76,6 @@ class FireManager {
                             //                                TR_PayManager.share.getAppPayReceipt(type: .refresh)
                             //                            }
                             //                        }
-                            //
-                            //                        let gameInfo: String = self.deConfig["game_config"].stringValue
-                            //                        if gameInfo.count > 0 {
-                            //                            if let mod = TR_GameModel.deserialize(from: gameInfo) {
-                            //                                SystemManager.share.gameCount = mod.num
-                            //                                SystemManager.share.isShowGame = mod.show != 0
-                            //                            }
-                            //                        }
                         }
                         return
                     }

@@ -59,14 +59,18 @@ class GoogleNativeController: UIViewController {
     
     @IBOutlet weak var s_closeView: UIImageView!
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        HubTool.share.showAdomb = true
+        TbaManager.instance.addEvent(type: .custom, event: .adsshowPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
+        NotificationCenter.default.post(name: Noti_ShowAds, object: nil, userInfo: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.isUpClose = Bool.random()
-        HubTool.share.showAdomb = true
-        NotificationCenter.default.post(name: Noti_ShowAds, object: nil, userInfo: nil)
         MobileAds.shared.isApplicationMuted = true
         MobileAds.shared.audioVideoManager.isAudioSessionApplicationManaged = true
-        TbaManager.instance.addEvent(type: .custom, event: .adsshowPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         
         if let ad = self.adContent {
             installButton.layer.cornerRadius = 8

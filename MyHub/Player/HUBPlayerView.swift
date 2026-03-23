@@ -654,6 +654,10 @@ extension HUBPlayerView: HUBPlayerContentViewDelegate {
     func contentView(_ contentView: HUBPlayerContentView, forWardOrBack forward: Bool) {
         let current = Int(ceil(self.currentDuration))
         let total = Int(ceil(self.totalDuration))
+        if total < 10 {
+            return
+        }
+        self.isUserPause = false
         if forward {
             if total - current > 10 {
                 let time = CMTimeMake(value: 10, timescale: 1)
@@ -671,6 +675,7 @@ extension HUBPlayerView: HUBPlayerContentViewDelegate {
                 player?.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
             }
         }
+        self.play()
         contentView.setDisplayDuration(forward)
     }
     

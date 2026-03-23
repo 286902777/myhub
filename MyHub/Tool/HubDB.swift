@@ -244,7 +244,7 @@ class HubDB {
                 do {
                     try realm.write {
                         rModel.state = model.state.rawValue
-                        rModel.isPass = model.isPass.rawValue
+                        rModel.isPass = model.platform == .box ? model.isPass.rawValue : HUB_ModerateType.passed.rawValue
                         rModel.name = model.name
                         rModel.size = model.size
                         rModel.done_size = model.done_size
