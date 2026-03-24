@@ -17,6 +17,7 @@ class DownFileController: UIViewController {
         table.dataSource = self
         table.separatorStyle = .none
         table.backgroundColor = .clear
+        table.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: CusTabBarHight + 24, right: 0)
         table.register(DownCell.self, forCellReuseIdentifier: cellIdentifier)
         table.register(UploadAndDownCell.self, forCellReuseIdentifier: uCellIdentifier)
         if #available(iOS 15.0, *) {

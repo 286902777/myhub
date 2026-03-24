@@ -18,8 +18,8 @@ class PlayTool {
         let vc = PlayVideoController(model: mod, history: history)
         vc.hidesBottomBarWhenPushed = true
         TabbarTool.instance.displayOrHidden(false)
-        vc.premiumBlock = { [weak self] in
-            guard let self = self else { return }
+//        vc.premiumBlock = { [weak self] in
+//            guard let self = self else { return }
 //            if PremiumTool.instance.isMember {
 //                return
 //            }
@@ -28,7 +28,7 @@ class PlayTool {
 //            DispatchQueue.main.async {
 //                self.adsPushPremium(.playBack, .vip_Ad, controller)
 //            }
-        }
+//        }
         if let vs = controller.navigationController?.viewControllers, vs.count > 0 {
             controller.navigationController?.pushViewController(vc, animated: true)
         } else {

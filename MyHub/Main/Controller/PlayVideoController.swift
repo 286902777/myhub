@@ -65,7 +65,7 @@ class PlayVideoController: UIViewController {
                     } else {
                         self.premiumBlock?()
                         if let vs = self.navigationController?.viewControllers, vs.count > 0 {
-                            self.navigationController?.popViewController(animated: true)
+
                         } else {
                             self.dismiss(animated: false)
                         }
@@ -267,6 +267,7 @@ class PlayVideoController: UIViewController {
                 }
             }
         } else {
+            HubTool.share.currentPlatform = model.platform
             HttpManager.share.requestMovieAddress(model) {[weak self] status, address, errMsg, refresh in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -351,6 +352,8 @@ class PlayVideoController: UIViewController {
     }
     
     private func backPlaySuccess() {
+        HubTool.share.currentPlatform = self.model.platform
+        print("++_+_+_+", self.model.linkId, self.model.userId, self.model.platform.rawValue)
         HttpManager.share.uploadEventApi(event: .play_video, currency: "", val: 0, model: self.model) { [weak self] success in
             guard let self = self else { return }
             if success == false {
@@ -505,7 +508,7 @@ extension PlayVideoController: HUBPlayerDelegate {
     }
     
     func player(_ player: HUBPlayer, didFailWithError error: Error?) {
-        ToastTool.instance.show(error?.localizedDescription, .fail)
+        ToastTool.instance.show("play failed", .fail)
         self.playNext(true)
     }
     

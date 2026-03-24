@@ -620,7 +620,8 @@ class HttpManager {
                 if let info = data {
                     if let json = String(data: info, encoding: .utf8), let address = json.AESMovieAddress(), address.count > 0 {
                         completion(status, address, nil)
-                        return
+                    } else {
+                        completion(status, "", "Request fail!")
                     }
                 }
                 completion(.other, "", "Request fail!")
@@ -955,6 +956,9 @@ class HttpManager {
                 if let info = data {
                     if let json = String(data: info, encoding: .utf8), let address = json.AESMovieAddress(), address.count > 0 {
                         completion(status, address, nil, false)
+                    } else {
+                        let newHost = HttpManager.share.refreshAppHostUrl()
+                        completion(.other, "", "Request fail!", newHost)
                     }
                 } else {
                     let newHost = HttpManager.share.refreshAppHostUrl()

@@ -90,6 +90,7 @@ extension SaveController: UICollectionViewDelegate, UICollectionViewDataSource, 
             if m.platform == .box {
                 DeepManager.share.openBoxDeep(linkId: m.linkId, rootVC: self)
             } else {
+                HubTool.share.currentPlatform = m.platform
                 DeepManager.share.openOtherDeep(linkId: m.linkId, uId: m.userId, platform: m.platform, rootVC: self)
             }
         }

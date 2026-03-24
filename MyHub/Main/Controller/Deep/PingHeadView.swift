@@ -26,6 +26,8 @@ class PingHeadView: UIView {
     
     let hotView: DeepHeadView = DeepHeadView.view()
     var clickBlock: ((_ data: ChannelData, _ hot: Bool) -> Void)?
+    var pingClickBlock: ((_ data: ChannelData, _ hot: Bool) -> Void)?
+
     class func view() -> PingHeadView {
         let view = PingHeadView()
         view.setup()
@@ -57,13 +59,24 @@ class PingHeadView: UIView {
     func setHeadData(_ data: ChannelListData, linkId: String, uId: String, name: String, platform: HUB_PlatformType) {
         self.hotView.hotVC.setDatas(lists: data.hots, linkId: linkId, uId: uId, name: name, platform: platform)
         self.hotView.recentlyVC.setDatas(lists: data.recents, linkId: linkId, uId: uId, name: name, platform: platform)
-        self.hotView.hotVC.clickBlock = {[weak self] data in
-            guard let self = self else { return }
-            self.clickBlock?(data, true)
-        }
-        self.hotView.recentlyVC.clickBlock = {[weak self] data in
-            guard let self = self else { return }
-            self.clickBlock?(data, false)
+        if linkId.count > 0 {
+            self.hotView.hotVC.clickBlock = {[weak self] data in
+                guard let self = self else { return }
+                self.clickBlock?(data, true)
+            }
+            self.hotView.recentlyVC.clickBlock = {[weak self] data in
+                guard let self = self else { return }
+                self.clickBlock?(data, false)
+            }
+        } else {
+            self.hotView.hotVC.clickBlock = {[weak self] data in
+                guard let self = self else { return }
+                self.pingClickBlock?(data, true)
+            }
+            self.hotView.recentlyVC.clickBlock = {[weak self] data in
+                guard let self = self else { return }
+                self.pingClickBlock?(data, false)
+            }
         }
         self.iconV.setImage(data.userInfo.thumbnail, placeholder: "logo")
         self.nameL.text = data.userInfo.name
