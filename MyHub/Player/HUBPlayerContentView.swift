@@ -273,9 +273,7 @@ class HUBPlayerContentView: UIView {
             if isShowMorePanel {
                 hiddenToolView()
             } else {
-                if screenState == .fullScreen {
-                    showToolView()
-                }
+                showToolView()
             }
             UIView.animate(withDuration: 0.25) {
                 self.setNeedsLayout()
@@ -667,11 +665,12 @@ private extension HUBPlayerContentView {
 // MARK: - PlayContent---objc
 @objc private extension HUBPlayerContentView {
     func tapAction() {
-        if isShowMorePanel {
-            isShowMorePanel = false
-        } else {
-            isHiddenToolView ? showToolView() : hiddenToolView()
-        }
+        isShowMorePanel = !isShowMorePanel
+//        if isShowMorePanel {
+//            isShowMorePanel = false
+//        } else {
+//            isHiddenToolView ? showToolView() : hiddenToolView()
+//        }
     }
 
     func leftTapAction() {
@@ -897,7 +896,7 @@ extension HUBPlayerContentView: UIGestureRecognizerDelegate {
     }
 
     func showToolView() {
-        guard self.isShowLoad == false else { return }
+//        guard self.isShowLoad == false else { return }
         self.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         isHiddenToolView = false
         topToolView.snp.updateConstraints { make in

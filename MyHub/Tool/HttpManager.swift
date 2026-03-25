@@ -620,7 +620,8 @@ class HttpManager {
                 if let info = data {
                     if let json = String(data: info, encoding: .utf8), let address = json.AESMovieAddress(), address.count > 0 {
                         completion(status, address, nil)
-                        return
+                    } else {
+                        completion(status, "", "Request fail!")
                     }
                 }
                 completion(.other, "", "Request fail!")
@@ -628,7 +629,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, "", nil)
             default:
-                completion(status, "", error?.localizedDescription)
+                completion(status, "", "Request fail!")
                 return
             }
         })
@@ -955,14 +956,17 @@ class HttpManager {
                 if let info = data {
                     if let json = String(data: info, encoding: .utf8), let address = json.AESMovieAddress(), address.count > 0 {
                         completion(status, address, nil, false)
+                    } else {
+                        let newHost = HttpManager.share.refreshAppHostUrl()
+                        completion(.other, "", "Request fail!", newHost)
                     }
                 } else {
                     let newHost = HttpManager.share.refreshAppHostUrl()
-                    completion(.other, "", newHost ? "" : "Request fail!", newHost)
+                    completion(.other, "", "Request fail!", newHost)
                 }
             default:
                 let newHost = HttpManager.share.refreshAppHostUrl()
-                completion(status, "", newHost ? "" : "Request fail!", newHost)
+                completion(status, "", "Request fail!", newHost)
             }
         })
         task.resume()

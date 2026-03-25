@@ -270,7 +270,7 @@ class PingListController: SuperController {
     func pushModelVC(_ model: VideoData) {
         switch model.file_type {
         case .folder:
-            let vc = OtherFolderListController(model: model, linkId: self.linkId, userId: model.userId, userName: self.userName, platform: self.platform, channel: self.isChannel)
+            let vc = PingListController(model: model, linkId: self.linkId, userId: model.userId, userName: self.userName, platform: self.platform, channel: self.isChannel)
             self.navigationController?.pushViewController(vc, animated: true)
         case .photo:
             let vc = OpenPhotoController(model: model)

@@ -117,6 +117,7 @@ class PingController: UIViewController {
                 TackManager.share.startTrack()
             }
         }
+
         self.view.addSubview(self.tableView)
         self.tableView.tableHeaderView = self.headView
         self.view.addSubview(self.bottomView)
@@ -236,7 +237,7 @@ class PingController: UIViewController {
                         self.dataModel = model
                         HubDB.instance.updateUserInfo(model.userInfo)
                         self.headView.setHeadData(model, linkId: "", uId: model.userInfo.id, name: model.userInfo.name, platform: self.platform)
-                        self.headView.clickBlock = { data, hot in
+                        self.headView.pingClickBlock = { data, hot in
                             self.pushHotRecentData(HubTool.share.channelModel(data, linkId: "", uId: model.userInfo.id, platform: self.platform), HubTool.share.channelList(hot ? model.hots : model.recents, linkId: "", uId: model.userInfo.id, platform: self.platform))
                         }
                         HubTool.share.uId = model.userInfo.id

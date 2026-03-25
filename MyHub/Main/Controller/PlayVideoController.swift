@@ -65,7 +65,7 @@ class PlayVideoController: UIViewController {
                     } else {
                         self.premiumBlock?()
                         if let vs = self.navigationController?.viewControllers, vs.count > 0 {
-                            self.navigationController?.popViewController(animated: true)
+
                         } else {
                             self.dismiss(animated: false)
                         }
@@ -120,7 +120,6 @@ class PlayVideoController: UIViewController {
                     HubTool.share.downEvent(self.model)
                 }
                 UploadDownTool.instance.downLoad(self.model)
-                HubTool.share.downEvent(self.model)
             }
             if self.isBack {
                 self.premiumBlock?()
@@ -268,6 +267,7 @@ class PlayVideoController: UIViewController {
                 }
             }
         } else {
+            HubTool.share.currentPlatform = model.platform
             HttpManager.share.requestMovieAddress(model) {[weak self] status, address, errMsg, refresh in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -352,6 +352,8 @@ class PlayVideoController: UIViewController {
     }
     
     private func backPlaySuccess() {
+        HubTool.share.currentPlatform = self.model.platform
+        print("++_+_+_+", self.model.linkId, self.model.userId, self.model.platform.rawValue)
         HttpManager.share.uploadEventApi(event: .play_video, currency: "", val: 0, model: self.model) { [weak self] success in
             guard let self = self else { return }
             if success == false {
@@ -433,7 +435,6 @@ extension PlayVideoController: HUBPlayerDelegate {
     
     func playerDidClickDownButton(_ player: HUBPlayer) {
         if (LoginManager.share.isLogin == false) {
-//            self.player.playerView.contentView.loadingView.stop()
             self.player.pause()
             LoginManager.share.loginRequest(self) { success in
                
@@ -446,7 +447,6 @@ extension PlayVideoController: HUBPlayerDelegate {
         HubTool.share.show(.play) { [weak self] success in
             guard let self = self else { return }
             if success {
-//                self.player.playerView.contentView.loadingView.stop()
                 self.player.pause()
             } else {
                 ToastTool.instance.show("Added to download list")
@@ -508,7 +508,7 @@ extension PlayVideoController: HUBPlayerDelegate {
     }
     
     func player(_ player: HUBPlayer, didFailWithError error: Error?) {
-        ToastTool.instance.show(error?.localizedDescription, .fail)
+        ToastTool.instance.show("play failed", .fail)
         self.playNext(true)
     }
     

@@ -34,10 +34,10 @@ class DownTool: NSObject, URLSessionDownloadDelegate {
                 }
             }
         } else {
-            if model.movieAddress.count > 0 {
-                self.taskDown(model)
-            } else {
-                HttpManager.share.requestMovieAddress(model) { status, address, errMsg, refresh in
+            HubTool.share.currentPlatform = model.platform
+            HttpManager.share.requestMovieAddress(model) { [weak self] status, address, errMsg, refresh in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
                     if status == .success {
                         model.movieAddress = address
                         self.taskDown(model)
