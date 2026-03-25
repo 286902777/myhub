@@ -1160,4 +1160,3 @@ extension HttpManager {
         return HttpCode(rawValue: statusCode) ?? .other
     }
 }
-

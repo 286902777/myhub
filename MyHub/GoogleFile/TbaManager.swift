@@ -130,9 +130,9 @@ enum EventType {
 class TbaManager {
     static let instance = TbaManager()
     
-    let hostUrl = "https://test-hilum.myhubweb.com/hoboken/litigant" // test
+//    let hostUrl = "https://test-hilum.myhubweb.com/hoboken/litigant" // test
 
-//    let hostUrl = "https://hilum.myhubweb.com/yoke/magic"
+    let hostUrl = "https://hilum.myhubweb.com/yoke/magic"
 
     var uploadList: [[String: Any]] = UserDefaults.standard.value(forKey: EventUploadArray) == nil ? [] : UserDefaults.standard.value(forKey: EventUploadArray) as! [[String: Any]] {
         didSet {
@@ -142,7 +142,7 @@ class TbaManager {
 
     func configInit() {
         self.uploadList.forEach { data in
-            if let da = data["brett"] as? String, let i = Double(da) {
+            if let da = data["gig"] as? String, let i = Double(da) {
                 let d = Date(timeIntervalSince1970: i / 1000)
                 if d.isThreeDay(Date()) == false {
                     self.startEventUpload(data)

@@ -377,6 +377,9 @@ class HUBPlayerContentView: UIView {
                 self.isShowLoad = false
 //                loadingView.stop()
             case .buffering:
+                if let topVC = HubTool.share.keyVC() {
+                    LoadManager.instance.show(topVC)
+                }
                 sliderView.isUserInteractionEnabled = true
                 placeholderStackView.isHidden = true
                 self.isShowLoad = true

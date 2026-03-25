@@ -55,12 +55,12 @@ class FireManager {
                                     GoogleManager.share.listData.append(GoogleManager.share.mapAdsData(mod.three, .three))
                                 }
                             }
-                            //                        let deepInfo: String = self.deConfig["deep_Permission"].stringValue
-                            //                        if deepInfo.count > 0 {
-                            //                            if let mod = TR_ConfigModel.deserialize(from: deepInfo) {
-                            //                                SystemManager.share.configModel = mod
-                            //                            }
-                            //                        }
+                            let cloakInfo: String = self.deConfig["MyHub_Cloak"].stringValue
+                            if cloakInfo.count > 0 {
+                                if let data = SimModel.deserialize(from: cloakInfo) {
+                                    HubTool.share.simData = data
+                                }
+                            }
                             //                        let premuimInfo: String = self.deConfig["premuim_config"].stringValue
                             //                        if premuimInfo.count > 0 {
                             //                            UserDefaults.standard.set(premuimInfo, forKey: premuimInfoKey)
