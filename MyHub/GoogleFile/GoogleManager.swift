@@ -333,6 +333,8 @@ extension GoogleManager {
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
                 if let e = error {
                     TbaManager.instance.addEvent(type: .custom, event: .adsreqFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1", EventParaName.code.rawValue: "\(e.localizedDescription)"])
+                    TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: model.id, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: "\(e.localizedDescription)"])
+
                     print(error.debugDescription, error?.localizedDescription ?? "")
                     print("App -  广告加载失败 type: \(mode.rawValue) 优先级: \(idx + 1), id: \(model.id)")
                     self.admobMaxLoad(mode, idx + 1)
@@ -340,6 +342,8 @@ extension GoogleManager {
                 }
                 print("App -  广告加载成功 placementid: \(model.id)")
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
+                TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: model.id, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: EventParaValue.success.rawValue])
+
                 if let adData = info {
                     let cacheM = GoogleAdsCacheData()
                     cacheM.id = model.id
@@ -385,12 +389,13 @@ extension GoogleManager {
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
                 if let e = error {
                     TbaManager.instance.addEvent(type: .custom, event: .adsreqFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1", EventParaName.code.rawValue: "\(e.localizedDescription)"])
+                    TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: model.id, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: "\(e.localizedDescription)"])
                     print("App -  广告加载失败 type: \(mode.rawValue) 优先级: \(idx + 1), id: \(model.id)")
                     self.admobMaxLoad(mode, idx + 1)
                     return
                 }
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
-                
+                TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: model.id, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: EventParaValue.success.rawValue])
                 if let adData = info {
                     let cacheM = GoogleAdsCacheData()
                     cacheM.id = model.id
@@ -436,13 +441,13 @@ extension GoogleManager {
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
                 if let e = error {
                     TbaManager.instance.addEvent(type: .custom, event: .adsreqFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1", EventParaName.code.rawValue: "\(e.localizedDescription)"])
-                    
+                    TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: model.id, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: "\(e.localizedDescription)"])
                     print("App -  广告加载失败 type: \(mode.rawValue) 优先级: \(idx + 1), id: \(model.id)")
                     self.admobMaxLoad(mode, idx + 1)
                     return
                 }
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: mode == .plus ? "2" : "1"])
-                
+                TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: model.id, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: EventParaValue.success.rawValue])
                 if let adData = info {
                     let cacheM = GoogleAdsCacheData()
                     cacheM.id = model.id
@@ -493,7 +498,7 @@ extension GoogleManager: NativeAdLoaderDelegate, NativeAdDelegate {
             self.requestNative(adsId)
         }
         TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
-        
+        TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: adLoader.adUnitID, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue:  EventParaValue.success.rawValue])
         let cacheModel = GoogleAdsCacheData()
         cacheModel.id = adLoader.adUnitID
         cacheModel.ad = nativeAd
@@ -516,7 +521,7 @@ extension GoogleManager: NativeAdLoaderDelegate, NativeAdDelegate {
         if let adsId = self.nativeList.first {
             self.requestNative(adsId)
         }
-        
+        TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: adLoader.adUnitID, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: "\(error.localizedDescription)"])
         TbaManager.instance.addEvent(type: .custom, event: .adsreqFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1", EventParaName.code.rawValue: "\(error.localizedDescription)"])
         self.listData.forEach({ item in
             for (idx, m) in item.lists.enumerated() {
@@ -580,7 +585,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         
         print("App -  广告加载成功 placementid: \(ad.adUnitIdentifier)")
         TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: self.showMode == .plus ? "2" : "1"])
-        
+        TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: ad.adUnitIdentifier, EventParaName.adSource.rawValue: EventParaValue.max.rawValue, EventParaName.result.rawValue: EventParaValue.success.rawValue])
         for item in self.listData {
             item.lists.forEach { m in
                 if m.id == ad.adUnitIdentifier {
@@ -606,6 +611,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         self.listData.forEach({ mod in
             if let item = mod.lists.first(where: {$0.id == adUnitIdentifier}) {
                 TbaManager.instance.addEvent(type: .custom, event: .adsreqFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: self.showMode == .plus ? "2" : "1", EventParaName.code.rawValue: "\(error.message)"])
+                TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: adUnitIdentifier, EventParaName.adSource.rawValue: EventParaValue.max.rawValue, EventParaName.result.rawValue: "\(error.message)"])
                 print("App -  广告加载失败 type: \(mod.playMode.rawValue) 优先级: \(item.index + 1), placementid: \(adUnitIdentifier)")
                 self.admobMaxLoad(mod.playMode, item.index + 1)
                 return

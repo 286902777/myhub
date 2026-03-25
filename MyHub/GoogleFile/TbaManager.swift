@@ -30,6 +30,7 @@ enum EventName: String {
     case adsshowPlacement = "PlNLcI"
     case adsshowFail = "SmqSOyHnqx"
     case adsclick = "cCB"
+    case adResult = "pVTT1"
     case historyExpose = "dvVHfmkw"
     case deeplinkOpen = "ezEJGdb"
     case channellistExpose = "XoGcml"
@@ -90,6 +91,9 @@ enum EventParaName: String {
     case commonLin = "vTVUA"
     case vip_popup = "SrTJmUyh"
     case vip_auto = "QECJvibezr"
+    case adId = "tltxwcami1"
+    case adSource = "OYKuLp1"
+    case result = "Djyn1"
 }
 
 enum EventParaValue: String {
@@ -113,6 +117,10 @@ enum EventParaValue: String {
     case box = "EHT"
     case cash = "LzgfRaO"
     case quick = "rySvz"
+    case success = "zalhRImt1"
+    case max = "jSt1"
+    case admob = "HCFtPA1"
+    case topon = "asntFYAXBQ1"
 }
 
 enum EventType {
