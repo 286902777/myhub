@@ -140,8 +140,8 @@ class GoogleNativeController: UIViewController {
             self.timeL.isHidden = true
             self.isShowCloseBtn()
         }
-        self.closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)
-        self.s_closeBtn.addTarget(self, action: #selector(clickCloseEvent), for: .touchUpInside)
+        self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
+        self.s_closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         NotificationCenter.default.addObserver(forName: Noti_ClickNativeAds, object: nil, queue: .main) {  [weak self] _ in
             guard let self = self else { return }
             self.isClickAds = true
@@ -243,7 +243,7 @@ class GoogleNativeController: UIViewController {
         }
     }
     
-    @objc func clickCloseEvent() {
+    @objc func clickCloseAction() {
         self.dismiss(animated: false) {
             GoogleManager.share.closeAdSuccess()
         }
