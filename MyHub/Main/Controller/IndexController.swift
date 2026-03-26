@@ -358,11 +358,13 @@ class IndexController: SuperController {
                 self.isHisUpload = true
             }
         }
-        self.channelList = HubDB.instance.readUsers()
-        if self.channelList.count > 0 {
-            if self.isGroupUpload == false {
-                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
-                self.isGroupUpload = true
+        if LoginManager.share.isLogin {
+            self.channelList = HubDB.instance.readUsers()
+            if self.channelList.count > 0 {
+                if self.isGroupUpload == false {
+                    TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
+                    self.isGroupUpload = true
+                }
             }
         }
         self.netRequestUpload()
