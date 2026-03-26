@@ -21,9 +21,8 @@ class FireManager {
             guard let dj = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
             data = dj.base64EncodedString()
         }
-        
         deConfig.configSettings = RemoteConfigSettings()
-//        deConfig.setDefaults(["premuim_config": "" as NSObject])
+        deConfig.setDefaults(["MyHub_Vip": "" as NSObject])
         deConfig.configSettings.minimumFetchInterval = 5000
         deConfig.setDefaults(["MyHub_Ads": data as NSObject])
         self.initData()
@@ -61,21 +60,21 @@ class FireManager {
                                     HubTool.share.simData = data
                                 }
                             }
-                            //                        let premuimInfo: String = self.deConfig["premuim_config"].stringValue
-                            //                        if premuimInfo.count > 0 {
-                            //                            UserDefaults.standard.set(premuimInfo, forKey: premuimInfoKey)
-                            //                            if let mod = TR_PayListData.deserialize(from: premuimInfo) {
-                            //                                TR_PayManager.share.productDatas = mod.subscription_items.sorted(by: {$0.order < $1.order})
-                            //                                TR_PayManager.share.defaultProduct = TR_PayManager.share.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
-                            //                                guard let _ = TR_PayManager.share.productDatas.first(where: {$0.isSelect == true}) else {
-                            //                                    TR_PayManager.share.productDatas.first?.isSelect = true
-                            //                                    TR_PayManager.share.defaultProduct = TR_PayManager.share.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
-                            //                                    TR_PayManager.share.getAppPayReceipt(type: .refresh)
-                            //                                    return
-                            //                                }
-                            //                                TR_PayManager.share.getAppPayReceipt(type: .refresh)
-                            //                            }
-                            //                        }
+                            let premuimInfo: String = self.deConfig["MyHub_Vip"].stringValue
+                            if premuimInfo.count > 0 {
+                                UserDefaults.standard.set(premuimInfo, forKey: VipInfoKey)
+                                if let mod = PayListData.deserialize(from: premuimInfo) {
+                                    PayManager.instance.productDatas = mod.items.sorted(by: {$0.index > $1.index})
+                                    PayManager.instance.defaultProduct = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
+                                    guard let _ = PayManager.instance.productDatas.first(where: {$0.isSelect == true}) else {
+                                        PayManager.instance.productDatas.first?.isSelect = true
+                                        PayManager.instance.defaultProduct = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
+                                        PayManager.instance.requestProductInfo(type: .refresh)
+                                        return
+                                    }
+                                    PayManager.instance.requestProductInfo(type: .refresh)
+                                }
+                            }
                         }
                         return
                     }

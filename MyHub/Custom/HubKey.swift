@@ -66,7 +66,7 @@ let PreAutoVipPayDate = "PreAutoVipPayDate" ///大弹窗
 
 let PreAutoVipPayCount = "PreAutoVipPayCount"
 
-let FirePremuimInfoKey: String = "FirePremuimInfoKey"
+let VipInfoKey: String = "VipInfoKey"
 
 let Noti_Login = NSNotification.Name(rawValue: "HUB_loginSuccess")
 

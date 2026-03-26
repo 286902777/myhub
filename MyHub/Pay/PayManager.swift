@@ -51,7 +51,7 @@ class PayManager: NSObject {
     }
     
     func config() {
-        let info = UserDefaults.standard.string(forKey: FirePremuimInfoKey)
+        let info = UserDefaults.standard.string(forKey: VipInfoKey)
         if let data = PayListData.deserialize(from: info) {
             self.productDatas = data.items
         }
