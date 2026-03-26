@@ -30,6 +30,7 @@ class GoogleUPMTool: NSObject {
         
         //For testing purposes, you can force a UMPDebugGeography of EEA or not EEA.
 #if DEBUG
+        ConsentInformation.shared.reset()
         let debugSettings = DebugSettings()
 //        debugSettings.testDeviceIdentifiers = ["C9CB6E3D-C3AF-4997-909D-EB914B4F6DF6"]
         debugSettings.geography = DebugGeography.EEA

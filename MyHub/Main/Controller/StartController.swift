@@ -176,9 +176,6 @@ private extension StartController {
         }
         window.rootViewController = HubTabBarController()
         self.cleanup()
-#if DEBUG
-        ConsentInformation.shared.reset()
-#endif
         if let vc = HubTool.share.keyVC() {
             GoogleUPMTool.instance.showGoogleView(vc) { consentError in
                 if let consentError {

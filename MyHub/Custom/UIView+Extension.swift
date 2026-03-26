@@ -222,7 +222,7 @@ extension UIImage {
 
 extension UIImageView {
     typealias CompleteBlock = (_ image: UIImage?)->()
-    func setImage(_ url: String?, placeholder: String = "video_bg", complete: CompleteBlock? = nil) {
+    func setImage(_ url: String?, placeholder: String = "video_bg", size: CGSize = .zero, complete: CompleteBlock? = nil) {
         let placeImg = UIImage(named: placeholder)
         var imageAddress: String? = url
 
@@ -237,8 +237,9 @@ extension UIImageView {
             return
         }
 
+        let pro = DownsamplingImageProcessor(size: size == .zero ? CGSize(width: 200, height: 200) : size)
         let imgUrl = URL(string: url)
-        self.kf.setImage(with: imgUrl, placeholder: placeImg, options: [.cacheSerializer(DefaultCacheSerializer.default)], progressBlock: nil) { (result) in
+        self.kf.setImage(with: imgUrl, placeholder: placeImg, options: [.processor(pro), .cacheSerializer(DefaultCacheSerializer.default)], progressBlock: nil) { (result) in
             switch result {
             case let .success(info):
                 complete?(info.image.kf.normalized)

@@ -37,7 +37,7 @@ class OpenPhotoController: SuperController {
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(self.navbar.snp.bottom)
         }
-        self.imageV.setImage(self.model.thumbnail, placeholder: "")
+        self.imageV.setImage(self.model.thumbnail, placeholder: "", size: ScreenSize)
     }
     
     override func backAction() {

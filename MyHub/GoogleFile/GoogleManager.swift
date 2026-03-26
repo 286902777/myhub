@@ -662,11 +662,6 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         }
         if result {
             let m = VideoData()
-            if self.showMode == .play, HubTool.share.isChannelAds == false {
-                if HubTool.share.adsPlayState != .donwloadpage {
-                    m.linkId = linkId
-                }
-            }
             if let userId = UserDefaults.standard.string(forKey: EventSaveUserId) {
                 m.userId = userId
             }
