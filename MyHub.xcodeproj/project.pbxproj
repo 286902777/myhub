@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		576E16682F74FE51003B8AA3 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 576E16672F74FE51003B8AA3 /* StoreKit.framework */; };
 		D208BCC868557BD317FCACCF /* Pods_MyHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F07214D99DE88BE88723FDFD /* Pods_MyHub.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4694B69F8EA3B3CA2976C503 /* Pods-MyHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyHub.release.xcconfig"; path = "Target Support Files/Pods-MyHub/Pods-MyHub.release.xcconfig"; sourceTree = "<group>"; };
+		576E16672F74FE51003B8AA3 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		CA1066A9672441C98F247D33 /* Pods-MyHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyHub.debug.xcconfig"; path = "Target Support Files/Pods-MyHub/Pods-MyHub.debug.xcconfig"; sourceTree = "<group>"; };
 		D7AF79142F35E17400CD9DDE /* MyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F07214D99DE88BE88723FDFD /* Pods_MyHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -43,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				576E16682F74FE51003B8AA3 /* StoreKit.framework in Frameworks */,
 				D208BCC868557BD317FCACCF /* Pods_MyHub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +56,7 @@
 		5E67AABC3BF24E04EE4EF047 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				576E16672F74FE51003B8AA3 /* StoreKit.framework */,
 				F07214D99DE88BE88723FDFD /* Pods_MyHub.framework */,
 			);
 			name = Frameworks;

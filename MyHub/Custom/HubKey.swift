@@ -109,3 +109,5 @@ let Noti_TabbarShow = NSNotification.Name(rawValue: "Noti_TabbarShow")
 let Noti_ClosePresent = NSNotification.Name(rawValue: "Noti_ClosePresent")
 
 let Noti_HomeUpdate = NSNotification.Name(rawValue: "Noti_HomeUpdate")
+
+let Noti_UserVip = NSNotification.Name(rawValue: "Noti_UserVip")
