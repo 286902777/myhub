@@ -61,6 +61,7 @@ class GoogleManager: NSObject {
             self.s_nativeTime = self.startData.s_NativeTime
             self.s_nativeClickRate = self.startData.s_NativeClickRate
             self.listData.append(self.mapAdsData(self.startData.play, .play))
+            self.listData.append(self.mapAdsData(self.startData.playing, .playing))
         }
     }
     
@@ -173,7 +174,6 @@ extension GoogleManager {
     
     func requestNative(_ adsId: String) {
         print("App -  广告加载", adsId)
-        TbaManager.instance.addEvent(type: .custom, event: .adsreqPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         let option = NativeAdViewAdOptions()
         option.preferredAdChoicesPosition = .topRightCorner
         self.admobLoader = AdLoader(adUnitID: adsId, rootViewController: HubTool.share.keyVC(), adTypes: [.native], options: [option])
@@ -196,6 +196,8 @@ extension GoogleManager {
         //            complete(false, nil, false)
         //            return
         //        }
+        complete(false, nil, false)
+        return
         guard HubTool.share.showAdomb == false else {
             complete(false, nil, false)
             return
@@ -214,7 +216,7 @@ extension GoogleManager {
         
         TbaManager.instance.addEvent(type: .custom, event: .adsneedShow, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         
-        self.showMode = mode == .playing ? .play : mode
+        self.showMode = mode
         var found: Bool = false
         var data: GoogleAdsCacheData?
         var twoData: GoogleAdsCacheData?
@@ -497,6 +499,7 @@ extension GoogleManager: NativeAdLoaderDelegate, NativeAdDelegate {
         if let adsId = self.nativeList.first {
             self.requestNative(adsId)
         }
+        TbaManager.instance.addEvent(type: .custom, event: .adsreqPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         TbaManager.instance.addEvent(type: .custom, event: .adsreqSuc, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: adLoader.adUnitID, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue:  EventParaValue.success.rawValue])
         let cacheModel = GoogleAdsCacheData()
@@ -521,6 +524,7 @@ extension GoogleManager: NativeAdLoaderDelegate, NativeAdDelegate {
         if let adsId = self.nativeList.first {
             self.requestNative(adsId)
         }
+        TbaManager.instance.addEvent(type: .custom, event: .adsreqPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
         TbaManager.instance.addEvent(type: .custom, event: .adResult, paramter: [EventParaName.adId.rawValue: adLoader.adUnitID, EventParaName.adSource.rawValue: EventParaValue.admob.rawValue, EventParaName.result.rawValue: "\(error.localizedDescription)"])
         TbaManager.instance.addEvent(type: .custom, event: .adsreqFail, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1", EventParaName.code.rawValue: "\(error.localizedDescription)"])
         self.listData.forEach({ item in

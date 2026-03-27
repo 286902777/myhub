@@ -404,6 +404,7 @@ class OtherDeepController: UIViewController {
                 pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: HubTool.share.platform))
             }
             if model.recommoned {
+                HubTool.share.playSource = .landpage_recommend
                 PlayTool.instance.pushPage(self, HubTool.share.channelModel(model, linkId: "", uId: self.recommenduId, platform: HubTool.share.platform), pushList)
             } else {
                 PlayTool.instance.pushPage(self, HubTool.share.channelModel(model, linkId: self.linkId, uId: self.dataModel.userInfo.id, platform: HubTool.share.platform), pushList)

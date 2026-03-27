@@ -348,6 +348,7 @@ class PingController: UIViewController {
                 pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: self.platform))
             }
             if model.recommoned {
+                HubTool.share.playSource = .channel_recommend
                 PlayTool.instance.pushPage(self, HubTool.share.channelModel(model, linkId: "", uId: self.recommenduId, platform: self.platform), pushList)
             } else {
                 PlayTool.instance.pushPage(self, HubTool.share.channelModel(model, linkId: "", uId: self.uId, platform: self.platform), pushList)
