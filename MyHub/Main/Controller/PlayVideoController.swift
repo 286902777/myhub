@@ -106,12 +106,14 @@ class PlayVideoController: UIViewController {
         NotificationCenter.default.addObserver(forName: Noti_ShowAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
 //            self.player.playerView.contentView.loadingView.stop()
+            LoadManager.instance.dismiss()
             self.player.pause()
         }
         
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
 //            self.player.playerView.contentView.loadingView.stop()
+            
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
             LoadManager.instance.dismiss()
             if HubTool.share.adsPlayState == .download {
@@ -283,6 +285,8 @@ class PlayVideoController: UIViewController {
                     } else {
                         LoadManager.instance.dismiss()
                         if let e = errMsg {
+                            TbaManager.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
+                            TbaManager.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: e])
                             ToastTool.instance.show(e, .fail)
                         }
                     }
