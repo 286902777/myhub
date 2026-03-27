@@ -296,10 +296,10 @@ class HUBPlayerContentView: UIView {
 
     private let rateView: HUBRateView = HUBRateView.view()
     private var isShowRateV: Bool = false
-    
     private var screenFull = false
     weak var delegate: HUBPlayerContentViewDelegate?
 
+    
     weak var placeholderView: UIView? {
         didSet {
             guard placeholderView != oldValue else { return }

@@ -47,6 +47,8 @@ class HUBPlayerView: UIView {
     }()
 
     private var showPopLoad: Bool = false
+//    private var playTimer: Timer?
+//    private var timeOut: TimeInterval = 15.0
     
     private var keyWindow: UIWindow? {
         mainSync {
@@ -329,6 +331,22 @@ private extension HUBPlayerView {
 // MARK: - JmoVxia---observe
 
 private extension HUBPlayerView {
+//    func cleanTime() {
+//        self.playTimer?.invalidate()
+//        self.playTimer = nil
+//    }
+//    
+//    func startPlayTime() {
+//        self.playTimer?.invalidate()
+//        self.playTimer = Timer.scheduledTimer(withTimeInterval: timeOut, repeats: false, block: { [weak self] _ in
+//            guard let self = self else { return }
+//            if self.player?.currentItem?.status == .unknown {
+//                ToastTool.instance.show("load failed", .fail)
+//            }
+//            self.cleanTime()
+//        })
+//    }
+    
     func observeStatusAction() {
         guard let playerItem = playerItem else { return }
         if playerItem.status == .readyToPlay {
@@ -371,9 +389,9 @@ private extension HUBPlayerView {
                     pause()
                 }
             }
-        } else if playerItem.status == .failed {
+        } else {
             TbaManager.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
-            TbaManager.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: playerItem.error?.localizedDescription ?? "request fail!"])
+            TbaManager.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: playerItem.error?.localizedDescription ?? "load fail!"])
             if PlayTool.instance.auto == false {
                 TbaManager.instance.addEvent(type: .custom, event: .playSource, paramter: [EventParaName.value.rawValue: HubTool.share.playSource.rawValue])
             }

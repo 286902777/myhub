@@ -260,6 +260,7 @@ class PlayVideoController: UIViewController {
                             self.play()
                         }
                     } else {
+                        LoadManager.instance.dismiss()
                         if let e = errMsg {
                             ToastTool.instance.show(e, .fail)
                         }
@@ -280,6 +281,7 @@ class PlayVideoController: UIViewController {
                             self.play()
                         }
                     } else {
+                        LoadManager.instance.dismiss()
                         if let e = errMsg {
                             ToastTool.instance.show(e, .fail)
                         }
@@ -508,7 +510,8 @@ extension PlayVideoController: HUBPlayerDelegate {
     }
     
     func player(_ player: HUBPlayer, didFailWithError error: Error?) {
-        ToastTool.instance.show("play failed", .fail)
+        ToastTool.instance.show("load failed", .fail)
+        LoadManager.instance.dismiss()
         self.playNext(true)
     }
     
