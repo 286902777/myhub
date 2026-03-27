@@ -540,6 +540,7 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
                     DispatchQueue.main.async {
                         HubTool.share.channelSource = .homeChannel
                         HubTool.share.platform = data.platform
+                        HubTool.share.currentPlatform = data.platform
                         let vc = PingController(uId: data.id, platform: data.platform)
                         vc.hidesBottomBarWhenPushed = true
                         TabbarTool.instance.displayOrHidden(false)
