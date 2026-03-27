@@ -442,12 +442,19 @@ class HubTool {
     }
     
     func show(_ mode: AdsShowMode = .play, complete: @escaping(_ success: Bool) -> Void) {
-//        if PayManager.share.isVip == true {
-//            SystemManager.share.showAdomb = false
-//            complete(false)
-//            return
-//        }
-        
+        if PayManager.instance.isVip == true {
+            HubTool.share.showAdomb = false
+            complete(false)
+            return
+        }
+        guard HubTool.share.toPay == false else {
+            complete(false)
+            return
+        }
+        guard HubTool.share.showAdomb == false else {
+            complete(false)
+            return
+        }
         GoogleManager.share.disPlay(mode) { suc, adItem, showPlus in
             HubTool.share.keyVC()?.view.hideToast()
             if mode == .playing, suc == false {

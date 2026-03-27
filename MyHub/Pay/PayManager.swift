@@ -176,16 +176,16 @@ class PayManager: NSObject {
         }
         //        let bodyStr = String(format: "{\"device_id\":\"%@\",\"receipt_base64_data\":\"%@\",\"product_id\":\"%@\",\"package_name\":\"%@\"}", VAnalysis.shared.idfv(), data, self.product_id, appBunldeID)
         
-        let bodyStr = String(format: "{\"kaeieg_f4l\":\"%@\",\"ranchmen\":\"%@\",\"snowballed\":\"%@\",\"epictetian\":\"%@\"}", HttpManager.share.appPrimaryKey(), data, "", HUB_BuildId)
+        let bodyStr = String(format: "{\"garbage\":\"%@\",\"filiformed\":\"%@\",\"wheft\":\"%@\",\"ensorcel\":\"%@\"}", HttpManager.share.appPrimaryKey(), data, "", HUB_BuildId)
         //        let url = "\(PayHost)/v1/ios/receipt-verifier"
-        let url = "https://evve.eversavebox.com/halomancy/linometer/kuvasz"
+        let url = "https://mhb.myhubweb.com/educables/speculist/thrippence"
         
         var request: URLRequest = URLRequest(url: URL(string: url)!)
         request.httpMethod = "POST"
         let requestData = bodyStr.data(using: .utf8)
         request.httpBody = requestData
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("leonese", forHTTPHeaderField: "episporium") /// episporium == x-api-id
+        request.setValue("yamp", forHTTPHeaderField: "monkshoods") /// monkshoods == x-api-id
         request.timeoutInterval = 15
         let configuration: URLSessionConfiguration = URLSessionConfiguration.default
         let session: URLSession = URLSession(configuration: configuration)

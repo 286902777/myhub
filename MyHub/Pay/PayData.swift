@@ -21,9 +21,9 @@ enum PayType: String, HandyJSONEnum {
 }
 
 enum PayID: String, HandyJSONEnum {
-    case weak = "week_evve"
-    case year = "year_evve"
-    case life = "lifetime_evve"
+    case weak = "myhub_week"
+    case year = "myhub_year"
+    case life = "myhub_lifetime"
 }
 
 class PayListData: SuperData {
@@ -56,13 +56,13 @@ class PayEntityData: SuperData {
     var ok: Bool = false
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &latest_receipt_info, name: "ixjrcanxth")
-        mapper.specify(property: &pending_renewal_info, name: "knifings")
-        mapper.specify(property: &environment, name: "dinarchies")
-        mapper.specify(property: &status, name: "chickens")
-        mapper.specify(property: &receipt, name: "boltlike")
-        mapper.specify(property: &device_id, name: "kaeieg_f4l")
-        mapper.specify(property: &ok, name: "smuts")
+        mapper.specify(property: &latest_receipt_info, name: "kissably")
+        mapper.specify(property: &pending_renewal_info, name: "shacko")
+        mapper.specify(property: &environment, name: "5avyddccrz")
+        mapper.specify(property: &status, name: "dainteous")
+        mapper.specify(property: &receipt, name: "ghatti")
+        mapper.specify(property: &device_id, name: "garbage")
+        mapper.specify(property: &ok, name: "goldenwing")
     }
 }
 
@@ -78,15 +78,15 @@ class PayReceiptData: SuperData {
     var purchase_date_pst = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &product_id, name: "snowballed")
-        mapper.specify(property: &transaction_id, name: "befleck")
-        mapper.specify(property: &quantity, name: "flashlike")
-        mapper.specify(property: &expires_date_ms, name: "ipiffqrwy8")
-        mapper.specify(property: &expires_date, name: "turbopump")
-        mapper.specify(property: &expires_date_pst, name: "sextern")
-        mapper.specify(property: &purchase_date_ms, name: "entering")
-        mapper.specify(property: &purchase_date, name: "np2ualktjs")
-        mapper.specify(property: &purchase_date_pst, name: "tailsman")
+        mapper.specify(property: &product_id, name: "wheft")
+        mapper.specify(property: &transaction_id, name: "colorisms")
+        mapper.specify(property: &quantity, name: "prologed")
+        mapper.specify(property: &expires_date_ms, name: "rompingly")
+        mapper.specify(property: &expires_date, name: "scaliness")
+        mapper.specify(property: &expires_date_pst, name: "nonanemic")
+        mapper.specify(property: &purchase_date_ms, name: "peptidic")
+        mapper.specify(property: &purchase_date, name: "0jlk0hyzkn")
+        mapper.specify(property: &purchase_date_pst, name: "crazyweed")
     }
 }
 
@@ -95,8 +95,8 @@ class PayRenewalData: SuperData {
     var auto_renew_status = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &original_transaction_id, name: "bib")
-        mapper.specify(property: &auto_renew_status, name: "ducatus")
+        mapper.specify(property: &original_transaction_id, name: "extramodal")
+        mapper.specify(property: &auto_renew_status, name: "seersucker")
     }
 }
 
@@ -114,6 +114,6 @@ class ApplePayData: SuperData {
     
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &entity, name: "amerinds")
+        mapper.specify(property: &entity, name: "horrorize")
     }
 }

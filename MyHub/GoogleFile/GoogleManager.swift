@@ -181,19 +181,6 @@ extension GoogleManager {
     }
     
     func disPlay(_ mode: AdsShowMode, complete: @escaping(Bool, FullScreenPresentingAd?, Bool) -> Void) {
-        //        guard PayManager.share.isVip == false else {
-        //            complete(false, nil, false)
-        //            return
-        //        }
-        //        guard HubTool.share.goPay == false else {
-        //            complete(false, nil, false)
-        //            return
-        //        }
-        guard HubTool.share.showAdomb == false else {
-            complete(false, nil, false)
-            return
-        }
-        
         let date = Date().timeIntervalSince1970
         if mode != .playing {
             self.isPlayingAds = false
@@ -287,12 +274,12 @@ extension GoogleManager {
     }
     
     func admobMaxLoad(_ mode: AdsShowMode, _ idx: Int = 0) {
-        //        if PayManager.share.isVip {
-        //            return
-        //        }
-        //        guard HubTool.share.goPay == false else {
-        //            return
-        //        }
+        if PayManager.instance.isVip {
+            return
+        }
+        guard HubTool.share.toPay == false else {
+            return
+        }
         
         if let item = self.listData.first(where: {$0.playMode == mode}), idx < item.lists.count {
             let model = item.lists[idx]
