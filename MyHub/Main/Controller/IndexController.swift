@@ -25,6 +25,11 @@ class IndexController: SuperController {
     
     let tableHeadV: IndexHeadView = IndexHeadView.view()
         
+    lazy var vipBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "home_pre"), for: .normal)
+        return btn
+    }()
     lazy var tableView: UITableView = {
         let table = UITableView.init(frame: .zero, style: .plain)
         table.delegate = self
@@ -153,14 +158,13 @@ class IndexController: SuperController {
         TbaManager.instance.installEvent(link: false)
     }
     
-//    @objc func clickVipAction() {
-//        HubTool.share.preSource = .vip_home
-//        HubTool.share.preMethod = .vip_click
-//        let vc = PremiumController()
-//        vc.hidesBottomBarWhenPushed = true
-//        vc.modalPresentationStyle = .overFullScreen
-//        self.present(vc, animated: true)
-//    }
+    @objc func clickVipAction() {
+        HubTool.share.preSource = .vip_home
+        HubTool.share.preMethod = .vip_click
+        TabbarTool.instance.displayOrHidden(false)
+        let vc = PayController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     func appFlyerPushSubVC(_  info: String) {
         guard HubTool.share.showAdomb == false else { return }
@@ -313,10 +317,17 @@ class IndexController: SuperController {
         self.navbar.backBtn.isHidden = true
         self.navbar.nameL.isHidden = true
         self.navbar.bgView.addSubview(self.headL)
+        self.navbar.bgView.addSubview(self.vipBtn)
         self.headL.snp.makeConstraints { make in
             make.left.equalTo(14)
             make.centerY.equalToSuperview()
         }
+        self.vipBtn.snp.makeConstraints { make in
+            make.left.equalTo(6)
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 44, height: 44))
+        }
+        self.vipBtn.addTarget(self, action: #selector(clickVipAction), for: .touchUpInside)
         self.view.addSubview(self.tableHeadV)
         self.tableHeadV.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
