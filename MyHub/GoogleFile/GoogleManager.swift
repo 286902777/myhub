@@ -116,9 +116,6 @@ extension GoogleManager {
     func deleteCache(_ adsId: String) {
         print("--------------------adddeleteCache\(adsId)")
         self.cacheArray.removeValue(forKey: adsId)
-        //        if let m = self.cacheArray.first(where: {$0.mode == mode}), m.lists.count > 0 {
-        //            m.lists.removeFirst()
-        //        }
     }
     
     func reSetAdsData() {
@@ -140,10 +137,6 @@ extension GoogleManager {
     
     func getCacheData(_ adsId: String) -> GoogleAdsCacheData? {
         return self.cacheArray[adsId]
-        //        if let item = self.cacheArray.first(where: {$0.mode == mode}) {
-        //            return item.lists
-        //        }
-        //        return []
     }
     
     func loadNativeAd(mode: AdsShowMode, index: Int, adsId: String) {
@@ -196,8 +189,6 @@ extension GoogleManager {
         //            complete(false, nil, false)
         //            return
         //        }
-        complete(false, nil, false)
-        return
         guard HubTool.share.showAdomb == false else {
             complete(false, nil, false)
             return
