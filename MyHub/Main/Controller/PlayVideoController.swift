@@ -248,8 +248,8 @@ class PlayVideoController: UIViewController {
     }
     
     private func requestPlayUrl(_ model: VideoData) {
+        LoadManager.instance.show(self)
         if model.platform == .box {
-            LoadManager.instance.show(self)
             HttpManager.share.boxVideoUrlApi(model.id) {[weak self] status, address, errMsg in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
