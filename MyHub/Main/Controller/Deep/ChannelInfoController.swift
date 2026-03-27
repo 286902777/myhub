@@ -142,6 +142,7 @@ extension ChannelInfoController: UICollectionViewDelegate, UICollectionViewDataS
         if let user = self.listArr.safeIndex(indexPath.section), let data = user.users.safeIndex(indexPath.item) {
             HubTool.share.channelSource = .channelList
             HubTool.share.platform = data.platform
+            HubTool.share.currentPlatform = data.platform
             let vc = PingController(uId: data.id, platform: data.platform)
             self.navigationController?.pushViewController(vc, animated: true)
         }

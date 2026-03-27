@@ -71,6 +71,9 @@ class HubDB {
     }
     
     func updateUserInfo(_ user: ChannelUserData) {
+        if user.id.count == 0 {
+            return
+        }
         if let uModel = self.getUserInfo(user.id) {
             if let realm = self.getDataBaseData() {
                 do {

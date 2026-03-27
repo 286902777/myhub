@@ -235,6 +235,7 @@ class PingController: UIViewController {
                 if status == .success {
                     if self.currentPage == 1 {
                         self.dataModel = model
+                        model.userInfo.platform = self.platform
                         HubDB.instance.updateUserInfo(model.userInfo)
                         self.headView.setHeadData(model, linkId: "", uId: model.userInfo.id, name: model.userInfo.name, platform: self.platform)
                         self.headView.pingClickBlock = { data, hot in
