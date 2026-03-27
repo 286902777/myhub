@@ -249,6 +249,7 @@ class FileListController: SuperController {
             let vc = OpenPhotoController(model: model)
             self.navigationController?.pushViewController(vc, animated: true)
         case .video:
+            HubTool.share.playSource = .cloud
             PlayTool.instance.pushPage(self, model, self.list.filter({$0.file_type == .video}))
         }
     }
