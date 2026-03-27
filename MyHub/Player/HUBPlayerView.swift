@@ -350,6 +350,7 @@ private extension HUBPlayerView {
     func observeStatusAction() {
         guard let playerItem = playerItem else { return }
         if playerItem.status == .readyToPlay {
+            self.isUserPause = false
             contentView.playState = .readyToPlay
             TbaManager.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
             TbaManager.instance.addEvent(type: .custom, event: .playSuc, paramter: nil)
@@ -395,6 +396,7 @@ private extension HUBPlayerView {
             if PlayTool.instance.auto == false {
                 TbaManager.instance.addEvent(type: .custom, event: .playSource, paramter: [EventParaName.value.rawValue: HubTool.share.playSource.rawValue])
             }
+            self.isUserPause = false
             contentView.playState = .failed
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
