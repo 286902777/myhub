@@ -275,6 +275,7 @@ class OtherDeepController: UIViewController {
                         UserDefaults.standard.set(self.linkId, forKey: EventSaveLinkId)
                         UserDefaults.standard.set(model.userInfo.id, forKey: EventSaveUserId)
                         UserDefaults.standard.synchronize()
+                        NotificationCenter.default.post(name: Noti_HomeUpdate, object: nil, userInfo: nil)
                         self.uploadOpenDeepLink()
                     } else {
                         self.dataModel.files.append(contentsOf: model.files)

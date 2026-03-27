@@ -358,13 +358,11 @@ class IndexController: SuperController {
                 self.isHisUpload = true
             }
         }
-        if LoginManager.share.isLogin {
-            self.channelList = HubDB.instance.readUsers()
-            if self.channelList.count > 0 {
-                if self.isGroupUpload == false {
-                    TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
-                    self.isGroupUpload = true
-                }
+        self.channelList = HubDB.instance.readUsers()
+        if self.channelList.count > 0 {
+            if self.isGroupUpload == false {
+                TbaManager.instance.addEvent(type: .custom, event: .homeChannelExpose, paramter: [EventParaName.history.rawValue: self.channelList.count])
+                self.isGroupUpload = true
             }
         }
         self.netRequestUpload()
@@ -399,7 +397,7 @@ class IndexController: SuperController {
             self.tableView.reloadData()
         }
 
-        var channels: [ChannelUserData] = []
+        var channels: [ChannelUserData] = self.channelList
         var uploads: [VideoData] = []
         
         var userData: UserSpaceData = UserSpaceData()
@@ -439,29 +437,29 @@ class IndexController: SuperController {
                     group.leave()
                 }
             }
-            group.enter()
-            queue.async { [weak self] in
-                guard let self = self else { return }
-                if let m = self.channelList.first(where: {$0.platform != .box}) {
-                    let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
-                        if refresh {
-                            self.netRequestUpload()
-                            return
-                        }
-                        if status == .success {
-                            if list.count > 0 {
-                                let userArr = self.insertUser(self.channelList, list, m.platform)
-                                channels = userArr
-                            }
-                        }
-                        group.leave()
-                    }
-                } else {
-                    group.leave()
-                }
-            }
         } else {
             TbaManager.instance.addEvent(type: .custom, event: .homeExpose, paramter: nil)
+        }
+        group.enter()
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            if let m = self.channelList.first(where: {$0.platform != .box}) {
+                let _ = HttpManager.share.channelUserList(m.id, m.platform) { status, list, errMsg, refresh in
+                    if refresh {
+                        self.netRequestUpload()
+                        return
+                    }
+                    if status == .success {
+                        if list.count > 0 {
+                            let userArr = self.insertUser(self.channelList, list, m.platform)
+                            channels = userArr
+                        }
+                    }
+                    group.leave()
+                }
+            } else {
+                group.leave()
+            }
         }
         group.notify(queue: queue) {
             DispatchQueue.main.async { [weak self] in
@@ -624,13 +622,14 @@ extension IndexController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let m = self.list.safeIndex(section) {
-            if m.type == .upload {
+            switch m.type {
+            case .upload:
                 return m.lists.count
-            } else {
+            default:
                 return 1
             }
         }
-        return 1
+        return 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
