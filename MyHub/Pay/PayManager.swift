@@ -11,18 +11,18 @@ import HandyJSON
 
 class PayManager: NSObject {
     static let instance = PayManager()
-    
-    var isVip: Bool = UserDefaults.standard.bool(forKey: HUB_UserVip) {
-        didSet {
-            UserDefaults.standard.set(isVip, forKey: HUB_UserVip)
-            UserDefaults.standard.synchronize()
-            NotificationCenter.default.post(name: Noti_UserVip, object: nil)
-        }
-    }
+    var isVip: Bool = true
+//    var isVip: Bool = UserDefaults.standard.bool(forKey: HUB_UserVip) {
+//        didSet {
+//            UserDefaults.standard.set(isVip, forKey: HUB_UserVip)
+//            UserDefaults.standard.synchronize()
+//            NotificationCenter.default.post(name: Noti_UserVip, object: nil)
+//        }
+//    }
       
     var isPop: Bool = false
 
-    var defaultProduct: String = ""
+    var defaultProduct: PayID = .life
     
     var task: URLSessionDataTask?
     
@@ -69,7 +69,6 @@ class PayManager: NSObject {
         year.name = PayType.yearly.rawValue
         let weak = PayData()
         weak.product_id = PayID.weak.rawValue
-        weak.hot = true
         weak.index = 2
         weak.price = "2.99"
         weak.name = PayType.weekly.rawValue
@@ -221,19 +220,19 @@ class PayManager: NSObject {
                                     }
                                     if let serviceModel = model.entity.latest_receipt_info.first {
                                         if let price = self.productDatas.first(where: {$0.product_id == serviceModel.product_id})?.price {
-                                            UserDefaults.standard.set(price, forKey: PremiumPrice)
+                                            UserDefaults.standard.set(price, forKey: PayPrice)
                                         }
                                         if let showPrice = self.productDatas.first(where: {$0.product_id == serviceModel.product_id})?.showPrice {
-                                            UserDefaults.standard.set(showPrice, forKey: PremiumDisplayF)
+                                            UserDefaults.standard.set(showPrice, forKey: PayDisplayF)
                                         }
                                         if serviceModel.product_id == PayID.life.rawValue {
-                                            UserDefaults.standard.set("", forKey: PremiumTime)
+                                            UserDefaults.standard.set("", forKey: PayTime)
                                         } else {
                                             let date = Date(timeIntervalSince1970: serviceModel.expires_date_ms / 1000).toYMD()
-                                            UserDefaults.standard.set(date, forKey: PremiumTime)
+                                            UserDefaults.standard.set(date, forKey: PayTime)
                                         }
                                         if let productType = self.productDatas.first(where: {$0.product_id == serviceModel.product_id})?.name {
-                                            UserDefaults.standard.set(productType, forKey: PremiumName)
+                                            UserDefaults.standard.set(productType, forKey: PayName)
                                         }
                                         UserDefaults.standard.synchronize()
                                     }

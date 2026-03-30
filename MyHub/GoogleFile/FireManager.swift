@@ -65,10 +65,12 @@ class FireManager {
                                 UserDefaults.standard.set(premuimInfo, forKey: VipInfoKey)
                                 if let mod = PayListData.deserialize(from: premuimInfo) {
                                     PayManager.instance.productDatas = mod.items.sorted(by: {$0.index > $1.index})
-                                    PayManager.instance.defaultProduct = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
+                                    let selectPro = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
+                                    PayManager.instance.defaultProduct = PayID(rawValue: selectPro) ?? .life
                                     guard let _ = PayManager.instance.productDatas.first(where: {$0.isSelect == true}) else {
                                         PayManager.instance.productDatas.first?.isSelect = true
-                                        PayManager.instance.defaultProduct = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
+                                        let selectPro = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
+                                        PayManager.instance.defaultProduct = PayID(rawValue: selectPro) ?? .life
                                         PayManager.instance.requestProductInfo(type: .refresh)
                                         return
                                     }

@@ -81,11 +81,6 @@ class HUBPlayerContentView: UIView {
 
     private let listFullView: UIView = UIView()
 
-//    lazy var loadingView: ESRotateAnimationView = {
-//        let view = ESRotateAnimationView(frame: .init(x: 0, y: 0, width: 40, height: 40))
-//        view.startAnimation()
-//        return view
-//    }()
     var soundPlayer: AVPlayer?
     private var isShowLoad: Bool = false {
         didSet {
@@ -95,7 +90,7 @@ class HUBPlayerContentView: UIView {
         }
     }
     
-//    lazy var loadingView: HUBPlayLoadView = HUBPlayLoadView.view()
+    lazy var loadingView: HUBPlayLoadView = HUBPlayLoadView.view()
     
     private lazy var backButton: UIButton = {
         let view = UIButton()
@@ -359,36 +354,30 @@ class HUBPlayerContentView: UIView {
                 playButton.isSelected = false
                 placeholderStackView.isHidden = placeholderView == nil
                 self.isShowLoad = true
-//                loadingView.start()
+                loadingView.start()
             case .waiting:
                 sliderView.isUserInteractionEnabled = false
                 placeholderStackView.isHidden = true
                 self.isShowLoad = true
-//                loadingView.start()
+                loadingView.start()
             case .readyToPlay:
-                LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = true
                 self.isShowLoad = false
             case .playing:
-                LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = true
                 playButton.isSelected = true
                 placeholderStackView.isHidden = true
                 self.isShowLoad = false
-//                loadingView.stop()
+                loadingView.stop()
             case .buffering:
-                if let topVC = HubTool.share.keyVC() {
-                    LoadManager.instance.show(topVC)
-                }
                 sliderView.isUserInteractionEnabled = true
                 placeholderStackView.isHidden = true
                 self.isShowLoad = true
-//                loadingView.start()
+                loadingView.start()
             case .failed:
-                LoadManager.instance.dismiss()
                 sliderView.isUserInteractionEnabled = false
                 self.isShowLoad = false
-//                loadingView.stop()
+                loadingView.stop()
             case .pause:
                 sliderView.isUserInteractionEnabled = true
                 playButton.isSelected = false
@@ -397,7 +386,7 @@ class HUBPlayerContentView: UIView {
                 playButton.isSelected = false
                 placeholderStackView.isHidden = placeholderView == nil
                 self.isShowLoad = false
-//                loadingView.stop()
+                loadingView.stop()
             }
         }
     }
@@ -424,7 +413,7 @@ private extension HUBPlayerContentView {
         addSubview(topToolView)
         addSubview(bottomToolView)
         addSubview(listFullView)
-//        addSubview(loadingView)
+        addSubview(loadingView)
         
         topToolView.addSubview(backButton)
         topToolView.addSubview(titleLabel)
@@ -472,18 +461,19 @@ private extension HUBPlayerContentView {
 
         addGestureRecognizer(panGesture)
 
-//        loadingView.clickBlock = { [weak self] click  in
-//            guard let self = self else { return }
-//            if click {
-//                self.delegate?.contentView(self, didClickVipButton: true)
-//            } else {
-//                self.soundPlayer?.play()
-//            }
-//        }
-//        loadingView.stateBlock = {[weak self] in
-//            guard let self = self else { return }
-//            self.isShowLoad = false
-//        }
+        loadingView.clickBlock = { [weak self] click  in
+            guard let self = self else { return }
+            if click {
+                self.delegate?.contentView(self, didClickVipButton: true)
+            } else {
+                self.soundPlayer?.play()
+            }
+        }
+        loadingView.stateBlock = {[weak self] in
+            guard let self = self else { return }
+            self.isShowLoad = false
+        }
+        
         guard !config.isHiddenToolbarWhenStart else { return }
         autoFadeOutTooView()
     }
@@ -538,9 +528,9 @@ private extension HUBPlayerContentView {
             make.bottom.equalToSuperview()
         }
         
-//        loadingView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
+        loadingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         backButton.snp.makeConstraints { make in
             make.left.equalTo(10)
@@ -552,11 +542,7 @@ private extension HUBPlayerContentView {
             make.right.equalTo(vipButton.snp.left).offset(-15)
             make.centerY.height.equalToSuperview()
         }
-//        vipButton.snp.makeConstraints { make in
-//            make.right.equalTo(moreButton.snp.left).offset(-15)
-//            make.size.equalTo(CGSize(width: 56, height: 24))
-//            make.centerY.equalToSuperview()
-//        }
+
         vipButton.snp.makeConstraints { make in
             make.right.equalTo(-10)
             make.size.equalTo(CGSize(width: 0, height: 0))
@@ -644,7 +630,6 @@ private extension HUBPlayerContentView {
         bottomToolView.backgroundColor = config.color.bottomToolbar
         progressView.trackTintColor = config.color.progress
         progressView.progressTintColor = config.color.progressBuffer
-//        loadingView.updateWithConfigure { $0.backgroundColor = self.config.color.loading }
 
         backButton.setImage(config.image.back, for: .normal)
         vipButton.setImage(config.image.vip, for: .normal)
@@ -669,11 +654,6 @@ private extension HUBPlayerContentView {
 @objc private extension HUBPlayerContentView {
     func tapAction() {
         isShowMorePanel = !isShowMorePanel
-//        if isShowMorePanel {
-//            isShowMorePanel = false
-//        } else {
-//            isHiddenToolView ? showToolView() : hiddenToolView()
-//        }
     }
 
     func leftTapAction() {

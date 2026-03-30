@@ -50,8 +50,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-//        PremiumTool.instance.requestProductInfo(type: .refresh)
-//        PremiumTool.instance.requestServiceReceiptData(product: nil, type: .refresh)
+        PayManager.instance.requestProductInfo(type: .refresh)
+        PayManager.instance.requestServiceReceiptData(product: nil, type: .refresh)
         if noFirst == false {
             TbaManager.instance.addEvent(type: .session, event: .session, paramter: nil)
             noFirst = true
@@ -59,7 +59,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         guard HubTool.share.showAdomb == false else { return }
-//        guard HubTool.share.toPay == false else { return }
+        guard HubTool.share.toPay == false else { return }
         if noFirst {
             HubTool.share.adsPlayState = .openHot
             HubTool.share.show() { _ in

@@ -105,17 +105,15 @@ class PlayVideoController: UIViewController {
         self.setDownBtnState()
         NotificationCenter.default.addObserver(forName: Noti_ShowAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-//            self.player.playerView.contentView.loadingView.stop()
-            LoadManager.instance.dismiss()
+            self.player.playerView.contentView.loadingView.stop()
             self.player.pause()
         }
         
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-//            self.player.playerView.contentView.loadingView.stop()
+            self.player.playerView.contentView.loadingView.stop()
             
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
-            LoadManager.instance.dismiss()
             if HubTool.share.adsPlayState == .download {
                 ToastTool.instance.show("Added to download list")
                 if self.model.platform != .box {
@@ -186,7 +184,7 @@ class PlayVideoController: UIViewController {
         HubTool.share.show(.play) { [weak self] success in
             guard let self = self else { return }
             if success {
-//                self.player.playerView.contentView.loadingView.stop()
+                self.player.playerView.contentView.loadingView.stop()
                 self.player.pause()
                 let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
                 UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
@@ -234,7 +232,7 @@ class PlayVideoController: UIViewController {
     }
     
     private func play() {
-        LoadManager.instance.show(self)
+        self.player.playerView.contentView.loadingView.start()
         var isPlay = false
         if let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) {
             isPlay = true
@@ -248,7 +246,7 @@ class PlayVideoController: UIViewController {
     }
     
     private func requestPlayUrl(_ model: VideoData) {
-        LoadManager.instance.show(self)
+        self.player.playerView.contentView.loadingView.start()
         if model.platform == .box {
             HttpManager.share.boxVideoUrlApi(model.id) {[weak self] status, address, errMsg in
                 guard let self = self else { return }
@@ -262,7 +260,7 @@ class PlayVideoController: UIViewController {
                             self.play()
                         }
                     } else {
-                        LoadManager.instance.dismiss()
+                        self.player.playerView.contentView.loadingView.stop()
                         if let e = errMsg {
                             ToastTool.instance.show(e, .fail)
                         }
@@ -283,7 +281,7 @@ class PlayVideoController: UIViewController {
                             self.play()
                         }
                     } else {
-                        LoadManager.instance.dismiss()
+                        self.player.playerView.contentView.loadingView.stop()
                         if let e = errMsg {
                             TbaManager.instance.addEvent(type: .custom, event: .playStartAll, paramter: nil)
                             TbaManager.instance.addEvent(type: .custom, event: .playFail, paramter: [EventParaName.value.rawValue: e])
@@ -515,12 +513,12 @@ extension PlayVideoController: HUBPlayerDelegate {
     
     func player(_ player: HUBPlayer, didFailWithError error: Error?) {
         ToastTool.instance.show("load failed", .fail)
-        LoadManager.instance.dismiss()
+        self.player.playerView.contentView.loadingView.stop()
         self.playNext(true)
     }
     
     func playerLoadPop(_ player: HUBPlayer) {
-//        guard PremiumTool.instance.isMember == false else { return }
+        guard PayManager.instance.isVip == false else { return }
         if HubTool.share.preMiumCount < 5, HubTool.share.preMiumMagin >= 2 {
             let played = HubTool.share.preMiumLists.contains(where: {$0 == self.model.id})
             if played {

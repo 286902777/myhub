@@ -71,12 +71,17 @@ class GoogleNativeController: UIViewController {
         self.isUpClose = Bool.random()
         MobileAds.shared.isApplicationMuted = true
         MobileAds.shared.audioVideoManager.isAudioSessionApplicationManaged = true
-        
+        self.installButton.layer.cornerRadius = 12
+        self.s_installButton.layer.cornerRadius = 12
+        self.installButton.layer.masksToBounds = true
+        self.s_installButton.layer.masksToBounds = true
+        self.timeL.layer.cornerRadius = 10
+        self.timeL.layer.masksToBounds = true
+        self.s_timeL.layer.cornerRadius = 10
+        self.s_timeL.layer.masksToBounds = true
         if let ad = self.adContent {
-            installButton.layer.cornerRadius = 8
-            installButton.layer.masksToBounds = true
-            timeL.layer.cornerRadius = 9
-            timeL.layer.masksToBounds = true
+      
+
             mainView.mediaView = videoV
             mainView.callToActionView = installButton
             mainView.storeView = closeView
@@ -98,10 +103,7 @@ class GoogleNativeController: UIViewController {
             self.showC = 0
         }
         if let s_ad = self.s_adContent {
-            s_installButton.layer.cornerRadius = 8
-            s_installButton.layer.masksToBounds = true
-            s_timeL.layer.cornerRadius = 9
-            s_timeL.layer.masksToBounds = true
+ 
             s_mainView.mediaView = s_videoV
             s_mainView.callToActionView = s_installButton
             s_mainView.storeView = s_closeView
@@ -132,7 +134,6 @@ class GoogleNativeController: UIViewController {
             self.adsRate = GoogleManager.share.nativeClickRate
             self.timeL.isHidden = !self.isUpAds
             self.s_timeL.isHidden = self.isUpAds
-            self.strat()
         } else {
             self.showC = 1
             self.adsTime = GoogleManager.share.playNativeTime
@@ -140,6 +141,7 @@ class GoogleNativeController: UIViewController {
             self.timeL.isHidden = true
             self.isShowCloseBtn()
         }
+        self.strat()
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         self.s_closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         NotificationCenter.default.addObserver(forName: Noti_ClickNativeAds, object: nil, queue: .main) {  [weak self] _ in

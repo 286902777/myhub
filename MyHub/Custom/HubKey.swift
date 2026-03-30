@@ -52,11 +52,11 @@ let HUB_UploadFirstDeepPlay: String = "HUB_UploadFirstDeepPlay"
 
 let HUB_UserVip: String = "HUB_UserVip"
 
-let PremiumSuccess: String = "PremiumSuccess"
-let PremiumDisplayF: String = "PremiumDisplayF"
-let PremiumPrice: String = "PremiumPrice"
-let PremiumTime: String = "PremiumTime"
-let PremiumName: String = "PremiumName"
+let PaySuccess: String = "HUB_PaySuccess"
+let PayDisplayF: String = "HUB_PayDisplayF"
+let PayPrice: String = "HUB_PayPrice"
+let PayTime: String = "HUB_PayTime"
+let PayName: String = "HUB_PayName"
 
 let PreStartPopVip = "PreStartPopVip"
 

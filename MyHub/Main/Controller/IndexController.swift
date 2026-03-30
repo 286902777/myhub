@@ -323,7 +323,7 @@ class IndexController: SuperController {
             make.centerY.equalToSuperview()
         }
         self.vipBtn.snp.makeConstraints { make in
-            make.left.equalTo(6)
+            make.right.equalTo(-6)
             make.centerY.equalToSuperview()
             make.size.equalTo(CGSize(width: 44, height: 44))
         }

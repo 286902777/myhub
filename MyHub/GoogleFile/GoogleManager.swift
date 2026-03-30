@@ -181,6 +181,8 @@ extension GoogleManager {
     }
     
     func disPlay(_ mode: AdsShowMode, complete: @escaping(Bool, FullScreenPresentingAd?, Bool) -> Void) {
+        complete(false, nil, false)
+        return
         let date = Date().timeIntervalSince1970
         if mode != .playing {
             self.isPlayingAds = false
