@@ -15,17 +15,17 @@ class FireManager {
     var total: Int = 0
     
     func setConfig() {
-//        var dataInfo = ""
-//        let path = Bundle.main.path(forResource: "GoogleAds", ofType: "json")
-//        if let p = path {
-//            guard let d = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
-//            dataInfo = d.base64EncodedString()
-//        }
-//        deConfig.configSettings = RemoteConfigSettings()
-//        deConfig.setDefaults(["MyHub_Vip": "" as NSObject])
-//        deConfig.configSettings.minimumFetchInterval = 5000
-//        deConfig.setDefaults(["MyHub_Ads": dataInfo as NSObject])
-//        self.initData()
+        var dataInfo = ""
+        let path = Bundle.main.path(forResource: "GoogleAds", ofType: "json")
+        if let p = path {
+            guard let d = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
+            dataInfo = d.base64EncodedString()
+        }
+        deConfig.configSettings = RemoteConfigSettings()
+        deConfig.setDefaults(["MyHub_Vip": "" as NSObject])
+        deConfig.configSettings.minimumFetchInterval = 5000
+        deConfig.setDefaults(["MyHub_Ads": dataInfo as NSObject])
+        self.initData()
     }
     
     private func initData() {

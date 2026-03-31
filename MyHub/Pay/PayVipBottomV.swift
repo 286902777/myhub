@@ -95,9 +95,10 @@ class PayVipBottomV: UIView {
         }
         
         self.stackV.snp.makeConstraints { make in
-            make.bottom.centerX.equalToSuperview()
+            make.centerX.equalToSuperview()
             make.top.equalTo(self.nextBtn.snp.bottom).offset(8)
             make.height.equalTo(28)
+            make.bottom.equalTo(-BottomSafeH)
         }
         let tTap = UITapGestureRecognizer(target: self, action: #selector(clickTermsAction))
         self.termsL.isUserInteractionEnabled = true

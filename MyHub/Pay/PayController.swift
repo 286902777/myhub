@@ -111,7 +111,7 @@ class PayController: UIViewController {
         self.navbar.clickBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+                if let vs = self.navigationController?.viewControllers, vs.count > 1 {
                     self.navigationController?.popViewController(animated: true)
                 } else {
                     self.dismiss(animated: true)
@@ -144,8 +144,7 @@ class PayController: UIViewController {
         self.view.addSubview(self.bottomV)
         self.view.addSubview(self.tremsV)
         self.bottomV.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+            make.left.bottom.right.equalToSuperview()
         }
         
         self.tremsV.snp.makeConstraints { make in
@@ -274,7 +273,6 @@ class PayController: UIViewController {
         let vc = HtmlController()
         vc.linkType = .privacy
         vc.name = "Privacy Policy"
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -282,7 +280,6 @@ class PayController: UIViewController {
         let vc = HtmlController()
         vc.linkType = .terms
         vc.name = "Terms of Service"
-        vc.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

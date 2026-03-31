@@ -250,8 +250,9 @@ class OtherDeepController: UIViewController {
         HubTool.share.preSource = .vip_landPage
         HubTool.share.preMethod = .vip_click
         let vc = PayController()
-        vc.modalPresentationStyle = .overFullScreen
-        self.present(vc, animated: true)
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .overFullScreen
+        self.present(nav, animated: true)
     }
     
     @objc func clickCloseAction() {

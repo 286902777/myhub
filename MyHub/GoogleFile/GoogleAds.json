@@ -13,10 +13,21 @@
     "play": [
         {
             "source": "admob",
+            "index": 5,
+            "type": "interstitial",
+            "id": "ca-app-pub-5465830639706745/1448325609"
+        },
+        {
+            "source": "max",
             "index": 4,
-            "type": "native",
-            "id": "ca-app-pub-3940256099942544/3986624511",
-            "s_id":"ca-app-pub-3940256099942544/2247696110"
+            "type": "rewarded",
+            "id": "d9c99dd0f50af7af"
+        },
+        {
+            "source": "max",
+            "index": 3,
+            "type": "interstitial",
+            "id": "60ad1181fa1fdb70"
         }
     ]
 }

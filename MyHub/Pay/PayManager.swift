@@ -85,7 +85,7 @@ class PayManager: NSObject {
             self.type = .restore
             self.requestProductInfo(type: .restore)
         } else {
-            ToastTool.instance.show("Congratulations! You have become a member and can enjoy all premium benefits")
+            ToastTool.instance.show("Congrats! As a new member, you can take advantage of all premium perks.")
         }
     }
     
@@ -216,7 +216,7 @@ class PayManager: NSObject {
                                 if model.entity.ok == true {
                                     if type == .pay {
                                         self.successToPay()
-                                        ToastTool.instance.show("You have become a member and can enjoy all premium benefits.")
+                                        ToastTool.instance.show("Congrats! As a new member, you can take advantage of all premium perks.")
                                     }
                                     if let serviceModel = model.entity.latest_receipt_info.first {
                                         if let price = self.productDatas.first(where: {$0.product_id == serviceModel.product_id})?.price {
