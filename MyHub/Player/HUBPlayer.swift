@@ -150,12 +150,6 @@ public class HUBPlayer: UIStackView {
         }
     }
 
-    public weak var placeholder: UIView? {
-        didSet {
-            playerView.contentView.placeholderView = placeholder
-        }
-    }
-
     public weak var delegate: HUBPlayerDelegate?
 }
 

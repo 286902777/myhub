@@ -74,7 +74,7 @@ public struct HUBPlayerConfigure {
         public var sound: UIImage?
         
         public init(back: UIImage? = UIImage(named: "back_w"),
-                    vip: UIImage? = UIImage(named: "pre_nav"),
+                    vip: UIImage? = UIImage(named: "home_pre"),
                     more: UIImage? = UIImage(named: "play_list"),
                     play: UIImage? = UIImage(named: "play_play"),
                     pause: UIImage? = UIImage(named: "play_pause"),

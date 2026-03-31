@@ -27,7 +27,7 @@ enum PayID: String, HandyJSONEnum {
 }
 
 class PayListData: SuperData {
-    var items: [PayData] = []
+    var infoList: [PayData] = []
 }
 
 //product_id: 商品的唯一标识符。
@@ -42,7 +42,7 @@ class PayData: SuperData {
     var index: Int = 1
     var isSelect: Bool = false
     var name: String = ""
-    var fu: String = "$"
+//    var fu: String = "$"
     var showPrice: String = ""
 }
 

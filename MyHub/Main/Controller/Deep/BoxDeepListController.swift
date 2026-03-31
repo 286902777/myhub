@@ -15,6 +15,13 @@ class BoxDeepListController: UIViewController {
         btn.setImage(UIImage(named: "close"), for: .normal)
         return btn
     }()
+    
+    lazy var vipBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "home_pre"), for: .normal)
+        return btn
+    }()
+    
     lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -85,7 +92,7 @@ class BoxDeepListController: UIViewController {
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: BoxDeepListController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                VipPopManager.instance.openPopPage(self)
+                PayPopManager.instance.openPopPage(self)
             }
         }
     }
@@ -93,6 +100,7 @@ class BoxDeepListController: UIViewController {
     func setUI() {
         self.view.backgroundColor = .clear
         self.view.addSubview(self.closeBtn)
+        self.view.addSubview(self.vipBtn)
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.headView)
         self.contentView.addSubview(self.tableView)
@@ -103,11 +111,17 @@ class BoxDeepListController: UIViewController {
             make.top.equalTo(NavBarH)
         }
         self.closeBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview()
+            make.left.equalToSuperview()
             make.bottom.equalTo(self.contentView.snp.top)
-            make.size.equalTo(CGSizeMake(52, 52))
+            make.size.equalTo(CGSizeMake(52, 44))
         }
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
+        self.vipBtn.snp.makeConstraints { make in
+            make.right.equalTo(-6)
+            make.centerY.equalTo(self.closeBtn)
+            make.size.equalTo(CGSize(width: 44, height: 44))
+        }
+        self.vipBtn.addTarget(self, action: #selector(clickVipAction), for: .touchUpInside)
         self.headView.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(74)
@@ -172,7 +186,6 @@ class BoxDeepListController: UIViewController {
                     HubTool.share.show(.play) { success in
                         if success == false {
                             self.downFile()
-                            VipPopManager.instance.openPopPage(self)
                         }
                     }
                 }
@@ -287,6 +300,14 @@ class BoxDeepListController: UIViewController {
     
     @objc func clickCloseAction() {
         NotificationCenter.default.post(name: Noti_ClosePresent, object: nil, userInfo: nil)
+    }
+    
+    @objc func clickVipAction() {
+        HubTool.share.preSource = .vip_landPage
+        HubTool.share.preMethod = .vip_click
+        let vc = PayController()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true)
     }
 }
 

@@ -48,6 +48,13 @@ class PingController: UIViewController {
         view.image = UIImage(named: "channel_bg")
         return view
     }()
+    
+    lazy var vipBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "home_pre"), for: .normal)
+        return btn
+    }()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
@@ -80,15 +87,16 @@ class PingController: UIViewController {
         TbaManager.instance.addEvent(type: .custom, event: .channelpageExpose, paramter: [EventParaName.source.rawValue: HubTool.share.channelSource.rawValue])
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
+            guard let vc = HubTool.share.keyVC(), vc.isKind(of: PingController.self) else { return }
             HubTool.share.isChannelAds = false
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                VipPopManager.instance.openPopPage(self)
+                PayPopManager.instance.openPopPage(self)
             }
             if HubTool.share.adsPlayState == .channelPage {
                 HubTool.share.preSource = .vip_Ad
                 HubTool.share.preMethod = .vip_auto
+                PlayTool.instance.adsPushPremium(.channelPage, .vip_Ad, self)
             }
         }
         HubTool.share.adsPlayState = .channelPage
@@ -118,6 +126,15 @@ class PingController: UIViewController {
             }
         }
 
+        self.navbar.bgView.addSubview(self.vipBtn)
+        self.vipBtn.snp.makeConstraints { make in
+            make.right.equalTo(-6)
+            make.centerY.equalToSuperview()
+            make.size.equalTo(CGSize(width: 44, height: 44))
+        }
+        self.vipBtn.addTarget(self, action: #selector(clickVipAction), for: .touchUpInside)
+
+        
         self.view.addSubview(self.tableView)
         self.tableView.tableHeaderView = self.headView
         self.view.addSubview(self.bottomView)
@@ -387,6 +404,13 @@ class PingController: UIViewController {
             }
         }
         self.tableView.reloadData()
+    }
+    
+    @objc func clickVipAction() {
+        HubTool.share.preSource = .vip_channelPage
+        HubTool.share.preMethod = .vip_click
+        let vc = PayController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

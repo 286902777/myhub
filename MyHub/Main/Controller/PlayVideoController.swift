@@ -112,7 +112,6 @@ class PlayVideoController: UIViewController {
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
             self.player.playerView.contentView.loadingView.stop()
-            
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: PlayVideoController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 ToastTool.instance.show("Added to download list")
@@ -130,7 +129,7 @@ class PlayVideoController: UIViewController {
                 }
             } else {
                 self.player.pause()
-                VipPopManager.instance.openPopPage(self)
+                PayPopManager.instance.openPopPage(self, true)
             }
         }
         NotificationCenter.default.addObserver(forName: Noti_DownSuccess, object: nil, queue: .main) { [weak self] data in
@@ -150,6 +149,7 @@ class PlayVideoController: UIViewController {
     
     func setUI() {
         self.view.addSubview(self.player)
+        PlayTool.instance.player = self.player
         self.player.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaInsets.top)
             make.bottom.equalTo(self.view.safeAreaInsets.bottom)
@@ -375,9 +375,13 @@ class PlayVideoController: UIViewController {
             HubTool.share.preSource = .vip_playPage
             HubTool.share.preMethod = .vip_click
         }
-//        let vc = PremiumController()
-//        vc.modalPresentationStyle = .fullScreen
-//        self.present(vc, animated: true)
+        let vc = PayController()
+        if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            vc.modalPresentationStyle = .overFullScreen
+            self.present(vc, animated: false)
+        }
     }
 }
 
@@ -416,7 +420,6 @@ extension PlayVideoController: HUBPlayerDelegate {
             if success {
                 self.isBack = true
             } else {
-                self.premiumBlock?()
                 if let vs = self.navigationController?.viewControllers, vs.count > 0 {
                     self.navigationController?.popViewController(animated: true)
                 } else {
@@ -472,7 +475,7 @@ extension PlayVideoController: HUBPlayerDelegate {
         if self.player.playerView.isFullScreen {
             self.player.playerView.dismiss { [weak self] in
                 guard let self = self else { return }
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5) {
                     self.openPremium(auto)
                 }
             }

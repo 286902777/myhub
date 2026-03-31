@@ -15,17 +15,17 @@ class FireManager {
     var total: Int = 0
     
     func setConfig() {
-        var dataInfo = ""
-        let path = Bundle.main.path(forResource: "GoogleAds", ofType: "json")
-        if let p = path {
-            guard let d = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
-            dataInfo = d.base64EncodedString()
-        }
-        deConfig.configSettings = RemoteConfigSettings()
-        deConfig.setDefaults(["MyHub_Vip": "" as NSObject])
-        deConfig.configSettings.minimumFetchInterval = 5000
-        deConfig.setDefaults(["MyHub_Ads": dataInfo as NSObject])
-        self.initData()
+//        var dataInfo = ""
+//        let path = Bundle.main.path(forResource: "GoogleAds", ofType: "json")
+//        if let p = path {
+//            guard let d = try? Data(contentsOf: URL(fileURLWithPath: p)) else { return }
+//            dataInfo = d.base64EncodedString()
+//        }
+//        deConfig.configSettings = RemoteConfigSettings()
+//        deConfig.setDefaults(["MyHub_Vip": "" as NSObject])
+//        deConfig.configSettings.minimumFetchInterval = 5000
+//        deConfig.setDefaults(["MyHub_Ads": dataInfo as NSObject])
+//        self.initData()
     }
     
     private func initData() {
@@ -64,7 +64,7 @@ class FireManager {
                             if premuimInfo.count > 0 {
                                 UserDefaults.standard.set(premuimInfo, forKey: VipInfoKey)
                                 if let mod = PayListData.deserialize(from: premuimInfo) {
-                                    PayManager.instance.productDatas = mod.items.sorted(by: {$0.index > $1.index})
+                                    PayManager.instance.productDatas = mod.infoList.sorted(by: {$0.index > $1.index})
                                     let selectPro = PayManager.instance.productDatas.first(where: {$0.isSelect == true})?.product_id ?? ""
                                     PayManager.instance.defaultProduct = PayID(rawValue: selectPro) ?? .life
                                     guard let _ = PayManager.instance.productDatas.first(where: {$0.isSelect == true}) else {

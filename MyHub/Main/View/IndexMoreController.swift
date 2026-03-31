@@ -70,10 +70,10 @@ class IndexMoreController: UIViewController {
         setUI()
         NotificationCenter.default.addObserver(forName: Noti_DismissAds, object: nil, queue: .main) { [weak self] _ in
             guard let self = self else { return }
-            guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
+            guard let vc = HubTool.share.keyVC(), vc.isKind(of: IndexController.self) || vc.isKind(of: IndexListController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                VipPopManager.instance.openPopPage(self)
+                PayPopManager.instance.openPopPage(self)
             }
         }
     }

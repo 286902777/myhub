@@ -56,6 +56,7 @@ class HUBPlayLoadView: UIView {
     
     lazy var sliderV: PlayerSlider = {
         let view = PlayerSlider()
+        view.isUserInteractionEnabled = false
         view.maximumTrackTintColor = UIColor.rgbHex("#FFFFFF", 0.5)
         view.minimumTrackTintColor = UIColor.rgbHex("#DDF75B")
         view.setThumbImage(UIImage(named: "pre_star"), for: .normal)
@@ -65,6 +66,7 @@ class HUBPlayLoadView: UIView {
         view.layer.cornerRadius = 2
         return view
     }()
+    
     lazy var fastL: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
@@ -79,6 +81,7 @@ class HUBPlayLoadView: UIView {
     var stateBlock: (() -> Void)?
         
     private var timer: Timer?
+    private var isEnd: Bool = false
     
     class func view() -> HUBPlayLoadView {
         let view = HUBPlayLoadView()
@@ -138,8 +141,6 @@ class HUBPlayLoadView: UIView {
             make.size.equalTo(CGSize(width: 100, height: 4))
         }
 
-        self.sliderV.value = 0
-        
         self.fastL.snp.makeConstraints { make in
             make.bottom.centerX.equalToSuperview()
         }
@@ -149,10 +150,14 @@ class HUBPlayLoadView: UIView {
             self.mainV.isHidden = PayManager.instance.isVip
             self.vipV.isHidden = !PayManager.instance.isVip
         }
+        self.sliderV.value = 0
     }
     
     
     func start() {
+        if self.isEnd {
+            self.sliderV.value = 0
+        }
         self.clickBlock?(false)
         self.isHidden = false
         self.mainV.isHidden = PayManager.instance.isVip
@@ -164,9 +169,8 @@ class HUBPlayLoadView: UIView {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 showLength -= 1
-                if showLength <= 0 {
+                if showLength <= 0, self.isEnd == false {
                     self.stop()
-                    print("bbbbbb-dismis")
                     self.clickBlock?(false)
                 }
                 if PayManager.instance.isVip == false {
@@ -184,12 +188,11 @@ class HUBPlayLoadView: UIView {
     }
     
     func stop() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.stateBlock?()
-            self.timer?.invalidate()
-            self.isHidden = true
-        }
+        self.isEnd = true
+        self.stateBlock?()
+        self.timer?.invalidate()
+        self.timer = nil
+        self.isHidden = true
     }
     
     deinit {
@@ -197,7 +200,9 @@ class HUBPlayLoadView: UIView {
     }
     
     @objc func clickToPreAction() {
+        self.isEnd = true
         self.timer?.invalidate()
+        self.timer = nil
         self.stateBlock?()
         self.isHidden = true
         self.clickBlock?(true)

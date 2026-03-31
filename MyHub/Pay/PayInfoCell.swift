@@ -109,7 +109,7 @@ class PayInfoCell: UICollectionViewCell {
         }
 
         self.hotL.isHidden = !data.hot
-        self.priceL.text = "\(data.fu) \(data.price)"
+        self.priceL.text = "\(data.showPrice)"
         self.typeL.text = data.name
     }
 }

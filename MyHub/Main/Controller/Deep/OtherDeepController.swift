@@ -16,6 +16,12 @@ class OtherDeepController: UIViewController {
         return btn
     }()
     
+    lazy var vipBtn: UIButton = {
+        let btn = UIButton()
+        btn.setImage(UIImage(named: "home_pre"), for: .normal)
+        return btn
+    }()
+    
     lazy var contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -52,6 +58,8 @@ class OtherDeepController: UIViewController {
     private var recommendList: [ChannelData] = []
     private var recommenduId: String = ""
     
+    var clickCloseToPayBlock: (() -> Void)?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
@@ -76,7 +84,7 @@ class OtherDeepController: UIViewController {
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                VipPopManager.instance.openPopPage(self)
+                PayPopManager.instance.openPopPage(self)
             }
         }
         NotificationCenter.default.addObserver(forName: Noti_ClosePresent, object: nil, queue: .main) { [weak self] _ in
@@ -92,7 +100,9 @@ class OtherDeepController: UIViewController {
                 self?.dismissAllChildControllers(animated: animated)
             }
         } else {
-            self.dismiss(animated: false) {
+            self.dismiss(animated: false) { [weak self] in
+                guard let self = self else { return }
+                self.clickCloseToPayBlock?()
                 TabbarTool.instance.displayOrHidden(true)
             }
         }
@@ -101,16 +111,24 @@ class OtherDeepController: UIViewController {
     func setup() {
         self.view.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         self.view.addSubview(self.closeBtn)
+        self.view.addSubview(self.vipBtn)
         self.view.addSubview(self.contentView)
         self.contentView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
             make.top.equalTo(NavBarH)
         }
         self.closeBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview()
+            make.left.equalToSuperview()
             make.bottom.equalTo(self.contentView.snp.top)
-            make.size.equalTo(CGSizeMake(52, 52))
+            make.size.equalTo(CGSizeMake(52, 44))
         }
+        self.vipBtn.snp.makeConstraints { make in
+            make.right.equalTo(-6)
+            make.centerY.equalTo(self.closeBtn)
+            make.size.equalTo(CGSize(width: 44, height: 44))
+        }
+        self.vipBtn.addTarget(self, action: #selector(clickVipAction), for: .touchUpInside)
+
         self.closeBtn.addTarget(self, action: #selector(clickCloseAction), for: .touchUpInside)
         
         self.contentView.addSubview(self.headView)
@@ -226,6 +244,14 @@ class OtherDeepController: UIViewController {
             }
         }
         ToastTool.instance.show("The contents, excluding the folder, have been added to the download list.")
+    }
+    
+    @objc func clickVipAction() {
+        HubTool.share.preSource = .vip_landPage
+        HubTool.share.preMethod = .vip_click
+        let vc = PayController()
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: true)
     }
     
     @objc func clickCloseAction() {

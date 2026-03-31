@@ -47,9 +47,6 @@ class HUBPlayerView: UIView {
     }()
 
     private var showPopLoad: Bool = false
-//    private var playTimer: Timer?
-//    private var timeOut: TimeInterval = 15.0
-    
     private var keyWindow: UIWindow? {
         mainSync {
             if #available(iOS 13.0, *) {
@@ -87,7 +84,7 @@ class HUBPlayerView: UIView {
 
     private var isEnterBackground: Bool = false
 
-    private var player: AVPlayer?
+    var player: AVPlayer?
 
     private var playerItem: AVPlayerItem? {
         didSet {
@@ -127,6 +124,8 @@ class HUBPlayerView: UIView {
                     if success {
                         self.pause()
                         UserDefaults.standard.set(0, forKey: HUB_PlayingCount)
+                        let count = UserDefaults.standard.integer(forKey: HUB_OpenVipPop)
+                        UserDefaults.standard.set(count + 1, forKey: HUB_OpenVipPop)
                         UserDefaults.standard.synchronize()
                     }
                 }
@@ -172,12 +171,6 @@ class HUBPlayerView: UIView {
             pause()
             isUserPause = false
             play()
-        }
-    }
-    
-    weak var placeholder: UIView? {
-        didSet {
-            contentView.placeholderView = placeholder
         }
     }
 
@@ -227,7 +220,6 @@ class HUBPlayerView: UIView {
             playerItem = AVPlayerItem(asset: AVURLAsset(url: url))
             player = AVPlayer(playerItem: playerItem)
             (layer as? AVPlayerLayer)?.player = player
-            contentView.soundPlayer = player
             contentView.showToolView()
         }
     }
@@ -331,22 +323,6 @@ private extension HUBPlayerView {
 // MARK: - JmoVxia---observe
 
 private extension HUBPlayerView {
-//    func cleanTime() {
-//        self.playTimer?.invalidate()
-//        self.playTimer = nil
-//    }
-//    
-//    func startPlayTime() {
-//        self.playTimer?.invalidate()
-//        self.playTimer = Timer.scheduledTimer(withTimeInterval: timeOut, repeats: false, block: { [weak self] _ in
-//            guard let self = self else { return }
-//            if self.player?.currentItem?.status == .unknown {
-//                ToastTool.instance.show("load failed", .fail)
-//            }
-//            self.cleanTime()
-//        })
-//    }
-    
     func observeStatusAction() {
         guard let playerItem = playerItem else { return }
         if playerItem.status == .readyToPlay {

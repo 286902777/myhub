@@ -59,6 +59,10 @@ class GoogleNativeController: UIViewController {
     
     @IBOutlet weak var s_closeView: UIImageView!
     
+    @IBOutlet weak var topV: UIView!
+    
+    @IBOutlet weak var bottomV: UIView!
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         HubTool.share.showAdomb = true
@@ -80,15 +84,12 @@ class GoogleNativeController: UIViewController {
         self.s_timeL.layer.cornerRadius = 10
         self.s_timeL.layer.masksToBounds = true
         if let ad = self.adContent {
-      
-
             mainView.mediaView = videoV
             mainView.callToActionView = installButton
             mainView.storeView = closeView
             mainView.bodyView = infoL
             mainView.headlineView = titleL
             mainView.iconView = appImgV
-            
             self.videoV.mediaContent = ad.mediaContent
             mainView.nativeAd = ad
             appImgV.image = ad.icon?.image
@@ -96,20 +97,22 @@ class GoogleNativeController: UIViewController {
             infoL.text = ad.body
             installButton.setTitle(ad.callToAction, for: .normal)
             self.mainView.isHidden = false
+            self.topV.isHidden = false
             self.isUpAds = true
             self.showC = 1
         } else {
             self.mainView.isHidden = true
+            self.topV.isHidden = true
             self.showC = 0
         }
         if let s_ad = self.s_adContent {
- 
             s_mainView.mediaView = s_videoV
             s_mainView.callToActionView = s_installButton
             s_mainView.storeView = s_closeView
             s_mainView.bodyView = s_infoL
             s_mainView.headlineView = s_titleL
             s_mainView.iconView = s_appImgV
+
             
             self.s_videoV.mediaContent = s_ad.mediaContent
             s_mainView.nativeAd = s_ad
@@ -118,6 +121,7 @@ class GoogleNativeController: UIViewController {
             s_infoL.text = s_ad.body
             installButton.setTitle(s_ad.callToAction, for: .normal)
             self.s_mainView.isHidden = false
+            self.bottomV.isHidden = false
             if self.showC == 0 {
                 self.showC = 2
             } else {
@@ -125,6 +129,7 @@ class GoogleNativeController: UIViewController {
             }
         } else {
             self.s_mainView.isHidden = true
+            self.bottomV.isHidden = true
         }
             
         self.view.backgroundColor = UIColor.rgbHex("#000000", GoogleManager.share.showMode == .playing ? 0.4 : 1.0)

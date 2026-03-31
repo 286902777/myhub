@@ -19,7 +19,6 @@ class GoogleManager: NSObject {
     var startTime: Int = 7
     var playingIndex: Int = 5
     var playingTime: Int = 10
-    var playMethod: Int = 0
     var playNativeTime: Int = 7
     var playNativeClickRate: Int = 60
     var nativeTime: Int = 7
@@ -55,7 +54,6 @@ class GoogleManager: NSObject {
             self.nativeClickRate = self.startData.nativeClickRate
             self.playingIndex = self.startData.playingIndex
             self.playingTime = self.startData.playingTime
-            self.playMethod = self.startData.playMethod
             self.playNativeTime = self.startData.playNativeTime
             self.playNativeClickRate = self.startData.playNativeClickRate
             self.s_nativeTime = self.startData.s_NativeTime
@@ -181,8 +179,6 @@ extension GoogleManager {
     }
     
     func disPlay(_ mode: AdsShowMode, complete: @escaping(Bool, FullScreenPresentingAd?, Bool) -> Void) {
-        complete(false, nil, false)
-        return
         let date = Date().timeIntervalSince1970
         if mode != .playing {
             self.isPlayingAds = false
@@ -543,7 +539,7 @@ extension GoogleManager: MAAdViewAdDelegate, MARewardedAdDelegate, MAAdRevenueDe
         HubTool.share.showAdomb = true
         TbaManager.instance.addEvent(type: .custom, event: .adsshowPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
     }
-    
+
     func adDidRecordClick(_ ad: FullScreenPresentingAd) {
         TbaManager.instance.addEvent(type: .custom, event: .adsclick, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
     }

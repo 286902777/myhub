@@ -10,6 +10,7 @@ import UIKit
 class PlayTool {
     static let instance = PlayTool()
     
+    var player: HUBPlayer?
     var auto: Bool = false
     var list: [VideoData] = []
     
@@ -18,17 +19,17 @@ class PlayTool {
         let vc = PlayVideoController(model: mod, history: history)
         vc.hidesBottomBarWhenPushed = true
         TabbarTool.instance.displayOrHidden(false)
-//        vc.premiumBlock = { [weak self] in
-//            guard let self = self else { return }
-//            if PremiumTool.instance.isMember {
-//                return
-//            }
-//            ESBaseTool.instance.preSource = .vip_playPage
-//            ESBaseTool.instance.preMethod = .vip_auto
-//            DispatchQueue.main.async {
-//                self.adsPushPremium(.playBack, .vip_Ad, controller)
-//            }
-//        }
+        vc.premiumBlock = { [weak self] in
+            guard let self = self else { return }
+            if PayManager.instance.isVip {
+                return
+            }
+            HubTool.share.preSource = .vip_playPage
+            HubTool.share.preMethod = .vip_auto
+            DispatchQueue.main.async {
+                self.adsPushPremium(.playBack, .vip_Ad, controller)
+            }
+        }
         if let vs = controller.navigationController?.viewControllers, vs.count > 0 {
             controller.navigationController?.pushViewController(vc, animated: true)
         } else {
@@ -38,34 +39,39 @@ class PlayTool {
     }
     
     func adsPushPremium(_ state: HUB_AdsPlayState, _ source: HUB_PremiumSource, _ controller: UIViewController) {
-//        if PremiumTool.instance.isMember == false {
-//            let count = UserDefaults.standard.integer(forKey: PreAutoVipPayCount)
-//            if count > 2 {
-//                return
-//            }
-//            
-//            let popdate = UserDefaults.standard.object(forKey: PrePupopDate) as? Date
-//            let date = UserDefaults.standard.object(forKey: PreAutoVipPayDate) as? Date
-//            if let d = date, d.isDayHour(Date()) == true {
-//                return
-//            }
-//            
-//            let d = date ?? Date()
-//            if let popd = popdate {
-//                if d.isHour(popd) {
-//                    return
-//                }
-//            }
-//            
-//            UserDefaults.standard.set(Date(), forKey: PreAutoVipPayDate)
-//            UserDefaults.standard.set(count + 1, forKey: PreAutoVipPayCount)
-//            UserDefaults.standard.synchronize()
-//            ESBaseTool.instance.adsPlayState = state
-//            ESBaseTool.instance.preMethod = .vip_auto
-//            ESBaseTool.instance.preSource = source
-//            let vc = PremiumController()
-//            vc.modalPresentationStyle = .fullScreen
-//            controller.present(vc, animated: true)
-//        }
+        TabbarTool.instance.displayOrHidden(false)
+        if PayManager.instance.isVip == false {
+            let count = UserDefaults.standard.integer(forKey: PreAutoVipPayCount)
+            if count > 2 {
+                return
+            }
+            
+            let popdate = UserDefaults.standard.object(forKey: PrePupopDate) as? Date
+            let date = UserDefaults.standard.object(forKey: PreAutoVipPayDate) as? Date
+            if let d = date, d.isDayHour(Date()) == true {
+                return
+            }
+            
+            let d = date ?? Date()
+            if let popd = popdate {
+                if d.isHour(popd) {
+                    return
+                }
+            }
+            
+            UserDefaults.standard.set(Date(), forKey: PreAutoVipPayDate)
+            UserDefaults.standard.set(count + 1, forKey: PreAutoVipPayCount)
+            UserDefaults.standard.synchronize()
+            HubTool.share.adsPlayState = state
+            HubTool.share.preMethod = .vip_auto
+            HubTool.share.preSource = source
+            let vc = PayController()
+            if let vs = controller.navigationController?.viewControllers, vs.count > 0 {
+                controller.navigationController?.pushViewController(vc, animated: true)
+            } else {
+                vc.modalPresentationStyle = .overFullScreen
+                controller.present(vc, animated: false)
+            }
+        }
     }
 }

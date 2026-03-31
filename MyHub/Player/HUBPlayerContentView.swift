@@ -60,19 +60,6 @@ class HUBPlayerContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private lazy var placeholderStackView: UIStackView = {
-        let view = UIStackView()
-        view.isHidden = true
-        view.axis = .horizontal
-        view.distribution = .fill
-        view.alignment = .fill
-        view.insetsLayoutMarginsFromSafeArea = false
-        view.isLayoutMarginsRelativeArrangement = true
-        view.layoutMargins = .zero
-        view.spacing = 0
-        return view
-    }()
-    
     private let topToolView: UIView = UIView()
 
     private let bottomToolView: UIView = UIView()
@@ -81,7 +68,6 @@ class HUBPlayerContentView: UIView {
 
     private let listFullView: UIView = UIView()
 
-    var soundPlayer: AVPlayer?
     private var isShowLoad: Bool = false {
         didSet {
             if isShowLoad {
@@ -294,19 +280,6 @@ class HUBPlayerContentView: UIView {
     private var screenFull = false
     weak var delegate: HUBPlayerContentViewDelegate?
 
-    
-    weak var placeholderView: UIView? {
-        didSet {
-            guard placeholderView != oldValue else { return }
-            placeholderStackView.isHidden = placeholderView == nil
-            if let newView = placeholderView {
-                placeholderStackView.addArrangedSubview(newView)
-            }
-            guard let oldView = oldValue else { return }
-            placeholderStackView.removeArrangedSubview(oldView)
-        }
-    }
-
     var title: NSMutableAttributedString? {
         didSet {
             guard let title = title else { return }
@@ -352,13 +325,12 @@ class HUBPlayerContentView: UIView {
             case .unknow:
                 sliderView.isUserInteractionEnabled = false
                 playButton.isSelected = false
-                placeholderStackView.isHidden = placeholderView == nil
                 self.isShowLoad = true
-                loadingView.start()
+                loadingView.stop()
             case .waiting:
                 sliderView.isUserInteractionEnabled = false
-                placeholderStackView.isHidden = true
                 self.isShowLoad = true
+                print("bbbbbb-start-waiting")
                 loadingView.start()
             case .readyToPlay:
                 sliderView.isUserInteractionEnabled = true
@@ -366,14 +338,13 @@ class HUBPlayerContentView: UIView {
             case .playing:
                 sliderView.isUserInteractionEnabled = true
                 playButton.isSelected = true
-                placeholderStackView.isHidden = true
                 self.isShowLoad = false
+                print("bbbbbb-dismis-playing")
                 loadingView.stop()
             case .buffering:
                 sliderView.isUserInteractionEnabled = true
-                placeholderStackView.isHidden = true
+                print("bbbbbb-buffering")
                 self.isShowLoad = true
-                loadingView.start()
             case .failed:
                 sliderView.isUserInteractionEnabled = false
                 self.isShowLoad = false
@@ -384,7 +355,6 @@ class HUBPlayerContentView: UIView {
             case .ended:
                 sliderView.isUserInteractionEnabled = true
                 playButton.isSelected = false
-                placeholderStackView.isHidden = placeholderView == nil
                 self.isShowLoad = false
                 loadingView.stop()
             }
@@ -392,10 +362,9 @@ class HUBPlayerContentView: UIView {
     }
     
     func showLoading() {
-        self.soundPlayer?.pause()
+        PlayTool.instance.player?.pause()
         self.isShowLoad = true
-//        loadingView.pushVip = true
-//        loadingView.start()
+        loadingView.start()
     }
 }
 
@@ -433,7 +402,6 @@ private extension HUBPlayerContentView {
         bottomContentView.addSubview(progressView)
         bottomContentView.addSubview(sliderView)
 
-        addSubview(placeholderStackView)
         addSubview(rateView)
         addSubview(lightV)
         addSubview(displayTimeV)
@@ -466,7 +434,7 @@ private extension HUBPlayerContentView {
             if click {
                 self.delegate?.contentView(self, didClickVipButton: true)
             } else {
-                self.soundPlayer?.play()
+                PlayTool.instance.player?.play()
             }
         }
         loadingView.stateBlock = {[weak self] in
@@ -545,8 +513,7 @@ private extension HUBPlayerContentView {
 
         vipButton.snp.makeConstraints { make in
             make.right.equalTo(-10)
-            make.size.equalTo(CGSize(width: 0, height: 0))
-//            make.size.equalTo(CGSize(width: 56, height: 24))
+            make.size.equalTo(CGSize(width: 44, height: 44))
             make.centerY.equalToSuperview()
         }
         playButton.snp.makeConstraints { make in
@@ -616,10 +583,6 @@ private extension HUBPlayerContentView {
             make.height.equalTo(10)
             make.centerY.equalTo(currentDurationLabel).offset(1)
         }
-
-        placeholderStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
     }
 
     func addConfig() {
@@ -686,9 +649,9 @@ private extension HUBPlayerContentView {
                 print("light\(veloctyPoint.y / 10000)= \(UIScreen.main.brightness)")
                 self.lightV.setValue(true, Float(UIScreen.main.brightness))
             case .rightVertical:
-                soundPlayer?.volume -= Float(veloctyPoint.y / 10000)
-                print("volumeSlider = \(soundPlayer?.volume ?? 0)")
-                self.lightV.setValue(false, soundPlayer?.volume ?? 0.0)
+                PlayTool.instance.player?.playerView.player?.volume -= Float(veloctyPoint.y / 10000)
+                print("volumeSlider = \(PlayTool.instance.player?.playerView.player?.volume ?? 0)")
+                self.lightV.setValue(false, PlayTool.instance.player?.playerView.player?.volume ?? 0.0)
             default:
                 break
             }
@@ -848,7 +811,7 @@ extension HUBPlayerContentView {
     
     func setDisplayDuration(_ forward: Bool) {
         self.displayTimeV.setValue(forward)
-        self.soundPlayer?.play()
+        PlayTool.instance.player?.play()
     }
     
     func setTimeDetailDuration(_ old: TimeInterval, _ new: TimeInterval) {
@@ -880,7 +843,6 @@ extension HUBPlayerContentView: UIGestureRecognizerDelegate {
 
     func showToolView() {
 //        guard self.isShowLoad == false else { return }
-        self.backgroundColor = UIColor.rgbHex("#000000", 0.4)
         isHiddenToolView = false
         topToolView.snp.updateConstraints { make in
             make.top.equalTo(screenFull ? 0 : TopSafeH)

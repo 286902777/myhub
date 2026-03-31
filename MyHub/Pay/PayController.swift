@@ -47,7 +47,7 @@ class PayController: UIViewController {
     }()
     
     let bottomV: PayVipBottomV = PayVipBottomV.view()
-
+    let tremsV: PayTremsView = PayTremsView.view()
     let infoCellIdentifier: String = "PayInfoListCellID"
     let textCellIdentifier = "PayTextCellID"
     let benefitsCellIdentifier = "PayBenefitsCellID"
@@ -111,7 +111,11 @@ class PayController: UIViewController {
         self.navbar.clickBlock = { [weak self] in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
+                if let vs = self.navigationController?.viewControllers, vs.count > 0 {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.dismiss(animated: true)
+                }
             }
         }
         self.navbar.bgView.addSubview(self.stroeBtn)
@@ -138,20 +142,21 @@ class PayController: UIViewController {
         self.view.addSubview(self.contentView)
         self.contentView.addSubview(self.tableView)
         self.view.addSubview(self.bottomV)
+        self.view.addSubview(self.tremsV)
         self.bottomV.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
-        }
-        self.contentView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
-            make.top.equalTo(self.iconV.snp.bottom).offset(16)
-            make.bottom.equalTo(self.bottomV.snp.top)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
         }
+        
+        self.tremsV.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+        }
+
         self.tableView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(12)
         }
-        self.contentView.setNeedsLayout()
-        self.contentView.addRedius([.topLeft, .topRight], 24)
         
         self.bottomV.clickBlock = { [weak self] idx in
             guard let self = self else { return }
@@ -167,6 +172,17 @@ class PayController: UIViewController {
             }
         }
         
+        self.tremsV.clickBlock = { [weak self] idx in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch idx {
+                case 0:
+                    self.clickTermsAction()
+                default:
+                    self.clickPolicyAction()
+                }
+            }
+        }
         TbaManager.instance.addEvent(type: .custom, event: .premiumVipExpose, paramter: [EventParaName.vip_popup.rawValue: false, EventParaName.vip_auto.rawValue: HubTool.share.preMethod == .vip_auto, EventParaName.source.rawValue: HubTool.share.preSource.rawValue])
 
         self.productList = PayManager.instance.productDatas
@@ -195,6 +211,13 @@ class PayController: UIViewController {
         self.titleL.attributedText = NSAttributedString(string: PayManager.instance.isVip ? "Congrats! " : "Ad-free experience", attributes: [.paragraphStyle: paragraphStyle, .font: UIFont.GoogleSans(weight: .bold, size: 36), .foregroundColor: UIColor.rgbHex("#14171C")])
         self.list.removeAll()
         if PayManager.instance.isVip {
+            self.bottomV.isHidden = true
+            self.tremsV.isHidden = false
+            self.contentView.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.iconV.snp.bottom).offset(16)
+                make.bottom.equalTo(self.tremsV.snp.top)
+            }
             let noneData = PayTableData()
             noneData.info = "As a new member, you can take advantage of all premium perks."
             self.list.append(noneData)
@@ -205,19 +228,26 @@ class PayController: UIViewController {
             let deadData = PayTableData()
             deadData.type = .deadline
             let name = UserDefaults.standard.string(forKey: PayName) ?? ""
-            let fu = UserDefaults.standard.string(forKey: PayDisplayF) ?? ""
+            let time = UserDefaults.standard.string(forKey: PayTime) ?? ""
             var disText: String = ""
             switch PayType(rawValue: name) {
             case .weekly:
-                disText = "Auto-renews weekly at \(fu). Cancel any time."
+                disText = time
             case .yearly:
-                disText = "\(fu) per year, auto-renewal. Cancel at any time."
+                disText = time
             default:
-                disText = "Lifetime access with a one-time purchase, no need for renewal."
+                disText = "You’re already a member for life."
             }
             deadData.info = disText
             self.list.append(deadData)
         } else {
+            self.bottomV.isHidden = false
+            self.tremsV.isHidden = true
+            self.contentView.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.iconV.snp.bottom).offset(16)
+                make.bottom.equalTo(self.bottomV.snp.top)
+            }
             let planData = PayTableData()
             planData.type = .plans
             planData.plans = self.productList
@@ -231,7 +261,8 @@ class PayController: UIViewController {
             renewalData.info = "Automatic renewal of the subscription will persist until canceled, as detailed in the terms. Cancellation can be initiated at any time. To avoid incurring additional fees, please cancel at least 24 hours prior to the renewal. Note that no refunds will be provided if the subscription period has not expired."
             self.list.append(renewalData)
         }
-        
+        self.contentView.setNeedsLayout()
+        self.contentView.addRedius([.topLeft, .topRight], 24)
         self.tableView.reloadData()
     }
     

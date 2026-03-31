@@ -37,7 +37,6 @@ class GoogleAdsFireData: SuperData {
     var nativeClickRate: Int = 50
     var playingIndex: Int = 5
     var playingTime: Int = 10
-    var playMethod: Int = 0
     var playNativeTime: Int = 7
     var playNativeClickRate: Int = 80
     var s_NativeTime: Int = 7

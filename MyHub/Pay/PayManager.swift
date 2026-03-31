@@ -11,14 +11,14 @@ import HandyJSON
 
 class PayManager: NSObject {
     static let instance = PayManager()
-    var isVip: Bool = true
-//    var isVip: Bool = UserDefaults.standard.bool(forKey: HUB_UserVip) {
-//        didSet {
-//            UserDefaults.standard.set(isVip, forKey: HUB_UserVip)
-//            UserDefaults.standard.synchronize()
-//            NotificationCenter.default.post(name: Noti_UserVip, object: nil)
-//        }
-//    }
+
+    var isVip: Bool = UserDefaults.standard.bool(forKey: HUB_UserVip) {
+        didSet {
+            UserDefaults.standard.set(isVip, forKey: HUB_UserVip)
+            UserDefaults.standard.synchronize()
+            NotificationCenter.default.post(name: Noti_UserVip, object: nil)
+        }
+    }
       
     var isPop: Bool = false
 
@@ -53,7 +53,7 @@ class PayManager: NSObject {
     func config() {
         let info = UserDefaults.standard.string(forKey: VipInfoKey)
         if let data = PayListData.deserialize(from: info) {
-            self.productDatas = data.items
+            self.productDatas = data.infoList
         }
         guard self.productDatas.count == 0 else { return }
         let life = PayData()
@@ -315,7 +315,7 @@ extension PayManager: SKProductsRequestDelegate, SKPaymentTransactionObserver, S
                 if let priceString = formatter.string(from: item.price) {
                     m.showPrice = priceString
                     m.price = "\(item.price)"
-                    m.fu = formatter.locale.currencySymbol ?? ""
+//                    m.fu = formatter.locale.currencySymbol ?? ""
                 }
             }
         }

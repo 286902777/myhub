@@ -95,10 +95,9 @@ class PayVipBottomV: UIView {
         }
         
         self.stackV.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
+            make.bottom.centerX.equalToSuperview()
             make.top.equalTo(self.nextBtn.snp.bottom).offset(8)
             make.height.equalTo(28)
-            make.bottom.equalTo(-BottomSafeH)
         }
         let tTap = UITapGestureRecognizer(target: self, action: #selector(clickTermsAction))
         self.termsL.isUserInteractionEnabled = true
@@ -115,9 +114,9 @@ class PayVipBottomV: UIView {
     func setData(_ data: PayData) {
         switch PayID(rawValue: data.product_id) {
         case .weak:
-            self.priceL.text = "Automatic renewal at \(data.fu)\(data.price) weekly. Cancel anytime."
+            self.priceL.text = "Automatic renewal at \(data.showPrice) weekly. Cancel anytime."
         case .year:
-            self.priceL.text = "Automatic renewal at \(data.fu)\(data.price) annually. Cancel anytime."
+            self.priceL.text = "Automatic renewal at \(data.showPrice) annually. Cancel anytime."
         default:
             self.priceL.text = "Valid for life after purchase, no renewal required"
         }
