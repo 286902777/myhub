@@ -242,7 +242,6 @@ class PayManager: NSObject {
                                     switch type {
                                     case .pay:
                                         ToastTool.instance.show("Payment failed", .fail)
-                                        self.failToPay()
                                         self.reSetPurchaseData(type: .refresh)
                                     case .restore:
                                         ToastTool.instance.show("Restore failed", .fail)
@@ -310,8 +309,6 @@ extension PayManager: SKProductsRequestDelegate, SKPaymentTransactionObserver, S
                 let formatter = NumberFormatter()
                 formatter.numberStyle = .currency
                 formatter.locale = item.priceLocale
-                print(formatter.locale.currencySymbol ?? "")
-                print(item.price)
                 if let priceString = formatter.string(from: item.price) {
                     m.showPrice = priceString
                     m.price = "\(item.price)"
@@ -353,7 +350,6 @@ extension PayManager: SKProductsRequestDelegate, SKPaymentTransactionObserver, S
             default:
                 print("订阅 --- 未知错误")
                 LoadManager.instance.dismiss()
-                self.failToPay()
                 ToastTool.instance.show("Payment failed", .fail)
             }
         }

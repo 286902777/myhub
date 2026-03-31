@@ -19,7 +19,7 @@ class PayInfoListCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
-        collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 0)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
@@ -89,6 +89,6 @@ extension PayInfoListCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 116, height: 120)
+        return CGSize(width: 126, height: 120)
     }
 }

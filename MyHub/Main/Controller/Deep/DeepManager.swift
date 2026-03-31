@@ -14,8 +14,7 @@ class DeepManager {
         let vc = BoxDeepController(linkId: linkId)
         TabbarTool.instance.displayOrHidden(false)
         HubTool.share.deepUrl = ""
-        vc.clickCloseToPayBlock = { [weak self] in
-            guard let self = self else { return }
+        vc.clickCloseToPayBlock = {
             DispatchQueue.main.async {
                 HubTool.share.preSource = .vip_home
                 HubTool.share.preMethod = .vip_auto
@@ -33,8 +32,7 @@ class DeepManager {
             let vc = OtherDeepController(linkId: linkId)
             TabbarTool.instance.displayOrHidden(false)
             HubTool.share.deepUrl = ""
-            vc.clickCloseToPayBlock = { [weak self] in
-                guard let self = self else { return }
+            vc.clickCloseToPayBlock = {
                 DispatchQueue.main.async {
                     HubTool.share.preSource = .vip_home
                     HubTool.share.preMethod = .vip_auto

@@ -219,6 +219,7 @@ class BoxDeepController: UIViewController {
     
     @objc func clickCloseAction() {
         TabbarTool.instance.displayOrHidden(true)
+        self.clickCloseToPayBlock?()
         self.dismiss(animated: false)
     }
     

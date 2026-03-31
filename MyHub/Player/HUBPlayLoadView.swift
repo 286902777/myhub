@@ -200,11 +200,11 @@ class HUBPlayLoadView: UIView {
     }
     
     @objc func clickToPreAction() {
-        self.isEnd = true
-        self.timer?.invalidate()
-        self.timer = nil
+//        self.isEnd = true
+//        self.timer?.invalidate()
+//        self.timer = nil
+//        self.isHidden = true
         self.stateBlock?()
-        self.isHidden = true
         self.clickBlock?(true)
     }
 }
