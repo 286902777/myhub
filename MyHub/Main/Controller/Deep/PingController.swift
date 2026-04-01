@@ -67,6 +67,11 @@ class PingController: UIViewController {
         }
         self.tableView.reloadData()
         self.bottomView.isHidden = true
+        MHURLSession.share.getAllTasks { tasks in
+            tasks.forEach { t in
+                t.cancel()
+            }
+        }
     }
     
     init(uId: String, platform: HUB_PlatformType) {

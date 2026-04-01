@@ -39,7 +39,6 @@ class PlayTool {
     }
     
     func adsPushPremium(_ state: HUB_AdsPlayState, _ source: HUB_PremiumSource, _ controller: UIViewController) {
-        TabbarTool.instance.displayOrHidden(false)
         if PayManager.instance.isVip == false {
             let count = UserDefaults.standard.integer(forKey: PreAutoVipPayCount)
             if count > 2 {
@@ -65,6 +64,7 @@ class PlayTool {
             HubTool.share.adsPlayState = state
             HubTool.share.preMethod = .vip_auto
             HubTool.share.preSource = source
+            TabbarTool.instance.displayOrHidden(false)
             let vc = PayController()
             if let vs = controller.navigationController?.viewControllers, vs.count > 0 {
                 controller.navigationController?.pushViewController(vc, animated: true)

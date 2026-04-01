@@ -81,6 +81,11 @@ class BoxDeepListController: UIViewController {
         }
         self.tableView.reloadData()
         self.bottomView.isHidden = true
+        MHURLSession.share.getAllTasks { tasks in
+            tasks.forEach { t in
+                t.cancel()
+            }
+        }
     }
     
     override func viewDidLoad() {

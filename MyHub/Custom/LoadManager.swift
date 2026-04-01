@@ -26,7 +26,10 @@ class LoadManager: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.initUI()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.initUI()
+        }
     }
     
     required init?(coder: NSCoder) {

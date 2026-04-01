@@ -85,8 +85,6 @@ class HttpManager {
     
     func loginApi(_ token: String, _ completion: @escaping (_ status: HttpCode, _ model: UserData, _ errMsg: String?) -> ()) {
         let para: [String: Any] = ["areawide": token] //access_token
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
         let url: String = userHost + HttpApi.login.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -98,7 +96,7 @@ class HttpManager {
             request.httpBody = pa
         }
         
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -121,8 +119,7 @@ class HttpManager {
     }
     
     func deleteUserApi(_ completion: @escaping (_ status: HttpCode, _ model: UserDeleteData, _ errMsg: String?) -> ()) {
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.deleteUser.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -131,7 +128,7 @@ class HttpManager {
         request.setValue(HttpHeadValue.deleteUser.rawValue, forHTTPHeaderField: userHeadKey)
         request.setValue(LoginManager.share.userToken, forHTTPHeaderField: tokenKey)
         
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -149,7 +146,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, UserDeleteData(), nil)
             default:
-                completion(status, UserDeleteData(), error?.localizedDescription)
+                completion(status, UserDeleteData(), error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -178,8 +175,7 @@ class HttpManager {
                                        "tsere": sign
         ]
         para["amidated"] = fileMeta
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.uploadFile.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -191,7 +187,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -221,8 +217,7 @@ class HttpManager {
         para["illy"] = LoginManager.share.userId ///namespace
         para["ferrule"] = transferId // transfer_id
         para["qszs_s26zd"] = true /// ok
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.uploadResult.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -234,7 +229,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -252,7 +247,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, FileCallData(), nil)
             default:
-                completion(status, FileCallData(), error?.localizedDescription)
+                completion(status, FileCallData(), error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -260,8 +255,7 @@ class HttpManager {
     }
     
     func getBoxSpaceApi(_ completion: @escaping (_ status: HttpCode, _ model: UserSpaceData, _ errMsg: String?) -> ()) {
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.userSpace.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "GET"
@@ -270,7 +264,7 @@ class HttpManager {
         request.setValue(HttpHeadValue.userSpace.rawValue, forHTTPHeaderField: userHeadKey)
         request.setValue(LoginManager.share.userToken, forHTTPHeaderField: tokenKey)
         
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -288,7 +282,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, UserSpaceData(), nil)
             default:
-                completion(status, UserSpaceData(), error?.localizedDescription)
+                completion(status, UserSpaceData(), error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -301,8 +295,7 @@ class HttpManager {
         para["affronty"] = LoginManager.share.userId ///namespace
         para["scungili"] = fileIds // fileIds
         
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.deleteFile.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -314,7 +307,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             DispatchQueue.main.async {
                 switch status {
@@ -331,7 +324,7 @@ class HttpManager {
                     HttpManager.share.premissonLaterLogin()
                     completion(status, nil)
                 default:
-                    completion(status, error?.localizedDescription)
+                    completion(status, error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                     return
                 }
             }
@@ -343,8 +336,7 @@ class HttpManager {
         para["triplanes"] = LoginManager.share.userId ///namespace
         para["prejudges"] = parentId // parent_id
         para["oryx"] = fileName /// filename
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.createFolder.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -356,7 +348,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -365,7 +357,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, nil)
             default:
-                completion(status, error?.localizedDescription)
+                completion(status, error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -379,8 +371,7 @@ class HttpManager {
         para["debited"] = 0 /// page_number
         para["beefcake"] = pageSize /// page_size
         
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.lsDir.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -392,7 +383,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -432,7 +423,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, [], nil)
             default:
-                completion(status, [], error?.localizedDescription)
+                completion(status, [], error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -444,8 +435,7 @@ class HttpManager {
         para["scholarity"] = LoginManager.share.userId ///namespace
         para["gamesomely"] = file_ids // file_ids
         
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.selectFiles.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -457,7 +447,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -496,7 +486,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, [], nil)
             default:
-                completion(status, [], error?.localizedDescription)
+                completion(status, [], error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -508,8 +498,7 @@ class HttpManager {
         para["bernicles"] = LoginManager.share.userId ///namespace
         para["nullbiety"] = fileId // file_id
         para["ayahuca"] = fileName /// filename
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.fixName.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -521,7 +510,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -530,7 +519,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, nil)
             default:
-                completion(status, error?.localizedDescription)
+                completion(status, error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -553,8 +542,7 @@ class HttpManager {
             para["uwdstbx2qv"] = 1
         }
         para["chow"] = arr
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.shareFile.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -566,7 +554,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -584,7 +572,7 @@ class HttpManager {
                 HttpManager.share.premissonLaterLogin()
                 completion(status, ShareRootData(), nil)
             default:
-                completion(status, ShareRootData(), error?.localizedDescription)
+                completion(status, ShareRootData(), error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -601,8 +589,7 @@ class HttpManager {
         }///namespace
         para["unspoil"] = fileId // fileId
         
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.downLoadUrl.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -613,7 +600,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -657,7 +644,7 @@ class HttpManager {
     //        if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
     //            request.httpBody = pa
     //        }
-    //        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+    //        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
     //            let status = self.getCode(response)
     //            switch status {
     //            case .success:
@@ -672,7 +659,7 @@ class HttpManager {
     //            case .permission:
     //                HttpManager.share.premissonLaterLogin()
     //            default:
-    //                completion(status, [], error?.localizedDescription)
+    //                completion(status, [], error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
     //                return
     //            }
     //        })
@@ -686,8 +673,7 @@ class HttpManager {
         para["laplandish"] = currentPage  /// page_number
         para["elric"] = 20        /// page_size
         //        para["qqrdyn8f5o"] = ""
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.openShareUrl.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -698,7 +684,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -715,7 +701,7 @@ class HttpManager {
             case .permission:
                 completion(status, OpenRootData(), nil)
             default:
-                completion(status, OpenRootData(), error?.localizedDescription)
+                completion(status, OpenRootData(), error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -728,8 +714,7 @@ class HttpManager {
         para["aeried"] = parentId /// parentId
         para["beautihood"] = currentPage  /// page_number
         para["shushes"] = 50          /// page_size
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = userHost + HttpApi.openFolder.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -741,7 +726,7 @@ class HttpManager {
         if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
             request.httpBody = pa
         }
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -784,7 +769,7 @@ class HttpManager {
             case .permission:
                 completion(status, [], nil)
             default:
-                completion(status, [], error?.localizedDescription)
+                completion(status, [], error?.localizedDescription == "cancelled" ? "" : error?.localizedDescription)
                 return
             }
         })
@@ -806,8 +791,7 @@ class HttpManager {
                                    "unlikened":"v2",
                                    "wracks": page,
                                    "riposte": pageSize]
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         let url: String = appHost + HttpApi.channel.rawValue
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
@@ -818,7 +802,7 @@ class HttpManager {
             request.httpBody = pa
         }
         
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -862,8 +846,7 @@ class HttpManager {
         para["paraglenal"] = Locale.current.identifier
         para["rally"] = ["ragazze": plabs]
         
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -873,7 +856,7 @@ class HttpManager {
             request.httpBody = pa
         }
         
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -912,10 +895,9 @@ class HttpManager {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
+
         request.setValue("italianish", forHTTPHeaderField: appHeadKey)
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { [weak self] data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { [weak self] data, response, error in
             guard let self = self else { return }
             let status = self.getCode(response)
             switch status {
@@ -946,10 +928,8 @@ class HttpManager {
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("norroway", forHTTPHeaderField: appHeadKey)
-        
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             let status = self.getCode(response)
             switch status {
             case .success:
@@ -1013,10 +993,7 @@ class HttpManager {
             }
             print("_______parassss:\(aseStr)")
         }
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.default
-        let session: URLSession = URLSession(configuration: configuration)
-        
-        let task: URLSessionDataTask = session.dataTask(with: request, completionHandler: { data, response, error in
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { data, response, error in
             if let _ = error {
                 let refresh = HttpManager.share.refreshAppHostUrl()
                 print("_______se\(model.userId),\(model.linkId),\(event.rawValue),\(model.platform.rawValue)")
@@ -1159,4 +1136,8 @@ extension HttpManager {
         let statusCode = httpResponse.statusCode
         return HttpCode(rawValue: statusCode) ?? .other
     }
+}
+
+class MHURLSession {
+    static let share: URLSession = URLSession(configuration: URLSessionConfiguration.default)
 }

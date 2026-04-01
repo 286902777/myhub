@@ -154,14 +154,12 @@ class PayManager: NSObject {
                 }
             }
         } else {
-            DispatchQueue.main.async {
-                LoadManager.instance.dismiss()
-                if type == .restore{
-                    ToastTool.instance.show("Restore failed", .fail)
-                }
-                if type == .pay{
-                    ToastTool.instance.show("Payment failed", .fail)
-                }
+            LoadManager.instance.dismiss()
+            if type == .restore{
+                ToastTool.instance.show("Restore failed", .fail)
+            }
+            if type == .pay{
+                ToastTool.instance.show("Payment failed", .fail)
             }
         }
     }

@@ -22,6 +22,14 @@ class SuperController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        MHURLSession.share.getAllTasks { tasks in
+            tasks.forEach { t in
+                t.cancel()
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         initNavBar()

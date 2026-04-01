@@ -18,7 +18,7 @@ class DeepManager {
             DispatchQueue.main.async {
                 HubTool.share.preSource = .vip_home
                 HubTool.share.preMethod = .vip_auto
-                TabbarTool.instance.displayOrHidden(false)
+                TabbarTool.instance.displayOrHidden(true)
                 PlayTool.instance.adsPushPremium(HubTool.share.adsPlayState, .vip_Ad, rootVC)
             }
         }
@@ -36,7 +36,7 @@ class DeepManager {
                 DispatchQueue.main.async {
                     HubTool.share.preSource = .vip_home
                     HubTool.share.preMethod = .vip_auto
-                    TabbarTool.instance.displayOrHidden(false)
+                    TabbarTool.instance.displayOrHidden(true)
                     PlayTool.instance.adsPushPremium(HubTool.share.adsPlayState, .vip_Ad, rootVC)
                 }
             }
