@@ -18,6 +18,7 @@ class PlayListController: UIViewController {
     private lazy var contentV: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 20
+        view.layer.masksToBounds = true
         view.backgroundColor = UIColor.rgbHex("#000000", 0.25)
         return view
     }()
@@ -145,10 +146,12 @@ class PlayListController: UIViewController {
                     if let data = self.lists.first(where: {$0.type == .recommend}) {
                         data.lists.append(contentsOf: arr)
                     } else {
-                        let m = ChannelRecommendData()
-                        m.type = .recommend
-                        m.lists = arr
-                        self.lists.append(m)
+                        if arr.count > 0 {
+                            let m = ChannelRecommendData()
+                            m.type = .recommend
+                            m.lists = arr
+                            self.lists.append(m)
+                        }
                     }
                     self.collectionView.reloadData()
                 } else {
@@ -179,6 +182,9 @@ class PlayListController: UIViewController {
             make.bottom.equalTo(self.contentV.snp.top)
             make.size.equalTo(CGSize(width: 52, height: 52))
         }
+        self.contentV.layoutIfNeeded()
+        self.contentV.backgroundColor = UIColor.rgbHex("#000000", 0.2)
+        self.contentV.addEffectView(self.contentV.frame.size, .light)
     }
     
     func scrollToIdx() {
@@ -276,7 +282,8 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
             label.textColor = .white
             header.addSubview(label)
             label.snp.makeConstraints { make in
-                make.left.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.centerY.equalToSuperview().offset(indexPath.section == 0 ? 0 : 8)
             }
             if let m = self.lists.safeIndex(indexPath.section) {
                 label.text = m.type.rawValue
@@ -288,7 +295,7 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
+        return CGSize(width: collectionView.frame.width, height: section != 0 ? 50 : 44)
     }
 }
 

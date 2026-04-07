@@ -159,10 +159,10 @@ class OtherDeepController: UIViewController {
         }
         
         self.tableView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview()
+            make.left.bottom.right.equalToSuperview()
             make.top.equalTo(self.headView.snp.bottom)
-            make.bottom.equalTo(self.bottomView.snp.top)
         }
+        
         self.bottomView.isHidden = true
         self.bottomView.clickBlock = { [weak self] idx in
             guard let self = self else { return }
@@ -466,10 +466,19 @@ class OtherDeepController: UIViewController {
             self.bottomView.snp.updateConstraints { make in
                 make.height.equalTo(0)
             }
+            self.tableView.snp.remakeConstraints { make in
+                make.left.bottom.right.equalToSuperview()
+                make.top.equalTo(self.headView.snp.bottom)
+            }
         } else {
             self.bottomView.isHidden = false
             self.bottomView.snp.updateConstraints { make in
                 make.height.equalTo(64)
+            }
+            self.tableView.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.headView.snp.bottom)
+                make.bottom.equalTo(self.bottomView.snp.top)
             }
         }
         self.tableView.reloadData()

@@ -77,7 +77,9 @@ class PlayListCell: UICollectionViewCell {
         }
 
         playingV.layoutIfNeeded()
-        playingV.addRedius([.topLeft, .bottomRight], 16, self.playingV.bounds) 
+        nameBgV.layoutIfNeeded()
+        playingV.addRedius([.topLeft, .bottomRight], 16, self.playingV.bounds)
+        nameBgV.addRedius([.bottomLeft, .bottomRight], 16, self.nameBgV.bounds)
     }
     
     func initData(_ data: VideoData) {

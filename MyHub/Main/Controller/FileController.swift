@@ -164,9 +164,9 @@ class FileController: UIViewController {
         TabbarTool.instance.displayOrHidden(false)
         self.isShowBottom = true
         self.sortV.isHidden = true
-        self.sortV.snp.updateConstraints { make in
-            make.height.equalTo(0)
-        }
+//        self.sortV.snp.updateConstraints { make in
+//            make.height.equalTo(0)
+//        }
         let selectList = self.list.filter({$0.isSelect == true})
         self.showCountBlock?(selectList.count)
         if selectList.count > 0 {
@@ -210,9 +210,9 @@ class FileController: UIViewController {
         self.dismissCountBlock?()
         self.isShowBottom = false
         self.sortV.isHidden = false
-        self.sortV.snp.updateConstraints { make in
-            make.height.equalTo(28)
-        }
+//        self.sortV.snp.updateConstraints { make in
+//            make.height.equalTo(28)
+//        }
         let _ = self.list.map({$0.isSelect = false})
         self.tableView.reloadData()
         self.bottomView.removeFromSuperview()

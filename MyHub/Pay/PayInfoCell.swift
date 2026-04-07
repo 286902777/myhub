@@ -78,12 +78,12 @@ class PayInfoCell: UICollectionViewCell {
         
         self.typeL.snp.makeConstraints { make in
             make.top.equalTo(34)
-            make.left.equalTo(12)
+            make.left.equalTo(10)
         }
         
         self.priceL.snp.makeConstraints { make in
             make.top.equalTo(self.typeL.snp.bottom).offset(18)
-            make.left.equalTo(12)
+            make.left.equalTo(10)
         }
 
         self.selectV.snp.makeConstraints { make in

@@ -120,10 +120,7 @@ class UploadAndDownCell: UITableViewCell {
             make.top.equalTo(12)
             make.right.equalTo(self.stackView.snp.left).offset(-16)
         }
-        self.stateL.snp.makeConstraints { make in
-            make.left.equalTo(self.iconV.snp.right).offset(16)
-            make.top.equalTo(self.nameL.snp.bottom).offset(8)
-        }
+       
         self.speedL.snp.makeConstraints { make in
             make.centerY.equalTo(self.stateL)
             make.right.equalTo(self.progreeV)
@@ -133,6 +130,11 @@ class UploadAndDownCell: UITableViewCell {
             make.bottom.equalTo(-12)
             make.height.equalTo(2)
             make.right.equalTo(self.stackView.snp.left).offset(-16)
+        }
+        
+        self.stateL.snp.makeConstraints { make in
+            make.left.equalTo(self.iconV.snp.right).offset(16)
+            make.bottom.equalTo(self.progreeV.snp.top).offset(-5)
         }
         self.stackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -160,9 +162,11 @@ class UploadAndDownCell: UITableViewCell {
         case .uploadFaid:
             self.failBtn.isHidden = false
             self.stateL.text = "Upload failed"
+            self.progreeV.progress = 0
         case .downFail:
             self.failBtn.isHidden = false
             self.stateL.text = "Download failed"
+            self.progreeV.progress = 0
         case .uploading:
             self.failBtn.isHidden = true
             self.stateL.text = "\(model.done_size.computeFileSize())/\(model.size)"
@@ -174,6 +178,7 @@ class UploadAndDownCell: UITableViewCell {
         default:
             self.failBtn.isHidden = true
             self.stateL.text = "Waiting…"
+            self.progreeV.progress = 0
         }
         self.nameL.text = model.name
     }

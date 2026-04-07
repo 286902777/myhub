@@ -65,11 +65,6 @@ class BoxDeepController: UIViewController {
         }
         self.tableView.reloadData()
         self.bottomView.isHidden = true
-        MHURLSession.share.getAllTasks { tasks in
-            tasks.forEach { t in
-                t.cancel()
-            }
-        }
     }
     
     init(linkId: String) {
@@ -311,6 +306,18 @@ class BoxDeepController: UIViewController {
         self.bottomView.isHidden = arr.count == 0
         self.bottomView.snp.updateConstraints { make in
             make.height.equalTo(arr.count == 0 ? 0 : 64)
+        }
+        if arr.count == 0 {
+            self.tableView.snp.remakeConstraints { make in
+                make.left.bottom.right.equalToSuperview()
+                make.top.equalTo(self.headView.snp.bottom)
+            }
+        } else {
+            self.tableView.snp.remakeConstraints { make in
+                make.left.right.equalToSuperview()
+                make.top.equalTo(self.headView.snp.bottom)
+                make.bottom.equalTo(self.bottomView.snp.top)
+            }
         }
     }
 }

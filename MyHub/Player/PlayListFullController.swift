@@ -26,6 +26,7 @@ class PlayListFullController: UIViewController {
     private lazy var contentV: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 20
+        view.layer.masksToBounds = true
         view.backgroundColor = UIColor.rgbHex("#000000", 0.25)
         return view
     }()
@@ -152,10 +153,12 @@ class PlayListFullController: UIViewController {
                     if let data = self.lists.first(where: {$0.type == .recommend}) {
                         data.lists.append(contentsOf: arr)
                     } else {
-                        let m = ChannelRecommendData()
-                        m.type = .recommend
-                        m.lists = arr
-                        self.lists.append(m)
+                        if arr.count > 0 {
+                            let m = ChannelRecommendData()
+                            m.type = .recommend
+                            m.lists = arr
+                            self.lists.append(m)
+                        }
                     }
                     self.collectionView.reloadData()
                 } else {
@@ -170,10 +173,10 @@ class PlayListFullController: UIViewController {
         self.view.addSubview(self.contentV)
         self.view.addSubview(self.closeBtn)
         self.contentV.snp.makeConstraints { make in
-            make.left.equalTo(14)
+            make.top.equalTo(14)
             make.right.equalTo(-14)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
-            make.height.equalTo(ScreenHeight * 0.4)
+            make.bottom.equalTo(-14)
+            make.width.equalTo(348)
         }
         self.contentV.addSubview(self.collectionView)
         self.collectionView.snp.makeConstraints { make in
@@ -182,10 +185,14 @@ class PlayListFullController: UIViewController {
       
         self.closeBtn.addTarget(self, action: #selector(pageDismiss), for: .touchUpInside)
         self.closeBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview()
-            make.bottom.equalTo(self.contentV.snp.top)
+            make.right.equalTo(self.contentV.snp.left)
+            make.top.equalToSuperview()
             make.size.equalTo(CGSize(width: 52, height: 52))
         }
+        
+        self.contentV.layoutIfNeeded()
+        self.contentV.backgroundColor = UIColor.rgbHex("#000000", 0.2)
+        self.contentV.addEffectView(self.contentV.frame.size, .light)
     }
     
     func scrollToIdx() {
@@ -280,7 +287,8 @@ extension PlayListFullController: UICollectionViewDelegate, UICollectionViewData
             label.textColor = .white
             header.addSubview(label)
             label.snp.makeConstraints { make in
-                make.left.centerY.equalToSuperview()
+                make.left.equalToSuperview()
+                make.centerY.equalToSuperview().offset(indexPath.section == 0 ? 0 : 8)
             }
             if let m = self.lists.safeIndex(indexPath.section) {
                 label.text = m.type.rawValue
@@ -292,7 +300,7 @@ extension PlayListFullController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.frame.width, height: 44)
+        return CGSize(width: collectionView.frame.width, height: section != 0 ? 50 : 44)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -191,7 +191,7 @@ class SetController: SuperController {
         self.list.append(cache)
         let del: SetData = SetData()
         del.idx = 5
-        del.imageName = "delete"
+        del.imageName = "delete_set"
         del.name = "Delete\naccount"
         self.list.append(del)
         self.list.forEach { m in
@@ -208,11 +208,11 @@ class SetController: SuperController {
             }
         }
         let topLineV: UIView = UIView()
-        topLineV.backgroundColor = UIColor.rgbHex("#EDEDED", 0.75)
+        topLineV.backgroundColor = UIColor.rgbHex("#EDEDED", 0.4)
         let botLineV: UIView = UIView()
-        botLineV.backgroundColor = UIColor.rgbHex("#EDEDED", 0.75)
+        botLineV.backgroundColor = UIColor.rgbHex("#EDEDED", 0.4)
         let midLineV: UIView = UIView()
-        midLineV.backgroundColor = UIColor.rgbHex("#EDEDED", 0.75)
+        midLineV.backgroundColor = UIColor.rgbHex("#EDEDED", 0.4)
         self.gradV.addSubview(topLineV)
         self.gradV.addSubview(botLineV)
         self.gradV.addSubview(midLineV)

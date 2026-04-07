@@ -89,6 +89,6 @@ extension PayInfoListCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 126, height: 120)
+        return CGSize(width: 136, height: 120)
     }
 }

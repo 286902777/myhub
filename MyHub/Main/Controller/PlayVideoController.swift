@@ -47,11 +47,6 @@ class PlayVideoController: UIViewController {
             self.model.date = Double(Date().timeIntervalSince1970 * 1000)
             HubDB.instance.updateMovieData(self.model)
         }
-        MHURLSession.share.getAllTasks { tasks in
-            tasks.forEach { t in
-                t.cancel()
-            }
-        }
     }
 
     override func willMove(toParent parent: UIViewController?) {

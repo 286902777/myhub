@@ -656,7 +656,7 @@ extension HUBPlayerView: HUBPlayerContentViewDelegate {
         self.isUserPause = false
         if forward {
             if total - current > 10 {
-                let time = CMTimeMake(value: 10, timescale: 1)
+                let time = CMTimeMake(value: Int64(current + 10), timescale: 1)
                 player?.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
             } else {
                 let time = CMTimeMake(value: Int64(ceil(self.totalDuration)), timescale: 1)
@@ -664,7 +664,7 @@ extension HUBPlayerView: HUBPlayerContentViewDelegate {
             }
         } else {
             if current > 10 {
-                let time = CMTimeMake(value: Int64(ceil(currentDuration - 10)), timescale: 1)
+                let time = CMTimeMake(value: Int64(current - 10), timescale: 1)
                 player?.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
             } else {
                 let time = CMTimeMake(value: 0, timescale: 1)

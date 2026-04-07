@@ -269,7 +269,7 @@ extension UploadFileController: UITableViewDelegate, UITableViewDataSource {
         }
         delBtn.snp.makeConstraints { make in
             make.centerY.right.equalToSuperview()
-            make.size.equalTo(CGSize(width: 72, height: 32))
+            make.size.equalTo(CGSize(width: 82, height: 32))
         }
         if let m = self.list.safeIndex(section) {
             label.text = m.state.rawValue + " · " + "\(m.lists.count)"
