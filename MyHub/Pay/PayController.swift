@@ -271,15 +271,15 @@ class PayController: UIViewController {
     
     func clickTermsAction() {
         let vc = HtmlController()
-        vc.linkType = .privacy
-        vc.name = "Privacy Policy"
+        vc.linkType = .terms
+        vc.name = "Terms of Service"
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
     func clickPolicyAction() {
         let vc = HtmlController()
-        vc.linkType = .terms
-        vc.name = "Terms of Service"
+        vc.linkType = .privacy
+        vc.name = "Privacy Policy"
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

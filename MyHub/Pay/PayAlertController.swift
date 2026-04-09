@@ -234,16 +234,16 @@ class PayAlertController: UIViewController {
     
     @objc func clickTermsAction() {
         let vc = HtmlController()
-        vc.linkType = .privacy
-        vc.name = "Privacy Policy"
+        vc.linkType = .terms
+        vc.name = "Terms of Service"
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true)
     }
 
     @objc func clickPolicyAction() {
         let vc = HtmlController()
-        vc.linkType = .terms
-        vc.name = "Terms of Service"
+        vc.linkType = .privacy
+        vc.name = "Privacy Policy"
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: true)
     }
