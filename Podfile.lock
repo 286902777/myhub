@@ -1,54 +1,78 @@
 PODS:
-  - Ads-Global (7.6.0.5):
-    - Ads-Global/BUAdSDK (= 7.6.0.5)
-  - Ads-Global/BUAdSDK (7.6.0.5)
+  - Ads-Global (7.8.5.8):
+    - Ads-Global/BUAdSDK (= 7.8.5.8)
+  - Ads-Global/BUAdSDK (7.8.5.8):
+    - Ads-Global/PangleSDK
+    - Ads-Global/TikTokBusinessSDK
+  - Ads-Global/PangleSDK (7.8.5.8)
+  - Ads-Global/TikTokBusinessSDK (7.8.5.8)
   - Alamofire (5.10.2)
-  - AppLovinMediationBidMachineAdapter (3.4.0.0.0):
+  - AppLovinMediationBidMachineAdapter (3.5.0.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - BidMachine (= 3.4.0)
-  - AppLovinMediationBigoAdsAdapter (4.9.3.0):
+    - BidMachine (= 3.5.0)
+  - AppLovinMediationBigoAdsAdapter (5.1.0.0):
     - AppLovinSDK (>= 12.4.1)
-    - BigoADS (= 4.9.3)
-  - AppLovinMediationByteDanceAdapter (7.6.0.5.0):
-    - Ads-Global (= 7.6.0.5)
+    - BigoADS (= 5.1.0)
+  - AppLovinMediationByteDanceAdapter (7.8.5.8.0):
+    - Ads-Global (= 7.8.5.8)
     - AppLovinSDK (>= 13.0.0)
-  - AppLovinMediationFacebookAdapter (6.20.1.0):
+  - AppLovinMediationChartboostAdapter (9.10.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - FBAudienceNetwork (= 6.20.1)
+    - ChartboostSDK (= 9.10.0)
+  - AppLovinMediationFacebookAdapter (6.21.0.0):
+    - AppLovinSDK (>= 13.0.0)
+    - FBAudienceNetwork (= 6.21.0)
   - AppLovinMediationFyberAdapter (8.3.8.0):
     - AppLovinSDK (>= 13.0.0)
     - Fyber_Marketplace_SDK (= 8.3.8)
+  - AppLovinMediationGoogleAdapter (12.11.0.0):
+    - AppLovinSDK (>= 13.0.0)
+    - Google-Mobile-Ads-SDK (= 12.11.0)
+  - AppLovinMediationGoogleAdManagerAdapter (12.11.0.0):
+    - AppLovinSDK (>= 13.0.0)
+    - Google-Mobile-Ads-SDK (= 12.11.0)
   - AppLovinMediationInMobiAdapter (10.8.6.0):
     - AppLovinSDK (>= 13.0.0)
     - InMobiSDK (= 10.8.6)
   - AppLovinMediationIronSourceAdapter (8.11.0.0.0):
     - AppLovinSDK (>= 13.0.0)
     - IronSourceSDK/Ads (= 8.11.0.0)
-  - AppLovinMediationMintegralAdapter (7.7.9.0.0):
+  - AppLovinMediationLineAdapter (3.0.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - MintegralAdSDK (= 7.7.9)
-    - MintegralAdSDK/BidSplashAd (= 7.7.9)
-  - AppLovinMediationMolocoAdapter (3.13.0.0):
+    - FiveAd (= 3.0.0)
+  - AppLovinMediationMintegralAdapter (8.0.5.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - MolocoSDKiOS (= 3.13.0)
-  - AppLovinMediationUnityAdsAdapter (4.16.1.0):
+    - MintegralAdSDK (= 8.0.5)
+    - MintegralAdSDK/BidSplashAd (= 8.0.5)
+  - AppLovinMediationMobileFuseAdapter (1.11.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - UnityAds (= 4.16.1)
-  - AppLovinMediationVungleAdapter (7.5.3.0):
+    - MobileFuseSDK (= 1.11.0)
+  - AppLovinMediationMolocoAdapter (4.3.0.0):
     - AppLovinSDK (>= 13.0.0)
-    - VungleAds (= 7.5.3)
+    - MolocoSDKiOS (= 4.3.0)
+  - AppLovinMediationSmaatoAdapter (23.1.0.0):
+    - AppLovinSDK (>= 13.0.0)
+    - smaato-ios-sdk (= 23.1.0)
+    - smaato-ios-sdk/InApp (= 23.1.0)
+  - AppLovinMediationUnityAdsAdapter (4.16.5.0):
+    - AppLovinSDK (>= 13.0.0)
+    - UnityAds (= 4.16.5)
+  - AppLovinMediationVungleAdapter (7.6.3.1):
+    - AppLovinSDK (>= 13.0.0)
+    - VungleAds (= 7.6.3)
   - AppLovinSDK (13.4.0)
   - AppsFlyerFramework (6.17.6):
     - AppsFlyerFramework/Main (= 6.17.6)
   - AppsFlyerFramework/Main (6.17.6)
-  - BidMachine (3.4.0):
-    - BidMachine/Static (= 3.4.0)
-  - BidMachine/Static (3.4.0):
-    - StackModules/Static (~> 3.3.0)
-  - BigoADS (4.9.3)
+  - ATOM-Standalone (3.9.0)
+  - BidMachine (3.5.0):
+    - BidMachine/Static (= 3.5.0)
+  - BidMachine/Static (3.5.0):
+    - StackModules/Static (~> 3.4.0)
+  - BigoADS (5.1.0)
   - ChartboostSDK (9.10.0)
   - CryptoSwift (1.8.4)
-  - FBAudienceNetwork (6.20.1)
+  - FBAudienceNetwork (6.21.0)
   - Firebase/Analytics (12.3.0):
     - Firebase/Core
   - Firebase/Core (12.3.0):
@@ -117,7 +141,7 @@ PODS:
     - nanopb (~> 3.30910.0)
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (12.3.0)
-  - FiveAd (2.9.20250930)
+  - FiveAd (3.0.0)
   - Fyber_Marketplace_SDK (8.3.8)
   - Google-Mobile-Ads-SDK (12.11.0):
     - GoogleUserMessagingPlatform (>= 1.1)
@@ -157,8 +181,8 @@ PODS:
   - GoogleMobileAdsMediationChartboost (9.10.0.0):
     - ChartboostSDK (= 9.10.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
-  - GoogleMobileAdsMediationFacebook (6.20.1.0):
-    - FBAudienceNetwork (= 6.20.1)
+  - GoogleMobileAdsMediationFacebook (6.21.0.1):
+    - FBAudienceNetwork (= 6.21.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
   - GoogleMobileAdsMediationFyber (8.3.8.0):
     - Fyber_Marketplace_SDK (= 8.3.8)
@@ -172,30 +196,30 @@ PODS:
   - GoogleMobileAdsMediationIronSource (8.11.0.0.0):
     - Google-Mobile-Ads-SDK (~> 12.0)
     - IronSourceSDK (= 8.11.0.0)
-  - GoogleMobileAdsMediationLine (2.9.20250930.0):
-    - FiveAd (= 2.9.20250930)
+  - GoogleMobileAdsMediationLine (3.0.0.0):
+    - FiveAd (= 3.0.0)
     - Google-Mobile-Ads-SDK (~> 12.0)
-  - GoogleMobileAdsMediationMaio (2.2.0.0):
+  - GoogleMobileAdsMediationMaio (2.2.0.2):
     - Google-Mobile-Ads-SDK (~> 12.0)
     - MaioSDK-v2 (= 2.2.0)
-  - GoogleMobileAdsMediationMintegral (7.7.9.1):
+  - GoogleMobileAdsMediationMintegral (8.0.5.2):
     - Google-Mobile-Ads-SDK (~> 12.0)
-    - MintegralAdSDK/All (= 7.7.9)
-  - GoogleMobileAdsMediationMoloco (3.13.0.0):
+    - MintegralAdSDK/All (= 8.0.5)
+  - GoogleMobileAdsMediationMoloco (4.3.0.1):
     - Google-Mobile-Ads-SDK (~> 12.0)
-    - MolocoSDKiOS (= 3.13.0)
-  - GoogleMobileAdsMediationMyTarget (5.36.0.0):
+    - MolocoSDKiOS (= 4.3.0)
+  - GoogleMobileAdsMediationMyTarget (5.38.0.0):
     - Google-Mobile-Ads-SDK (~> 12.0)
-    - myTargetSDK (= 5.36.0)
-  - GoogleMobileAdsMediationPangle (7.6.0.5.0):
-    - Ads-Global (= 7.6.0.5)
+    - myTargetSDK (= 5.38.0)
+  - GoogleMobileAdsMediationPangle (7.8.5.8.1):
+    - Ads-Global (= 7.8.5.8)
     - Google-Mobile-Ads-SDK (~> 12.0)
-  - GoogleMobileAdsMediationUnity (4.16.1.0):
+  - GoogleMobileAdsMediationUnity (4.16.6.0):
     - Google-Mobile-Ads-SDK (~> 12.0)
-    - UnityAds (= 4.16.1)
-  - GoogleMobileAdsMediationVungle (7.5.3.0):
+    - UnityAds (= 4.16.5)
+  - GoogleMobileAdsMediationVungle (7.6.3.2):
     - Google-Mobile-Ads-SDK (~> 12.0)
-    - VungleAds (= 7.5.3)
+    - VungleAds (= 7.6.3)
   - GoogleUserMessagingPlatform (3.0.0)
   - GoogleUtilities/AppDelegateSwizzler (8.1.0):
     - GoogleUtilities/Environment
@@ -274,18 +298,18 @@ PODS:
   - IronSourceSDK/Ads (8.11.0.0)
   - Kingfisher (8.5.0)
   - MaioSDK-v2 (2.2.0)
-  - MintegralAdSDK (7.7.9):
-    - MintegralAdSDK/BannerAd (= 7.7.9)
-    - MintegralAdSDK/BidBannerAd (= 7.7.9)
-    - MintegralAdSDK/BidInterstitialVideoAd (= 7.7.9)
-    - MintegralAdSDK/BidNativeAd (= 7.7.9)
-    - MintegralAdSDK/BidNewInterstitialAd (= 7.7.9)
-    - MintegralAdSDK/BidRewardVideoAd (= 7.7.9)
-    - MintegralAdSDK/InterstitialVideoAd (= 7.7.9)
-    - MintegralAdSDK/NativeAd (= 7.7.9)
-    - MintegralAdSDK/NewInterstitialAd (= 7.7.9)
-    - MintegralAdSDK/RewardVideoAd (= 7.7.9)
-  - MintegralAdSDK/All (7.7.9):
+  - MintegralAdSDK (8.0.5):
+    - MintegralAdSDK/BannerAd (= 8.0.5)
+    - MintegralAdSDK/BidBannerAd (= 8.0.5)
+    - MintegralAdSDK/BidInterstitialVideoAd (= 8.0.5)
+    - MintegralAdSDK/BidNativeAd (= 8.0.5)
+    - MintegralAdSDK/BidNewInterstitialAd (= 8.0.5)
+    - MintegralAdSDK/BidRewardVideoAd (= 8.0.5)
+    - MintegralAdSDK/InterstitialVideoAd (= 8.0.5)
+    - MintegralAdSDK/NativeAd (= 8.0.5)
+    - MintegralAdSDK/NewInterstitialAd (= 8.0.5)
+    - MintegralAdSDK/RewardVideoAd (= 8.0.5)
+  - MintegralAdSDK/All (8.0.5):
     - MintegralAdSDK/BannerAd
     - MintegralAdSDK/BidNativeAd
     - MintegralAdSDK/InterstitialVideoAd
@@ -294,40 +318,41 @@ PODS:
     - MintegralAdSDK/NewInterstitialAd
     - MintegralAdSDK/RewardVideoAd
     - MintegralAdSDK/SplashAd
-  - MintegralAdSDK/BannerAd (7.7.9):
+  - MintegralAdSDK/BannerAd (8.0.5):
     - MintegralAdSDK/NativeAd
-  - MintegralAdSDK/BidBannerAd (7.7.9):
+  - MintegralAdSDK/BidBannerAd (8.0.5):
     - MintegralAdSDK/BannerAd
     - MintegralAdSDK/BidNativeAd
-  - MintegralAdSDK/BidInterstitialVideoAd (7.7.9):
+  - MintegralAdSDK/BidInterstitialVideoAd (8.0.5):
     - MintegralAdSDK/BidNativeAd
     - MintegralAdSDK/InterstitialVideoAd
-  - MintegralAdSDK/BidNativeAd (7.7.9):
+  - MintegralAdSDK/BidNativeAd (8.0.5):
     - MintegralAdSDK/NativeAd
-  - MintegralAdSDK/BidNewInterstitialAd (7.7.9):
+  - MintegralAdSDK/BidNewInterstitialAd (8.0.5):
     - MintegralAdSDK/BidNativeAd
     - MintegralAdSDK/NewInterstitialAd
-  - MintegralAdSDK/BidRewardVideoAd (7.7.9):
+  - MintegralAdSDK/BidRewardVideoAd (8.0.5):
     - MintegralAdSDK/BidNativeAd
     - MintegralAdSDK/RewardVideoAd
-  - MintegralAdSDK/BidSplashAd (7.7.9):
+  - MintegralAdSDK/BidSplashAd (8.0.5):
     - MintegralAdSDK/BidNativeAd
     - MintegralAdSDK/SplashAd
-  - MintegralAdSDK/InterstitialVideoAd (7.7.9):
+  - MintegralAdSDK/InterstitialVideoAd (8.0.5):
     - MintegralAdSDK/NativeAd
-  - MintegralAdSDK/NativeAd (7.7.9)
-  - MintegralAdSDK/NativeAdvancedAd (7.7.9):
+  - MintegralAdSDK/NativeAd (8.0.5)
+  - MintegralAdSDK/NativeAdvancedAd (8.0.5):
     - MintegralAdSDK/NativeAd
-  - MintegralAdSDK/NewInterstitialAd (7.7.9):
+  - MintegralAdSDK/NewInterstitialAd (8.0.5):
     - MintegralAdSDK/InterstitialVideoAd
     - MintegralAdSDK/NativeAd
-  - MintegralAdSDK/RewardVideoAd (7.7.9):
+  - MintegralAdSDK/RewardVideoAd (8.0.5):
     - MintegralAdSDK/NativeAd
-  - MintegralAdSDK/SplashAd (7.7.9):
+  - MintegralAdSDK/SplashAd (8.0.5):
     - MintegralAdSDK/NativeAd
   - MJRefresh (3.7.9)
-  - MolocoSDKiOS (3.13.0)
-  - myTargetSDK (5.36.0):
+  - MobileFuseSDK (1.11.0)
+  - MolocoSDKiOS (4.3.0)
+  - myTargetSDK (5.38.0):
     - myTrackerSDK (~> 3.3.0)
   - myTrackerSDK (3.3.0)
   - nanopb (3.30910.0):
@@ -335,7 +360,7 @@ PODS:
     - nanopb/encode (= 3.30910.0)
   - nanopb/decode (3.30910.0)
   - nanopb/encode (3.30910.0)
-  - OMSDK_Appodeal (1.5.2)
+  - OMSDK_Appodeal/Static (1.6.0.3)
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
@@ -344,32 +369,71 @@ PODS:
   - Realm/Headers (20.0.3)
   - RealmSwift (20.0.3):
     - Realm (= 20.0.3)
+  - smaato-ios-sdk (23.1.0):
+    - smaato-ios-sdk/Full (= 23.1.0)
+  - smaato-ios-sdk/Banner (23.1.0):
+    - smaato-ios-sdk/InApp
+    - smaato-ios-sdk/Modules/Banner
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Full (23.1.0):
+    - smaato-ios-sdk/Banner
+    - smaato-ios-sdk/Interstitial
+    - smaato-ios-sdk/Native
+    - smaato-ios-sdk/RewardedAds
+  - smaato-ios-sdk/InApp (23.1.0):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Interstitial (23.1.0):
+    - smaato-ios-sdk/InApp
+    - smaato-ios-sdk/Modules/Interstitial
+  - smaato-ios-sdk/Modules/Banner (23.1.0):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Core (23.1.0):
+    - ATOM-Standalone
+  - smaato-ios-sdk/Modules/Interstitial (23.1.0):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/Native (23.1.0):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Modules/RewardedAds (23.1.0):
+    - smaato-ios-sdk/Modules/Core
+  - smaato-ios-sdk/Native (23.1.0):
+    - smaato-ios-sdk/InApp
+    - smaato-ios-sdk/Modules/Core
+    - smaato-ios-sdk/Modules/Native
+  - smaato-ios-sdk/RewardedAds (23.1.0):
+    - smaato-ios-sdk/InApp
+    - smaato-ios-sdk/Modules/RewardedAds
   - SnapKit (5.7.1)
-  - StackModules/Core-Static (3.3.0)
-  - StackModules/ProductPresentation-Static (3.3.0):
+  - StackModules/Core-Static (3.4.7)
+  - StackModules/ProductPresentation-Static (3.4.7):
     - StackModules/Core-Static
-  - StackModules/Rendering-Static (3.3.0):
-    - OMSDK_Appodeal (= 1.5.2)
+  - StackModules/Rendering-Static (3.4.7):
+    - OMSDK_Appodeal/Static (= 1.6.0.3)
     - StackModules/Core-Static
     - StackModules/ProductPresentation-Static
-  - StackModules/Static (3.3.0):
+  - StackModules/Static (3.4.7):
     - StackModules/Core-Static
     - StackModules/ProductPresentation-Static
     - StackModules/Rendering-Static
-  - UnityAds (4.16.1)
-  - VungleAds (7.5.3)
+  - UnityAds (4.16.5)
+  - VungleAds (7.6.3)
 
 DEPENDENCIES:
   - Alamofire
-  - AppLovinMediationBidMachineAdapter
+  - AppLovinMediationBidMachineAdapter (= 3.5.0.0.0)
   - AppLovinMediationBigoAdsAdapter
   - AppLovinMediationByteDanceAdapter
+  - AppLovinMediationChartboostAdapter
   - AppLovinMediationFacebookAdapter
   - AppLovinMediationFyberAdapter
+  - AppLovinMediationGoogleAdapter
+  - AppLovinMediationGoogleAdManagerAdapter
   - AppLovinMediationInMobiAdapter
   - AppLovinMediationIronSourceAdapter
+  - AppLovinMediationLineAdapter
   - AppLovinMediationMintegralAdapter
+  - AppLovinMediationMobileFuseAdapter
   - AppLovinMediationMolocoAdapter
+  - AppLovinMediationSmaatoAdapter
   - AppLovinMediationUnityAdsAdapter
   - AppLovinMediationVungleAdapter
   - AppLovinSDK
@@ -408,16 +472,23 @@ SPEC REPOS:
     - AppLovinMediationBidMachineAdapter
     - AppLovinMediationBigoAdsAdapter
     - AppLovinMediationByteDanceAdapter
+    - AppLovinMediationChartboostAdapter
     - AppLovinMediationFacebookAdapter
     - AppLovinMediationFyberAdapter
+    - AppLovinMediationGoogleAdapter
+    - AppLovinMediationGoogleAdManagerAdapter
     - AppLovinMediationInMobiAdapter
     - AppLovinMediationIronSourceAdapter
+    - AppLovinMediationLineAdapter
     - AppLovinMediationMintegralAdapter
+    - AppLovinMediationMobileFuseAdapter
     - AppLovinMediationMolocoAdapter
+    - AppLovinMediationSmaatoAdapter
     - AppLovinMediationUnityAdsAdapter
     - AppLovinMediationVungleAdapter
     - AppLovinSDK
     - AppsFlyerFramework
+    - ATOM-Standalone
     - BidMachine
     - BigoADS
     - ChartboostSDK
@@ -475,6 +546,7 @@ SPEC REPOS:
     - MaioSDK-v2
     - MintegralAdSDK
     - MJRefresh
+    - MobileFuseSDK
     - MolocoSDKiOS
     - myTargetSDK
     - myTrackerSDK
@@ -484,32 +556,40 @@ SPEC REPOS:
     - PromisesSwift
     - Realm
     - RealmSwift
+    - smaato-ios-sdk
     - SnapKit
     - StackModules
     - UnityAds
     - VungleAds
 
 SPEC CHECKSUMS:
-  Ads-Global: 40ad25d2db7bd52d4216b890f56289f0648593dc
+  Ads-Global: be1d072a85695a685b3f9cd0b79da411ee195969
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
-  AppLovinMediationBidMachineAdapter: acfa295f114b897009ceaeb0d947b3a4d6bc6756
-  AppLovinMediationBigoAdsAdapter: 09225193b4511e220b71edad3884a0f24cccd472
-  AppLovinMediationByteDanceAdapter: f6185125bf3231d18c074bd6c4223902003805c9
-  AppLovinMediationFacebookAdapter: 7c9837eb64a43823812dc23609eac01973ff8b74
+  AppLovinMediationBidMachineAdapter: 9c4c1fb29dee235a5b8b209602534ffe12bfc52a
+  AppLovinMediationBigoAdsAdapter: 6990711409cbc107bb686f25b052f0461c36b669
+  AppLovinMediationByteDanceAdapter: c7f5e0a0e8545e958bc4f81da70c5e2ceb0c1cc5
+  AppLovinMediationChartboostAdapter: cc32d1dbc020c1237fb65607a3144358ec7c9f24
+  AppLovinMediationFacebookAdapter: 228611db1f86884d61c0f06bef0af0983d7e2eba
   AppLovinMediationFyberAdapter: e2f031599ed2bcfe71af54ba87a929610308338f
+  AppLovinMediationGoogleAdapter: 7974f784ae6ac93739222343c0c1c01110a13e34
+  AppLovinMediationGoogleAdManagerAdapter: 9737e973a85c5d1bfc01fe12e33ad838799f1243
   AppLovinMediationInMobiAdapter: 4699701fa946b78151dc5aa0394cc1feda249809
   AppLovinMediationIronSourceAdapter: 5a970d97567bc5576bd963a83fc4465c0fada0a9
-  AppLovinMediationMintegralAdapter: c73b2cbce91600868c49c08adae5cc2664bc330c
-  AppLovinMediationMolocoAdapter: d05c5cb60423ccf8cecf3e2073abe19d90bfa05b
-  AppLovinMediationUnityAdsAdapter: 16e2c3cc72761ce5bd395a5c91222ad15c040cb5
-  AppLovinMediationVungleAdapter: 0c957ff2f95dc5ec8e078b00cb7dbece2724f745
+  AppLovinMediationLineAdapter: 793b430b5cce687e7176e53f4169826c861dfe66
+  AppLovinMediationMintegralAdapter: 7db2190cc4e0fa6cd2d4f952ecd81ef13f811433
+  AppLovinMediationMobileFuseAdapter: 2389e6f3c367abfd48770785586f8539e17e41f5
+  AppLovinMediationMolocoAdapter: c1f6efff3dc92344d682c34838aa1280000e2c8d
+  AppLovinMediationSmaatoAdapter: 33718c19b4957d850702aac2ab07f78c197437f8
+  AppLovinMediationUnityAdsAdapter: 5ae32d0d4635fde3eb76457b4bdfde578b6aabee
+  AppLovinMediationVungleAdapter: 3d37db4bdea7c6ec087724a4052209aeca738ea1
   AppLovinSDK: 33fcc783889e2d522ae26886b31e5551246a5b2f
   AppsFlyerFramework: c2a11846e1f716132449810e0fb5f191f4f1bf4c
-  BidMachine: aae28c0331dbcec42d63a71b25b0470990b87fe7
-  BigoADS: 42cdec736eb8084a6658f3efd34345cc3f753ab8
+  ATOM-Standalone: cd8bed8eb43e48d0f2e778aa0db893cb7f8ceb93
+  BidMachine: 7722254fdf6641a354ceef845bcb6cc3ff8dc0f3
+  BigoADS: a7721b65e51f506141d5f1a6dff1cab213b04c76
   ChartboostSDK: 486aea4d9ab63d7700e9296578142010fd686754
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
-  FBAudienceNetwork: 08e86d63a05b3a5a59414af12e4af8d756943c80
+  FBAudienceNetwork: f4ab9e073ab98c884dbdb5ffe7c861272b380bc2
   Firebase: f5439b235721ceeef14ca1f327c0da8e4e8556b5
   FirebaseABTesting: 6e748dfecb81a49539c030adb5b12263acf62865
   FirebaseAnalytics: fefb765365c6d3a4f2cb9d2c99dcf595124d41ae
@@ -522,7 +602,7 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfigInterop: 66d61ad6cee1cd2137cb8dedf468112e9ba92c6a
   FirebaseSessions: 352b204966530e5cb7036c02d8c366922210e681
   FirebaseSharedSwift: a08758c5e2617f3ebb47865b45ecca6f02cd35ea
-  FiveAd: a2a79a8c040cbbb449ed59b1fe0646819beb2a1d
+  FiveAd: 16fac25b6d3efe14b55585e68e6c01dec1f10abc
   Fyber_Marketplace_SDK: 078ce5d06cee765bc822ace5c231af7a17e8dcd1
   Google-Mobile-Ads-SDK: b833c723759e32bbaf06edaaf2293f08ed898232
   GoogleAdsOnDeviceConversion: b4fcc557983271d53177d75ddf704c025791d261
@@ -530,19 +610,19 @@ SPEC CHECKSUMS:
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleMobileAdsMediationAppLovin: 604d93a0913908be064558a90170004f35b57a96
   GoogleMobileAdsMediationChartboost: bb841004669d696ecdb2764f299bbfaa40fbecf7
-  GoogleMobileAdsMediationFacebook: b11a92ae3bfdae19853b882252b7e62791c18162
+  GoogleMobileAdsMediationFacebook: a8379733e6e593e9a5ea278bdc16e747ec952a18
   GoogleMobileAdsMediationFyber: 4478e63584d8a2555b2dea6ab9a000533355fe8f
   GoogleMobileAdsMediationIMobile: 6c5652c640095377c00cbe6c356f8b56201b9371
   GoogleMobileAdsMediationInMobi: 1b9a223c4626924777d2be734e43da5d85fa8a59
   GoogleMobileAdsMediationIronSource: 38f21bbcf729b208e63f43b757b61b2c8e0c7ad4
-  GoogleMobileAdsMediationLine: 194f77f738429c327055a4f82c6678b0224ff17c
-  GoogleMobileAdsMediationMaio: b1a1685512b8d4927696b559157c4e50fe6349dc
-  GoogleMobileAdsMediationMintegral: 850a80c9cda83b28a12b0bcff690cd7daaaa14a4
-  GoogleMobileAdsMediationMoloco: 8536fb75fd0961c756e3c6296b37453f30d35533
-  GoogleMobileAdsMediationMyTarget: 101337a5b4fb49c188edd4ac7bf94707c62b1469
-  GoogleMobileAdsMediationPangle: 460cc4b6168e2491ac8dda1ba76124baa3dc66f0
-  GoogleMobileAdsMediationUnity: 9e788d0fc5517623ff1321c5896608c808d66099
-  GoogleMobileAdsMediationVungle: 15b78a22329c5893234bd9702f11b250b8a0b5fa
+  GoogleMobileAdsMediationLine: d92ef4bee9186492687a9475c92cd320f5166f1d
+  GoogleMobileAdsMediationMaio: 99f28abc413571e03d997ef2c2b3878a18eb9453
+  GoogleMobileAdsMediationMintegral: 6937634be2fd5aeec0c738374fb8397d8f76f26d
+  GoogleMobileAdsMediationMoloco: 86e1afd6e729d9c8b52f08a9e39b442bff5fdcb7
+  GoogleMobileAdsMediationMyTarget: faf2790bbe46e386c321705bebfb590b80001f24
+  GoogleMobileAdsMediationPangle: e6744bb937ded6c482fa6c944e89bf006daa730f
+  GoogleMobileAdsMediationUnity: 85fd40e2b42371341446745899e2963faaaaaba9
+  GoogleMobileAdsMediationVungle: 9e186cd0aa6b6d9e6a87bf44485061209cca2707
   GoogleUserMessagingPlatform: f8d0cdad3ca835406755d0a69aa634f00e76d576
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
@@ -560,22 +640,24 @@ SPEC CHECKSUMS:
   IronSourceSDK: 32eeb199f608b590112a8263028a485e50f8d1b7
   Kingfisher: ff0d31a1f07bdff6a1ebb3ba08b8e6e567b6500c
   MaioSDK-v2: 566025577e43c02a8325dd9913d79ff242c6fd30
-  MintegralAdSDK: 054814f99bb7e967b8974fe635d9005b225cbe42
+  MintegralAdSDK: 07ff43683ce5ee0c9a394abba6dd79620c775555
   MJRefresh: ff9e531227924c84ce459338414550a05d2aea78
-  MolocoSDKiOS: 4336042d04960e0cf4b5e6ac8061fe2fa3921f4b
-  myTargetSDK: bd42c0e7f935405d1f2ef2430b9f883cfed1a6e4
+  MobileFuseSDK: 08da0fcba90e7c208e2817f6964ff4f15bd6f285
+  MolocoSDKiOS: c2800326280d78aa3a7914f4e474024272891b85
+  myTargetSDK: c761a9b66095dda4a510bd17b2e97a54edb466fc
   myTrackerSDK: 50f2ca5ca7a6aec2661f378b7441a85e15f2af29
   nanopb: fad817b59e0457d11a5dfbde799381cd727c1275
-  OMSDK_Appodeal: 066f9da2c77d560e319341c6bd4739828bc65842
+  OMSDK_Appodeal: 907fdbc78ac0c6dfccb14b69a81302899dc536c9
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   PromisesSwift: 9d77319bbe72ebf6d872900551f7eeba9bce2851
   Realm: 853e5089d6042dff807bda000277eadfe2da93d2
   RealmSwift: f33c19577cefcbf681345d721fcbc7b42be4c949
+  smaato-ios-sdk: 88d31a457defbdd6c90baa5ec65d1a2aac5ad7e9
   SnapKit: d612e99e678a2d3b95bf60b0705ed0a35c03484a
-  StackModules: 0b77df5a1453951c9e6aa0e32cab0b055fbf68e1
-  UnityAds: 24cb6536614958aefcd5a44576eb4f3157c781d0
-  VungleAds: 3b273eba0219680dbef90d51e690d165422702d9
+  StackModules: 53abb3789ff65603857a7157efaac07e860cb34d
+  UnityAds: 8b9e0ecf7c4aa7334d15f81efb58db279e28f502
+  VungleAds: 40e87d1eaba17ac818b0f94461fd8ed21ad768dc
 
-PODFILE CHECKSUM: b1ade25b1a28cd6be4f5c4e7527f9cce48a1500f
+PODFILE CHECKSUM: eb6f4b85b42e2360ba732c123908c15b3bbf6b62
 
 COCOAPODS: 1.16.2

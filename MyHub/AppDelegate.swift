@@ -51,17 +51,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 NSLog("Ad Name: %@, Description: %@, Latency: %f", adapter.key,
                       adapterStatus.description, adapterStatus.latency)
             }
-            
-            ALSdk.shared().settings.isMuted = true
-            ALSdkSettings().isMuted = true
-            let config = ALSdkInitializationConfiguration(sdkKey: self.alKey) { builder in
-                builder.mediationProvider = ALMediationProviderMAX
-            }
+        }
+        
+        ALSdk.shared().settings.isMuted = true
+        ALSdkSettings().isMuted = true
+        let config = ALSdkInitializationConfiguration(sdkKey: self.alKey) { builder in
+            builder.mediationProvider = ALMediationProviderMAX
+        }
 
-            ALSdk.shared().initialize(with: config) { _ in
-                if !GoogleManager.share.installed {
-                    GoogleManager.share.admobMaxLoad(.play)
-                }
+        ALSdk.shared().initialize(with: config) { _ in
+            if !GoogleManager.share.installed {
+                GoogleManager.share.admobMaxLoad(.play)
             }
         }
     }

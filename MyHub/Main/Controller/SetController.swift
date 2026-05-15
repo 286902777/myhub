@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import GoogleMobileAds
+import AppLovinSDK
 
 class SetController: SuperController {
     lazy var logoutBtn: UIButton = {
@@ -310,9 +312,32 @@ class SetController: SuperController {
             TabbarTool.instance.displayOrHidden(false)
             self.navigationController?.pushViewController(vc, animated: true)
         default:
+            showADStool()
             break
         }
     }
+    
+    func showADStool() {
+          MobileAds.shared.requestConfiguration.testDeviceIdentifiers = ["5648d310629cdf0b309a2d7e2af2b8a3"]
+          let alertController = UIAlertController(title: "AD Tools", message: "select AD Tool", preferredStyle: .actionSheet)
+          let action1 = UIAlertAction(title: "admob", style: .default) { (action) in
+              MobileAds.shared.presentAdInspector(from: self) { error in
+  
+              }
+          }
+          let action2 = UIAlertAction(title: "Max", style: .default) { (action) in
+              ALSdk.shared().showMediationDebugger()
+          }
+  
+          let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+              // Cancel code
+          }
+  
+          alertController.addAction(action1)
+          alertController.addAction(action2)
+          alertController.addAction(cancelAction)
+          present(alertController, animated: true, completion: nil)
+      }
     
     @objc func clickLogoutAction() {
         let vc = AlertController(title: "Confirm Exit?", info: " Exiting ends the current content. You will need to re-verify your identity next time.")
