@@ -83,7 +83,6 @@ class PingListController: SuperController {
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherFolderListController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                PayPopManager.instance.openPopPage(self)
             }
         }
     }
@@ -150,7 +149,6 @@ class PingListController: SuperController {
                         if success == false {
                             DispatchQueue.main.async {
                                 self.downFile()
-                                PayPopManager.instance.openPopPage(self)
                             }
                         }
                     }

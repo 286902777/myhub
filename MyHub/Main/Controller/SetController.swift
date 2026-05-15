@@ -312,7 +312,7 @@ class SetController: SuperController {
             TabbarTool.instance.displayOrHidden(false)
             self.navigationController?.pushViewController(vc, animated: true)
         default:
-            showADStool()
+//            showADStool()
             break
         }
     }

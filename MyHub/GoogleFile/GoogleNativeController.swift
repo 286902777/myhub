@@ -65,9 +65,11 @@ class GoogleNativeController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        HubTool.share.showAdomb = true
-        TbaManager.instance.addEvent(type: .custom, event: .adsshowPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
-        NotificationCenter.default.post(name: Noti_ShowAds, object: nil, userInfo: nil)
+        if let vc = HubTool.share.keyVC(), vc.isKind(of: GoogleNativeController.self) {
+            HubTool.share.showAdomb = true
+            TbaManager.instance.addEvent(type: .custom, event: .adsshowPlacement, paramter: [EventParaName.value.rawValue: HubTool.share.adsPlayState.rawValue, EventParaName.type.rawValue: "1"])
+            NotificationCenter.default.post(name: Noti_ShowAds, object: nil, userInfo: nil)
+        }
     }
     
     override func viewDidLoad() {

@@ -608,6 +608,7 @@ extension HUBPlayerView: UIViewControllerTransitioningDelegate {
 extension HUBPlayerView: HUBPlayerContentViewDelegate {
     func contentView(_ contentView: HUBPlayerContentView, didClickPlayButton isPlay: Bool) {
         isUserPause = isPlay
+        HubTool.share.showAdomb = false
         isPlay ? pause() : play()
     }
 

@@ -84,7 +84,6 @@ class OtherDeepController: UIViewController {
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherDeepController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                PayPopManager.instance.openPopPage(self)
             }
         }
         NotificationCenter.default.addObserver(forName: Noti_ClosePresent, object: nil, queue: .main) { [weak self] _ in

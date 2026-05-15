@@ -91,7 +91,6 @@ class PingController: UIViewController {
             HubTool.share.isChannelAds = false
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
-                PayPopManager.instance.openPopPage(self)
             }
             if HubTool.share.adsPlayState == .channelPage {
                 HubTool.share.preSource = .vip_Ad
