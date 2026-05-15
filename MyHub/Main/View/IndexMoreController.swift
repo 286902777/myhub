@@ -73,6 +73,7 @@ class IndexMoreController: UIViewController {
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: IndexController.self) || vc.isKind(of: IndexListController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
+                PayPopManager.instance.openPopPage(self)
             }
         }
     }

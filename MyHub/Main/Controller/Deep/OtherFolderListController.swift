@@ -85,6 +85,7 @@ class OtherFolderListController: UIViewController {
             guard let vc = HubTool.share.keyVC(), vc.isKind(of: OtherFolderListController.self) else { return }
             if HubTool.share.adsPlayState == .download {
                 self.downFile()
+                PayPopManager.instance.openPopPage(self)
             }
         }
     }
