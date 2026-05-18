@@ -46,6 +46,7 @@ enum HttpApi: String {
     case folder = "v1/dentately/maraud/blennoid"     /// v1/app/open/file/{uid}/{dirId}
     case event = "v1/menialism/hoose"              /// v1/app/events
     case recommendChannel = "v1/unsieved/dob"/// v1/app/push_operation_pools
+    case recommendData = "v1/browses/filiformed" ///v1/app/recommend
 }
 
 enum HttpHeadValue: String {
@@ -894,9 +895,8 @@ class HttpManager {
         var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-
         request.setValue("italianish", forHTTPHeaderField: appHeadKey)
+        
         let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { [weak self] data, response, error in
             guard let self = self else { return }
             let status = self.getCode(response)
@@ -920,6 +920,52 @@ class HttpManager {
             }
         })
         task.resume()
+    }
+    
+    func requestRecommend(_ uid: String, _ model: VideoData?, _ completion: @escaping (_ status: HttpCode, _ list: [RecommendFileData],  _ errMsg: String?, _ refresh: Bool) -> Void) {
+        let url: String = appHost + HttpApi.recommendData.rawValue
+        
+        var para: [String: Any] = [:]
+        para["diazoate"] = uid
+        if let m = model {
+            para["sparsile"] = ["tailte": [m.playTime, m.id]]
+        } else {
+            para["sparsile"] = ["tailte": []]
+        }
+
+        var request: URLRequest = URLRequest(url: URL(string: url)!, timeoutInterval: 15)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("dipsaceous", forHTTPHeaderField: appHeadKey)
+        
+        if let pa = try? JSONSerialization.data(withJSONObject: para, options: []) {
+            request.httpBody = pa
+        }
+        
+        let task: URLSessionDataTask = MHURLSession.share.dataTask(with: request, completionHandler: { [weak self] data, response, error in
+            guard let self = self else { return }
+            let status = self.getCode(response)
+            switch status {
+            case .success:
+                if let info = data {
+                    let json = String(data: info, encoding: .utf8)
+                    DispatchQueue.main.async {
+                        if let model = RecommendData.deserialize(from: json) {
+                            completion(status, model.files, nil, false)
+                        }
+                    }
+                } else {
+                    let newHost = HttpManager.share.refreshAppHostUrl()
+                    completion(status, [], newHost ? "" : "Request fail!", newHost)
+                }
+            default:
+                let newHost = HttpManager.share.refreshAppHostUrl()
+                completion(status, [], newHost ? "" : "Request fail!", newHost)
+                return
+            }
+        })
+        task.resume()
+        
     }
     
     func requestMovieAddress(_ model: VideoData, _ completion: @escaping (_ status: HttpCode, _ address: String, _ errMsg: String?, _ refresh: Bool) -> ()){

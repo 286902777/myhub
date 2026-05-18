@@ -349,7 +349,7 @@ class PingController: UIViewController {
         }
     }
     
-    func pushDataVC(_ model: ChannelData) {
+    func pushDataVC(_ model: ChannelData, _ isRecommend: Bool) {
         HubTool.share.eventSource = .channelpage
         HubTool.share.uploadPlatform = self.platform
         HubTool.share.playSource = .channel_file
@@ -361,9 +361,13 @@ class PingController: UIViewController {
             let vc = OpenPhotoController(model: HubTool.share.channelModel(model, linkId: "", uId: "", platform: self.platform))
             self.navigationController?.pushViewController(vc, animated: true)
         case .video:
-            var pushList = HubTool.share.channelList(self.dataModel.files, linkId: "", uId: self.uId, platform: self.platform)
-            if self.recommendList.count > 0 {
-                pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: self.platform))
+            var pushList: [VideoData] = [];
+            if (isRecommend == false) {
+                pushList = HubTool.share.channelList(self.dataModel.files, linkId: "", uId: self.uId, platform: self.platform)
+            } else {
+                if self.recommendList.count > 0 {
+                    pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: self.platform))
+                }
             }
             if model.recommoned {
                 HubTool.share.playSource = .channel_recommend
@@ -497,11 +501,11 @@ extension PingController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if let m = self.dataModel.files.safeIndex(indexPath.row) {
-                self.pushDataVC(m)
+                self.pushDataVC(m, false)
             }
         } else {
             if let m = self.recommendList.safeIndex(indexPath.row) {
-                self.pushDataVC(m)
+                self.pushDataVC(m, true)
             }
         }
     }

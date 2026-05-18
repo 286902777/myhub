@@ -415,7 +415,7 @@ class OtherDeepController: UIViewController {
         }
     }
     
-    func pushModelVC(_ model: ChannelData) {
+    func pushModelVC(_ model: ChannelData, _ isRecommend: Bool) {
         self.hiddenBottomView()
         HubTool.share.eventSource = .landpage
         HubTool.share.uploadPlatform = HubTool.share.platform
@@ -429,7 +429,12 @@ class OtherDeepController: UIViewController {
             let vc = OpenPhotoController(model: HubTool.share.channelModel(model, linkId: "", uId: "", platform: HubTool.share.platform))
             self.navigationController?.pushViewController(vc, animated: true)
         case .video:
-            var pushList = HubTool.share.channelList(self.dataModel.files, linkId: self.linkId, uId: self.dataModel.userInfo.id, platform: HubTool.share.platform)
+            var pushList: [VideoData] = [];
+            if (isRecommend == false) {
+                pushList = HubTool.share.channelList(self.dataModel.files, linkId: self.linkId, uId: self.dataModel.userInfo.id, platform: HubTool.share.platform)
+            } else {
+                pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: HubTool.share.platform))
+            }
             if self.recommendList.count > 0 {
                 pushList.append(contentsOf: HubTool.share.channelList(self.recommendList, linkId: "", uId: self.recommenduId, platform: HubTool.share.platform))
             }
@@ -581,11 +586,11 @@ extension OtherDeepController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 0 {
             if let m = self.dataModel.files.safeIndex(indexPath.row) {
-                self.pushModelVC(m)
+                self.pushModelVC(m, false)
             }
         } else {
             if let m = self.recommendList.safeIndex(indexPath.row) {
-                self.pushModelVC(m)
+                self.pushModelVC(m, true)
             }
         }
     }

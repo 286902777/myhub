@@ -118,10 +118,10 @@ class ChannelUserLabelData: SuperData {
     var second_label_code: String = ""
     override func mapping(mapper: HelpingMapper) {
         super.mapping(mapper: mapper)
-        mapper.specify(property: &id, name: "irisation")
-        mapper.specify(property: &label_name, name: "creepily")
-        mapper.specify(property: &first_label_code, name: "0qorzjuidi")
-        mapper.specify(property: &second_label_code, name: "fantaseid")
+        mapper.specify(property: &id, name: "aminoazo")
+        mapper.specify(property: &label_name, name: "unseismal")
+        mapper.specify(property: &first_label_code, name: "awrist")
+        mapper.specify(property: &second_label_code, name: "circulable")
     }
 }
 

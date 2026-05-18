@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import MJRefresh
 
 class PlayListController: UIViewController {
     lazy var closeBtn: UIButton = {
@@ -28,6 +29,8 @@ class PlayListController: UIViewController {
     private var currentIdx: Int = 0
     private var currentScetion: Int = 0
     private var currentModel: VideoData = VideoData()
+    private var recommendModel: VideoData?
+    
     let cellW: CGFloat = floor((ScreenWidth - 64) * 0.5)
     let cellH: CGFloat = floor((ScreenWidth - 64) * 0.5 * 0.55)
     lazy var collectionView: UICollectionView = {
@@ -50,10 +53,8 @@ class PlayListController: UIViewController {
     }()
     
     private var recommonedUserId: String = ""
-    private var recommonedList: [ChannelData] = []
 
     private var lists: [ChannelRecommendData] = []
-    
     private var isHistory: Bool = false
     init(model: VideoData, history: Bool) {
         self.currentModel = model
@@ -78,25 +79,20 @@ class PlayListController: UIViewController {
         }
         let m = ChannelRecommendData()
         m.type = .playlist
-        m.lists = PlayTool.instance.list.filter({$0.recommend == false})
+        m.lists = PlayTool.instance.list
         self.lists.append(m)
-        let remArr = PlayTool.instance.list.filter({$0.recommend == true})
-        if remArr.count > 0 {
-            let reData = ChannelRecommendData()
-            reData.type = .recommend
-            reData.lists = remArr
-            self.lists.append(reData)
-        }
+
         self.collectionView.reloadData()
        
         self.scrollToIdx()
-        if PlayTool.instance.list.last?.recommend == false, self.isHistory == false {
+        if self.isHistory == false {
             self.requestUserLoop()
         }
     }
     
     func requestUserLoop() {
-        let userList = HubDB.instance.readUsers().filter({$0.platform == self.currentModel.platform})
+        let resultList = HubDB.instance.readUsers().filter({$0.platform == self.currentModel.platform})
+        let userList = resultList.filter({$0.id != self.currentModel.userId})
         if userList.count > 0 {
             let userListCount: UInt32 = UInt32(userList.count - 1)
             if let m = userList.safeIndex(Int(arc4random_uniform(userListCount))) {
@@ -111,11 +107,11 @@ class PlayListController: UIViewController {
                             let listCount: UInt32 = UInt32(result.count - 1)
                             if let mod = result.safeIndex(Int(arc4random_uniform(listCount))) {
                                 self.recommonedUserId = mod.id
-                                self.requestRecommoned()
+                                self.addFooter()
                             }
                         } else {
                             self.recommonedUserId = m.id
-                            self.requestRecommoned()
+                            self.addFooter()
                         }
                     } else {
                         LoadManager.instance.dismiss()
@@ -124,41 +120,80 @@ class PlayListController: UIViewController {
             }
         } else {
             self.recommonedUserId = self.currentModel.id
-            self.requestRecommoned()
+            self.addFooter()
         }
     }
     
+    func addFooter() {
+        let foot = BaseRefreshFooter { [weak self] in
+            guard let self = self else { return }
+            self.requestRecommoned()
+        }
+        self.collectionView.mj_footer = foot
+        self.collectionView.mj_footer?.beginRefreshing()
+    }
+    
     func requestRecommoned() {
-        HttpManager.share.channel("", self.recommonedUserId, 1) { [weak self] status, model, errMsg, refresh in
+        LoadManager.instance.show(self)
+        HttpManager.share.requestRecommend(self.recommonedUserId, self.recommendModel) { [weak self] status, list, errMsg, refresh in
             guard let self = self else { return }
             DispatchQueue.main.async {
+                LoadManager.instance.dismiss()
                 if refresh {
                     self.requestRecommoned()
                     return
                 }
+                self.collectionView.mj_footer?.endRefreshing()
+                var arr: [VideoData] = []
                 if status == .success {
-                    model.files.forEach { data in
-                        data.recommoned = true
-                        self.recommonedList.append(data)
-                    }
-                    let arr = HubTool.share.channelList(self.recommonedList, linkId: "", uId: self.recommonedUserId, platform: self.currentModel.platform)
-                    PlayTool.instance.list.append(contentsOf: arr)
-                    if let data = self.lists.first(where: {$0.type == .recommend}) {
-                        data.lists.append(contentsOf: arr)
-                    } else {
-                        if arr.count > 0 {
+                    if list.count > 0 {
+                        list.forEach { data in
+                            arr.append(self.recommendToVideo(data))
+                        }
+                        PlayTool.instance.list.append(contentsOf: arr)
+                        self.collectionView.reloadData()
+                        self.recommendModel = arr.last
+                        if let resultList = self.lists.first(where: {$0.type == .recommend}) {
+                            resultList.lists.append(contentsOf: arr)
+                        } else {
                             let m = ChannelRecommendData()
                             m.type = .recommend
                             m.lists = arr
                             self.lists.append(m)
                         }
+                    } else {
+                        self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
                     }
-                    self.collectionView.reloadData()
                 } else {
                     ToastTool.instance.show("request fail!", .fail)
                 }
             }
         }
+    }
+    
+    func recommendToVideo(_ model: RecommendFileData) -> VideoData {
+        var result: VideoData = VideoData()
+        let dbData: [VideoData] = HubDB.instance.readDatas()
+        if let mod = dbData.first(where: {$0.id == model.id && $0.file_type == .video}) {
+            result = mod
+            result.recommend = true
+        } else {
+            result.id = model.id
+            result.userId = self.recommonedUserId
+            result.size = "\(model.file_meta.size.computeFileSize())"
+            result.file_size = model.file_meta.size
+            result.ext = model.file_meta.ext
+            result.isNet = true
+            result.recommend = true
+            result.pubData = model.update_time
+            result.name = model.fileName
+            result.isPass = .passed
+            result.thumbnail = model.file_meta.thumbnail
+            result.file_type = model.file_type
+            result.vid_qty = model.vid_qty
+            result.platform = self.currentModel.platform
+        }
+        return result
     }
     
     func initUI() {
