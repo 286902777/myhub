@@ -52,9 +52,6 @@ class PlayListController: UIViewController {
         return collectionView
     }()
     
-    private var recommonedUserId: String = ""
-
-    private var lists: [ChannelRecommendData] = []
     private var defaultList: [VideoData] = []
     private var isHistory: Bool = false
     init(model: VideoData, list: [VideoData], history: Bool) {
@@ -79,16 +76,22 @@ class PlayListController: UIViewController {
                 self.scrollToIdx()
             }
         }
-        let m = ChannelRecommendData()
-        m.type = .playlist
-        m.lists = self.defaultList
-        self.lists.append(m)
-
+        if PlayTool.instance.recommendLists.count == 0 {
+            let m = ChannelRecommendData()
+            m.type = .playlist
+            m.lists = self.defaultList
+            PlayTool.instance.recommendLists.append(m)
+        }
+        
         self.collectionView.reloadData()
        
         self.scrollToIdx()
-        if self.isHistory == false {
+        if self.isHistory == false, PlayTool.instance.recommonedUserId.count == 0 {
             self.requestUserLoop()
+        }
+        if PlayTool.instance.recommonedUserId.count > 0 {
+            self.recommendModel = PlayTool.instance.recommendLists.first(where: {$0.type == .recommend})?.lists.last
+            self.addFooter()
         }
     }
     
@@ -107,11 +110,11 @@ class PlayListController: UIViewController {
                         if result.count > 0 {
                             let listCount: UInt32 = UInt32(result.count - 1)
                             if let mod = result.safeIndex(Int(arc4random_uniform(listCount))) {
-                                self.recommonedUserId = mod.id
+                                PlayTool.instance.recommonedUserId = mod.id
                                 self.addFooter()
                             }
                         } else {
-                            self.recommonedUserId = m.id
+                            PlayTool.instance.recommonedUserId = m.id
                             self.addFooter()
                         }
                     } else {
@@ -132,7 +135,7 @@ class PlayListController: UIViewController {
     }
     
     func requestRecommoned() {
-        HttpManager.share.requestRecommend(self.recommonedUserId, self.recommendModel) { [weak self] status, list, errMsg, refresh in
+        HttpManager.share.requestRecommend(PlayTool.instance.recommonedUserId, self.recommendModel) { [weak self] status, list, errMsg, refresh in
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if refresh {
@@ -149,13 +152,13 @@ class PlayListController: UIViewController {
                         PlayTool.instance.list.append(contentsOf: arr)
                         self.collectionView.reloadData()
                         self.recommendModel = arr.last
-                        if let resultList = self.lists.first(where: {$0.type == .recommend}) {
+                        if let resultList = PlayTool.instance.recommendLists.first(where: {$0.type == .recommend}) {
                             resultList.lists.append(contentsOf: arr)
                         } else {
                             let m = ChannelRecommendData()
                             m.type = .recommend
                             m.lists = arr
-                            self.lists.append(m)
+                            PlayTool.instance.recommendLists.append(m)
                         }
                     } else {
                         self.collectionView.mj_footer?.endRefreshingWithNoMoreData()
@@ -175,7 +178,7 @@ class PlayListController: UIViewController {
             result.recommend = true
         } else {
             result.id = model.id
-            result.userId = self.recommonedUserId
+            result.userId = PlayTool.instance.recommonedUserId
             result.size = "\(model.file_meta.size.computeFileSize())"
             result.file_size = model.file_meta.size
             result.ext = model.file_meta.ext
@@ -219,7 +222,7 @@ class PlayListController: UIViewController {
     }
     
     func scrollToIdx() {
-        for (i, item) in self.lists.enumerated() {
+        for (i, item) in PlayTool.instance.recommendLists.enumerated() {
             for (j, data) in item.lists.enumerated() {
                 if (data.id == self.currentModel.id) {
                     self.currentIdx = j
@@ -243,19 +246,19 @@ class PlayListController: UIViewController {
 
 extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let m = self.lists.safeIndex(section) {
+        if let m = PlayTool.instance.recommendLists.safeIndex(section) {
             return m.lists.count
         }
         return 0
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        self.lists.count
+        PlayTool.instance.recommendLists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! PlayListCell
-        if let m = self.lists.safeIndex(indexPath.section) {
+        if let m = PlayTool.instance.recommendLists.safeIndex(indexPath.section) {
             if let data = m.lists.safeIndex(indexPath.item) {
                 cell.initData(data)
             }
@@ -264,7 +267,7 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        for (i, item) in self.lists.enumerated() {
+        for (i, item) in PlayTool.instance.recommendLists.enumerated() {
             for (j, data) in item.lists.enumerated() {
                 if data.isSelect {
                     data.isSelect = false
@@ -272,7 +275,7 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
                 }
             }
         }
-        if let m = self.lists.safeIndex(indexPath.section) {
+        if let m = PlayTool.instance.recommendLists.safeIndex(indexPath.section) {
             if let data = m.lists.safeIndex(indexPath.item) {
                 data.isSelect = true
                 self.selectBlock?(data)
@@ -316,7 +319,7 @@ extension PlayListController: UICollectionViewDelegate, UICollectionViewDataSour
                 make.left.equalToSuperview()
                 make.centerY.equalToSuperview().offset(indexPath.section == 0 ? 0 : 8)
             }
-            if let m = self.lists.safeIndex(indexPath.section) {
+            if let m = PlayTool.instance.recommendLists.safeIndex(indexPath.section) {
                 label.text = m.type.rawValue
             }
             return header

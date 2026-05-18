@@ -102,6 +102,9 @@ class PlayVideoController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        PlayTool.instance.recommendLists = [];
+        PlayTool.instance.recommonedUserId = "";
+        
         self.setUI()
         self.loadSource()
         self.setDownBtnState()

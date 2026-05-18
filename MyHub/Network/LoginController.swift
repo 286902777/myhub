@@ -162,7 +162,6 @@ extension LoginController: ASAuthorizationControllerDelegate {
             TbaManager.instance.addEvent(type: .custom, event: .loginFail, paramter: [EventParaName.value.rawValue: "apple", EventParaName.reason.rawValue: msg.count == 0 ? "request fail!" : msg])
             print("fail: \(String(describing: authError?.localizedDescription))")
         }
-        ToastTool.instance.show("Authorization failed!", .fail)
     }
 }
 

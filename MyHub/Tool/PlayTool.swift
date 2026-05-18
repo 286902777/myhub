@@ -10,6 +10,9 @@ import UIKit
 class PlayTool {
     static let instance = PlayTool()
     
+    var recommendLists: [ChannelRecommendData] = []
+    var recommonedUserId: String = ""
+
     var player: HUBPlayer?
     var auto: Bool = false
     var list: [VideoData] = []
