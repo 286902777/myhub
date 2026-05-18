@@ -210,8 +210,8 @@ class PingListController: SuperController {
         LoadManager.instance.show(self)
         HttpManager.share.folderData(uId: self.userId, dirId: self.model.id, currentPage: self.currentPage) {[weak self] status, files, errMsg, refresh in
             guard let self = self else { return }
-            LoadManager.instance.dismiss()
             DispatchQueue.main.async {
+                LoadManager.instance.dismiss()
                 self.tableView.mj_footer?.endRefreshing()
                 if refresh {
                     self.netRequest()

@@ -16,7 +16,7 @@ class PlayTool {
     
     func pushPage(_ controller: UIViewController, _ mod: VideoData, _ list: [VideoData], _ history: Bool = false) {
         PlayTool.instance.list = list.filter({$0.file_type == .video})
-        let vc = PlayVideoController(model: mod, history: history)
+        let vc = PlayVideoController(model: mod, list: list.filter({$0.file_type == .video}), history: history)
         vc.hidesBottomBarWhenPushed = true
         TabbarTool.instance.displayOrHidden(false)
         vc.premiumBlock = { [weak self] in

@@ -55,9 +55,11 @@ class PlayListController: UIViewController {
     private var recommonedUserId: String = ""
 
     private var lists: [ChannelRecommendData] = []
+    private var defaultList: [VideoData] = []
     private var isHistory: Bool = false
-    init(model: VideoData, history: Bool) {
+    init(model: VideoData, list: [VideoData], history: Bool) {
         self.currentModel = model
+        self.defaultList = list
         self.isHistory = history
         super.init(nibName: nil, bundle: nil)
     }
@@ -79,7 +81,7 @@ class PlayListController: UIViewController {
         }
         let m = ChannelRecommendData()
         m.type = .playlist
-        m.lists = PlayTool.instance.list
+        m.lists = self.defaultList
         self.lists.append(m)
 
         self.collectionView.reloadData()
@@ -134,11 +136,9 @@ class PlayListController: UIViewController {
     }
     
     func requestRecommoned() {
-        LoadManager.instance.show(self)
         HttpManager.share.requestRecommend(self.recommonedUserId, self.recommendModel) { [weak self] status, list, errMsg, refresh in
             guard let self = self else { return }
             DispatchQueue.main.async {
-                LoadManager.instance.dismiss()
                 if refresh {
                     self.requestRecommoned()
                     return

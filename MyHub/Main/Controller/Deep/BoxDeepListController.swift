@@ -245,8 +245,8 @@ class BoxDeepListController: UIViewController {
         LoadManager.instance.show(self)
         HttpManager.share.getShareFolderApi(self.userId, self.model.id, self.currentPage) {[weak self] status, list, errMsg in
             guard let self = self else { return }
-            LoadManager.instance.dismiss()
             DispatchQueue.main.async {
+                LoadManager.instance.dismiss()
                 self.tableView.mj_footer?.endRefreshing()
                 if status == .success {
                     if list.count < 50 {

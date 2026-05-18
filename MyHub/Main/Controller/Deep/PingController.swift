@@ -243,8 +243,8 @@ class PingController: UIViewController {
         LoadManager.instance.show(self)
         HttpManager.share.channel("", self.uId, self.currentPage) { [weak self] status, model, errMsg, refresh in
             guard let self = self else { return }
-            LoadManager.instance.dismiss()
             DispatchQueue.main.async {
+                LoadManager.instance.dismiss()
                 if refresh {
                     self.netRequest()
                     return

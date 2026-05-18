@@ -21,9 +21,11 @@ class PlayVideoController: UIViewController {
     var add = false
     var premiumBlock: (() -> Void)?
     private var isPop: Bool = false
-    
-    init(model: VideoData, history: Bool) {
+    private var listData: [VideoData] = []
+
+    init(model: VideoData, list: [VideoData], history: Bool) {
         self.model = model
+        self.listData = list
         self.isHistory = history
         super.init(nibName: nil, bundle: nil)
     }
@@ -486,7 +488,8 @@ extension PlayVideoController: HUBPlayerDelegate {
     
     func player(_ player: HUBPlayer, didClickMore full: Bool) {
         if full {
-            let vc = PlayListFullController(model: self.model, history: self.isHistory)
+            PlayTool.instance.list = self.listData
+            let vc = PlayListFullController(model: self.model, list: self.listData, history: self.isHistory)
             vc.selectBlock = { [weak self] mod in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -497,7 +500,8 @@ extension PlayVideoController: HUBPlayerDelegate {
             vc.modalPresentationStyle = .overFullScreen
             HubTool.share.keyVC()?.present(vc, animated: false)
         } else {
-            let vc = PlayListController(model: self.model, history: self.isHistory)
+            PlayTool.instance.list = self.listData
+            let vc = PlayListController(model: self.model, list: self.listData, history: self.isHistory)
             vc.selectBlock = { [weak self] mod in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
