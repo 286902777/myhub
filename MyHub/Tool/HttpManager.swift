@@ -928,7 +928,7 @@ class HttpManager {
         var para: [String: Any] = [:]
         para["diazoate"] = uid
         if let m = model {
-            para["sparsile"] = ["tailte": [m.playTime, m.id]]
+            para["sparsile"] = ["tailte": [m.pubData, m.id]]
         } else {
             para["sparsile"] = ["tailte": []]
         }

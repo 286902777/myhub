@@ -94,10 +94,9 @@ class PlayListController: UIViewController {
     
     func requestUserLoop() {
         let resultList = HubDB.instance.readUsers().filter({$0.platform == self.currentModel.platform})
-        let userList = resultList.filter({$0.id != self.currentModel.userId})
-        if userList.count > 0 {
-            let userListCount: UInt32 = UInt32(userList.count - 1)
-            if let m = userList.safeIndex(Int(arc4random_uniform(userListCount))) {
+        if resultList.count > 0 {
+            let userListCount: UInt32 = UInt32(resultList.count - 1)
+            if let m = resultList.safeIndex(Int(arc4random_uniform(userListCount))) {
                 HttpManager.share.channelUserList(m.id, m.platform) { [weak self] status, list, errMsg, refresh in
                     guard let self = self else { return }
                     if refresh {
@@ -120,9 +119,6 @@ class PlayListController: UIViewController {
                     }
                 }
             }
-        } else {
-            self.recommonedUserId = self.currentModel.id
-            self.addFooter()
         }
     }
     
